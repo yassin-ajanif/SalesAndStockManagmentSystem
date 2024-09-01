@@ -1,0 +1,228 @@
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\libSkiaSharp.dylib
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libSkiaSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libSkiaSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libSkiaSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\zxing.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\zxing.presentation.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\zxing.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\zxing.presentation.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.AssemblyReference.cache
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesPro.CCBB1B71.Up2Date
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\libHarfBuzzSharp.dylib
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libHarfBuzzSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libHarfBuzzSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libHarfBuzzSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-arm64\native\libQuestPdfSkia.so
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-x64\native\libQuestPdfSkia.so
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x64\native\QuestPdfSkia.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x86\native\QuestPdfSkia.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\ExCSS.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\ShimSkiaSharp.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Custom.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Model.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Skia.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.xml
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\libSkiaSharp.dylib
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libSkiaSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libSkiaSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libSkiaSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\libHarfBuzzSharp.dylib
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libHarfBuzzSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libHarfBuzzSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libHarfBuzzSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-arm64\native\libQuestPdfSkia.so
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-x64\native\libQuestPdfSkia.so
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x64\native\QuestPdfSkia.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x86\native\QuestPdfSkia.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.pdb
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ExCSS.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ShimSkiaSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Custom.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Model.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Skia.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.pdb
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.pdb
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.pdb
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.pdb
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.pdb
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\zxing.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\zxing.presentation.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.pdb
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.xml
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.AssemblyReference.cache
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.CoreCompileInputs.cache
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesPro.CCBB1B71.Up2Date
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.dll
+D:\Fll Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.pdb
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\Newtonsoft.Json.dll
+C:\Users\yassin\source\repos\SalesProductsManagmentSystemBusinessLayer\bin\Release\Newtonsoft.Json.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\libSkiaSharp.dylib
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libSkiaSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libSkiaSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libSkiaSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\libHarfBuzzSharp.dylib
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libHarfBuzzSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libHarfBuzzSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libHarfBuzzSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-arm64\native\libQuestPdfSkia.so
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-x64\native\libQuestPdfSkia.so
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x64\native\QuestPdfSkia.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x86\native\QuestPdfSkia.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.pdb
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ExCSS.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Newtonsoft.Json.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ShimSkiaSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Custom.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Model.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Skia.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.pdb
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.pdb
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\Newtonsoft.Json.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.pdb
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.pdb
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.pdb
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.pdb
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.xml
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.AssemblyReference.cache
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesPro.CCBB1B71.Up2Date
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.dll
+C:\Users\DELL\Desktop\Full Project\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\libSkiaSharp.dylib
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libSkiaSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libSkiaSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libSkiaSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\libHarfBuzzSharp.dylib
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\x86\libHarfBuzzSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\x64\libHarfBuzzSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\arm64\libHarfBuzzSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-arm64\native\libQuestPdfSkia.so
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\linux-x64\native\libQuestPdfSkia.so
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x64\native\QuestPdfSkia.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\runtimes\win-x86\native\QuestPdfSkia.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemBusinessLayer.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\ExCSS.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\Newtonsoft.Json.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\ShimSkiaSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Custom.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Model.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\Svg.Skia.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SalesProductsManagmentSystemDataLayer.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\HarfBuzzSharp.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\Newtonsoft.Json.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\QuestPDF.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\SkiaSharp.HarfBuzz.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Buffers.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Drawing.Common.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Memory.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Numerics.Vectors.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.pdb
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\bin\Release\ZXing.SkiaSharp.xml
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.AssemblyReference.cache
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesPro.CCBB1B71.Up2Date
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesProductsManagmentSystemBusinessLayer\obj\Release\SalesProductsManagmentSystemBusinessLayer.pdb
