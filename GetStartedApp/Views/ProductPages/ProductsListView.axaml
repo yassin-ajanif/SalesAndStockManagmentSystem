@@ -1,0 +1,179 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:GetStartedApp.ViewModels.ProductPages"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
+             x:Class="GetStartedApp.Views.ProductPages.ProductsListView"
+			 x:CompileBindings="True"
+			  x:DataType="vm:ProductsListViewModel"
+			 FontFamily="roboto"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+			 xmlns:local="clr-namespace:GetStartedApp.Views"
+			 
+			 >
+
+
+	<UserControl.Resources>
+		<local:StockQuantityToColorConverter x:Key="StockQuantityToColorConverter"/>
+	</UserControl.Resources>
+	
+	<UserControl.Styles>
+
+
+
+		<Style Selector="Border">
+
+			<Setter Property="BoxShadow" Value="0 10 20 5 Gainsboro"/>
+			<Setter Property="CornerRadius"        Value="0"/>
+			<Setter Property="Margin"              Value="0"/>
+			<Setter Property="BorderThickness" Value="1"></Setter>
+			<Setter Property="BorderBrush" Value="Gainsboro"></Setter>
+
+		</Style>
+
+
+	</UserControl.Styles>
+
+	
+	<!--Width="700" Height="510"
+	Background="{DynamicResource myBackgroundFaintBlueColor}"
+	-->
+
+
+	<Border  Margin="10 10 10 50"    Width="700" Height="520" >
+
+
+
+		<StackPanel Margin="10 10 10 0 " Width="700" Height="510">
+			
+			<Grid Margin="10">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<!-- Add New Product Button -->
+				<Button Grid.Column="0" Command="{Binding AddNewProductCommand }"
+						FlowDirection="RightToLeft"
+						Margin="0 0 10 0">اضافة منتج جديد +</Button>
+
+				<!-- Category ComboBox -->
+				<ComboBox Grid.Column="1" Name="CategoryId" FlowDirection="RightToLeft"
+						  ItemsSource="{Binding ProductCategories}"
+						  SelectedItem="{Binding SelectedCategory}">
+				</ComboBox>
+
+				<!-- Search Bar -->
+				<TextBox Grid.Column="3" Name="SearchBar" 
+						 Watermark="بحث ..."
+						 FlowDirection="RightToLeft"
+					 Text="{Binding SearchedProducts}"
+					 Margin="10 0 0 0" />
+
+				</Grid>
+
+			<Grid>
+				<DataGrid ItemsSource="{Binding ProductsListObservable}"
+			  AutoGenerateColumns="False" IsReadOnly="True"
+			  GridLinesVisibility="All"
+			  SelectionChanged="OnSelectionChanged"
+			  FlowDirection="RightToLeft"
+			  Width="680" Height="450"
+			  Name="ProductsListGrid" 
+			  PointerMoved="OnUserHoverTheProductRow"
+						  CanUserResizeColumns="True">
+
+					<DataGrid.Columns>
+						<DataGridTextColumn Binding="{Binding id}" Header="رقم المنتوج" Width="auto"/>
+						<DataGridTextColumn Binding="{Binding name}" Header="اسم المنتوج" Width="*"/>
+						<DataGridTextColumn Binding="{Binding price}" Header="السعر" Width="auto"/>
+						<DataGridTextColumn Binding="{Binding StockQuantity}" Header="الكمية" Width="auto"/>
+						<DataGridTextColumn Binding="{Binding description}" Header="الوصف" Width="*"/>
+						<DataGridTextColumn Binding="{Binding selectedCategory}" Header="تصنيفات" Width="*"/>
+						<DataGridTemplateColumn Header="الصورة">
+							<DataGridTemplateColumn.CellTemplate>
+								<DataTemplate>
+									<Image Source="{Binding SelectedProductImage}" Width="20" Height="20">
+										<ToolTip.Tip>
+											<Border Background="White" Padding="10">
+												<Image Source="{Binding SelectedProductImage}" MaxHeight="200" MaxWidth="200"/>
+											</Border>
+										</ToolTip.Tip>
+										<ToolTip.Placement>
+											Bottom
+										</ToolTip.Placement>
+									</Image>
+								</DataTemplate>
+							</DataGridTemplateColumn.CellTemplate>
+						</DataGridTemplateColumn>
+
+					</DataGrid.Columns>
+
+					<DataGrid.Styles>
+					
+						<Style Selector="DataGrid">
+							<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+						</Style>
+						
+						<Style Selector="DataGridRow"
+							   >
+							
+							<Setter Property="ContextMenu">
+								
+								<Setter.Value>
+									<ContextMenu  FontFamily="roboto">
+										<MenuItem Header="تعديل الكمية"
+											 Click="OnEditQuantityBtnClicked"/>
+										<MenuItem Header="تعديل السعر"
+											 Click="OnEditPriceBtnClicked"/>
+										<MenuItem Header="تعديل كل المعلومات"
+											 Click="OnEditAllInfoProducts"/>
+										<MenuItem Header="حذف"
+											 Click="OnDeletePriceBtnClicked"/>
+										<MenuItem Header="طباعة الباركود"
+											 Click="OnPrintBarCodeForThisProduct"/>
+										<MenuItem Header="إرجاع هذا المنتج"
+											 Click="OnReturnProductBtnClicked"/>
+									</ContextMenu>
+
+								</Setter.Value>
+								
+							</Setter>
+
+
+							
+							<Setter Property="Foreground"
+										Value="{Binding 
+										Converter={StaticResource StockQuantityToColorConverter}}" />
+
+
+							
+						
+						</Style>
+
+					
+						
+						
+					</DataGrid.Styles>
+
+				
+					
+				</DataGrid>
+
+			</Grid>
+
+
+		</StackPanel>
+
+
+
+
+
+	</Border>
+
+
+</UserControl>

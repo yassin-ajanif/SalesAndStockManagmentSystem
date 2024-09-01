@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="150"
+             x:Class="GetStartedApp.SetMinimalStockQuanityToNotifyUserView"
+			 
+			 xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+			 x:CompileBindings="True"
+			 x:DataType="vm:SetMinimalStockQuanityToNotifyUserViewModel"
+			 FontFamily="Roboto"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+			 xmlns:local="clr-namespace:GetStartedApp.Views"
+			 >
+
+	<!--xmlns:vm="using:GetStartedApp.ViewModels.ProductPages"
+	mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
+	x:Class="GetStartedApp.Views.ProductPages.ProductsListView"
+	x:CompileBindings="True"
+	x:DataType="vm:ProductsListViewModel"
+	FontFamily="roboto"
+	Background="{DynamicResource myBackgroundFaintBlueColor}"
+	xmlns:local="clr-namespace:GetStartedApp.Views"
+	Welcome to Avalonia!-->
+
+	<Grid HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft">
+		<StackPanel Orientation="Vertical" HorizontalAlignment="Center" >
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,40">
+				<TextBlock Text="الحد الأدنى :" 
+						   VerticalAlignment="Center" Margin="0,0,10,0"/>
+				<TextBox Text="{Binding MinimalStockQuantity, Mode=TwoWay}"
+						 FlowDirection="LeftToRight" Width="50" />
+			</StackPanel>
+			<Button  Click="OnSaveCommand"  Width="80" HorizontalAlignment="Center">
+				<TextBlock HorizontalAlignment="Center">حفظ</TextBlock>
+			</Button>
+		</StackPanel>
+	</Grid>
+
+	
+	
+</UserControl>

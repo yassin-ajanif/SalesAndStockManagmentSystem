@@ -1,0 +1,75 @@
+is_global = true
+build_property.AvaloniaNameGeneratorIsEnabled = true
+build_property.AvaloniaNameGeneratorBehavior = InitializeComponent
+build_property.AvaloniaNameGeneratorDefaultFieldModifier = internal
+build_property.AvaloniaNameGeneratorFilterByPath = *
+build_property.AvaloniaNameGeneratorFilterByNamespace = *
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = GetStartedApp_-_Backup
+build_property.ProjectDir = C:\Users\yassin\source\repos\GetStartedApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+
+[C:/Users/yassin/source/repos/GetStartedApp/App.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/BarCodeGeneratorView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/BLView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/CategoryPages/AddNewCategoryView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/CategoryProductsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/DashboardView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/FinancesView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/LoginPageView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/MakeSaleView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/ReturnedProductsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/SetMinimalStockQuanityToNotifyUserView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DashboardPages/SoldProductsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/DialogContainerView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/LisenceKeyVerificationView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/ProductPages/AddProductView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/ProductPages/ProductsListView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/ProductPages/ReturnProductView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/GetStartedApp/Views/ShowMessageBoxContainer.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

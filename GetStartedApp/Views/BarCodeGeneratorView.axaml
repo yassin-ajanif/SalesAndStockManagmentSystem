@@ -1,0 +1,154 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GetStartedApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GetStartedApp.Views.BarCodeGeneratorView"
+             x:CompileBindings="True"
+             x:DataType="vm:BarCodeGeneratorViewModel"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+			 FontFamily="Roboto"
+			 >
+			 
+			 <!--Background="{DynamicResource myBackgroundFaintBlueColor}"Width="3182" Height="450"-->
+	<Grid ColumnDefinitions="4*,*" RowDefinitions="*,*">
+		<StackPanel Grid.Column="0" Margin="10">
+			<TextBlock Text="حاوية محاكي عرض الصورة" FontWeight="Bold" FlowDirection="RightToLeft"/>
+
+			<!-- ScrollViewer and Viewbox added here -->
+			<Image Margin="20"
+				   Name="barCodeViewerImage"
+	Source="{Binding BarCodeImagePreviewImage}">
+			</Image>
+		</StackPanel>
+		
+		<StackPanel Grid.Column="1" Margin="10" FlowDirection="RightToLeft">
+
+			<TextBlock Text="الإعدادات" FontWeight="Bold" Margin="10"/>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<Label Grid.Column="0" Grid.Row="0" Content="عدد الصفوف" />
+				<TextBox Grid.Column="1" Grid.Row="0" Watermark="عدد الصفوف" Margin="10" Text="{Binding NumRows}" FlowDirection="LeftToRight"/>
+
+				<Label Grid.Column="0" Grid.Row="1" Content="عدد الأعمدة" />
+				<TextBox Grid.Column="1" Grid.Row="1" Watermark="عدد الأعمدة" Margin="10" Text="{Binding NumColumns}" FlowDirection="LeftToRight"/>
+
+				<Label Grid.Column="0" Grid.Row="2" Content="التباعد" />
+				<TextBox Grid.Column="1" Grid.Row="2" Watermark="التباعد" Margin="10" Text="{Binding Spacing}" FlowDirection="LeftToRight"/>
+
+				<Label Grid.Column="0" Grid.Row="3" Content="موقع الباركود في بداية الصف" />
+				<TextBox Grid.Column="1" Grid.Row="3" Watermark="بداية الصف" Margin="10" Text="{Binding StartRow}" FlowDirection="LeftToRight"/>
+
+				<Label Grid.Column="0" Grid.Row="4" Content="موقع الباركود في بداية العمود" />
+				<TextBox Grid.Column="1" Grid.Row="4" Watermark="بداية العمود" Margin="10" Text="{Binding StartColumn}" FlowDirection="LeftToRight"/>
+
+				<Label Grid.Column="0" Grid.Row="5" Content="عدد الباركود" />
+				<TextBox Grid.Column="1" Grid.Row="5" 
+						 Watermark="عدد الباركود" Margin="10" 
+						 Text="{Binding NumBarcodes}"
+						 IsEnabled="{Binding CanIsetBarCodeNumbers}" FlowDirection="LeftToRight"/>
+
+				<Label Grid.Column="0" Grid.Row="6" Content="رمز الباركود" 
+					   FlowDirection="RightToLeft"/>
+				<TextBox Grid.Column="1" Grid.Row="6"
+						 Watermark="رمز الباركود" Margin="10"
+						 Text="{Binding NumberToPrintAsBarcodeNumber}"
+						 IsEnabled="{Binding CanIsetBarCodeNumbers}" FlowDirection="LeftToRight"/>
+			</Grid>
+
+
+
+
+
+			<Grid Margin="10" >
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				<!--	<ColumnDefinition Width="*" />-->
+				</Grid.ColumnDefinitions>
+
+				<!-- First row -->
+				<Button Content="الإزاحة  →"
+						Width="70"
+						Command="{Binding IncrementOffsetXCommand}"
+						Margin="10"
+						Grid.Row="0"
+						Grid.Column="0"
+						/>
+				<Button Content="الإزاحة  ←"
+						Width="70"
+						Command="{Binding DecrementOffsetXCommand}"
+						Margin="10"
+						Grid.Row="0"
+						Grid.Column="1"
+						/>
+
+				<!-- Second row -->
+				<Button Content="الإزاحة  ↓"
+						Width="70"
+						Command="{Binding IncrementOffsetYCommand}"
+						Margin="10"
+						Grid.Row="1"
+						Grid.Column="0"
+						/>
+				<Button Content="الإزاحة  ↑"
+						Width="70"
+						Command="{Binding DecrementOffsetYCommand}"
+						Margin="10"
+						Grid.Row="1"
+						Grid.Column="1"
+						/>
+
+				<!-- Third row for Zoom In/Out buttons -->
+				<Button Content="تكبير   +"
+						Width="70"
+						Click="ZoomIn"
+						Margin="10"
+						Grid.Row="2"
+						Grid.Column="0"
+						/>
+				<Button Content="تصغير   -"
+						Width="70"
+						Click="ZoomOut"
+						Margin="10"
+						Grid.Row="2"
+						Grid.Column="1"
+						/>
+			</Grid>
+
+
+
+			<Button Command="{Binding PrintPdfBarcodeCommand}" Margin="75 0 0 0" 
+				Background="red" Foreground="White"	FontWeight="DemiBold" Padding="10,5">
+				طباعة
+			</Button>
+			
+		</StackPanel>
+	</Grid>
+
+
+
+
+
+
+</UserControl>

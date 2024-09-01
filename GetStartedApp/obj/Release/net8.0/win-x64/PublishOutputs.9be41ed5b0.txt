@@ -1,0 +1,12 @@
+C:\Users\yassin\Desktop\protable installation\GetStartedApp.pdb
+C:\Users\yassin\Desktop\protable installation\libSkiaSharp.dylib
+C:\Users\yassin\Desktop\protable installation\x86\libSkiaSharp.dll
+C:\Users\yassin\Desktop\protable installation\x64\libSkiaSharp.dll
+C:\Users\yassin\Desktop\protable installation\arm64\libSkiaSharp.dll
+C:\Users\yassin\Desktop\protable installation\av_libglesv2.dll
+C:\Users\yassin\Desktop\protable installation\libHarfBuzzSharp.dll
+C:\Users\yassin\Desktop\protable installation\sni.dll
+C:\Users\yassin\Desktop\protable installation\libSkiaSharp.dll
+C:\Users\yassin\Desktop\protable installation\SalesProductsManagmentSystemBusinessLayer.pdb
+C:\Users\yassin\Desktop\protable installation\SalesProductsManagmentSystemDataLayer.pdb
+C:\Users\yassin\Desktop\protable installation\GetStartedApp.exe

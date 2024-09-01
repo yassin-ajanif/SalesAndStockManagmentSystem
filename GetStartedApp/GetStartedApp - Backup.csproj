@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Finances.svg" />
+    <None Remove="Assets\Fonts\ElMessiri-Bold.ttf" />
+    <None Remove="Assets\Fonts\ElMessiri-SemiBold.ttf" />
+    <None Remove="Assets\Fonts\ElMessiri-VariableFont_wght.ttf" />
+    <None Remove="Assets\Fonts\RobotoCondensed.ttf" />
+    <None Remove="Assets\Icons\add.png" />
+    <None Remove="Assets\Icons\backspace_7156258.png" />
+    <None Remove="Assets\Icons\DashedColeredLine.svg" />
+    <None Remove="Assets\Icons\edit.png" />
+    <None Remove="Assets\Icons\line.svg" />
+    <None Remove="Assets\Icons\NotificationNo.png" />
+    <None Remove="Assets\Icons\NotificationYes.png" />
+    <None Remove="Assets\MakeBarCode.svg" />
+    <None Remove="Assets\MakeSale.svg" />
+    <None Remove="Assets\NoImageImage.png" />
+    <None Remove="Assets\ProductCategories.svg" />
+    <None Remove="Assets\Products.svg" />
+    <None Remove="Assets\ReturnProduct.svg" />
+    <None Remove="Assets\Stock.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Svg.Skia" Version="11.0.0.18" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="ZXing.Net.Bindings.SkiaSharp" Version="0.16.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SalesProductsManagmentSystemBusinessLayer\SalesProductsManagmentSystemBusinessLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\DashboardPages\CategoryProductsView.axaml.cs">
+      <DependentUpon>CategoryProductsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DashboardPages\CodeBarGeneratorView.axaml.cs">
+      <DependentUpon>CodeBarGeneratorView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DashboardPages\MakeSaleView.axaml.cs">
+      <DependentUpon>MakeSaleView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\DialogContainerView.axaml.cs">
+      <DependentUpon>DialogContainerView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ProductPages\AddProductView.axaml.cs">
+      <DependentUpon>AddProductView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

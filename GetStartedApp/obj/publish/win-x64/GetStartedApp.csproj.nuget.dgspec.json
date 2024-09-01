@@ -1,0 +1,203 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\yassin\\source\\repos\\GetStartedApp\\GetStartedApp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\yassin\\source\\repos\\GetStartedApp\\GetStartedApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\GetStartedApp\\GetStartedApp.csproj",
+        "projectName": "GetStartedApp",
+        "projectPath": "C:\\Users\\yassin\\source\\repos\\GetStartedApp\\GetStartedApp.csproj",
+        "packagesPath": "C:\\Users\\yassin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yassin\\source\\repos\\GetStartedApp\\obj\\publish\\win-x64\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\yassin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
+                "projectPath": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Avalonia": {
+              "target": "Package",
+              "version": "[11.0.10, )"
+            },
+            "Avalonia.Controls.DataGrid": {
+              "target": "Package",
+              "version": "[11.0.10, )"
+            },
+            "Avalonia.Desktop": {
+              "target": "Package",
+              "version": "[11.0.10, )"
+            },
+            "Avalonia.Fonts.Inter": {
+              "target": "Package",
+              "version": "[11.0.10, )"
+            },
+            "Avalonia.ReactiveUI": {
+              "target": "Package",
+              "version": "[11.0.10, )"
+            },
+            "Avalonia.Svg.Skia": {
+              "target": "Package",
+              "version": "[11.0.0.18, )"
+            },
+            "Avalonia.Themes.Fluent": {
+              "target": "Package",
+              "version": "[11.0.10, )"
+            },
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.2.2, )"
+            },
+            "MessageBox.Avalonia": {
+              "target": "Package",
+              "version": "[3.1.5.1, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.3, )",
+              "autoReferenced": true
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            },
+            "ZXing.Net.Bindings.SkiaSharp": {
+              "target": "Package",
+              "version": "[0.16.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[8.0.3, 8.0.3]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[8.0.3, 8.0.3]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[8.0.3, 8.0.3]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    },
+    "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj",
+        "projectName": "SalesProductsManagmentSystemBusinessLayer",
+        "projectPath": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj",
+        "packagesPath": "C:\\Users\\yassin\\.nuget\\packages\\",
+        "projectStyle": "PackagesConfig",
+        "configFilePaths": [
+          "C:\\Users\\yassin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj": {
+                "projectPath": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj"
+              }
+            }
+          }
+        },
+        "packagesConfigPath": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemBusinessLayer\\packages.config"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj",
+        "projectName": "SalesProductsManagmentSystemDataLayer",
+        "projectPath": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj",
+        "packagesPath": "C:\\Users\\yassin\\.nuget\\packages\\",
+        "projectStyle": "PackagesConfig",
+        "configFilePaths": [
+          "C:\\Users\\yassin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        },
+        "packagesConfigPath": "C:\\Users\\yassin\\source\\repos\\SalesProductsManagmentSystemDataLayer\\packages.config"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    }
+  }
+}

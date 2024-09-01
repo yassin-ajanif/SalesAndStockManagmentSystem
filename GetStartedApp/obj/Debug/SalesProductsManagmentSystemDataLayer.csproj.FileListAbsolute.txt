@@ -1,0 +1,2 @@
+C:\Users\yassin\source\repos\GetStartedApp\obj\Debug\SalesProductsManagmentSystemDataLayer.csproj.AssemblyReference.cache
+C:\Users\yassin\source\repos\GetStartedApp\obj\Debug\SalesProductsManagmentSystemDataLayer.csproj.CoreCompileInputs.cache

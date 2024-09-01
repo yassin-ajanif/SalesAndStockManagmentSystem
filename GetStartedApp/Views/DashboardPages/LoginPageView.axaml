@@ -1,0 +1,208 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GetStartedApp.Views.DashboardPages.LoginPageView"
+             x:DataType="vm:LoginPageViewModel"
+             x:CompileBindings="True"
+             Background="{DynamicResource myBackgroundFaintBlueColor}"
+			 FontFamily="Roboto"
+             HorizontalAlignment="Center" VerticalAlignment="Center"
+			 >
+
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+				Margin="20" >
+
+		<Border CornerRadius="10"  Padding="100,50" BoxShadow="0 0 10 #888"
+			HorizontalAlignment="Center" VerticalAlignment="Center"
+		 >
+
+			<StackPanel>
+				
+				<StackPanel HorizontalAlignment="Center" FlowDirection="RightToLeft" 
+							IsVisible="{Binding IsRegistrationBlockVisible}">
+					<TextBlock Text="تسجيل الدخول" FontWeight="Bold" FontSize="20"
+							   HorizontalAlignment="Center" Margin="0,0,0,20"
+							   Foreground="DarkSlateBlue" />
+					<ComboBox Name="UserTypeBox" 
+							  HorizontalAlignment="Center" Width="200" Margin="0,0,0,10"
+							  ItemsSource="{Binding UsersTyesList}"
+							  SelectedItem="{Binding UserType}">
+						
+					</ComboBox>
+					<TextBox Name="PasswordBox" Watermark="كلمة المرور" Foreground="DarkSlateBlue"
+							 PasswordChar="*" Text="{Binding Password}"
+							 Margin="0,0,0,20" HorizontalAlignment="Center" Width="200"/>
+					<Button Content="تسجيل الدخول" HorizontalAlignment="Center"
+							Command="{Binding LoginCommand}"
+							Background="SkyBlue" Foreground="White" Padding="10,5" Margin="0,0,0,10" />
+					<Button Content="نسيت كلمة المرور" HorizontalAlignment="Center"
+							IsVisible="{Binding IsForgotPasswordVisible}"
+							Command="{Binding ForgotPasswordCommand}"
+							Background="Transparent" Foreground="DarkBlue" Padding="10,5" />
+
+					<StackPanel Orientation="Horizontal" IsVisible="{Binding IsVerificationQuestionVisible}" >
+
+						<Label Foreground="DarkSlateBlue" Margin="0 10 10 0" FontWeight="Bold"> اجب عن سؤال التحقق :</Label>
+						<TextBox Name="IDBox" Watermark="ادخل رقم البطاقة الوطنية "
+							 Foreground="DarkSlateBlue"
+							 Text="{Binding IDBoxToVerify}" Margin="0,10,0,10"
+								 PasswordChar="*"
+							 HorizontalAlignment="Center" Width="200"/>
+
+					</StackPanel>
+
+					<StackPanel IsVisible="{Binding IsWrongPasswordErrorActive}">
+						<Label Foreground="Red" 
+							   FontWeight="Bold" 
+							   Content="كلمة المرور خاطئة" 
+							   HorizontalAlignment="Center"/>
+					</StackPanel>
+
+
+				</StackPanel>
+
+				<!--Wecloming block message-->
+				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+					<TextBlock Text="مرحبا بك في برنامج ادارة المخازن المرجو تسجيل الرقم"
+							   HorizontalAlignment="Center"
+							   IsVisible="{Binding IsWelcomingMessageVisible}"
+							   TextWrapping="Wrap"
+							   TextAlignment="Center"
+							   FontSize="16"
+							   Margin="10"
+							   Foreground="DarkSlateBlue"
+							   FontWeight="Bold" 
+							   FlowDirection="RightToLeft"/>
+					<TextBlock Text="السري الخاص بك كمدير و الخاص بموضفيك."
+							   HorizontalAlignment="Center"
+							   IsVisible="{Binding IsWelcomingMessageVisible}"
+							   TextWrapping="Wrap"
+							   TextAlignment="Center"
+							   FontSize="16"
+							   Margin="10,5,10,10" 
+					Foreground="DarkSlateBlue"
+					FontWeight="Bold" 
+							   FlowDirection="RightToLeft"/>
+					<TextBlock Text="اضافة الى سؤال التحقق في حال نسيان رقمك السري"
+							   HorizontalAlignment="Center"
+							   IsVisible="{Binding IsWelcomingMessageVisible}"
+							   TextWrapping="Wrap"
+							   TextAlignment="Center"
+							   FontSize="16"
+							   Margin="10"
+							   Foreground="DarkSlateBlue"
+							   FontWeight="Bold"
+							   FlowDirection="RightToLeft"
+							   />
+				</StackPanel>
+				
+
+				<!-- New StackPanel -->
+				<StackPanel HorizontalAlignment="Center" FlowDirection="RightToLeft" IsVisible="{Binding IsPasswordAddingOrEditingBlockVisible}">
+					<TextBlock Text="كلمات المرور" FontWeight="Bold" FontSize="20"
+							   HorizontalAlignment="Center" Margin="0,10,0,20"
+							   Foreground="DarkSlateBlue" />
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="20" />
+							<!-- This is the space between the two main columns -->
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="20" />
+							<!-- This is the space between the two main columns -->
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+
+						<!-- Admin Account -->
+						<Label Grid.Column="0" Grid.Row="0" Content="المدير" FontWeight="Bold" FontSize="16"
+							   HorizontalAlignment="Center" Margin="0,0,0,10"
+							   Foreground="DarkSlateBlue" />
+						<TextBox Grid.Column="0" Grid.Row="1" 
+								 Watermark="كلمة المرور" Foreground="DarkSlateBlue"
+								 IsEnabled="{Binding AdminPasswordIsEnabled}"
+								 PasswordChar="*" Text="{Binding AdminPasswordToAddOrEdit}"
+								 Margin="0,0,0,10" HorizontalAlignment="Center" Width="150"/>
+						<TextBox Grid.Column="0" Grid.Row="2" Watermark="تأكيد كلمة المرور" Foreground="DarkSlateBlue"
+								 PasswordChar="*" Text="{Binding AdminConfirmPasswordToAddOrEdit }"
+								 Margin="0,0,0,10" HorizontalAlignment="Center" Width="150"/>
+
+						<!-- User Account -->
+						<Label Grid.Column="4" Grid.Row="0" Content="المستخدم" FontWeight="Bold" FontSize="16"
+							   HorizontalAlignment="Center" Margin="0,0,0,10"
+							   Foreground="DarkSlateBlue" />
+						<TextBox Grid.Column="4" Grid.Row="1" Watermark="كلمة المرور" 
+								 Foreground="DarkSlateBlue"
+								 IsEnabled="{Binding UserPasswordIsEnabled}"
+								 PasswordChar="*" Text="{Binding UserPasswordToAddOrEdit}"
+								 Margin="0,0,0,10" HorizontalAlignment="Center" Width="150"/>
+						<TextBox Grid.Column="4" Grid.Row="2" Watermark="تأكيد كلمة المرور"
+								 Foreground="DarkSlateBlue"
+								 PasswordChar="*" Text="{Binding UserConfirmPasswordToAddOrEdit}"
+								 Margin="0,0,0,10" HorizontalAlignment="Center" Width="150"/>
+					</Grid>
+
+
+					<StackPanel Orientation="Horizontal">
+
+						<Label Foreground="DarkSlateBlue" Margin="0 10 10 0" 
+							   FontWeight="Bold">سؤال التحقق :</Label>
+					
+						<TextBox Name="IDBoxToVerify" 
+						     Watermark="ادخل رقم البطاقة الوطنية "
+							 Foreground="DarkSlateBlue"
+							 Text="{Binding ID}" Margin="0,10,0,10"
+							 HorizontalAlignment="Center" Width="200"
+								PasswordChar="*"
+								 />
+						
+					</StackPanel>
+
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+						<Button Foreground="White" HorizontalAlignment="Center"
+								Margin="15"
+								Command="{Binding AddOrUpdatePasswords}"
+								Background="Red"
+								FontWeight="Bold"
+								>تسجيل</Button>
+						<Button Foreground="White" HorizontalAlignment="Center" 
+								Margin="15"
+								Command="{Binding goBackFromAddOrEditPasswordPage}"
+								IsVisible="{Binding IsGoBackBtnVisible}"
+								>رجوع</Button>
+					</StackPanel>
+
+					
+					
+
+
+					<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+						<Label Content="لقد حدث خطأ ما"
+								 Foreground="Red"
+								 FontWeight="Bold"
+								 FlowDirection="RightToLeft"
+								 Background="Transparent"
+								 BorderThickness="0"
+								 IsVisible= 
+							   "{ Binding CouldNotSignOrEditPasswordErrorIsActive}"/>
+					</StackPanel>
+
+
+
+				</StackPanel>
+
+			</StackPanel>
+
+		</Border>
+
+
+	</StackPanel>
+	
+</UserControl>

@@ -1,0 +1,73 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:GetStartedApp.Views"
+		xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+        x:Class="GetStartedApp.Views.MainWindow"
+        x:CompileBindings="True"
+		x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/Icons/avalonia-logo.ico"
+        Title="Sales and stock management"
+		Background="{DynamicResource myBackgroundFaintBlueColor}"
+		FontFamily="Roboto"
+		xmlns:local="clr-namespace:GetStartedApp.Views"
+		>
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	
+
+	<StackPanel>
+
+
+		<StackPanel Margin="20" HorizontalAlignment="Center" Width="720"
+						IsVisible="{Binding IsAppHeaderVisible}"
+					
+					
+					>
+
+
+			
+
+				<!-- Third column content -->
+			<Border Width="30" HorizontalAlignment="Right" >
+
+				<StackPanel>
+					<Image Source="{Binding NotificationBellImage}">
+						<Image.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="تعديل كمية انتهاء المخزن" 
+										  FlowDirection="RightToLeft"
+										  FontFamily="Roboto"
+							Click="OnEditMinStockValue_Before_RaisingBellNotification"			   />
+							</ContextMenu>
+						</Image.ContextMenu>
+					</Image>
+				</StackPanel>
+			</Border>
+
+
+
+
+
+		</StackPanel>
+		
+		<!--application body-->		
+        <Button Content=" ← رجوع "
+         IsVisible = "{Binding IsBackPageBtnVisible}"
+         Command="{Binding goBackToPreviousPageCommand}"
+				Margin="10 0 0 0"/>
+		<TransitioningContentControl Content="{Binding CurrentPage}" />
+	
+
+	</StackPanel>
+
+
+
+</Window>
