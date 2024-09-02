@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EsIk8F0LBVj4YZ9ws6Hcc6wbowj61Lz3yeMvPQXiHeTM3Pu22kwo6r3gBG6OJL0QvPCJ5/DlDqk330FzUGcrgg==",
+  "dgSpecHash": "O7+erOwcCgJtvNrQLzVvc/bmtih0vAQE9MMagHxv1kAIa5BKPqR39BwS8lCwxuIx4zE0TJryB/2Gm+FlBZABMQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\GetStartedApp.csproj",
+  "projectFilePath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\GetStartedApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yassin\\.nuget\\packages\\avalonia\\11.0.10\\avalonia.11.0.10.nupkg.sha512",
     "C:\\Users\\yassin\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.0.2023020321\\avalonia.angle.windows.natives.2.1.0.2023020321.nupkg.sha512",

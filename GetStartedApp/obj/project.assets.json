@@ -5847,11 +5847,11 @@
   "project": {
     "version": "1.0.2",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\GetStartedApp.csproj",
+      "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\GetStartedApp.csproj",
       "projectName": "GetStartedApp",
-      "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\GetStartedApp.csproj",
+      "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\GetStartedApp.csproj",
       "packagesPath": "C:\\Users\\yassin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\obj\\",
+      "outputPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\yassin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5868,8 +5868,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
-              "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj"
+            "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
+              "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj"
             }
           }
         }

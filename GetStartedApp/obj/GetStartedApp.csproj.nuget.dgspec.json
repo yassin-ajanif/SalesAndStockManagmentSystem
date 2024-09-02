@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\GetStartedApp.csproj": {}
+    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\GetStartedApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\GetStartedApp.csproj": {
+    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\GetStartedApp.csproj": {
       "version": "1.0.2",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\GetStartedApp.csproj",
+        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\GetStartedApp.csproj",
         "projectName": "GetStartedApp",
-        "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\GetStartedApp.csproj",
+        "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\GetStartedApp.csproj",
         "packagesPath": "C:\\Users\\yassin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\GetStartedApp\\obj\\",
+        "outputPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\yassin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
-                "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj"
+              "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
+                "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj"
               }
             }
           }
@@ -134,16 +134,16 @@
         }
       }
     },
-    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
+    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj",
+        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj",
         "projectName": "SalesProductsManagmentSystemBusinessLayer",
-        "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj",
+        "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj",
         "frameworks": {
           "net472": {
             "projectReferences": {
-              "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj": {
-                "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj"
+              "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj": {
+                "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj"
               }
             }
           }
@@ -153,11 +153,11 @@
         "net472": {}
       }
     },
-    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj": {
+    "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj",
+        "projectUniqueName": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj",
         "projectName": "SalesProductsManagmentSystemDataLayer",
-        "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj",
+        "projectPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj",
         "frameworks": {
           "net472": {
             "projectReferences": {}
