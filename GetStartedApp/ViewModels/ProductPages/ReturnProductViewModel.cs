@@ -68,7 +68,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             // this section is for testing
 
-        //    returnEachDayOf_2024_ProductId_1_And_2_And_See_If_EachDay_Of_2024_Has_This_ProductId_Returned();
+        //  returnEachDayOf_2024_ProductId_1_And_2_And_See_If_EachDay_Of_2024_Has_This_ProductId_Returned();
 
         }
 
