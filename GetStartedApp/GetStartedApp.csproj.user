@@ -6,4 +6,9 @@
   <PropertyGroup>
     <ActiveDebugProfile>GetStartedApp</ActiveDebugProfile>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Assets\Languages\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

@@ -20,7 +20,9 @@
 
   <ItemGroup>
     <AvaloniaResource Remove="Assets\Images\A4GridPreview.png" />
+    <AvaloniaResource Remove="Assets\Languages\Resources.resx" />
   </ItemGroup>
+
 
   <ItemGroup>
     <None Remove="Assets\Finances.svg" />
@@ -88,8 +90,29 @@
   <ItemGroup>
     <ProjectReference Include="..\SalesProductsManagmentSystemBusinessLayer\SalesProductsManagmentSystemBusinessLayer.csproj" />
   </ItemGroup>
+	
+	<ItemGroup>
+		<EmbeddedResource Update="Assets\Languages\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<Compile Update="Assets\Languages\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+
+	<ItemGroup>
+    <Compile Update="Assets\Languages\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\DashboardPages\CategoryProductsView.axaml.cs">
       <DependentUpon>CategoryProductsView.axaml</DependentUpon>
     </Compile>

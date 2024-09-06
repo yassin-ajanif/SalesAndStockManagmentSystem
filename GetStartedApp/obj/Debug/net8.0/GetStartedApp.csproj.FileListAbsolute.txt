@@ -600,3 +600,7 @@ C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSyste
 C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\obj\Debug\net8.0\GetStart.4E492BE5.Up2Date
 C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\obj\Debug\net8.0\GetStartedApp.genruntimeconfig.cache
 C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\obj\Debug\net8.0\ref\GetStartedApp.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\obj\Debug\net8.0\GetStartedApp.Assets.Languages.Resources.resources
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\bin\Debug\net8.0\fr-FR\GetStartedApp.resources.dll
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\obj\Debug\net8.0\GetStartedApp.Assets.Languages.Resources.fr-FR.resources
+C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\obj\Debug\net8.0\fr-FR\GetStartedApp.resources.dll

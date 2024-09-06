@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+			 xmlns:lang="clr-namespace:GetStartedApp.Assets.Languages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 x:CompileBindings="True"
              x:Class="GetStartedApp.Views.DashboardPages.DashboardView"
@@ -130,10 +131,17 @@
 							<StackPanel Classes="BtnContainer">
 								<Image Source="{SvgImage /Assets/Icons/ProductCategories.svg}"
 									  Height="80" />
+								<!--
 								<Label Content="اصناف"
-									   Classes="WelecomeBtnsStyles"/>
-								<Label Content="المنتجات"
-									   Classes="WelecomeBtnsStyles"/>
+									   Classes="WelecomeBtnsStyles"/> 
+								<Label Content="المنتجات"/>
+								
+								-->
+								<Label 
+						Content="{x:Static lang:Resources.Product}"
+						Classes="WelecomeBtnsStyles"></Label>
+						
+									   
 							</StackPanel>
 						</Button>
 					</Border>
