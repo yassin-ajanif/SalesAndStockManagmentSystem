@@ -1480,6 +1480,47 @@ public class ClsDataAccessLayer
         }
     
 }
+
+    public static bool AddNewClient(string clientName, string phoneNumber, string email)
+    {
+        // Variable to track success
+        bool isInserted = false;
+
+        // Create and open a connection to the database
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            try
+            {
+                connection.Open();
+
+                // Create a SQL command to call the stored procedure
+                using (SqlCommand command = new SqlCommand("AddNewClient", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters for the stored procedure
+                    command.Parameters.AddWithValue("@ClientName", clientName);
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                    command.Parameters.AddWithValue("@Email", email);
+
+                    // Execute the stored procedure
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // If at least one row was affected, the insert was successful
+                    isInserted = rowsAffected > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception or log it
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        // Return whether the insertion was successful
+        return isInserted;
+    }
+
 }
 
 
