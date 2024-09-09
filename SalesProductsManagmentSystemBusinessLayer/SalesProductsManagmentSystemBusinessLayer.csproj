@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsBackup.cs" />
+    <Compile Include="ClsClients.cs" />
     <Compile Include="ClsPdfGenerator.cs" />
     <Compile Include="ClsBarCodeManager.cs" />
     <Compile Include="ClsCategoryProductManager.cs" />
