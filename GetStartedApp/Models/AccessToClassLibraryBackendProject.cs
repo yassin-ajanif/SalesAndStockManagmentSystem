@@ -446,5 +446,10 @@ namespace GetStartedApp.Models
         {
             SalesProductsManagmentSystemBusinessLayer.ClsBackup.DoDailyBackup();
         }
+
+        public static bool AddClient(string clientName, string phoneNumber, string email)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.AddClient(clientName, phoneNumber, email);
+        }
     }
 }
