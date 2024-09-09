@@ -44,7 +44,6 @@ namespace GetStartedApp.Views.DashboardPages
         }
 
 
-
         private async Task ShowDialogOfAddNewCategory(InteractionContext<AddNewCategoryViewModel, Unit> interaction)
         {
             var dialog = new DialogContainerView();
@@ -65,10 +64,6 @@ namespace GetStartedApp.Views.DashboardPages
         }
 
 
-        private async void OnItemSelected(object sender, SelectionChangedEventArgs e)
-        {
-            Debug.WriteLine("tst is done");
-        }
 
         private async void OnEditCategoryClicked(object sender, RoutedEventArgs e) {
 
@@ -90,14 +85,7 @@ namespace GetStartedApp.Views.DashboardPages
             var result = await dialog.ShowDialog<Unit>(window);
         }
 
-        private async void showMessageBoxInfo(string messageToShow, bool MessageBoxBtnsAreVisible)
-        {
-        
-            
-
-          
-        }
-
+   
         private async void OnDeleteCategoryClicked(object sender, RoutedEventArgs e)
         {
             

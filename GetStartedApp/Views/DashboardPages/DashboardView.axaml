@@ -131,16 +131,11 @@
 							<StackPanel Classes="BtnContainer">
 								<Image Source="{SvgImage /Assets/Icons/ProductCategories.svg}"
 									  Height="80" />
-								<!--
-								<Label Content="اصناف"
-									   Classes="WelecomeBtnsStyles"/> 
-								<Label Content="المنتجات"/>
 								
-								-->
-								<Label 
-						Content="{x:Static lang:Resources.Product}"
-						Classes="WelecomeBtnsStyles"></Label>
-						
+								<Label Content="{x:Static lang:Resources.Categories}"
+									   Classes="WelecomeBtnsStyles"/> 
+								<Label Content="{x:Static lang:Resources.Products}"
+									   Classes="WelecomeBtnsStyles"/>
 									   
 							</StackPanel>
 						</Button>

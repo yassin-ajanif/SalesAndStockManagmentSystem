@@ -77,14 +77,17 @@ public class MainWindowViewModel : ViewModelBase
 
         CheckIfSystemShouldRaiseBellNotificationIcon();
 
-        CultureHelper.SetLanguageSystem("fr-FR");
+        CultureHelper.SetLanguageSystem("ar-Ma");
        // GoToLiscencePage();
         
         GoToDashboardPage();
-       // ObservableCollection<ProductsScannedInfo> productsScannedInfos = new ObservableCollection<ProductsScannedInfo>();
+        // ObservableCollection<ProductsScannedInfo> productsScannedInfos = new ObservableCollection<ProductsScannedInfo>();
 
-       // CurrentPage = new BLViewModel(this,new MakeSaleViewModel(this), productsScannedInfos);
-       
+        // CurrentPage = new BLViewModel(this,new MakeSaleViewModel(this), productsScannedInfos);
+
+
+         CurrentPage = new ClientsListViewModel(this);
+
     }
 
     private void DoBackup()
