@@ -8,51 +8,53 @@ using System;
 using System.Reactive;
 using Avalonia.ReactiveUI;
 using GetStartedApp.ViewModels.DashboardPages;
+using GetStartedApp.ViewModels.ClientsPages;
 
 namespace GetStartedApp.Views.ClientsPages;
 
-public partial class AddNewClientView : UserControl
+public partial class AddNewClientView : ReactiveUserControl<AddNewClientViewModel>
 {
     public AddNewClientView()
     {
         InitializeComponent();
+        RegisterShowDialogCategoriesEvents();
     }
 
     private void RegisterShowDialogCategoriesEvents()
     {
 
 
-    //    this.WhenActivated(action =>
-    //    {
-    //        action(ViewModel!.Show.RegisterHandler(showDialogWhenUserAddNewClient));
-    //
-    //    });
+       this.WhenActivated(action =>
+       {
+           action(ViewModel!.ShowDialogOfAddNewClientResponseMessage.RegisterHandler(showDialogWhenUserAddNewClient));
+   
+       });
 
 
     }
 
-  //  private async Task showDialogWhenUserAddNewClient(InteractionContext<string, Unit> interaction)
-  //  {
-  //      var GetParentOfProductListView = this.GetVisualRoot() as Window;
-  //      GetParentOfProductListView.Title = "اضافة تصنيف جديد";
-  //      string messageToShow = interaction.Input;
-  //
-  //      if (GetParentOfProductListView == null)
-  //      {
-  //          throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
-  //      }
-  //
-  //      bool MessageBoxBtnsAreVisibleIf = (messageToShow == "هل تريد حقا حدف المنتج");
-  //
-  //      var DeleteMessageBox = new ShowMessageBoxContainer(messageToShow, MessageBoxBtnsAreVisibleIf);
-  //
-  //
-  //      await DeleteMessageBox.ShowDialog<Unit>(GetParentOfProductListView);
-  //
-  //      interaction.SetOutput(Unit.Default);
-  //
-  //      // close the windows that contain the AddCategoryProductView
-  //      GetParentOfProductListView.Close();
-  //  }
+   private async Task showDialogWhenUserAddNewClient(InteractionContext<string, Unit> interaction)
+   {
+       var GetParentOfProductListView = this.GetVisualRoot() as Window;
+       GetParentOfProductListView.Title = "اضافة زبون جديد";
+       string messageToShow = interaction.Input;
+  
+       if (GetParentOfProductListView == null)
+       {
+           throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
+       }
+  
+       bool MessageBoxBtnsAreVisibleIf = (messageToShow == "هل تريد حقا حدف المنتج");
+  
+       var DeleteMessageBox = new ShowMessageBoxContainer(messageToShow, MessageBoxBtnsAreVisibleIf);
+  
+  
+       await DeleteMessageBox.ShowDialog<Unit>(GetParentOfProductListView);
+  
+       interaction.SetOutput(Unit.Default);
+  
+       // close the windows that contain the AddCategoryProductView
+       GetParentOfProductListView.Close();
+   }
 
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Reactive;
 using GetStartedApp.Models;
 using GetStartedApp.ViewModels.DashboardPages;
+using System.Reactive.Linq;
 
 namespace GetStartedApp.ViewModels.ClientsPages
 {
@@ -45,41 +46,45 @@ namespace GetStartedApp.ViewModels.ClientsPages
             set => this.RaiseAndSetIfChanged(ref _city, value);
         }
 
-        // Command to handle any actions, e.g., save or submit
-        public ReactiveCommand<Unit, Unit> SaveCommand { get; }
+        private string _clientActionBtnName;
+        public string ClientActionBtnName
+        {
+            get { return _clientActionBtnName; }
+            set { this.RaiseAndSetIfChanged(ref _clientActionBtnName, value); }
+        }
 
-        private async void AddNewClient()
+        public Interaction<string, Unit> ShowDialogOfAddNewClientResponseMessage { get; set; }
+        // Command to handle any actions, e.g., save or submit
+        public ReactiveCommand<Unit, Unit> AddOrEditOrDeleteClient { get; set; }
+
+        public ClientsListViewModel ClientsListViewModel { get; set; }
+
+        private async void AddNewClientToDatabase()
         {
             if(AccessToClassLibraryBackendProject.AddClient(ClientName, PhoneNumber, Email))
             {
+                await ShowDialogOfAddNewClientResponseMessage.Handle("لقد تمت اضافة زبون جديد بنجاح ");
 
+                ClientsListViewModel.ReloadClients();
             }
 
             else
             {
-
+                await ShowDialogOfAddNewClientResponseMessage.Handle("لقد حصل خطأ ما ");
             }
         }
 
-   //     private async void AddNewCategoryToDatabase()
-   //     {
-   //         if (AccessToClassLibraryBackendProject.InsertNewCategoryOfProduct(CategoryName))
-   //         {
-   //             await ShowDialogOfAddNewCategoryResponseMessage.Handle("لقد تمت إضافة الفئة الجديدة بنجاح");
-   //
-   //             categoryProductsViewModel.ReloadProductsCategories();
-   //         }
-   //
-   //         else
-   //         {
-   //             await ShowDialogOfAddNewCategoryResponseMessage.Handle("لقد حصل خطأ ما ");
-   //         }
-   //     }
-        public AddNewClientViewModel(ViewModelBase mainViewModel)
+
+        public AddNewClientViewModel(ClientsListViewModel clientsListViewModel)
         {
+            ClientActionBtnName = "إضافة زبون";
             // Initialize the command (e.g., to save or submit the client data)
-            SaveCommand = ReactiveCommand.Create(AddNewClient);
-          
+            AddOrEditOrDeleteClient = ReactiveCommand.Create(AddNewClientToDatabase);
+
+            ShowDialogOfAddNewClientResponseMessage = new Interaction<string, Unit>();
+
+            ClientsListViewModel = clientsListViewModel;
+
         }
 
 

@@ -30,7 +30,7 @@
 				 FlowDirection="LeftToRight" 
 				 Width="200" />
 
-		<Button Content="Save" Command="{Binding SaveCommand}" Margin="0,20,0,10"/>
+		<Button Content="{Binding ClientActionBtnName}" Command="{Binding AddOrEditOrDeleteClient}" Margin="0,20,0,10"/>
 		
 	</StackPanel>
 

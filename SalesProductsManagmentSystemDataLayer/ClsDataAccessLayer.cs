@@ -1521,6 +1521,186 @@ public class ClsDataAccessLayer
         return isInserted;
     }
 
+    public static List<string> GetClientNames()
+    {
+        // The column index for the 'ClientName' field
+       
+        List<string> clientNames = new List<string>();
+
+        try
+        {
+            // Initialize and open the SQL connection
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Initialize the command to execute the stored procedure
+                using (SqlCommand command = new SqlCommand("GetClientNames", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Execute the command and retrieve the data using SqlDataReader
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        // Loop through the result set
+                        while (reader.Read())
+                        {
+                            string ClientName = reader.GetString(0);
+                            string PhoneNumber = reader.GetString(1);
+                            string ClientNameCombinedWidthPhoneNumber = ClientName + "-" + PhoneNumber;
+
+                            clientNames.Add(ClientNameCombinedWidthPhoneNumber);
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception if necessary
+            // Return an empty list to prevent application crashes
+            return new List<string>();
+        }
+
+        // Return the list of client names
+        return clientNames;
+    }
+
+    public static bool UpdateClientInfo(string clientName, string oldPhoneNumber, string newPhoneNumber, string email)
+    {
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("UpdateClientInfo", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Adding parameters
+                    command.Parameters.AddWithValue("@ClientName", clientName);
+                    command.Parameters.AddWithValue("@OldPhoneNumber", oldPhoneNumber); // New parameter for old phone number
+                    command.Parameters.AddWithValue("@NewPhoneNumber", newPhoneNumber); // New parameter for the new phone number
+                    command.Parameters.AddWithValue("@Email", email);
+
+                    // Execute the update command
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    // Return true if at least one row is affected
+                    return rowsAffected > 0;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception
+            return false; // Return false in case of any errors
+        }
+    }
+
+    public static bool DeleteClientByPhoneNumber(string phoneNumber)
+    {
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("DeleteClientByPhoneNumber", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Add the phone number parameter
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+                    // Execute the delete command
+                    command.ExecuteNonQuery();
+
+                    // Return true if at least one row is affected
+                    return true;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception if necessary
+            return false; // Return false in case of any errors
+        }
+    }
+    public static bool IsPhoneNumberExists(string phoneNumber)
+    {
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("CheckIfPhoneNumberExists", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+                    // Execute the command and get the result
+                    int result = Convert.ToInt32(command.ExecuteScalar());
+
+                    // If result is 1, the phone number exists, otherwise it doesn't
+                    return result == 1;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception
+            return false; // return false in case of any errors
+        }
+    }
+
+
+    public static bool GetClientInfoByPhoneNumber(
+        string phoneNumber,
+        ref string clientName,
+        ref string email)
+    {
+        bool isClientFound = false;
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("GetClientInfoByPhoneNumber", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            clientName = reader["ClientName"] as string;
+                            email = reader["Email"] as string;
+                            isClientFound = true;
+                        }
+                        else
+                        {
+                            // Set default values if client is not found
+                            clientName = null;
+                            email = null;
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions (logging, rethrowing, etc.)
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+
+        return isClientFound;
+    }
+
 }
 
 

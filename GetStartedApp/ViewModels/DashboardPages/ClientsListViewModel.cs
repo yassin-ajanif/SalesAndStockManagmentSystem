@@ -14,8 +14,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
     {
       
           // Observable collection for clients list
-            public ObservableCollection<string> _ClientsList;
-            public ObservableCollection<string> ClientsList
+            public List<string> _ClientsList;
+            public List<string> ClientsList
             {
                 get { return _ClientsList; }
                 set { this.RaiseAndSetIfChanged(ref _ClientsList, value); }
@@ -40,8 +40,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
             {
                 LoadClientList();
 
-                ClientsList = new ObservableCollection<string>(ClientNames);
-
                 ShowAddNewClientDialog = new Interaction<AddNewClientViewModel, Unit>();
 
                 AddNewClientCommand = ReactiveCommand.Create(AddNewClient);
@@ -51,7 +49,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
             public void ReloadClients()
             {
                 LoadClientList();
-                ClientsList = new ObservableCollection<string>(ClientNames);
             }
 
             // Method to add a new client
@@ -64,22 +61,23 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // Method to delete selected client
             public bool DeleteClient()
             {
-         //      if (AccessToClassLibraryBackendProject.DeleteClient(SelectedClient))
-         //      {
-         //          ReloadClients();
-         //          return true;
-         //      }
+              string PhoneClientNumber = PhoneNumberExtractor.ExtractPhoneNumber(SelectedClient);
+
+              if (AccessToClassLibraryBackendProject.DeleteClient(PhoneClientNumber))
+              {
+                  ReloadClients();
+                  return true;
+              }
               return false;
             }
+
 
             // Method to load the client list
             private void LoadClientList()
             {
-                ClientNames = new List<string> { "Client 1", "Client 2", "Client 3" };
+                ClientsList = AccessToClassLibraryBackendProject.GetClientNames();
             }
 
-            // Temporary property to simulate loading from a backend
-            public List<string> ClientNames { get; private set; }
         }
     }
 

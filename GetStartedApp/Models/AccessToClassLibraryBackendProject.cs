@@ -421,14 +421,14 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsLoginManager.GetCompanyDetails();
         }
 
-        public static async Task<bool> UpdateCompanyDetailsAsync(byte[] companyLogo, string companyName, string companyLocation,string ICE, string TaxProfeesionalID, string TaxID)
+        public static async Task<bool> UpdateCompanyDetailsAsync(byte[] companyLogo, string companyName, string companyLocation, string ICE, string TaxProfeesionalID, string TaxID)
         {
-            return await SalesProductsManagmentSystemBusinessLayer.ClsLoginManager.UpdateCompanyDetailsAsync(companyLogo, companyName, companyLocation,ICE,TaxProfeesionalID,TaxID);
+            return await SalesProductsManagmentSystemBusinessLayer.ClsLoginManager.UpdateCompanyDetailsAsync(companyLogo, companyName, companyLocation, ICE, TaxProfeesionalID, TaxID);
         }
 
-        public static void GenerateBls(DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation,string ICE, string ProfessionalTaxID, string TaxID)
+        public static void GenerateBls(DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation, string ICE, string ProfessionalTaxID, string TaxID)
         {
-          SalesProductsManagmentSystemBusinessLayer.ClsPdfGenerator.BlsPdf.GenerateBls(ProductSoldTable, companyName, companyLogo, companyLocation,ICE,ProfessionalTaxID,TaxID);
+            SalesProductsManagmentSystemBusinessLayer.ClsPdfGenerator.BlsPdf.GenerateBls(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID);
         }
 
         public static int GetMinimalStockValue()
@@ -451,5 +451,37 @@ namespace GetStartedApp.Models
         {
             return SalesProductsManagmentSystemBusinessLayer.ClsClients.AddClient(clientName, phoneNumber, email);
         }
+
+        public static List<string> GetClientNames()
+        {
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientNames();
+        }
+
+        public static bool UpdateClient( string clientName, string oldPhoneNumber, string NewPhoneNumber, string email)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.UpdateClient( clientName, oldPhoneNumber, NewPhoneNumber, email);
+        }
+
+        public static bool DeleteClient(string phoneNumber)
+        {
+            // Optionally, add any business rules or validations here
+
+            // Call the data access method
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.DeleteClient(phoneNumber);
+        }
+
+        public static bool GetClientInfo(string phoneNumber, ref string clientName, ref string email)
+        {
+
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientInfo(phoneNumber, ref clientName, ref email);
+
+
+        }
+   
+       
+    
+    
+    
+    
     }
 }

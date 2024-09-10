@@ -86,7 +86,7 @@ public class MainWindowViewModel : ViewModelBase
         // CurrentPage = new BLViewModel(this,new MakeSaleViewModel(this), productsScannedInfos);
 
 
-         CurrentPage = new ClientsListViewModel(this);
+        // CurrentPage = new ClientsListViewModel(this);
 
     }
 
@@ -135,7 +135,17 @@ public class MainWindowViewModel : ViewModelBase
         
         CurrentPage = PageToGoAfterCheckingLicenseKey;
     }
-   
+
+    public void GoToClientsPage()
+    {
+        CurrentPage = new ClientsListViewModel(this);
+
+        navigationHistory.Push(CurrentPage);
+
+        HideheaderAndShowBtnBack();
+    }
+
+
     public void GoToDashboardPage()
     {
         CurrentPage = new DashboardViewModel(this);

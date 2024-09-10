@@ -58,14 +58,14 @@
 
 
 
-			<ListBox Grid.Row="1" ItemsSource="{Binding }"
-			 SelectedItem="{Binding }"
+			<ListBox Grid.Row="1" ItemsSource="{Binding ClientsList}"
+			 SelectedItem="{Binding SelectedClient }"
 					 FlowDirection="RightToLeft"
 			 >
 
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<TextBlock Text="Binding" VerticalAlignment="Center"/>
+						<TextBlock Text="{Binding}" VerticalAlignment="Center"/>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 
@@ -86,12 +86,13 @@
 
 							<Setter.Value>
 								<ContextMenu>
-									<MenuItem Header="تعديل الفئة"
-                                              Click=""
+									<MenuItem Header="تعديل معلومات الزبون"
+											  FontFamily="Roboto"
+                                              Click="OnEditClientInfoClicked"
                                    />
-									<MenuItem Header="حذف الفئة"
-
-											  Click=""
+									<MenuItem Header="حذف الزبون"
+                                              FontFamily="Roboto"
+											  Click="OnDeleteClientsClicked"
 />
 
 								</ContextMenu>

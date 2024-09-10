@@ -17,7 +17,7 @@ namespace GetStartedApp.ViewModels.CategoryPages
     {
 
 
-        // this value will stored the categoryname chosenby user to be edited
+        // this value will stored the categoryname chosen by user to be edited
         private string CategoryNameToChange { get; }
       
         public EditCategoryViewModel(CategoryProductsViewModel categoryProductsViewModel) : base(categoryProductsViewModel)
