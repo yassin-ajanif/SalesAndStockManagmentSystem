@@ -26,6 +26,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ICommand GoToSoldItemsPageCommand { get; private set; }
         public ICommand GoToLoginPageCommand { get; private set; }
         public ICommand GoToClientsPageCommand { get; private set; }
+        public ICommand GoToSuppliersPageCommand { get; private set; }
 
 
         // this funtion is responsibe for enabling the commands that will be sending through btns
@@ -44,6 +45,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
           GoToSoldItemsPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToSoldItemsPage);
           GoToLoginPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToLoginPage);
           GoToClientsPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToClientsPage);
+          GoToSuppliersPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToSuppliersPage);
 
         }
 

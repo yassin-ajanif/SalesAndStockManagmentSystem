@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using GetStartedApp.ViewModels;
+using SalesProductsManagmentSystemDataLayer;
 
 
 namespace GetStartedApp.Models
@@ -457,9 +458,9 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientNames();
         }
 
-        public static bool UpdateClient( string clientName, string oldPhoneNumber, string NewPhoneNumber, string email)
+        public static bool UpdateClient(string clientName, string oldPhoneNumber, string NewPhoneNumber, string email)
         {
-            return SalesProductsManagmentSystemBusinessLayer.ClsClients.UpdateClient( clientName, oldPhoneNumber, NewPhoneNumber, email);
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.UpdateClient(clientName, oldPhoneNumber, NewPhoneNumber, email);
         }
 
         public static bool DeleteClient(string phoneNumber)
@@ -477,11 +478,71 @@ namespace GetStartedApp.Models
 
 
         }
-   
-       
-    
-    
-    
-    
+
+
+        public static bool AddNewSupplierToDb(string supplierName,
+       string fiscalIdentifier,
+       string patented,
+       string rc,
+       string cnss,
+       string ice,
+       string bankAccountNumber,
+       string phoneNumber,
+       string address)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.ClsSupplier.
+               AddSupplier
+               (supplierName,
+                fiscalIdentifier,
+                patented,
+                rc,
+                cnss,
+                ice,
+                bankAccountNumber,
+                phoneNumber,
+                address);
+        }
+
+        public static List<string> GetSupplierNamePhoneNumberCombo()
+        {
+            // Get the list of supplier name and phone number combos
+            return SalesProductsManagmentSystemBusinessLayer.ClsSupplier.GetSupplierNamePhoneNumberCombo();
+        }
+
+        public static void getSupplierInfo(
+                   string phoneNumber,
+                   ref string supplierName,
+                   ref string bankAccount,
+                   ref string fiscalIdentifier,
+                   ref string rc,
+                   ref string ice,
+                   ref string patented,
+                   ref string cnss,
+                   ref string address)
+        {
+            clsDataLayerSupplier.GetSupplierInfoByPhoneNumber(phoneNumber, ref supplierName, ref bankAccount, ref fiscalIdentifier, ref rc, ref ice, ref patented, ref cnss, ref address);
+        }
+
+        public static bool UpdateSupplierByPhoneNumber(
+      string oldPhoneNumber,
+      string newPhoneNumber,
+      string supplierName,
+      string fiscalIdentifier,
+      string patented,
+      string rc,
+      string cnss,
+      string ice,
+      string accountNumber,
+      string address)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.ClsSupplier.UpdateSupplierByPhoneNumber
+                (oldPhoneNumber, newPhoneNumber, supplierName, fiscalIdentifier, patented, rc, cnss, ice, accountNumber, address);
+        }
+
+        public static bool DeleteSupplierByPhoneNumber(string phoneNumber)
+        {
+            // Call the Data Access Layer function
+            return SalesProductsManagmentSystemBusinessLayer.ClsSupplier.DeleteSupplierByPhoneNumber(phoneNumber);
+        }
     }
 }

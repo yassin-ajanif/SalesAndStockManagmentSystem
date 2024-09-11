@@ -1,0 +1,157 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:vm="using:GetStartedApp.ViewModels.SupplierPages"
+			 x:DataType="vm:AddNewSupplierViewModel"
+			 x:CompileBindings="True"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+             x:Class="GetStartedApp.Views.SupplierPages.AddNewSupplierView"
+			 FontFamily="Roboto">
+
+	<UserControl.Styles>
+
+		<Style Selector="TextBox">
+			<Setter Property="Margin" Value="10,0,0,10"/>
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="BorderThickness" Value="0"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Foreground" Value="Gray"/>
+			<Setter Property ="Width"        Value="200"/>
+
+		</Style>
+
+		<Style Selector="TextBlock">
+
+			
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Margin"       Value="0,0,0,0"/>
+			<Setter Property ="Width"        Value="150"/>
+            
+
+		</Style>
+
+		<Style Selector="ComboBox" >
+			<Setter Property="Margin" Value="10,0,0,10"/>
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="BorderThickness" Value="0"/>
+
+		</Style>
+
+		<Style Selector="Border">
+
+			<!---->
+			<Setter Property="BoxShadow" Value="0 10 20 5 Gainsboro"/>
+			<Setter Property="CornerRadius"        Value="0"/>
+			<Setter Property="Margin"              Value="1"/>
+
+		</Style>
+
+
+
+	</UserControl.Styles>
+
+	<Border BorderThickness="1" Width="650" Height="450" CornerRadius="5">
+	<Grid Margin="0,20,0,50" FlowDirection="RightToLeft" Width="600">
+		<!-- Define three columns -->
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<!-- Define rows -->
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<!-- Left Column -->
+		<StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" 
+					FlowDirection="RightToLeft">
+			<!-- Supplier Name -->
+			<TextBlock Text="اسم المورد" Margin="0,10,0,10"
+					   />
+			<TextBox Text="{Binding SupplierName, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 
+					 Width="200" />
+
+			<!-- Phone Number -->
+			<TextBlock Text="رقم الهاتف" Margin="0,10,0,10" />
+			<TextBox Text="{Binding PhoneNumber, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+
+			<!-- Patented -->
+			<TextBlock Text="رقم الضريبة المهنية TP" Margin="0,10,0,10" />
+			<TextBox Text="{Binding Patented, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+
+			<!-- CNSS -->
+			<TextBlock Text="رقم CNSS" Margin="0,10,0,10" />
+			<TextBox Text="{Binding CNSS, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+
+			
+
+			<!-- Bank Account -->
+			<TextBlock Text="رقم الحساب البنكي" Margin="0,10,0,10" />
+			<TextBox Text="{Binding BankAccount, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+		</StackPanel>
+
+		<!-- Spacer Column -->
+		<Border Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Background="Transparent" />
+
+		<!-- Right Column -->
+		<StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" FlowDirection="RightToLeft">
+			<!-- Fiscal Identifier -->
+			<TextBlock Text="الرقم الضريبي IF" Margin="0,10,0,10" />
+			<TextBox Text="{Binding FiscalIdentifier, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+
+			<!-- RC -->
+			<TextBlock Text="السجل التجاري RC" Margin="0,10,0,10" />
+			<TextBox Text="{Binding RC, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+
+			<!-- ICE -->
+			<TextBlock Text="رمز ICE " Margin="0,10,0,10" />
+			<TextBox Text="{Binding ICE, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+
+			<!-- Address -->
+			<TextBlock Text="العنوان" Margin="0,10,0,10" />
+			<TextBox Text="{Binding Address, Mode=TwoWay}"
+					 FlowDirection="LeftToRight"
+					 Width="200" />
+
+			
+		</StackPanel>
+
+		<!-- Action Button -->
+		<StackPanel Grid.ColumnSpan="3" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Button Content="{Binding SupplierActionBtnName}"
+					Command="{Binding AddOrEditOrDeleteSupplier}"
+					Margin="0,10,0,10"/>
+		</StackPanel>
+	</Grid>
+	</Border>
+	
+
+
+
+
+
+
+</UserControl>

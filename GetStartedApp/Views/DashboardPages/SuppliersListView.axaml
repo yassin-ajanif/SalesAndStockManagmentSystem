@@ -1,0 +1,126 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+			 x:DataType="vm:SuppliersListViewModel"
+			 x:CompileBindings="True"
+             x:Class="GetStartedApp.Views.DashboardPages.SuppliersListView"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+             FontFamily="Roboto">
+
+
+	
+	<UserControl.Styles>
+
+
+
+		<Style Selector="Border">
+
+			<Setter Property="BoxShadow" Value="0 10 20 5 Gainsboro"/>
+			<Setter Property="CornerRadius"        Value="0"/>
+			<Setter Property="Margin"              Value="0"/>
+			<Setter Property="BorderThickness" Value="1"></Setter>
+			<Setter Property="BorderBrush" Value="Gainsboro"></Setter>
+
+		</Style>
+
+
+	</UserControl.Styles>
+
+
+	<Border MaxWidth="700" MaxHeight="450" Background="Gainsboro" Margin="50">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+
+			<Grid Grid.Row="0" Margin="10" FlowDirection="RightToLeft">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+				<Button Content="اضافة مزود جديد"  HorizontalAlignment="Left"
+						Command="{Binding AddNewSupplierCommand}"
+						Grid.Column="2"/>
+				<TextBlock Text="لائحة المزودين"
+						   Grid.Column="0" FontWeight="Bold" FontSize="20"
+						   HorizontalAlignment="Right"/>
+
+			</Grid>
+
+
+
+
+			<ListBox Grid.Row="1" ItemsSource="{Binding SuppliersList}"
+			 SelectedItem="{Binding SelectedSupplier }"
+					 FlowDirection="RightToLeft"
+			 >
+
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+
+
+				<ListBox.Styles>
+
+					<Style Selector="ListBox">
+						<Setter Property="Background" Value="#F0F0F0"/>
+						<Setter Property="BorderBrush" Value="LightGray"/>
+						<Setter Property="BorderThickness" Value="0"/>
+					</Style>
+
+					<Style Selector="ListBoxItem">
+						<Setter Property="Padding" Value="10"/>
+						<Setter Property="FontSize" Value="16"/>
+						<Setter Property="Foreground" Value="Black"/>
+						<Setter Property="ContextMenu">
+
+							<Setter.Value>
+								<ContextMenu>
+									<MenuItem Header="تعديل معلومات المزود"
+											  FontFamily="Roboto"
+                                              Click="OnEditSupplierInfoClicked"
+                                   />
+									<MenuItem Header="حذف المزود"
+                                              FontFamily="Roboto"
+											  Click="OnDeleteSuppliersClicked"
+/>
+
+								</ContextMenu>
+							</Setter.Value>
+
+						</Setter>
+
+
+
+
+
+					</Style>
+
+					<Style Selector="ListBoxItem:selected">
+						<Setter Property="Background" Value="DodgerBlue"/>
+						<Setter Property="Foreground" Value="White"/>
+					</Style>
+
+				</ListBox.Styles>
+			</ListBox>
+
+
+
+
+
+
+		</Grid>
+	</Border>
+	
+	
+	
+</UserControl>

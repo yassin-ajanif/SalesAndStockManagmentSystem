@@ -95,6 +95,15 @@
 							</Button>
 						</Border>
 
+						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="2" Grid.Column="1">
+							<Button Classes="WelcomeBtnsStyles" Command="{Binding GoToSuppliersPageCommand}">
+								<StackPanel Classes="BtnContainer">
+									<Image Source="avares://GetStartedApp/Assets/Icons/Suppliers.png" Height="100"/>
+									<Label Content="فضاء المزودين" Classes="WelecomeBtnsStyles"/>
+								</StackPanel>
+							</Button>
+						</Border>
+
 						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="0" Grid.Column="1">
 							<Button Classes="WelcomeBtnsStyles" Command="{Binding GoToLoginPageCommand}">
 								<StackPanel Classes="BtnContainer">

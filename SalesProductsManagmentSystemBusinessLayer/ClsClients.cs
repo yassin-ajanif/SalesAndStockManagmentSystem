@@ -63,8 +63,9 @@ namespace SalesProductsManagmentSystemBusinessLayer
             {
                 return false; // Return false if any required field is empty
             }
+            bool PhoneNumberIsChanged = oldPhoneNumber != NewphoneNumber;
 
-            else if (ClsDataAccessLayer.IsPhoneNumberExists(NewphoneNumber)) { return false; }
+             if(PhoneNumberIsChanged && ClsDataAccessLayer.IsPhoneNumberExists(NewphoneNumber)) { return false; }
 
             // Call the data layer to update the client information
             return ClsDataAccessLayer.UpdateClientInfo( clientName, oldPhoneNumber, NewphoneNumber, email);

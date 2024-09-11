@@ -122,6 +122,9 @@
     <Compile Update="Views\ClientsPages\AddNewClientView.axaml.cs">
       <DependentUpon>AddNewClientView.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\DashboardPages\SuppliersListView.axaml.cs">
+      <DependentUpon>SuppliersListView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DialogContainerView.axaml.cs">
       <DependentUpon>DialogContainerView.axaml</DependentUpon>
     </Compile>
