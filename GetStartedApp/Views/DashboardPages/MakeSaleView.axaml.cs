@@ -13,6 +13,7 @@ using Avalonia.VisualTree;
 using ReactiveUI;
 using System.Threading.Tasks;
 using System.Reactive;
+using System.Linq;
 
 
 
@@ -20,16 +21,36 @@ namespace GetStartedApp.Views.DashboardPages;
 
 public partial class MakeSaleView : ReactiveUserControl<MakeSaleViewModel>
 {
-    public MakeSaleViewModel MakeSaleViewModelBoundTothisView { get; set; }
-    public MakeSaleView()
+  
+    
+public MakeSaleView()
     {
         InitializeComponent();
 
         RegisterShowDialogSalesEvents();
 
-
+        LoadClientListAt_ClientSearchBar_WhenViewIsCompleted();
     }
 
+    private void LoadClientListAt_ClientSearchBar()
+    {
+        // Retrieve and sort the clients list
+        var clientsList = ViewModel.GetClientsListFromDb().OrderBy(x => x).ToList();
+        clients.ItemsSource = clientsList;
+
+        // Define the search term you are looking for
+        string searchTerm = "Normal"; // Replace with your actual search term
+
+        // Find the client that matches the search term
+        var DefaultClientIsUnkonwClient = clientsList.FirstOrDefault(client => client.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0);
+
+        clients.SelectedItem = DefaultClientIsUnkonwClient;
+    }
+
+    private void LoadClientListAt_ClientSearchBar_WhenViewIsCompleted()
+    {
+        this.WhenActivated(_=>LoadClientListAt_ClientSearchBar());
+    }
     private void RegisterShowDialogSalesEvents()
     {
 
@@ -40,7 +61,7 @@ public partial class MakeSaleView : ReactiveUserControl<MakeSaleViewModel>
 
             action(ViewModel!.ShowDeleteSaleDialogInteraction.RegisterHandler(ShowDialogOfDeleteSell));
 
-
+            
         });
 
 

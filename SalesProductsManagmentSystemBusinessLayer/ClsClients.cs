@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -25,11 +26,11 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 return false;
             }
 
-            else if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
-            {
-                Console.WriteLine("Invalid email address.");
-                return false;
-            }
+          // else if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
+          // {
+          //     Console.WriteLine("Invalid email address.");
+          //     return false;
+          // }
 
             else if (ClsDataAccessLayer.IsPhoneNumberExists(phoneNumber)) { return false; }
 
@@ -56,6 +57,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return ClsDataAccessLayer.GetClientNames();
         }
 
+       
         public static bool UpdateClient(string clientName,string oldPhoneNumber, string NewphoneNumber, string email)
         {
             // Perform validation if needed

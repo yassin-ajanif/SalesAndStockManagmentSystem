@@ -1481,6 +1481,8 @@ public class ClsDataAccessLayer
     
 }
 
+
+
     public static bool AddNewClient(string clientName, string phoneNumber, string email)
     {
         // Variable to track success
@@ -1501,13 +1503,13 @@ public class ClsDataAccessLayer
                     // Add parameters for the stored procedure
                     command.Parameters.AddWithValue("@ClientName", clientName);
                     command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
-                    command.Parameters.AddWithValue("@Email", email);
+                    command.Parameters.AddWithValue("@Email", (object)email ?? DBNull.Value);
 
                     // Execute the stored procedure
-                    int rowsAffected = command.ExecuteNonQuery();
+                  command.ExecuteNonQuery();
 
                     // If at least one row was affected, the insert was successful
-                    isInserted = rowsAffected > 0;
+                    isInserted = true;
                 }
             }
             catch (Exception ex)
@@ -1566,6 +1568,7 @@ public class ClsDataAccessLayer
         return clientNames;
     }
 
+  
     public static bool UpdateClientInfo(string clientName, string oldPhoneNumber, string newPhoneNumber, string email)
     {
         try

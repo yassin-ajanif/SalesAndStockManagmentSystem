@@ -14,7 +14,8 @@
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+             to set the actual DataContext for runtime, 
+			 set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MakeSaleViewModel/>
 	</Design.DataContext>
 	
@@ -28,6 +29,11 @@
 			<Setter Property="BorderThickness" Value="1"></Setter>
 			<Setter Property="BorderBrush" Value="Gainsboro"></Setter>
 
+		</Style>
+
+		<Style Selector ="AutoCompleteBox">
+			<Setter Property="BorderBrush" Value="Gainsboro"/>
+			<Setter Property="BorderThickness" Value="1"/>
 		</Style>
 
 
@@ -220,9 +226,24 @@
 								</Button>
 							</StackPanel>
 
+							<StackPanel Margin="0"
+										Grid.Row="1"
+										Grid.Column="0" Grid.ColumnSpan="2" >
+								<TextBlock  FlowDirection="RightToLeft"
+											  Foreground="#0096FF"
+									        FontWeight="Bold"
+											Margin="0,0,0,5"
+									> اسم الزبون:</TextBlock>
+					     <AutoCompleteBox x:Name="clients" 
+										  FilterMode="ContainsOrdinal"
+										  FontFamily="Roboto"
+										  FlowDirection="LeftToRight"
+										  SelectedItem="{Binding SelectedClientName_PhoneNumber}"
+										  />
+							</StackPanel>
 
 							<StackPanel Grid.Row="1"
-									Grid.Column="0" Grid.ColumnSpan="6"
+									Grid.Column="1" Grid.ColumnSpan="6"
 									Margin="5"
 										VerticalAlignment="Center"
 									  HorizontalAlignment="Center">

@@ -17,7 +17,7 @@ using System.Data.SqlTypes;
 using System.Data;
 using System.Globalization;
 using Avalonia.Threading;
-
+using System.Collections.Generic;
 
 
 namespace GetStartedApp.ViewModels.DashboardPages
@@ -81,6 +81,13 @@ namespace GetStartedApp.ViewModels.DashboardPages
         {
             get => _TotalNumberOfProducts;
             set => this.RaiseAndSetIfChanged(ref _TotalNumberOfProducts, value);
+        }
+
+        private string _selectedClientName_PhoneNumber;
+        public string SelectedClientName_PhoneNumber
+        {
+            get => _selectedClientName_PhoneNumber;
+            set => this.RaiseAndSetIfChanged(ref _selectedClientName_PhoneNumber, value);
         }
 
         private string _errorMessage;
@@ -243,7 +250,16 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             return false;
         }
+        
+        public List<string> GetClientsListFromDb()
+        {
+            string UnkonwClientString = "Normal";
+            List<string> ClientList = AccessToClassLibraryBackendProject.GetClientNames();
+            // we add default unkown client to the list of client so a user can choose it if he deals with unregistred client
+            ClientList.Add(UnkonwClientString);
 
+            return ClientList;
+        } 
         // this function is already test and passed 
         private bool CheckIfProductBoughtInformationsAreValid(DataTable ProductsBoughtInThisOperation)
         {
@@ -312,6 +328,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
         private void GoToBlPageGeneratorPage()
         {
             mainWindowViewModel.CurrentPage = new BLViewModel(mainWindowViewModel,this,ProductsListScanned);
+        }
+
+        private void GetClientID_FromPhoneNumber(string clientPhoneNumber)
+        {
+
         }
         private async void SaveSellingOperationToDatabse()
         {
