@@ -630,6 +630,32 @@ public class ClsDataAccessLayer
         return reader;
     }
 
+    public static SqlDataReader GetProductsInfoListReaderBy_CategoryName_And_ProductID(string selectedCategory, decimal searchNumber)
+    {
+        SqlCommand command;
+        SqlCommand commandOfQueryThatDoesntReturnAnything = new SqlCommand("SELECT TOP 0 * FROM dbo.SearchProductsByID('', 0)", connection);
+
+        // Check if the selectedCategory or searchNumber is invalid
+        if (string.IsNullOrEmpty(selectedCategory) || ContainsInvalidSqlCharacters(selectedCategory))
+        {
+            command = commandOfQueryThatDoesntReturnAnything;
+        }
+        
+        else command = new SqlCommand($"SELECT * FROM dbo.SearchProductsByID('{selectedCategory}', {searchNumber})", connection);
+   
+        // Open the connection if it is not already open
+        if (connection.State != ConnectionState.Open)
+            connection.Open();
+
+        // Execute the query and return a SqlDataReader
+        SqlDataReader reader = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+        return reader;
+    }
+
+
+
+
     public static SqlDataReader GetSoldItems(DateTime startDate, DateTime endDate)
     {
         SqlConnection connection = new SqlConnection(connectionString);

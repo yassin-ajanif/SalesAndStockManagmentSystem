@@ -10,6 +10,7 @@ using System.Linq;
 using GetStartedApp.Views;
 using System.Threading.Tasks;
 using GetStartedApp.ViewModels.DashboardPages;
+using MsBox.Avalonia.Base;
 
 
 
@@ -37,11 +38,11 @@ namespace GetStartedApp.ViewModels.ProductPages
             set { this.RaiseAndSetIfChanged(ref _SelectedCategory, value); }
         }
 
-        private string _SearchedProducts;
+        private string _SearchedProducts="0";
         public string SearchedProducts
         {
             get { return _SearchedProducts; }
-            set { if(value.Length<=25)this.RaiseAndSetIfChanged(ref _SearchedProducts, value); }
+            set { if(value.Length<=18)this.RaiseAndSetIfChanged(ref _SearchedProducts, value); }
         }
 
         public long ClickedProductInfoID;
@@ -170,6 +171,33 @@ namespace GetStartedApp.ViewModels.ProductPages
         {
             SearchedProducts = "";
         }
+     
+        private void SearchProductByBarcodeNumber(string SelectedCategoryToSendToDatabase,Decimal barcodeNumber)
+        {
+            ProductsList = AccessToClassLibraryBackendProject.GetProductsInfoListBy_CategoryName_And_SearchProductID(SelectedCategoryToSendToDatabase, barcodeNumber);
+            ProductsListObservable = new ObservableCollection<ProductInfo>(ProductsList);
+        }
+
+        private void SearchProudctByDigitsThatANameContain(string SelectedCategoryToSendToDatabase, String searchedProduct)
+        {
+            ProductsList = AccessToClassLibraryBackendProject.GetProductsInfoListBy_CategoryName_And_SearchProductName(SelectedCategoryToSendToDatabase, SearchedProducts);
+
+            ProductsListObservable = new ObservableCollection<ProductInfo>(ProductsList);
+        }
+        private void Detect_How_To_SearchProduct_ByItsName_Or_BarCodeNumber(string SelectedCategoryToSendToDatabase, string SearchedProducts)
+        {
+            Decimal searchNumberStringConvertedSuccesffullyToNumber;
+            bool SearchedProduct_Has_Only_Digits = decimal.TryParse(SearchedProducts, out searchNumberStringConvertedSuccesffullyToNumber);
+
+            // if searched product has only digits it mean that you are searching product by barcode number not name so we have to call a specific function that 
+            // search products by barcode number wich is product id     
+            if(SearchedProduct_Has_Only_Digits) { SearchProductByBarcodeNumber(SelectedCategoryToSendToDatabase, searchNumberStringConvertedSuccesffullyToNumber); }
+
+            else
+            {
+                SearchProudctByDigitsThatANameContain(SelectedCategoryToSendToDatabase, SearchedProducts);
+            }
+        }
         private void LoadProductListIntoScreen_By_SelectedCategory_And_SearchProductName_WhenUserSearchProduct()
         {
             // the stored procedure regoginze All not in arabic so for this raison i made this state change
@@ -177,11 +205,10 @@ namespace GetStartedApp.ViewModels.ProductPages
             if (SelectedCategory == "جميع الاصناف")  SelectedCategoryToSendToDatabase = "All";
             else SelectedCategoryToSendToDatabase = SelectedCategory;
 
-            ProductsList = AccessToClassLibraryBackendProject.GetProductsInfoListBy_CategoryName_And_SearchProductName(SelectedCategoryToSendToDatabase, SearchedProducts);
 
-            ProductsListObservable = new ObservableCollection<ProductInfo>(ProductsList);
+            Detect_How_To_SearchProduct_ByItsName_Or_BarCodeNumber(SelectedCategoryToSendToDatabase, SearchedProducts);
 
-          
+
         }
       
         private void WhenUserSearchForProducts_LoadProductListFound()

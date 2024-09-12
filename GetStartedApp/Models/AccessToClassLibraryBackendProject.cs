@@ -210,6 +210,37 @@ namespace GetStartedApp.Models
             return products;
         }
 
+        public static List<ProductInfo> GetProductsInfoListBy_CategoryName_And_SearchProductID(string selectedCategory, decimal searchNumber)
+        {
+            var products = new List<ProductInfo>();
+
+            // Retrieve data from the database using a function that calls the table-valued function
+            SqlDataReader reader = SalesProductsManagmentSystemBusinessLayer.ClsProductManager.
+                GetProductsInfoListReaderBy_CategoryName_And_SearchProductID(selectedCategory, searchNumber);
+
+            while (reader.Read())
+            {
+                long id = reader.GetInt64(reader.GetOrdinal("ProductID"));
+                var name = reader.GetString(reader.GetOrdinal("ProductName"));
+                var description = reader.GetString(reader.GetOrdinal("Description"));
+                var stockQuantity = reader.GetInt32(reader.GetOrdinal("QuantityInStock"));
+                var price = (float)reader.GetDouble(reader.GetOrdinal("Price"));
+                var cost = (float)reader.GetDouble(reader.GetOrdinal("Cost"));
+                var category = reader.GetString(reader.GetOrdinal("CategoryName"));
+                Bitmap imageData = null;
+
+                // Optionally convert database image data to Bitmap
+                // imageData = ReadDbImageAndConvertItToBitmap(reader, "ImageData");
+
+                var product = new ProductInfo(id, name, description, stockQuantity, price, cost, imageData, category);
+                products.Add(product);
+            }
+
+            reader.Close();
+
+            return products;
+        }
+
 
         public static ProductInfo GetProductInfoByBarCode(long scannedBarCode)
         {

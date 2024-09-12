@@ -186,6 +186,10 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return ClsDataAccessLayer.GetProductsInfoListReaderBy_CategoryName_And_SearchProductName(selectedCategory,searchTerm);
         }
 
+        public static SqlDataReader GetProductsInfoListReaderBy_CategoryName_And_SearchProductID(string selectedCategory, decimal searchNumber)
+        {
+            return ClsDataAccessLayer.GetProductsInfoListReaderBy_CategoryName_And_ProductID(selectedCategory, searchNumber);
+        }
 
         public static bool IsProductId_ExistingIn_SalesItemTable(long productId)
         {

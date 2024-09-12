@@ -70,7 +70,7 @@
 				<!-- Search Bar -->
 				<TextBox Grid.Column="3" Name="SearchBar" 
 						 Watermark="بحث ..."
-						 FlowDirection="RightToLeft"
+						
 					 Text="{Binding SearchedProducts}"
 					 Margin="10 0 0 0" />
 

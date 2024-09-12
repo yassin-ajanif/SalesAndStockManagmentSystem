@@ -330,9 +330,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
             mainWindowViewModel.CurrentPage = new BLViewModel(mainWindowViewModel,this,ProductsListScanned);
         }
 
-        private void GetClientID_FromPhoneNumber(string clientPhoneNumber)
+        private long GetClientID_FromPhoneNumber()
         {
-
+            return long.Parse(PhoneNumberExtractor.ExtractPhoneNumber(SelectedClientName_PhoneNumber));
         }
         private async void SaveSellingOperationToDatabse()
         {
