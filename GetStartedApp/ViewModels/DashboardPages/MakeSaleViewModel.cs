@@ -325,9 +325,29 @@ namespace GetStartedApp.ViewModels.DashboardPages
                 && CheckIfTotalPriceOfSellingOperationIsValid(TotalPriceOfSalesIsValid);
         }
 
+        private (int, string) GetLastSaleClientID_And_Name()
+        {
+            int clientID = 0;
+            string clientName = "";
+
+            // Call the function to load the values by reference
+            AccessToClassLibraryBackendProject.GetLastSaleClientId_And_Name(ref clientID, ref clientName);
+
+            // we wont display unkwnclient we will convert it to empty string
+            if (clientName == "unknownClient") clientName = string.Empty;
+            // Return the tuple (int, string)
+            return (clientID, clientName);
+        }
+
+
         private void GoToBlPageGeneratorPage()
         {
-            mainWindowViewModel.CurrentPage = new BLViewModel(mainWindowViewModel,this,ProductsListScanned);
+            int    lastSaleClientID = GetLastSaleClientID_And_Name().Item1;
+            string lastSaleClientName = GetLastSaleClientID_And_Name().Item2;
+
+            
+
+            mainWindowViewModel.CurrentPage = new BLViewModel(mainWindowViewModel,this,ProductsListScanned,lastSaleClientID,lastSaleClientName);
         }
 
         private long GetClientID_FromPhoneNumber()
@@ -356,7 +376,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
                 if (SomeSalesInfoAreWrong) { await ShowAddSaleDialogInteraction.Handle("هناك معلومات خاطئة حول المنتجات"); return; }
 
-                if (AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation,ProductsBoughtInThisOperation))
+                if (AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation,ProductsBoughtInThisOperation,SelectedClientName_PhoneNumber))
                   {
                     await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
                     
@@ -805,225 +825,225 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         // this section is for a test 
 
-        async void AreTheAllProductScannedSuccessffully_100_Times()
-        {
-
-          for (int j = 1; j <= 1; j++) { 
-   
-              for (int i = 1; i <= 100; i++)
-                {
-                    Barcode = i.ToString();
-                    await Task.Delay(500);
-                    Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
-                    
-                }
-                
-                if (int.Parse(TotalNumberOfProducts) == 100) Debug.WriteLine("operation succeded");
-                else { Debug.WriteLine("something went wrong"); return; }
-              //  ProductsListScanned.Clear();
-            }
-
-            Debug.WriteLine("Test Is Passed");
-        }
-
-        async void AreTheAllManualProductScannedSuccessffully_100_Times()
-        {
-            for (int j = 1; j <= 5; j++)
-            {
-
-                for (int i = 1; i <= 100; i++)
-                {
-                    ManualBarcodeValue = i.ToString();
-                    AddProductScannedToScreenOperation();
-                    await Task.Delay(500);
-                    Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
-
-                }
-
-                if (int.Parse(TotalNumberOfProducts) == 100) Debug.WriteLine("operation succeded");
-                else { Debug.WriteLine("something went wrong"); return; }
-                ProductsListScanned.Clear();
-            }
-
-            Debug.WriteLine("Test Is Passed");
-        }
-
-        async void IsTotalPriceCorrectForAllTheItemsScannedAutomatically_500_Items()
-        {  
-                for (int i = 1; i <= 500; i++)
-                {
-                    Barcode = i.ToString();
-                    await Task.Delay(500);
-                    Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
-                    
-                }
-                if ( decimal.Parse(Total) != 25495.7m) { Debug.WriteLine("total price is not exact"); return; }
-                if (int.Parse(TotalNumberOfProducts) == 500) Debug.WriteLine("operation succeded");
-                else { Debug.WriteLine("something went wrong"); return; }
-                ProductsListScanned.Clear();
-
-            Debug.WriteLine("Test Is Passed");
-        }
-
-        async void IsTotalPriceCorrectForAllTheItemsScannedManually_500_Items()
-        {
-            for (int i = 1; i <= 500; i++)
-            {
-                ManualBarcodeValue = i.ToString();
-                AddProductScannedToScreenOperation();
-                await Task.Delay(500);
-                Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
-
-            }
-            if (decimal.Parse(Total) != 637856.41m) { Debug.WriteLine("total price is not exact"); return; }
-            if (int.Parse(TotalNumberOfProducts) == 100) Debug.WriteLine("operation succeded");
-            else { Debug.WriteLine("something went wrong"); return; }
-            ProductsListScanned.Clear();
-
-            Debug.WriteLine("Test Is Passed");
-        }
-
-
-         void insertEachDayOf_2024_ProductId_1_And_See_If_EachDay_Of_2024_Has_This_ProductId_Inserted()
-        {
-            float TotalPriceOfSellingOperation = 1000;
-            int productId = 1;
-            int quantitySold = 1;
-            decimal unitPrice = 10; // You can set this to any appropriate value
-            bool isReturned = false; // Assuming product is not returned
-            decimal profit = 5; // You can set this to any appropriate value
-
-            DataTable ProductsBoughtTable = new DataTable();
-            ProductsBoughtTable.Columns.Add("ProductId", typeof(int));
-            ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
-            ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
-            ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
-            ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
-
-            // Loop through each day of the year 2024
-            for (int month = 1; month <= 12; month++)
-            {
-                for (int day = 1; day <= DateTime.DaysInMonth(2024, month); day++)
-                {
-                    DateTime timeOfSellingOpperation = new DateTime(2024, month, day);
-
-                    if (day == 6)
-                    {
-                        Console.WriteLine("");
-                    }
-                    // Clear previous rows
-                    ProductsBoughtTable.Rows.Clear();
-
-                    // Add a new row for the product
-                    ProductsBoughtTable.Rows.Add(productId, quantitySold, unitPrice, isReturned, profit);
-
-                    // Call the method to add new sale to the database
-                    bool productIsInsertedAtDatabase = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperation, TotalPriceOfSellingOperation, ProductsBoughtTable);
-                    if (!productIsInsertedAtDatabase) 
-                    {
-                        Debug.WriteLine($"something wrong happened at day :{day} month : {month} ");
-                        return;
-                    }
-
-                    // Optionally add a delay to avoid overwhelming the database
-                    // await Task.Delay(100); // Uncomment if needed
-                    Debug.WriteLine($"final successful day :{day} month : {month} ");
-                }
-            }
-        }
-
-
-         void insertEachDayOf_2023_ProductId_1_And_See_If_EachDay_Of_2023_Has_This_ProductId_Inserted()
-        {
-            float TotalPriceOfSellingOperation = 1000;
-            int productId = 1;
-            int quantitySold = 1;
-            decimal unitPrice = 10; // You can set this to any appropriate value
-            bool isReturned = false; // Assuming product is not returned
-            decimal profit = 5; // You can set this to any appropriate value
-
-            DataTable ProductsBoughtTable = new DataTable();
-            ProductsBoughtTable.Columns.Add("ProductId", typeof(int));
-            ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
-            ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
-            ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
-            ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
-
-            // Loop through each day of the year 2024
-            for (int month = 1; month <= 12; month++)
-            {
-                for (int day = 1; day <= DateTime.DaysInMonth(2023, month); day++)
-                {
-                    DateTime timeOfSellingOpperation = new DateTime(2023, month, day);
-
-                    // Clear previous rows
-                    ProductsBoughtTable.Rows.Clear();
-
-                    // Add a new row for the product
-                    ProductsBoughtTable.Rows.Add(productId, quantitySold, unitPrice, isReturned, profit);
-
-                    // Call the method to add new sale to the database
-                    bool productIsInsertedAtDatabase = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperation, TotalPriceOfSellingOperation, ProductsBoughtTable);
-                    if (!productIsInsertedAtDatabase)
-                    {
-                        Debug.WriteLine($"something wrong happened at day :{day} month : {month} ");
-                        return;
-                    }
-
-                    // Optionally add a delay to avoid overwhelming the database
-                    // await Task.Delay(100); // Uncomment if needed
-
-                    Debug.WriteLine($"final successful day :{day} month : {month} ");
-                }
-
-            }
-        }
-
-
-        void insertEachDayOf_2024_ProductId_1_And_2_And_See_If_EachDay_Of_2024_Has_This_ProductId_Inserted()
-        {
-            float TotalPriceOfSellingOperation = 1000;
-            int productId = 1;
-            int quantitySold = 1;
-            decimal unitPrice = 10; // You can set this to any appropriate value
-            bool isReturned = false; // Assuming product is not returned
-            decimal profit = 5; // You can set this to any appropriate value
-
-            DataTable ProductsBoughtTable = new DataTable();
-            ProductsBoughtTable.Columns.Add("ProductId", typeof(int));
-            ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
-            ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
-            ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
-            ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
-
-            // Loop through each day of the year 2024
-            for (int month = 1; month <= 12; month++)
-            {
-                for (int day = 1; day <= DateTime.DaysInMonth(2024, month); day++)
-                {
-                    DateTime timeOfSellingOpperation = new DateTime(2024, month, day);
-
-                    // Clear previous rows
-                    ProductsBoughtTable.Rows.Clear();
-
-                    // Add a new row for the product
-                    ProductsBoughtTable.Rows.Add(productId, quantitySold, unitPrice, isReturned, profit);
-                    ProductsBoughtTable.Rows.Add(productId+1, quantitySold, unitPrice, isReturned, profit);
-
-                    // Call the method to add new sale to the database
-                    bool productIsInsertedAtDatabase = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperation, TotalPriceOfSellingOperation, ProductsBoughtTable);
-                    if (!productIsInsertedAtDatabase)
-                    {
-                        Debug.WriteLine($"something wrong happened at day :{day} month : {month} ");
-                        return;
-                    }
-
-                    // Optionally add a delay to avoid overwhelming the database
-                    // await Task.Delay(100); // Uncomment if needed
-                    Debug.WriteLine($"final successful day :{day} month : {month} ");
-                }
-            }
-        }
+   //    async void AreTheAllProductScannedSuccessffully_100_Times()
+   //    {
+   //
+   //      for (int j = 1; j <= 1; j++) { 
+   //
+   //          for (int i = 1; i <= 100; i++)
+   //            {
+   //                Barcode = i.ToString();
+   //                await Task.Delay(500);
+   //                Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
+   //                
+   //            }
+   //            
+   //            if (int.Parse(TotalNumberOfProducts) == 100) Debug.WriteLine("operation succeded");
+   //            else { Debug.WriteLine("something went wrong"); return; }
+   //          //  ProductsListScanned.Clear();
+   //        }
+   //
+   //        Debug.WriteLine("Test Is Passed");
+   //    }
+   //
+   //    async void AreTheAllManualProductScannedSuccessffully_100_Times()
+   //    {
+   //        for (int j = 1; j <= 5; j++)
+   //        {
+   //
+   //            for (int i = 1; i <= 100; i++)
+   //            {
+   //                ManualBarcodeValue = i.ToString();
+   //                AddProductScannedToScreenOperation();
+   //                await Task.Delay(500);
+   //                Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
+   //
+   //            }
+   //
+   //            if (int.Parse(TotalNumberOfProducts) == 100) Debug.WriteLine("operation succeded");
+   //            else { Debug.WriteLine("something went wrong"); return; }
+   //            ProductsListScanned.Clear();
+   //        }
+   //
+   //        Debug.WriteLine("Test Is Passed");
+   //    }
+   //
+   //    async void IsTotalPriceCorrectForAllTheItemsScannedAutomatically_500_Items()
+   //    {  
+   //            for (int i = 1; i <= 500; i++)
+   //            {
+   //                Barcode = i.ToString();
+   //                await Task.Delay(500);
+   //                Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
+   //                
+   //            }
+   //            if ( decimal.Parse(Total) != 25495.7m) { Debug.WriteLine("total price is not exact"); return; }
+   //            if (int.Parse(TotalNumberOfProducts) == 500) Debug.WriteLine("operation succeded");
+   //            else { Debug.WriteLine("something went wrong"); return; }
+   //            ProductsListScanned.Clear();
+   //
+   //        Debug.WriteLine("Test Is Passed");
+   //    }
+   //
+   //    async void IsTotalPriceCorrectForAllTheItemsScannedManually_500_Items()
+   //    {
+   //        for (int i = 1; i <= 500; i++)
+   //        {
+   //            ManualBarcodeValue = i.ToString();
+   //            AddProductScannedToScreenOperation();
+   //            await Task.Delay(500);
+   //            Debug.WriteLine($" i is : {i} and totalNumber is {TotalNumberOfProducts}");
+   //
+   //        }
+   //        if (decimal.Parse(Total) != 637856.41m) { Debug.WriteLine("total price is not exact"); return; }
+   //        if (int.Parse(TotalNumberOfProducts) == 100) Debug.WriteLine("operation succeded");
+   //        else { Debug.WriteLine("something went wrong"); return; }
+   //        ProductsListScanned.Clear();
+   //
+   //        Debug.WriteLine("Test Is Passed");
+   //    }
+   //
+   //
+   //     void insertEachDayOf_2024_ProductId_1_And_See_If_EachDay_Of_2024_Has_This_ProductId_Inserted()
+   //    {
+   //        float TotalPriceOfSellingOperation = 1000;
+   //        int productId = 1;
+   //        int quantitySold = 1;
+   //        decimal unitPrice = 10; // You can set this to any appropriate value
+   //        bool isReturned = false; // Assuming product is not returned
+   //        decimal profit = 5; // You can set this to any appropriate value
+   //
+   //        DataTable ProductsBoughtTable = new DataTable();
+   //        ProductsBoughtTable.Columns.Add("ProductId", typeof(int));
+   //        ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
+   //        ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
+   //        ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
+   //        ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
+   //
+   //        // Loop through each day of the year 2024
+   //        for (int month = 1; month <= 12; month++)
+   //        {
+   //            for (int day = 1; day <= DateTime.DaysInMonth(2024, month); day++)
+   //            {
+   //                DateTime timeOfSellingOpperation = new DateTime(2024, month, day);
+   //
+   //                if (day == 6)
+   //                {
+   //                    Console.WriteLine("");
+   //                }
+   //                // Clear previous rows
+   //                ProductsBoughtTable.Rows.Clear();
+   //
+   //                // Add a new row for the product
+   //                ProductsBoughtTable.Rows.Add(productId, quantitySold, unitPrice, isReturned, profit);
+   //
+   //                // Call the method to add new sale to the database
+   //                bool productIsInsertedAtDatabase = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperation, TotalPriceOfSellingOperation, ProductsBoughtTable);
+   //                if (!productIsInsertedAtDatabase) 
+   //                {
+   //                    Debug.WriteLine($"something wrong happened at day :{day} month : {month} ");
+   //                    return;
+   //                }
+   //
+   //                // Optionally add a delay to avoid overwhelming the database
+   //                // await Task.Delay(100); // Uncomment if needed
+   //                Debug.WriteLine($"final successful day :{day} month : {month} ");
+   //            }
+   //        }
+   //    }
+   //
+   //
+   //     void insertEachDayOf_2023_ProductId_1_And_See_If_EachDay_Of_2023_Has_This_ProductId_Inserted()
+   //    {
+   //        float TotalPriceOfSellingOperation = 1000;
+   //        int productId = 1;
+   //        int quantitySold = 1;
+   //        decimal unitPrice = 10; // You can set this to any appropriate value
+   //        bool isReturned = false; // Assuming product is not returned
+   //        decimal profit = 5; // You can set this to any appropriate value
+   //
+   //        DataTable ProductsBoughtTable = new DataTable();
+   //        ProductsBoughtTable.Columns.Add("ProductId", typeof(int));
+   //        ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
+   //        ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
+   //        ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
+   //        ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
+   //
+   //        // Loop through each day of the year 2024
+   //        for (int month = 1; month <= 12; month++)
+   //        {
+   //            for (int day = 1; day <= DateTime.DaysInMonth(2023, month); day++)
+   //            {
+   //                DateTime timeOfSellingOpperation = new DateTime(2023, month, day);
+   //
+   //                // Clear previous rows
+   //                ProductsBoughtTable.Rows.Clear();
+   //
+   //                // Add a new row for the product
+   //                ProductsBoughtTable.Rows.Add(productId, quantitySold, unitPrice, isReturned, profit);
+   //
+   //                // Call the method to add new sale to the database
+   //                bool productIsInsertedAtDatabase = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperation, TotalPriceOfSellingOperation, ProductsBoughtTable);
+   //                if (!productIsInsertedAtDatabase)
+   //                {
+   //                    Debug.WriteLine($"something wrong happened at day :{day} month : {month} ");
+   //                    return;
+   //                }
+   //
+   //                // Optionally add a delay to avoid overwhelming the database
+   //                // await Task.Delay(100); // Uncomment if needed
+   //
+   //                Debug.WriteLine($"final successful day :{day} month : {month} ");
+   //            }
+   //
+   //        }
+   //    }
+   //
+   //
+   //    void insertEachDayOf_2024_ProductId_1_And_2_And_See_If_EachDay_Of_2024_Has_This_ProductId_Inserted()
+   //    {
+   //        float TotalPriceOfSellingOperation = 1000;
+   //        int productId = 1;
+   //        int quantitySold = 1;
+   //        decimal unitPrice = 10; // You can set this to any appropriate value
+   //        bool isReturned = false; // Assuming product is not returned
+   //        decimal profit = 5; // You can set this to any appropriate value
+   //
+   //        DataTable ProductsBoughtTable = new DataTable();
+   //        ProductsBoughtTable.Columns.Add("ProductId", typeof(int));
+   //        ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
+   //        ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
+   //        ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
+   //        ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
+   //
+   //        // Loop through each day of the year 2024
+   //        for (int month = 1; month <= 12; month++)
+   //        {
+   //            for (int day = 1; day <= DateTime.DaysInMonth(2024, month); day++)
+   //            {
+   //                DateTime timeOfSellingOpperation = new DateTime(2024, month, day);
+   //
+   //                // Clear previous rows
+   //                ProductsBoughtTable.Rows.Clear();
+   //
+   //                // Add a new row for the product
+   //                ProductsBoughtTable.Rows.Add(productId, quantitySold, unitPrice, isReturned, profit);
+   //                ProductsBoughtTable.Rows.Add(productId+1, quantitySold, unitPrice, isReturned, profit);
+   //
+   //                // Call the method to add new sale to the database
+   //                bool productIsInsertedAtDatabase = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperation, TotalPriceOfSellingOperation, ProductsBoughtTable);
+   //                if (!productIsInsertedAtDatabase)
+   //                {
+   //                    Debug.WriteLine($"something wrong happened at day :{day} month : {month} ");
+   //                    return;
+   //                }
+   //
+   //                // Optionally add a delay to avoid overwhelming the database
+   //                // await Task.Delay(100); // Uncomment if needed
+   //                Debug.WriteLine($"final successful day :{day} month : {month} ");
+   //            }
+   //        }
+   //    }
    
        
 

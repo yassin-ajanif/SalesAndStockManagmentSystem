@@ -898,18 +898,22 @@ public class ClsDataAccessLayer
         return reader;
     }
 
-    public static bool SaveNewSaleOperationToDatabase(DateTime saleDateTime, float totalPrice, DataTable productDataTable)
+    public static bool SaveNewSaleOperationToDatabase(
+      DateTime saleDateTime,
+      float totalPrice,
+      DataTable productDataTable,
+      string clientNameAndPhoneNumberOrNormal)
     {
-        if (saleDateTime == default(DateTime) || saleDateTime == null)
+        if (saleDateTime == default(DateTime))
         {
-            Console.WriteLine("Invalid saleDateTime: DateTime is not provided. or it null");
+            Console.WriteLine("Invalid saleDateTime: DateTime is not provided.");
             return false;
         }
 
         // Validate totalPrice
         if (totalPrice <= 0 || IsThisFloatOutOfRange(totalPrice))
         {
-            Console.WriteLine($"Invalid totalPrice: {totalPrice}. Total price must be greater than zero. or it s out of range");
+            Console.WriteLine($"Invalid totalPrice: {totalPrice}. Total price must be greater than zero or it is out of range.");
             return false;
         }
 
@@ -919,7 +923,14 @@ public class ClsDataAccessLayer
             Console.WriteLine("Invalid productDataTable: DataTable is null or empty.");
             return false;
         }
-   
+
+        // Validate clientNameAndPhoneNumberOrNormal
+        if (string.IsNullOrEmpty(clientNameAndPhoneNumberOrNormal))
+        {
+            Console.WriteLine("Invalid clientNameAndPhoneNumberOrNormal: The input is null or empty.");
+            return false;
+        }
+
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
             using (SqlCommand cmd = new SqlCommand("MakeSaleTransaction", conn))
@@ -932,6 +943,10 @@ public class ClsDataAccessLayer
                 {
                     TypeName = "dbo.ProductBought",
                     Value = productDataTable
+                });
+                cmd.Parameters.Add(new SqlParameter("@CLIENT_NameAndPhoneNumber_Or_Normal", SqlDbType.NVarChar)
+                {
+                    Value = clientNameAndPhoneNumberOrNormal
                 });
 
                 var returnValue = new SqlParameter("@ReturnValue", SqlDbType.Int)
@@ -956,6 +971,7 @@ public class ClsDataAccessLayer
             }
         }
     }
+
 
     public static byte[] GetImageOfProductById(long id)
     {
@@ -1549,6 +1565,10 @@ public class ClsDataAccessLayer
         return isInserted;
     }
 
+    private static bool IsUnkownClient(string PhoneNumber)
+    {
+        return PhoneNumber == null;
+    }
     public static List<string> GetClientNames_And_Their_Phones_As_String()
     {
         // The column index for the 'ClientName' field
@@ -1572,9 +1592,12 @@ public class ClsDataAccessLayer
                     {
                         // Loop through the result set
                         while (reader.Read())
-                        {
+                        {  
+                           
                             string ClientName = reader.GetString(0);
-                            string PhoneNumber = reader.GetString(1);
+                            string PhoneNumber = reader.IsDBNull(1) ? null : reader.GetString(1);
+                            // we don't add unkwn client to the list because they aren't know we only have their numbers so that isn't useful so we use contine to jump to the next round
+                            if (IsUnkownClient(PhoneNumber)) continue;
                             // there is a bug in avalonia rendrer when the string ends with charcther like > at the mode of rightTOleft for arabic lanauge this 
                             // character i mean ">" in this case dosent show up in it exact location
                             // so to fix that issue we must add a letter after that character which i stored width this variable
@@ -1616,13 +1639,13 @@ public class ClsDataAccessLayer
                     command.Parameters.AddWithValue("@ClientName", clientName);
                     command.Parameters.AddWithValue("@OldPhoneNumber", oldPhoneNumber); // New parameter for old phone number
                     command.Parameters.AddWithValue("@NewPhoneNumber", newPhoneNumber); // New parameter for the new phone number
-                    command.Parameters.AddWithValue("@Email", email);
+                    command.Parameters.AddWithValue("@Email", (object)email ?? DBNull.Value);
 
                     // Execute the update command
-                    int rowsAffected = command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
                     // Return true if at least one row is affected
-                    return rowsAffected > 0;
+                    return true ;
                 }
             }
         }
@@ -1733,6 +1756,49 @@ public class ClsDataAccessLayer
         }
 
         return isClientFound;
+    }
+
+    public static void GetLastSaleClientInfo(ref int clientID, ref string clientName)
+    {
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand("GetLastSale_ClientID_ClientName", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Define output parameters
+                SqlParameter clientIDParam = new SqlParameter("@ClientID", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                SqlParameter clientNameParam = new SqlParameter("@ClientName", SqlDbType.NVarChar, 50)
+                {
+                    Direction = ParameterDirection.Output
+                };
+
+                // Add the parameters to the command
+                cmd.Parameters.Add(clientIDParam);
+                cmd.Parameters.Add(clientNameParam);
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+
+                    // Load the output parameters into the reference variables
+                    clientID = (int)clientIDParam.Value;
+                    clientName = (string)clientNameParam.Value;
+
+                    
+                }
+                catch (SqlException ex)
+                {
+                    // Handle SQL exceptions as needed
+                    Console.WriteLine("SQL Error: " + ex.Message);
+                  
+                }
+            }
+        }
     }
 
 }

@@ -66,6 +66,9 @@ namespace GetStartedApp.ViewModels
         public ReactiveCommand<Unit, Unit> DeleteLogoImageCommand { get; }
         public ReactiveCommand<Unit, Unit> GenerateBlsCommand { get; }
 
+        private int _lastSaleClientID;
+        private string _lastSaleClientName;
+
         private DataTable CompanyLogo_Name_Address_ICI_ProfessonalTax_TaxID { get; }
 
         private string _selectedCompanyLogoPath;
@@ -75,11 +78,16 @@ namespace GetStartedApp.ViewModels
         MainWindowViewModel mainWindowViewModel;
         MakeSaleViewModel makeSaleViewModel;
 
-        public BLViewModel(MainWindowViewModel mainWindowViewModel,MakeSaleViewModel makeSaleViewModel, ObservableCollection<ProductsScannedInfo> ProductsListScanned)
+        public BLViewModel(MainWindowViewModel mainWindowViewModel,MakeSaleViewModel makeSaleViewModel, 
+            ObservableCollection<ProductsScannedInfo> ProductsListScanned, int lastSaleClientID, string lastSaleClientName)
         {
            
                 this.mainWindowViewModel = mainWindowViewModel;
                 this.makeSaleViewModel = makeSaleViewModel;
+
+                _lastSaleClientID   = lastSaleClientID;
+                _lastSaleClientName = lastSaleClientName;
+
                 // Initialize commands with appropriate logic
                 PickLogoImageCommand = ReactiveCommand.CreateFromTask(OnPickLogoImage);
                 DeleteLogoImageCommand = ReactiveCommand.CreateFromTask(OnDeleteLogoImage);
@@ -235,7 +243,8 @@ namespace GetStartedApp.ViewModels
 
                 if (!CompanyLogoAndLocationAreUpdatedSuccessfully) return;
 
-                AccessToClassLibraryBackendProject.GenerateBls(TableProductToPrintInBl, companyName, companyLogoConvertedToByteArray, companyLocation,ICE,NTaxProfessional,IdentifiantFiscal);
+                AccessToClassLibraryBackendProject.
+                    GenerateBls(TableProductToPrintInBl, companyName, companyLogoConvertedToByteArray, companyLocation,ICE,NTaxProfessional,IdentifiantFiscal,_lastSaleClientID,_lastSaleClientName);
 
 
                 GoBackToMakeSalePage();

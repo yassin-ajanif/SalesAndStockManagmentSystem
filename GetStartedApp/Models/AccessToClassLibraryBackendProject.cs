@@ -378,9 +378,9 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.GetNewProductID();
         }
 
-        public static bool AddNewSaleToDatabase(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList)
+        public static bool AddNewSaleToDatabase(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList, string clientNameAndPhoneNumberOrNormal)
         {
-            return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase(SaleDateTime, TotalPrice, SoldProductList);
+            return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase(SaleDateTime, TotalPrice, SoldProductList, clientNameAndPhoneNumberOrNormal);
         }
 
 
@@ -458,9 +458,12 @@ namespace GetStartedApp.Models
             return await SalesProductsManagmentSystemBusinessLayer.ClsLoginManager.UpdateCompanyDetailsAsync(companyLogo, companyName, companyLocation, ICE, TaxProfeesionalID, TaxID);
         }
 
-        public static void GenerateBls(DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation, string ICE, string ProfessionalTaxID, string TaxID)
+        public static void GenerateBls
+            (DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation, 
+            string ICE, string ProfessionalTaxID, string TaxID,int lastSaleClientID,string lastSaleClientName)
         {
-            SalesProductsManagmentSystemBusinessLayer.ClsPdfGenerator.BlsPdf.GenerateBls(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID);
+            SalesProductsManagmentSystemBusinessLayer.ClsPdfGenerator.BlsPdf.
+                GenerateBls(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID,lastSaleClientID,lastSaleClientName);
         }
 
         public static int GetMinimalStockValue()
@@ -574,6 +577,11 @@ namespace GetStartedApp.Models
         {
             // Call the Data Access Layer function
             return SalesProductsManagmentSystemBusinessLayer.ClsSupplier.DeleteSupplierByPhoneNumber(phoneNumber);
+        }
+
+        public static void GetLastSaleClientId_And_Name(ref int clientID, ref string clientName)
+        {
+            SalesProductsManagmentSystemBusinessLayer.ClsClients.GetLastSaleClientId_And_Name(ref clientID, ref clientName);
         }
     }
 }

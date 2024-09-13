@@ -22,9 +22,12 @@ namespace SalesProductsManagmentSystemBusinessLayer
             public string ProfessionalTaxID;
             public string TaxID;
             DataTable TableOfProductsBoughts;
+            private int lastSaleClientID;
+            private string lastSaleClientName;
             
 
-            public BlsPdf(DataTable TableOfProductsBoughts, string companyName, byte[] companyLogo, string companyLocation, string ICE, string ProfessionalTaxID, string TaxID)
+            public BlsPdf
+                (DataTable TableOfProductsBoughts, string companyName, byte[] companyLogo, string companyLocation, string ICE, string ProfessionalTaxID, string TaxID, int lastSaleClientID, string lastSaleClientName)
             {
                 this.CompanyName = companyName;
                 this.CompanyLogo = companyLogo;
@@ -33,6 +36,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 this.ICE = ICE;
                 this.ProfessionalTaxID = ProfessionalTaxID;
                 this.TaxID = TaxID;
+                this.lastSaleClientID = lastSaleClientID;
+                this.lastSaleClientName = lastSaleClientName;
             }
 
             public void Compose(IDocumentContainer container)
@@ -94,6 +99,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
                         column.Item().AlignCenter().Text(CompanyName).Style(titleStyle);
                         column.Item().AlignCenter().Text(SplitLocationAndPhoneNumber(CompanyLocation).Location).Style(titleStyle);
                         column.Item().AlignCenter().Text(SplitLocationAndPhoneNumber(CompanyLocation).Telephone).Style(titleStyle);
+                        column.Item().AlignCenter().Text($"Code Client: {lastSaleClientID}").Style(titleStyle);
+                        column.Item().AlignCenter().Text($"Nom de Client:  {lastSaleClientName}").Style(titleStyle);
                     });
                 });
             }
@@ -228,10 +235,12 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 return (CompanyLocation, string.Empty);
             }
 
-            public static void GenerateBls(DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation, string ICE, string ProfessionalTaxID, string TaxID)
+            public static void GenerateBls
+                (DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation, string ICE,
+                string ProfessionalTaxID, string TaxID, int lastSaleClientID, string lastSaleClientName)
             {
                 QuestPDF.Settings.License = LicenseType.Community;
-                var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID);
+                var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID,lastSaleClientID,lastSaleClientName);
 
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 string filePath = Path.Combine(desktopPath, $"BilanAchats_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.pdf");

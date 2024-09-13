@@ -26,11 +26,11 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 return false;
             }
 
-          // else if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
-          // {
-          //     Console.WriteLine("Invalid email address.");
-          //     return false;
-          // }
+            // else if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
+            // {
+            //     Console.WriteLine("Invalid email address.");
+            //     return false;
+            // }
 
             else if (ClsDataAccessLayer.IsPhoneNumberExists(phoneNumber)) { return false; }
 
@@ -57,20 +57,20 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return ClsDataAccessLayer.GetClientNames_And_Their_Phones_As_String();
         }
 
-       
-        public static bool UpdateClient(string clientName,string oldPhoneNumber, string NewphoneNumber, string email)
+
+        public static bool UpdateClient(string clientName, string oldPhoneNumber, string NewphoneNumber, string email)
         {
             // Perform validation if needed
-            if (string.IsNullOrWhiteSpace(clientName) || string.IsNullOrWhiteSpace(NewphoneNumber) || string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(clientName) || string.IsNullOrWhiteSpace(NewphoneNumber))
             {
                 return false; // Return false if any required field is empty
             }
             bool PhoneNumberIsChanged = oldPhoneNumber != NewphoneNumber;
 
-             if(PhoneNumberIsChanged && ClsDataAccessLayer.IsPhoneNumberExists(NewphoneNumber)) { return false; }
+            if (PhoneNumberIsChanged && ClsDataAccessLayer.IsPhoneNumberExists(NewphoneNumber)) { return false; }
 
             // Call the data layer to update the client information
-            return ClsDataAccessLayer.UpdateClientInfo( clientName, oldPhoneNumber, NewphoneNumber, email);
+            return ClsDataAccessLayer.UpdateClientInfo(clientName, oldPhoneNumber, NewphoneNumber, email);
         }
 
         public static bool DeleteClient(string phoneNumber)
@@ -80,14 +80,19 @@ namespace SalesProductsManagmentSystemBusinessLayer
             // Call the data access method
             return ClsDataAccessLayer.DeleteClientByPhoneNumber(phoneNumber);
         }
-       
-        public static bool GetClientInfo(string phoneNumber, ref string clientName , ref string email)
+
+        public static bool GetClientInfo(string phoneNumber, ref string clientName, ref string email)
         {
-           
+
             return ClsDataAccessLayer.GetClientInfoByPhoneNumber(phoneNumber, ref clientName, ref email);
 
-          
+
         }
 
+        public static void GetLastSaleClientId_And_Name(ref int clientID, ref string clientName)
+        {
+            ClsDataAccessLayer.GetLastSaleClientInfo(ref clientID, ref clientName);
+        }
     }
+
 }
