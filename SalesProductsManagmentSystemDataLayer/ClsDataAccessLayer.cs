@@ -1549,7 +1549,7 @@ public class ClsDataAccessLayer
         return isInserted;
     }
 
-    public static List<string> GetClientNames()
+    public static List<string> GetClientNames_And_Their_Phones_As_String()
     {
         // The column index for the 'ClientName' field
        
@@ -1575,7 +1575,11 @@ public class ClsDataAccessLayer
                         {
                             string ClientName = reader.GetString(0);
                             string PhoneNumber = reader.GetString(1);
-                            string ClientNameCombinedWidthPhoneNumber = ClientName + "-" + PhoneNumber;
+                            // there is a bug in avalonia rendrer when the string ends with charcther like > at the mode of rightTOleft for arabic lanauge this 
+                            // character i mean ">" in this case dosent show up in it exact location
+                            // so to fix that issue we must add a letter after that character which i stored width this variable
+                            string letterThatFixesAvaloniaBug_And_IndicateIfItsClientOrSupplier = "c";
+                            string ClientNameCombinedWidthPhoneNumber = ClientName + "<" + PhoneNumber + ">"+letterThatFixesAvaloniaBug_And_IndicateIfItsClientOrSupplier;
 
                             clientNames.Add(ClientNameCombinedWidthPhoneNumber);
                         }

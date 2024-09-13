@@ -52,9 +52,9 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
 
-        public static List<string> GetClientNames()
+        public static List<string> GetClientNames_And_Their_Phones_As_String()
         {
-            return ClsDataAccessLayer.GetClientNames();
+            return ClsDataAccessLayer.GetClientNames_And_Their_Phones_As_String();
         }
 
        

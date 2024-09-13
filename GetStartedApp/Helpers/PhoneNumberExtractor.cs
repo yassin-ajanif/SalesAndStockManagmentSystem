@@ -13,31 +13,31 @@ public static class PhoneNumberExtractor
         // Check if the input is null or empty
         if (string.IsNullOrEmpty(input))
         {
-            return string.Empty;
+            throw new ArgumentException("Input cannot be null or empty.");
         }
 
-        try
+        // Find the index of the '<' character
+        int startIndex = input.IndexOf('<');
+        // Find the index of the '>' character
+        int endIndex = input.IndexOf('>');
+
+        // Check if both characters are found and the indices are valid
+        if (startIndex == -1 || endIndex == -1 || startIndex >= endIndex)
         {
-            // Find the index of the '-' character
-            int dashIndex = input.IndexOf('-');
-
-            // Check if the '-' character is found and it's not the last character
-            if (dashIndex == -1 || dashIndex == input.Length - 1)
-            {
-                return string.Empty; // Return empty string if the format is incorrect
-            }
-
-            // Extract the phone number, which is the part after the '-'
-            string phoneNumber = input.Substring(dashIndex + 1).Trim();
-
-            return phoneNumber;
+            throw new FormatException("The input string is not in the correct format. Expected format: 'name<phoneNumber>'");
         }
-        catch (Exception ex)
+
+        // Extract the phone number between '<' and '>'
+        string phoneNumber = input.Substring(startIndex + 1, endIndex - startIndex - 1).Trim();
+
+        // Ensure the phone number is not empty after extraction
+        if (string.IsNullOrEmpty(phoneNumber))
         {
-            // Log or handle the exception if necessary
-            Console.WriteLine($"Error: {ex.Message}");
-            return string.Empty;
+            throw new FormatException("No phone number found between the angle brackets.");
         }
+
+        return phoneNumber;
     }
+
 
 }

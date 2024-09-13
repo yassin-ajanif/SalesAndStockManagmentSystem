@@ -75,7 +75,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // Method to load the client list
             private void LoadClientList()
             {
-                ClientsList = AccessToClassLibraryBackendProject.GetClientNames();
+                ClientsList = AccessToClassLibraryBackendProject.GetClientNames_And_Their_Phones_As_String();
             }
 
         }

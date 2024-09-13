@@ -254,7 +254,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public List<string> GetClientsListFromDb()
         {
             string UnkonwClientString = "Normal";
-            List<string> ClientList = AccessToClassLibraryBackendProject.GetClientNames();
+            List<string> ClientList = AccessToClassLibraryBackendProject.GetClientNames_And_Their_Phones_As_String();
             // we add default unkown client to the list of client so a user can choose it if he deals with unregistred client
             ClientList.Add(UnkonwClientString);
 

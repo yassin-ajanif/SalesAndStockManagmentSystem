@@ -64,7 +64,8 @@
 
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-						<TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+						<TextBlock Text="{Binding}"
+								   VerticalAlignment="Center"/>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 
@@ -85,7 +86,7 @@
 
 							<Setter.Value>
 								<ContextMenu>
-									<MenuItem Header="تعديل معلومات المزود"
+									<MenuItem Header="تعديل معلومات المزود"  
 											  FontFamily="Roboto"
                                               Click="OnEditSupplierInfoClicked"
                                    />

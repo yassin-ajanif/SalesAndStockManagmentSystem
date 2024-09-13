@@ -484,9 +484,9 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsClients.AddClient(clientName, phoneNumber, email);
         }
 
-        public static List<string> GetClientNames()
+        public static List<string> GetClientNames_And_Their_Phones_As_String()
         {
-            return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientNames();
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientNames_And_Their_Phones_As_String();
         }
 
         public static bool UpdateClient(string clientName, string oldPhoneNumber, string NewPhoneNumber, string email)

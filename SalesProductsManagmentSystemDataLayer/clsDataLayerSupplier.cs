@@ -38,7 +38,11 @@ namespace SalesProductsManagmentSystemDataLayer
                         {
                             var supplierName = reader.GetString(reader.GetOrdinal("SupplierName"));
                             var phoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber"));
-                            var combo = $"{supplierName}-{phoneNumber}";
+                            // there is a bug in avalonia rendrer when the string ends with charcther like > at the mode of rightTOleft for arabic lanauge this 
+                            // character i mean ">" in this case dosent show up in it exact location
+                            // so to fix that issue we must add a letter after that character which i stored width this variable
+                            string letterThatFixesAvaloniaBug_And_IndicateIfItsClientOrSupplier = "f";
+                            var combo = $"{supplierName}<{phoneNumber}>{letterThatFixesAvaloniaBug_And_IndicateIfItsClientOrSupplier}";
 
                             supplierCombos.Add(combo);
                         }
