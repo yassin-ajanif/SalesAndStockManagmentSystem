@@ -902,7 +902,8 @@ public class ClsDataAccessLayer
       DateTime saleDateTime,
       float totalPrice,
       DataTable productDataTable,
-      string clientNameAndPhoneNumberOrNormal)
+      string clientNameAndPhoneNumberOrNormal,
+      string selectedPaymentMethod)
     {
         if (saleDateTime == default(DateTime))
         {
@@ -947,6 +948,11 @@ public class ClsDataAccessLayer
                 cmd.Parameters.Add(new SqlParameter("@CLIENT_NameAndPhoneNumber_Or_Normal", SqlDbType.NVarChar)
                 {
                     Value = clientNameAndPhoneNumberOrNormal
+                });
+
+                cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar)
+                {
+                    Value = selectedPaymentMethod
                 });
 
                 var returnValue = new SqlParameter("@ReturnValue", SqlDbType.Int)
@@ -1801,6 +1807,7 @@ public class ClsDataAccessLayer
         }
     }
 
+   
 }
 
 

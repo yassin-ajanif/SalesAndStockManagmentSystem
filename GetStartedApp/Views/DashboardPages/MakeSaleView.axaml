@@ -241,8 +241,22 @@
 										  SelectedItem="{Binding SelectedClientName_PhoneNumber}"
 										  />
 							</StackPanel>
+					
+							<StackPanel Margin="0"
+							Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" >
+								<TextBlock  FlowDirection="RightToLeft"
+											  Foreground="#0096FF"
+									        FontWeight="Bold"
+											Margin="0,0,0,5"
+									> طريقة الدفع:</TextBlock>
+							<ComboBox FlowDirection="RightToLeft"
+						  Margin="10 0" ItemsSource="{Binding PaymentsMethods}"
+						  SelectedItem="{Binding SelectedPaymentMethod}"
+						>
+							</ComboBox>
 
-							<StackPanel Grid.Row="1"
+						</StackPanel>
+						<StackPanel Grid.Row="1"
 									Grid.Column="1" Grid.ColumnSpan="6"
 									Margin="5"
 										VerticalAlignment="Center"

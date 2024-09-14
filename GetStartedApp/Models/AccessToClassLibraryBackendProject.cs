@@ -378,9 +378,9 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.GetNewProductID();
         }
 
-        public static bool AddNewSaleToDatabase(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList, string clientNameAndPhoneNumberOrNormal)
+        public static bool AddNewSaleToDatabase(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList, string clientNameAndPhoneNumberOrNormal,string selectedPaymentMethod)
         {
-            return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase(SaleDateTime, TotalPrice, SoldProductList, clientNameAndPhoneNumberOrNormal);
+            return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase(SaleDateTime, TotalPrice, SoldProductList, clientNameAndPhoneNumberOrNormal, selectedPaymentMethod);
         }
 
 
@@ -582,6 +582,11 @@ namespace GetStartedApp.Models
         public static void GetLastSaleClientId_And_Name(ref int clientID, ref string clientName)
         {
             SalesProductsManagmentSystemBusinessLayer.ClsClients.GetLastSaleClientId_And_Name(ref clientID, ref clientName);
+        }
+
+        public static List<string> GetPaymentTypes()
+        {
+            return SalesProductsManagmentSystemBusinessLayer.clsPayments.GetPaymentTypes();
         }
     }
 }

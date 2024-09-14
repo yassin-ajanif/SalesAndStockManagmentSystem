@@ -28,11 +28,11 @@
 			       HorizontalAlignment="Center"
 				   Padding="10"
 			       TextWrapping="WrapWithOverflow"
-			       
+			       FontWeight="Bold"
 				   />
 
 		<!-- this part of the code the two button are going be to dynamically seen 
-		they will be only seen if i'm deleting a product -->
+		they will be only seen if we want to confirm something by yes or not -->
 		<StackPanel Orientation="Horizontal"
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"

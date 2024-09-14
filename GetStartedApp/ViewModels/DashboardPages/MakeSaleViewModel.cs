@@ -90,6 +90,20 @@ namespace GetStartedApp.ViewModels.DashboardPages
             set => this.RaiseAndSetIfChanged(ref _selectedClientName_PhoneNumber, value);
         }
 
+        private List<string> _paymentsMethods;
+        public List<string> PaymentsMethods 
+        {
+            get => _paymentsMethods;
+            set => this.RaiseAndSetIfChanged(ref _paymentsMethods, value);
+        }
+
+        private string _selectedPaymentMethod;
+        public string SelectedPaymentMethod
+        {
+            get => _selectedPaymentMethod;
+            set => this.RaiseAndSetIfChanged(ref _selectedPaymentMethod, value);
+        }
+
         private string _errorMessage;
         public string ErrorMessage
         {
@@ -141,6 +155,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             ProductsListScanned = new ObservableCollection<ProductsScannedInfo>();
 
+            LoadPaymentMethods_InArabic_And_SetDefault_PaymentMode();
 
             SubmitBarCodeManually = ReactiveCommand.Create(AddProductScannedToScreenOperation, CreateCheckIfUsercanAddBarCodeManually());
 
@@ -169,19 +184,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             ShowDeleteSaleDialogInteraction = new Interaction<string, bool>();
 
-            // this section is for test
-
-
-             //AreTheAllProductScannedSuccessffully_100_Times();
-            //AreTheAllManualProductScannedSuccessffully_100_Times();
-
-           // IsTotalPriceCorrectForAllTheItemsScannedAutomatically_500_Items();
-            //IsTotalPriceCorrectForAllTheItemsScannedManually_500_Items();
-
-            //insertEachDayOf_2024_ProductId_1_And_See_If_EachDay_Of_2024_Has_This_ProductId_Inserted();
-            //insertEachDayOf_2023_ProductId_1_And_See_If_EachDay_Of_2023_Has_This_ProductId_Inserted();
-
-           // insertEachDayOf_2024_ProductId_1_And_2_And_See_If_EachDay_Of_2024_Has_This_ProductId_Inserted();
         }
 
         ~MakeSaleViewModel()
@@ -189,7 +191,43 @@ namespace GetStartedApp.ViewModels.DashboardPages
             stopTheCounterOfNumberScannedProductList();
         }
 
+        public List<string> TranslatePaymentMethodsListToArabic(List<string> paymentMethods, string originalLanguageCode)
+        {
+            var translatedPaymentMethods = new List<string>();
 
+            foreach (var paymentMethod in paymentMethods)
+            {
+                try
+                {
+                    // Get the translated payment method in Arabic, specifying the original language code
+                    string translatedPaymentMethod = WordTranslation.TranslatePaymentIntoTargetedLanguage(paymentMethod,"ar");
+                    translatedPaymentMethods.Add(translatedPaymentMethod);
+                }
+                catch (Exception ex)
+                {
+                    // Handle the case where a translation is not found
+                    // For simplicity, we'll add the original payment method in case of an error
+                    translatedPaymentMethods.Add(paymentMethod); // or handle error differently
+                    Console.WriteLine($"Error translating '{paymentMethod}': {ex.Message}");
+                }
+            }
+
+            return translatedPaymentMethods;
+        }
+
+
+        private void LoadPaymentMethods_InArabic_And_SetDefault_PaymentMode()
+        {
+            PaymentsMethods = TranslatePaymentMethodsListToArabic(AccessToClassLibraryBackendProject.GetPaymentTypes(),"ar");
+
+            SelectedPaymentMethod = PaymentsMethods .First(p => p.Equals("نقدا", StringComparison.OrdinalIgnoreCase));
+        }
+
+        private string TranslateSelectedPaymentMethod_To_English_OriginalDb()
+        {
+            return WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod,"en");
+        }
+      
         private bool isThisNumberOutRange(int IntegerNumber)
         {
             return IntegerNumber <= int.MinValue || IntegerNumber >= int.MaxValue;
@@ -356,10 +394,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
         private async void SaveSellingOperationToDatabse()
         {
-            try { 
-            // we reused an already created shodelteproductDialog in the base class productlistViewModel so we prevent loosing time and duplicate cod
-            bool UserHasClickedNoToAddSaleOperationBtn = !await (ShowAddSaleDialogInteraction.Handle("هل تريد حقا تسجيل هذه المبيعة"));
-                
+            try {
+                // we reused an already created shodelteproductDialog in the base class productlistViewModel so we prevent loosing time and duplicate cod
+                 bool UserHasClickedNoToAddSaleOperationBtn = !await 
+                         (ShowAddSaleDialogInteraction.Handle($"هل تريد حقا تسجيل هذه المبيعة"));
+               
                 bool UserHasntAcceptedToLoseMoneyInOneProductOrMore = false; 
 
             if (UserHasClickedNoToAddSaleOperationBtn) return;
@@ -376,7 +415,10 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
                 if (SomeSalesInfoAreWrong) { await ShowAddSaleDialogInteraction.Handle("هناك معلومات خاطئة حول المنتجات"); return; }
 
-                if (AccessToClassLibraryBackendProject.AddNewSaleToDatabase(timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation,ProductsBoughtInThisOperation,SelectedClientName_PhoneNumber))
+                string slectedPaymentMethodInEnglish = TranslateSelectedPaymentMethod_To_English_OriginalDb();
+
+                if (AccessToClassLibraryBackendProject.
+                    AddNewSaleToDatabase(timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation,ProductsBoughtInThisOperation,SelectedClientName_PhoneNumber, slectedPaymentMethodInEnglish))
                   {
                     await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
                     
@@ -628,27 +670,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         }
 
-
-
-        // private  void WhenUserScanNewProduct_BarCodeSearchBarIsChanged()
-        // {
-        //     this.WhenAnyValue(x => x.Barcode)
-        //         .Throttle(TimeSpan.FromSeconds(1)) // Adjust the delay duration as needed
-        //         .Subscribe( async BarcodeNumberScanned => {
-        //
-        //             if (CheckIfBarCodeScannedIsValidNumber() )
-        //             {
-        //                 AddProductScannedToScreenOperation();
-        //             }
-        //
-        //             // we give a user a time to read the error show by an attribute of a non valid data he entred
-        //             else {  await Task.Delay(1500);}
-        //
-        //             EraseAutomaticBarCodeSearchBar();
-        //             EraseManualBarCodeSearchBar();
-        //
-        //         });
-        // }
 
         private void WhenUserScanNewProduct_BarCodeSearchBarIsChanged()
         {
