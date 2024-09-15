@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:vm="using:GetStartedApp.ViewModels"
+			 x:DataType="vm:AddNewChequeInfoViewModel"
+			 x:CompileBindings="True"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+             x:Class="GetStartedApp.Views.AddNewChequeInfoView"
+			 FontFamily="Roboto">
+
+	<StackPanel Margin="10 50" FlowDirection="RightToLeft"
+				HorizontalAlignment="Center">
+
+		<!-- Cheque Number (Arabic: رقم الشيك) -->
+		<TextBlock Text="رقم الشيك" Margin="0,10,0,10" />
+		<TextBox Text="{Binding ChequeNumber, Mode=TwoWay}"
+				 FlowDirection="LeftToRight"
+				 Width="200" />
+
+		<!-- Cheque Amount (Arabic: مبلغ الشيك) -->
+		<TextBlock Text="مبلغ الشيك" Margin="0,10,0,10" />
+		<TextBox Text="{Binding Amount, Mode=TwoWay}"
+				 FlowDirection="LeftToRight"
+				 Width="200" />
+
+		<!-- Cheque Date (Arabic: تاريخ الشيك) -->
+		<TextBlock Text="تاريخ الشيك" Margin="0,10,0,10"/>
+		<DatePicker SelectedDate="{Binding ChequeDate, Mode=TwoWay}"
+					FlowDirection="LeftToRight"
+					Width="300" />
+
+		<Button Content="إضافة الشيك"
+        Command="{Binding AddCheckInfo}"
+        Margin="0,20,0,10"/>
+
+	</StackPanel>
+
+</UserControl>

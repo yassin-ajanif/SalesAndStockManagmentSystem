@@ -124,9 +124,10 @@ namespace GetStartedApp.ViewModels.DashboardPages
             get => _blackOrRedColor;
             set => this.RaiseAndSetIfChanged(ref _blackOrRedColor, value);
         }
-       
 
+        private List<string> _clientList;
 
+        private ChequeInfo _loadedCheckInfoByUser_When_Choosing_CheckPaymentType;
 
         public ReactiveCommand<Unit, Unit> SubmitBarCodeManually { get; }
 
@@ -147,6 +148,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public Interaction<string,bool> ShowAddSaleDialogInteraction { get; set; }
 
         public Interaction<string,bool> ShowDeleteSaleDialogInteraction { get; set; }
+
+        public Interaction<AddNewChequeInfoViewModel, bool> ShowAddChequeInfoDialogInteraction { get; set; }
 
         MainWindowViewModel mainWindowViewModel { get; set; }
         public MakeSaleViewModel(MainWindowViewModel mainWindowViewModel)
@@ -175,6 +178,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             WhenUserAddOrRemoveScannedProduct_ExecuteTheseCheckings();
 
+            WhenUserUserChooseTheCheckPyamentMode_CheckIfHePickedTheClient_NotUnkownClient();
+
             SaveSellingOperationCommand =  
                 ReactiveCommand.Create(SaveSellingOperationToDatabse, CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms());
 
@@ -184,9 +189,12 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             ShowDeleteSaleDialogInteraction = new Interaction<string, bool>();
 
-        }
+            ShowAddChequeInfoDialogInteraction = new Interaction<AddNewChequeInfoViewModel, bool>();
 
-        ~MakeSaleViewModel()
+
+    }
+
+    ~MakeSaleViewModel()
         {
             stopTheCounterOfNumberScannedProductList();
         }
@@ -295,8 +303,12 @@ namespace GetStartedApp.ViewModels.DashboardPages
             List<string> ClientList = AccessToClassLibraryBackendProject.GetClientNames_And_Their_Phones_As_String();
             // we add default unkown client to the list of client so a user can choose it if he deals with unregistred client
             ClientList.Add(UnkonwClientString);
+           
+            // load the clientlist gloabl viarble so we can use it somewhere else
+            _clientList = ClientList;
 
             return ClientList;
+
         } 
         // this function is already test and passed 
         private bool CheckIfProductBoughtInformationsAreValid(DataTable ProductsBoughtInThisOperation)
@@ -388,6 +400,26 @@ namespace GetStartedApp.ViewModels.DashboardPages
             mainWindowViewModel.CurrentPage = new BLViewModel(mainWindowViewModel,this,ProductsListScanned,lastSaleClientID,lastSaleClientName);
         }
 
+        private bool UserHasSelected_Check_PaymentMode()
+        {
+            string slectedPaymentMethodInEnglish = TranslateSelectedPaymentMethod_To_English_OriginalDb();
+            return string.Equals(slectedPaymentMethodInEnglish,"check", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private async Task<(bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, ChequeInfo ChequeInfo)> OpenChequePage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage()
+        {
+            var chequeInfoToFillByUser = new ChequeInfo();
+            var userControlToShowInsideDialog = new AddNewChequeInfoViewModel(ref chequeInfoToFillByUser);
+
+            // Awaiting the dialog interaction and getting the result from the user
+            bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage = await ShowAddChequeInfoDialogInteraction.Handle(userControlToShowInsideDialog);
+
+            // Returning the tuple with the user interaction result and the filled cheque info
+            return (UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, chequeInfoToFillByUser);
+        }
+
+        
+
         private long GetClientID_FromPhoneNumber()
         {
             return long.Parse(PhoneNumberExtractor.ExtractPhoneNumber(SelectedClientName_PhoneNumber));
@@ -417,25 +449,46 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
                 string slectedPaymentMethodInEnglish = TranslateSelectedPaymentMethod_To_English_OriginalDb();
 
-                if (AccessToClassLibraryBackendProject.
-                    AddNewSaleToDatabase(timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation,ProductsBoughtInThisOperation,SelectedClientName_PhoneNumber, slectedPaymentMethodInEnglish))
-                  {
-                    await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
+                if (UserHasSelected_Check_PaymentMode())
+                {
+                    // Await the method to get the tuple result
+                    var (UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, chequeInfoUserHasFilled) = await OpenChequePage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage();
+                    bool userClosedThePage = !UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage;
+                    _loadedCheckInfoByUser_When_Choosing_CheckPaymentType = chequeInfoUserHasFilled;
                     
-                    if( await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ") ) GoToBlPageGeneratorPage();
-
-                    ResetAllSellingInfoOperation();
-                    mainWindowViewModel.CheckIfSystemShouldRaiseBellNotificationIcon();
-
+                    if (userClosedThePage) return;
+                    
                 }
-                
-                else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
+
+                SubmitOperationSalesDataToDatabase(timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, 
+                                                       slectedPaymentMethodInEnglish,_loadedCheckInfoByUser_When_Choosing_CheckPaymentType);
+
+
 
             }
 
             catch(Exception ex) { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ماتاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن "); }
         }
 
+        private async void SubmitOperationSalesDataToDatabase
+        (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
+        {
+            if (AccessToClassLibraryBackendProject.
+                  AddNewSaleToDatabase
+                  (timeOfSellingOpperationIsNow, TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, SelectedClientName_PhoneNumber, slectedPaymentMethodInEnglish,
+                  userChequeInfo))
+            {
+                await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
+
+                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ")) GoToBlPageGeneratorPage();
+
+                ResetAllSellingInfoOperation();
+                mainWindowViewModel.CheckIfSystemShouldRaiseBellNotificationIcon();
+
+            }
+
+            else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
+        }
         private async void MakeNewSellingOperation()
         {  
             bool UserHasClickedYesToDeleteSaleOperationBtn = await ShowDeleteSaleDialogInteraction.Handle("هل تريد حقا حدف هذه المبيعة");
@@ -726,8 +779,37 @@ namespace GetStartedApp.ViewModels.DashboardPages
                
                 Subscribe( _ => { if (ProductsListScanned.Count == 0) ResetAllSellingInfoOperation(); });
        }
-        // this function is teste manually and it valid
-        
+
+
+        private bool User_HasPicked_Known_Client()
+        {
+            // Check if SelectedClientName_PhoneNumber is not "Normal" and exists in _clientList
+            bool isKnownClient = !string.Equals(SelectedClientName_PhoneNumber, "Normal", StringComparison.OrdinalIgnoreCase);
+            bool existsInClientList = _clientList.Contains(SelectedClientName_PhoneNumber, StringComparer.OrdinalIgnoreCase);
+
+            return isKnownClient && existsInClientList;
+        }
+
+
+
+        private void WhenUserUserChooseTheCheckPyamentMode_CheckIfHePickedTheClient_NotUnkownClient()
+      {
+          this.WhenAnyValue(x => x.SelectedPaymentMethod, x=>x.SelectedClientName_PhoneNumber).
+
+               Subscribe(_ => {
+                   
+                      deleteDisplayedError();
+                   if (UserHasSelected_Check_PaymentMode()) 
+                   {
+                       if (User_HasPicked_Known_Client());
+                       else displayErrorMessage("يجب ان تختار زبون لديه رقم هاتف");
+                   }
+
+                        
+                               
+               });
+      }
+
         private void WhenUserSetInvalidProduct_Price_Or_Quantity_Block_TheSystem_From_Adding_NewProducts_AndShowError_Plus_MakeAdditional_Checkings()
           {
         

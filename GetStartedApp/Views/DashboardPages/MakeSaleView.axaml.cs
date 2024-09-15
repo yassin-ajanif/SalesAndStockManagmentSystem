@@ -14,6 +14,8 @@ using ReactiveUI;
 using System.Threading.Tasks;
 using System.Reactive;
 using System.Linq;
+using GetStartedApp.ViewModels.ClientsPages;
+using GetStartedApp.ViewModels;
 
 
 
@@ -61,7 +63,10 @@ public MakeSaleView()
 
             action(ViewModel!.ShowDeleteSaleDialogInteraction.RegisterHandler(ShowDialogOfDeleteSell));
 
-            
+            action(ViewModel!.ShowAddChequeInfoDialogInteraction.RegisterHandler(ShowDialogOfAddNewChequeInfo));
+
+
+
         });
 
 
@@ -127,5 +132,22 @@ public MakeSaleView()
 
     }
 
+    private async Task ShowDialogOfAddNewChequeInfo(InteractionContext<AddNewChequeInfoViewModel, bool> interaction)
+    {
+        var dialog = new DialogContainerView();
 
+        // the interaction is an instance of the viewmodel we want to bind to the view we want to display 
+        dialog.Content = new AddNewChequeInfoView() { DataContext = interaction.Input };
+        dialog.Title = "اضافة معلومات الشيك";
+        var window = this.GetVisualRoot() as Window;
+        if (window == null)
+        {
+            throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
+        }
+   
+        var userHasClosedTheAddNewWindow_Or_SubmitedTheChequeInfo = await dialog.ShowDialog<bool>(window);
+
+
+        interaction.SetOutput(userHasClosedTheAddNewWindow_Or_SubmitedTheChequeInfo);
+    }
 }

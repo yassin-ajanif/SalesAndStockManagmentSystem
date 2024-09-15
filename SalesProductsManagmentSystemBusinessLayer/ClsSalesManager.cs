@@ -11,10 +11,12 @@ namespace SalesProductsManagmentSystemBusinessLayer
     public class ClsSalesManager
     {
 
-        public static bool SaveNewSaleOperationToDatabase(DateTime SaleDateTime,float TotalPrice, DataTable SoldProductList, string clientNameAndPhoneNumberOrNormal, string selectedPaymentMethod)
-        {
-          
-            return ClsDataAccessLayer.SaveNewSaleOperationToDatabase(SaleDateTime, TotalPrice, SoldProductList, clientNameAndPhoneNumberOrNormal, selectedPaymentMethod);
+        public static bool SaveNewSaleOperationToDatabase(DateTime SaleDateTime,float TotalPrice, DataTable SoldProductList, string clientNameAndPhoneNumberOrNormal, 
+            string selectedPaymentMethod, long? chequeNumber = null, decimal? amount = null, DateTime? chequeDate = null)
+         {    
+            
+            return ClsDataAccessLayer.SaveNewSaleOperationToDatabase
+            (SaleDateTime, TotalPrice, SoldProductList, clientNameAndPhoneNumberOrNormal, selectedPaymentMethod,chequeNumber,amount,chequeDate);
 
         }
 

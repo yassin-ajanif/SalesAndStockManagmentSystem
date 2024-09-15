@@ -899,12 +899,16 @@ public class ClsDataAccessLayer
     }
 
     public static bool SaveNewSaleOperationToDatabase(
-      DateTime saleDateTime,
-      float totalPrice,
-      DataTable productDataTable,
-      string clientNameAndPhoneNumberOrNormal,
-      string selectedPaymentMethod)
+     DateTime saleDateTime,
+     float totalPrice,
+     DataTable productDataTable,
+     string clientNameAndPhoneNumberOrNormal,
+     string selectedPaymentMethod,
+     long? chequeNumber = null,  // Nullable long for cheque number
+     decimal? amount = null,     // Nullable decimal for cheque amount
+     DateTime? chequeDate = null) // Nullable DateTime for cheque date
     {
+        // Validate saleDateTime
         if (saleDateTime == default(DateTime))
         {
             Console.WriteLine("Invalid saleDateTime: DateTime is not provided.");
@@ -949,10 +953,25 @@ public class ClsDataAccessLayer
                 {
                     Value = clientNameAndPhoneNumberOrNormal
                 });
-
                 cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar)
                 {
                     Value = selectedPaymentMethod
+                });
+
+                // Add cheque-related parameters, allowing them to be null
+                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.BigInt)
+                {
+                    Value = chequeNumber.HasValue ? (object)chequeNumber.Value : DBNull.Value
+                });
+
+                cmd.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Decimal)
+                {
+                    Value = amount.HasValue ? (object)amount.Value : DBNull.Value
+                });
+
+                cmd.Parameters.Add(new SqlParameter("@ChequeDate", SqlDbType.DateTime)
+                {
+                    Value = chequeDate.HasValue ? (object)chequeDate.Value : DBNull.Value
                 });
 
                 var returnValue = new SqlParameter("@ReturnValue", SqlDbType.Int)
@@ -977,6 +996,9 @@ public class ClsDataAccessLayer
             }
         }
     }
+
+
+
 
 
     public static byte[] GetImageOfProductById(long id)

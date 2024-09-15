@@ -6,6 +6,7 @@ using System.Reactive;
 using GetStartedApp.ViewModels;
 using Avalonia.Controls;
 using GetStartedApp.Views.ProductPages;
+using Avalonia.Interactivity;
 
 
 
@@ -18,12 +19,11 @@ namespace GetStartedApp.Views
 
             
             InitializeComponent();
-
-           
+  
 
         }
 
-
+       
     }
 }
 

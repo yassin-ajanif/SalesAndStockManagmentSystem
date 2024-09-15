@@ -113,6 +113,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\AddNewChequeInfoView.axaml.cs">
+      <DependentUpon>AddNewChequeInfoView.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\DashboardPages\CategoryProductsView.axaml.cs">
       <DependentUpon>CategoryProductsView.axaml</DependentUpon>
     </Compile>

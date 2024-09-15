@@ -378,10 +378,33 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.GetNewProductID();
         }
 
-        public static bool AddNewSaleToDatabase(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList, string clientNameAndPhoneNumberOrNormal,string selectedPaymentMethod)
+        public static bool AddNewSaleToDatabase(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList,
+     string clientNameAndPhoneNumberOrNormal, string selectedPaymentMethod, ChequeInfo userChequeInfo)
         {
-            return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase(SaleDateTime, TotalPrice, SoldProductList, clientNameAndPhoneNumberOrNormal, selectedPaymentMethod);
+            // Default values to be used if userChequeInfo is null
+            long? chequeNumber = null;
+            decimal? amount = null;
+            DateTime? chequeDate = null;
+
+            if (userChequeInfo != null)
+            {
+                chequeNumber = userChequeInfo.ChequeNumber;
+                amount = userChequeInfo.Amount;
+                chequeDate = userChequeInfo.ChequeDate; // Convert DateTime to DateTimeOffset
+            }
+
+            return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase(
+                SaleDateTime,
+                TotalPrice,
+                SoldProductList,
+                clientNameAndPhoneNumberOrNormal,
+                selectedPaymentMethod,
+                chequeNumber,
+                amount,
+                chequeDate
+            );
         }
+
 
 
         public static bool InsertIntoReturnedProducts(long productId, string productName, int quantity, float sellingPrice, float profit)
