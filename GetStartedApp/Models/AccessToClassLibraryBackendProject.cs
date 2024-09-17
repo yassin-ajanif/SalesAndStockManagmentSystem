@@ -611,5 +611,11 @@ namespace GetStartedApp.Models
         {
             return SalesProductsManagmentSystemBusinessLayer.clsPayments.GetPaymentTypes();
         }
+
+        public static Dictionary<string, long> GetProductsByStartingLetter(string prefix)
+        {
+            // You can call the data access method to get products starting with the specified prefix
+            return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.GetProductsByStartingLetter(prefix);
+        }
     }
 }

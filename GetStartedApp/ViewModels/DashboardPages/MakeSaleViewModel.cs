@@ -90,12 +90,40 @@ namespace GetStartedApp.ViewModels.DashboardPages
             set => this.RaiseAndSetIfChanged(ref _selectedClientName_PhoneNumber, value);
         }
 
+        private string _productNameTermToSerach;
+
+        public string ProductNameTermToSerach
+        {
+            get => _productNameTermToSerach;
+            set => this.RaiseAndSetIfChanged(ref _productNameTermToSerach, value);
+        }
+
+        private string _selectedProductNameTermSerach;
+
+        public string SelectedProductNameTermSerach
+        {
+            get => _selectedProductNameTermSerach;
+            set => this.RaiseAndSetIfChanged(ref _selectedProductNameTermSerach, value);
+        }
+
+        private List<string> _productSuggestionsAfterManualSearch;
+        public List<string> ProductSuggestionsAfterManualSearch
+        {
+            get => _productSuggestionsAfterManualSearch;
+            set => this.RaiseAndSetIfChanged(ref _productSuggestionsAfterManualSearch, value);
+        }
+
+
+
         private List<string> _paymentsMethods;
         public List<string> PaymentsMethods 
         {
             get => _paymentsMethods;
             set => this.RaiseAndSetIfChanged(ref _paymentsMethods, value);
         }
+
+        private Dictionary<string , long > _productNamesAndTheirIDs;
+
 
         private string _selectedPaymentMethod;
         public string SelectedPaymentMethod
@@ -180,6 +208,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             WhenUserUserChooseTheCheckPyamentMode_CheckIfHePickedTheClient_NotUnkownClient();
 
+            WhenUserStartLookingFroProductManually_GetProductsList_ThatStart_With_SearchTerm();
+
             SaveSellingOperationCommand =  
                 ReactiveCommand.Create(SaveSellingOperationToDatabse, CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms());
 
@@ -190,6 +220,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             ShowDeleteSaleDialogInteraction = new Interaction<string, bool>();
 
             ShowAddChequeInfoDialogInteraction = new Interaction<AddNewChequeInfoViewModel, bool>();
+
+          
 
 
     }
@@ -236,6 +268,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod,"en");
         }
       
+
         private bool isThisNumberOutRange(int IntegerNumber)
         {
             return IntegerNumber <= int.MinValue || IntegerNumber >= int.MaxValue;
@@ -310,6 +343,20 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return ClientList;
 
         } 
+
+        public void GetProductsNamesFrom_Loaded_ProductsNameAndTheirIDs_Dictionary()
+        {
+
+            if (string.IsNullOrEmpty(ProductNameTermToSerach)) { ProductSuggestionsAfterManualSearch = new List<string>(); return; }
+
+            // ths is a dictionary string , int productname and it id list 
+            _productNamesAndTheirIDs = AccessToClassLibraryBackendProject.GetProductsByStartingLetter(ProductNameTermToSerach);
+            var productNamesListExtractedFromDictionary = _productNamesAndTheirIDs.Keys.ToList();
+            ProductSuggestionsAfterManualSearch = productNamesListExtractedFromDictionary;
+           
+        }
+
+     
         // this function is already test and passed 
         private bool CheckIfProductBoughtInformationsAreValid(DataTable ProductsBoughtInThisOperation)
         {
@@ -758,6 +805,15 @@ namespace GetStartedApp.ViewModels.DashboardPages
               );
         }
 
+    
+       private void WhenUserStartLookingFroProductManually_GetProductsList_ThatStart_With_SearchTerm()
+       {
+           this.WhenAnyValue(x => x.ProductNameTermToSerach)
+          .Throttle(TimeSpan.FromMilliseconds(200))
+          .ObserveOn(RxApp.MainThreadScheduler)// Optional: Add a debounce time to limit rapid requests
+          .Subscribe(async searchTerm =>{ GetProductsNamesFrom_Loaded_ProductsNameAndTheirIDs_Dictionary();});
+       }
+
         private void deleteDisplayedError()
         {
             isErrorLabelVisible = false;
@@ -809,6 +865,24 @@ namespace GetStartedApp.ViewModels.DashboardPages
                                
                });
       }
+
+        private void WhenUserStartLooking_ForProduct_Manually_DisplayProductsNames_BasedOn_SerachLetter()
+        {
+            this.WhenAnyValue(x => x.SelectedPaymentMethod, x => x.SelectedClientName_PhoneNumber).
+
+                 Subscribe(_ => {
+
+                     deleteDisplayedError();
+                     if (UserHasSelected_Check_PaymentMode())
+                     {
+                         if (User_HasPicked_Known_Client()) ;
+                         else displayErrorMessage("يجب ان تختار زبون لديه رقم هاتف");
+                     }
+
+
+
+                 });
+        }
 
         private void WhenUserSetInvalidProduct_Price_Or_Quantity_Block_TheSystem_From_Adding_NewProducts_AndShowError_Plus_MakeAdditional_Checkings()
           {

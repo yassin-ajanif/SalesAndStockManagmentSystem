@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:CustomControls="clr-namespace:GetStartedApp.Views.CustomControls"
 			 xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GetStartedApp.Views.DashboardPages.MakeSaleView"
@@ -16,7 +17,8 @@
 		<!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, 
 			 set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MakeSaleViewModel/>
+		
+		vm:MakeSaleViewModel/>
 	</Design.DataContext>
 	
 	<UserControl.Styles>
@@ -234,12 +236,15 @@
 									        FontWeight="Bold"
 											Margin="0,0,0,5"
 									> بحث عن منتوج يدويا:</TextBlock>
-					     <AutoCompleteBox x:Name="clients" 
-										  FilterMode="ContainsOrdinal"
-										  FontFamily="Roboto"
-										  FlowDirection="LeftToRight"
-										  SelectedItem="{Binding SelectedClientName_PhoneNumber}"
-										  />
+								
+							<CustomControls:CustomAutoCompleteBox
+		               SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
+		               ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch,
+					   Mode=TwoWay}"
+		               SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
+		                    FlowDirection="LeftToRight"     
+		                         />
+								
 							</StackPanel>
 
 							<StackPanel Margin="0,0,5,0"
@@ -250,7 +255,7 @@
 									        FontWeight="Bold"
 											Margin="0,0,0,5"
 									> اسم الزبون:</TextBlock>
-								<AutoCompleteBox x:Name="clientss"
+								<AutoCompleteBox x:Name="clients"
 												 FilterMode="ContainsOrdinal"
 												 FontFamily="Roboto"
 												 FlowDirection="LeftToRight"

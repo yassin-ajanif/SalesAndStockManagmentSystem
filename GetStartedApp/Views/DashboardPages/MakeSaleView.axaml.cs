@@ -14,8 +14,10 @@ using ReactiveUI;
 using System.Threading.Tasks;
 using System.Reactive;
 using System.Linq;
-using GetStartedApp.ViewModels.ClientsPages;
 using GetStartedApp.ViewModels;
+using System.Collections.Generic;
+using System.Reactive.Linq;
+using System.Data;
 
 
 
@@ -49,6 +51,8 @@ public MakeSaleView()
         clients.SelectedItem = DefaultClientIsUnkonwClient;
     }
 
+   
+
     private void LoadClientListAt_ClientSearchBar_WhenViewIsCompleted()
     {
         this.WhenActivated(_=>LoadClientListAt_ClientSearchBar());
@@ -65,7 +69,7 @@ public MakeSaleView()
 
             action(ViewModel!.ShowAddChequeInfoDialogInteraction.RegisterHandler(ShowDialogOfAddNewChequeInfo));
 
-
+ 
 
         });
 

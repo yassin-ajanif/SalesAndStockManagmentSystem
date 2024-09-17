@@ -220,5 +220,11 @@ namespace SalesProductsManagmentSystemBusinessLayer
         {
             return ClsDataAccessLayer.IsLowStock();
         }
+
+        public static Dictionary<string, long> GetProductsByStartingLetter(string prefix)
+        {
+            // You can call the data access method to get products starting with the specified prefix
+            return ClsDataAccessLayer.GetProductsByStartingLetter(prefix);
+        }
     }
 }

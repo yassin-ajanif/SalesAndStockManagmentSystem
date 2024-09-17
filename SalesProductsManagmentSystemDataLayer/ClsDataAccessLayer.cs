@@ -1829,7 +1829,39 @@ public class ClsDataAccessLayer
         }
     }
 
-   
+    public static Dictionary<string, long> GetProductsByStartingLetter(string prefix)
+    {
+        var productDictionary = new Dictionary<string, long>();
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            conn.Open();
+            using (SqlCommand cmd = new SqlCommand("GetProductsByStartingLetter", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ProductNamePrefix", prefix);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        long productId = reader.GetInt64(reader.GetOrdinal("ProductID"));
+                        string productName = reader.GetString(reader.GetOrdinal("ProductName"));
+
+                        // Add to dictionary if the product name does not already exist
+                        if (!productDictionary.ContainsKey(productName))
+                        {
+                            productDictionary.Add(productName, productId);
+                        }
+                    }
+                }
+            }
+        }
+
+        return productDictionary;
+    }
+
+
 }
 
 
