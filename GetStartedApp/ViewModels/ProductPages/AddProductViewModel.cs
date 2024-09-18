@@ -89,18 +89,20 @@ namespace GetStartedApp.ViewModels.ProductPages
         private string  _ProductName;
 
         //  [CheckForInvalidCharacters]
-        //[StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
+        [StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
         //  [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
         //  [ProductNameDoesNotExist("هذا الاسم موجود من قبل",eProductMode.addProductMode)]
       
         public string EntredProductName
         {
             get { return _ProductName; }
-            set { 
-                
+            set {
+
                 this.RaiseAndSetIfChanged(ref _ProductName, value);
 
                 IsTheProductNameToAddAlreadyExistInDb_AddMode();
+
+               
             }
         }
 
@@ -395,7 +397,8 @@ namespace GetStartedApp.ViewModels.ProductPages
             // so that cause issue and wont allow us to edit the product other elements like price and other stuff in this case we set
             // eproductmode.editmode and he will ignoe the product that we are in so we get rid of the product alredy existing message and still check that we don't inlcude 
             // or add a productname that exist in the db
-          //  if (EnteredProductDescription == null) EnteredProductDescription = "";
+            
+           
 
             _isTheProductNameToAddAlreadyExistInDb = AccessToClassLibraryBackendProject.DoesProductNameAlreadyExist(EntredProductName, (int)eProductMode.addProductMode, _ProductID);
             ShowError(nameof(EntredProductName), "هذا الاسم موجود من قبل", _isTheProductNameToAddAlreadyExistInDb);

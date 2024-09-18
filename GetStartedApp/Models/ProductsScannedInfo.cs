@@ -45,7 +45,7 @@ namespace GetStartedApp.Models
 
             { 
                 this.RaiseAndSetIfChanged(ref _productsUnits, value);
-            // we used this process validation by implementing intofiyInterfacedataerro in the viewmodel base
+                // we used this process validation by implementing intofiyInterfacedataerro in the viewmodel base
                 // we couldn't use attributes because they can't deal with dynamic variable they require const variable which is not in our case
 
                 bool Are_ProductsUnits_Exceed_Stock = ProductsUnitsNumberExceedTheOneInStock();

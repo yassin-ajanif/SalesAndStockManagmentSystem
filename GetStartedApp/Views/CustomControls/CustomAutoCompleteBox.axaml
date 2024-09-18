@@ -16,6 +16,7 @@
 					 ItemsSource="{Binding ItemListBySearchTerm, ElementName=Root}"
 					 IsVisible="{Binding IsListBoxVisible, ElementName=Root}"
 					 SelectionChanged="OnListBoxSelectionChanged"
+					 SelectedItem="{Binding SelectedItem, ElementName=Root}"
 				     MaxHeight="300"
 					 ScrollViewer.VerticalScrollBarVisibility="Auto"
 					 >

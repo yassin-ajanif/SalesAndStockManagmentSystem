@@ -206,9 +206,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             WhenUserAddOrRemoveScannedProduct_ExecuteTheseCheckings();
 
-            WhenUserUserChooseTheCheckPyamentMode_CheckIfHePickedTheClient_NotUnkownClient();
+            WhenUserUserChooseThe_CheckPyament_Or_DebtMode_CheckIfHePickedTheClient_NotUnkownClient();
 
             WhenUserStartLookingFroProductManually_GetProductsList_ThatStart_With_SearchTerm();
+
+            whenUserClickToProductSearchedManually_GetItProductID_And_PutIntoBarCodeSearchBar();
 
             SaveSellingOperationCommand =  
                 ReactiveCommand.Create(SaveSellingOperationToDatabse, CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms());
@@ -267,7 +269,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         {
             return WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod,"en");
         }
-      
+
 
         private bool isThisNumberOutRange(int IntegerNumber)
         {
@@ -451,6 +453,12 @@ namespace GetStartedApp.ViewModels.DashboardPages
         {
             string slectedPaymentMethodInEnglish = TranslateSelectedPaymentMethod_To_English_OriginalDb();
             return string.Equals(slectedPaymentMethodInEnglish,"check", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool UserHasSelected_Debt_PaymentMode()
+        {
+            string slectedPaymentMethodInEnglish = TranslateSelectedPaymentMethod_To_English_OriginalDb();
+            return string.Equals(slectedPaymentMethodInEnglish, "credit", StringComparison.OrdinalIgnoreCase);
         }
 
         private async Task<(bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, ChequeInfo ChequeInfo)> OpenChequePage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage()
@@ -814,6 +822,41 @@ namespace GetStartedApp.ViewModels.DashboardPages
           .Subscribe(async searchTerm =>{ GetProductsNamesFrom_Loaded_ProductsNameAndTheirIDs_Dictionary();});
        }
 
+        private void whenUserClickToProductSearchedManually_GetItProductID_And_PutIntoBarCodeSearchBar()
+        {
+            this.WhenAnyValue(x => x.SelectedProductNameTermSerach)
+         .ObserveOn(RxApp.MainThreadScheduler)// Optional: Add a debounce time to limit rapid requests
+         .Subscribe(async searchTerm => {
+
+             var getTheProductIdOfSelectedProductNameIfItFound = GetProductID_Of_SelectedProductName_If_Exist();
+
+             if(getTheProductIdOfSelectedProductNameIfItFound.isFound)
+             {
+                 long proudctIdFound = getTheProductIdOfSelectedProductNameIfItFound.productID;
+
+                 Barcode = proudctIdFound.ToString();
+             }
+
+
+         });
+        }
+
+        private (bool isFound, long productID) GetProductID_Of_SelectedProductName_If_Exist()
+        {
+            // Try to get the productID from the dictionary
+            if (_productNamesAndTheirIDs == null) return (false, -1);
+
+            // we used ProductNameTermtoserch insted selectedProductName becuase once we click or selecteditem the selecteditem is set to null this issue from my custom autocomplete
+            // this is not perfect but this was the solution or quick solution
+            if (_productNamesAndTheirIDs.TryGetValue(ProductNameTermToSerach, out long productID))
+            {
+                return (true, productID); // Return true and the productID if found
+            }
+
+            return (false, -1); // Return false and a default value (-1) if not found
+        }
+
+
         private void deleteDisplayedError()
         {
             isErrorLabelVisible = false;
@@ -848,14 +891,14 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
 
 
-        private void WhenUserUserChooseTheCheckPyamentMode_CheckIfHePickedTheClient_NotUnkownClient()
+        private void WhenUserUserChooseThe_CheckPyament_Or_DebtMode_CheckIfHePickedTheClient_NotUnkownClient()
       {
           this.WhenAnyValue(x => x.SelectedPaymentMethod, x=>x.SelectedClientName_PhoneNumber).
 
                Subscribe(_ => {
                    
                       deleteDisplayedError();
-                   if (UserHasSelected_Check_PaymentMode()) 
+                   if (UserHasSelected_Check_PaymentMode()|| UserHasSelected_Debt_PaymentMode()) 
                    {
                        if (User_HasPicked_Known_Client());
                        else displayErrorMessage("يجب ان تختار زبون لديه رقم هاتف");
