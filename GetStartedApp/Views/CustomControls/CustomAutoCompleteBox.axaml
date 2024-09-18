@@ -9,10 +9,15 @@
 		<TextBox x:Name="SearchTextBox"
 				 Text="{Binding SearchText, ElementName=Root, Mode=TwoWay}"
 				 Watermark="Type to search..." />
+		
+		<Popup IsOpen="{Binding IsListBoxVisible,ElementName=Root}" 
+			   x:Name="PopupResults" >
 			<ListBox x:Name="ResultsListBox" 
 					 ItemsSource="{Binding ItemListBySearchTerm, ElementName=Root}"
 					 IsVisible="{Binding IsListBoxVisible, ElementName=Root}"
-					 SelectionChanged="OnListBoxSelectionChanged"		 
+					 SelectionChanged="OnListBoxSelectionChanged"
+				     MaxHeight="300"
+					 ScrollViewer.VerticalScrollBarVisibility="Auto"
 					 >
 				<ListBox.ItemTemplate>
 					<DataTemplate>
@@ -20,8 +25,8 @@
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
-		
-	</StackPanel>
+			</Popup>
+		</StackPanel>
 	
 	
 </UserControl>

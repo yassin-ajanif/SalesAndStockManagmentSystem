@@ -54,6 +54,20 @@ namespace GetStartedApp.Views.CustomControls
             InitializeComponent();
 
             WhenTheUserMakeAserach_Update_And_DispalyTheNewsItemsFound();
+
+            SetPopUpWidthToBeTheSameAsSearchBox();
+        }
+
+        // we do that to make pop up looks good becuase the widht of pup is dynamic depending on the item string wich makes it look bad
+        private void SetPopUpWidthToBeTheSameAsSearchBox()
+        {
+            SearchTextBox.PropertyChanged += (s, e) =>
+            {
+                if (e.Property.Name == nameof(SearchTextBox.Bounds))
+                {
+                    PopupResults.Width = SearchTextBox.Bounds.Width;
+                }
+            };
         }
 
         private void WhenTheUserMakeAserach_Update_And_DispalyTheNewsItemsFound()

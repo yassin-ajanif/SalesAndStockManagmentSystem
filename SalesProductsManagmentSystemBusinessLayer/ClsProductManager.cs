@@ -226,5 +226,18 @@ namespace SalesProductsManagmentSystemBusinessLayer
             // You can call the data access method to get products starting with the specified prefix
             return ClsDataAccessLayer.GetProductsByStartingLetter(prefix);
         }
+
+        public static bool DoesProductNameAlreadyExist(string productName, int mode, long currentProductId)
+        {
+            // Call the data access method to check if the product name already exists
+            return ClsDataAccessLayer.DoesProductNameAlreadyExist(productName, mode, currentProductId);
+        }
+
+        public static long GetProductIDFromProductName(string productName)
+        {
+            // Call the data access method to get the ProductID from the product name
+            return ClsDataAccessLayer.GetProductIDFromProductName(productName);
+        }
+
     }
 }

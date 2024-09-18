@@ -1861,6 +1861,77 @@ public class ClsDataAccessLayer
         return productDictionary;
     }
 
+    public static bool DoesProductNameAlreadyExist(string productName, int mode, long currentProductId)
+    {
+        bool exists = false;
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand("CheckIfProductNameAlreadyExists", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Add input parameters
+                cmd.Parameters.AddWithValue("@ProductName", productName);
+                cmd.Parameters.AddWithValue("@Mode", mode);
+                cmd.Parameters.AddWithValue("@CurrentProductID", currentProductId);
+
+                // Add output parameter
+                SqlParameter outputParam = new SqlParameter
+                {
+                    ParameterName = "@Exists",
+                    SqlDbType = SqlDbType.Bit,
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(outputParam);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                // Retrieve the value of the output parameter
+                exists = (bool)cmd.Parameters["@Exists"].Value;
+            }
+        }
+
+        return exists;
+    }
+
+    public static long GetProductIDFromProductName(string productName)
+    {
+        const long PRODUCT_ID_NOT_FOUND = -1L; // Constant for ProductID not found
+        long productID = PRODUCT_ID_NOT_FOUND; // Initialize ProductID to "not found"
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand("GetProductIDFromProductName", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Add the input parameter for the ProductName
+                cmd.Parameters.AddWithValue("@ProductName", productName);
+
+                // Add the output parameter for the ProductID as long type
+                SqlParameter outputParam = new SqlParameter
+                {
+                    ParameterName = "@ProductID",
+                    SqlDbType = SqlDbType.BigInt, // SqlDbType for long
+                    Direction = ParameterDirection.Output,
+                    Value = PRODUCT_ID_NOT_FOUND // Default value if no product is found
+                };
+                cmd.Parameters.Add(outputParam);
+
+                // Open the connection and execute the command
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                // Retrieve the value of the output parameter
+                productID = (long)cmd.Parameters["@ProductID"].Value;
+            }
+        }
+
+        return productID; // Returns the ProductID or PRODUCT_ID_NOT_FOUND if not found
+    }
+
 
 }
 

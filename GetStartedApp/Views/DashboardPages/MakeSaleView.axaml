@@ -45,13 +45,14 @@
 	<Border Padding="10" Margin="20" MaxWidth="1024" Height="500"  
 			BoxShadow="0 1  20  5  Gainsboro"
 			BorderBrush="Gainsboro"
+			
 			>
 	
 		<Grid >
 			<!-- Define Rows -->
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
-				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
 				
 			</Grid.RowDefinitions>
 
@@ -83,7 +84,7 @@
 						<!-- Define Rows -->
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
+							<RowDefinition Height="50" />
 							
 						</Grid.RowDefinitions>
 
@@ -242,7 +243,8 @@
 		               ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch,
 					   Mode=TwoWay}"
 		               SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
-		                    FlowDirection="LeftToRight"     
+		               FlowDirection="LeftToRight"  
+					   
 		                         />
 								
 							</StackPanel>

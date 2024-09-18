@@ -85,16 +85,23 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
 
-        private string _EntredProductName;
+        //private string _EntredProductName;
         private string  _ProductName;
-        
-        [CheckForInvalidCharacters]
-        [StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
-        [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
+
+        //  [CheckForInvalidCharacters]
+        //[StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
+        //  [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
+        //  [ProductNameDoesNotExist("هذا الاسم موجود من قبل",eProductMode.addProductMode)]
+      
         public string EntredProductName
         {
             get { return _ProductName; }
-            set { this.RaiseAndSetIfChanged(ref _ProductName, value); }
+            set { 
+                
+                this.RaiseAndSetIfChanged(ref _ProductName, value);
+
+                IsTheProductNameToAddAlreadyExistInDb_AddMode();
+            }
         }
 
 
@@ -105,8 +112,18 @@ namespace GetStartedApp.ViewModels.ProductPages
         [MaxStringLengthAttribute_IS(100, "هذه الجملة طويلة جدا")]
         public string EnteredProductDescription
         {
-            get { return _ProductDescription; }
-            set { this.RaiseAndSetIfChanged(ref _ProductDescription, value); }
+            get {
+
+                
+                    return _ProductDescription;
+
+            }
+            set { 
+                
+                this.RaiseAndSetIfChanged(ref _ProductDescription, value);
+
+               
+            }
         }
 
 
@@ -240,6 +257,8 @@ namespace GetStartedApp.ViewModels.ProductPages
             set { this.RaiseAndSetIfChanged(ref _IsSelectedCategoryEnabled, value); }
         }
 
+        private bool _isTheProductNameToAddAlreadyExistInDb=false;
+
         public string BarCodeSerieNumber { get; set; }
         public int    NumberOfBarcodes { get; set; }
 
@@ -368,6 +387,21 @@ namespace GetStartedApp.ViewModels.ProductPages
                 nameof(EntredStockQuantity));
         }
 
+
+        private bool IsTheProductNameToAddAlreadyExistInDb_AddMode()
+        {
+            // we use this function to detect if the productname is already existing to prevent duplicated productnaem we use eproductmode to set a specif algorithm in stored procedure
+            // there is another mode wich is edit mode widht requie another algorith to treat that becuase when we edit a product that proudct is already existing in the db
+            // so that cause issue and wont allow us to edit the product other elements like price and other stuff in this case we set
+            // eproductmode.editmode and he will ignoe the product that we are in so we get rid of the product alredy existing message and still check that we don't inlcude 
+            // or add a productname that exist in the db
+          //  if (EnteredProductDescription == null) EnteredProductDescription = "";
+
+            _isTheProductNameToAddAlreadyExistInDb = AccessToClassLibraryBackendProject.DoesProductNameAlreadyExist(EntredProductName, (int)eProductMode.addProductMode, _ProductID);
+            ShowError(nameof(EntredProductName), "هذا الاسم موجود من قبل", _isTheProductNameToAddAlreadyExistInDb);
+
+            return _isTheProductNameToAddAlreadyExistInDb;
+        }
        
         private IObservable<bool> CheckIfFormIsFilledCorreclty( )
         {
@@ -390,7 +424,8 @@ namespace GetStartedApp.ViewModels.ProductPages
                              && !string.IsNullOrEmpty(EntredCost)                           
                              && !string.IsNullOrWhiteSpace(EntredCost) &&                          
                              !string.IsNullOrEmpty(SelectedCategory) && !string.IsNullOrWhiteSpace(SelectedCategory) 
-                             && AreAllPropertiesAttributeValid()
+                             && AreAllPropertiesAttributeValid()&&
+                             !_isTheProductNameToAddAlreadyExistInDb
                                                                   ) ;
            return canAddProduct;
 

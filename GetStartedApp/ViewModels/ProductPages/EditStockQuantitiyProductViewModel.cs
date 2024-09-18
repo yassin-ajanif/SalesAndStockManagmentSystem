@@ -42,6 +42,7 @@ namespace GetStartedApp.ViewModels.ProductPages
         [CheckForInvalidCharacters]
         [StringMustHaveAtLeast_3_Letters]
         [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
+        [ProductNameDoesNotExist("هذا الاسم موجود من قبل",eProductMode.EditProductMode)] 
         public string EntredProductName
         {
             get { return _ProductName; }
