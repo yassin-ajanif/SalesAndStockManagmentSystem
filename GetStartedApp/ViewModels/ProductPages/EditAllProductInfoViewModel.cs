@@ -50,12 +50,6 @@ namespace GetStartedApp.ViewModels.ProductPages
             AddOrEditOrDeleteProductCommand = ReactiveCommand.Create(EditAllInfoProduct, checkIfEditedAllInfoProductAreCorrectlyEdited());
 
 
-            // this section is for testing 
-
-            //Edit_RandomValidProduct_From_0_To_10_000_MainFunction();
-
-           // Edit_RandomInValidProduct_From_0_To_10_000_MainFunction();
-
         }
 
         private bool IsTheOriginalImageDifferentFromCurrent(Bitmap Image1 , Bitmap Image2) { 
@@ -90,7 +84,26 @@ namespace GetStartedApp.ViewModels.ProductPages
                     _originalProductSelectedCategory != SelectedCategory||
                      IsTheOriginalImageDifferentFromCurrent(_originalProductImage, SelectedImageToDisplay) 
                     );
-        }         
+        }
+
+        private bool Is_UiError_Raised_If_TheProductNameToEdit_Is_AlreadyExistInDb()
+        {
+            // we use this function to detect if the productname is already existing to prevent duplicated productnaem we use eproductmode to set a specif algorithm in stored procedure
+            // there is another mode wich is edit mode widht requie another algorith to treat that becuase when we edit a product that proudct is already existing in the db
+            // so that cause issue and wont allow us to edit the product other elements like price and other stuff in this case we set
+            // eproductmode.editmode and he will ignoe the product that we are in so we get rid of the product alredy existing message and still check that we don't inlcude 
+            // or add a productname that exist in the db
+
+            // this is to prevent the error becuase the property sometimes cannot be yet initialized becuase the code who calls this function is in the set which get exectued befreo 
+            // a constructor
+
+            _isTheProductNameToEditAlreadyExistInDb = AccessToClassLibraryBackendProject.DoesProductNameAlreadyExist(EntredProductName, (int)eProductMode.EditProductMode, _ProductID);
+
+            if (_isTheProductNameToEditAlreadyExistInDb) ShowUiError(nameof(EntredProductName), "هذا الاسم موجود من قبل");
+            else DeleteUiError(nameof(EntredProductName), "هذا الاسم موجود من قبل");
+
+            return _isTheProductNameToEditAlreadyExistInDb;
+        }
         private async void EditAllInfoProduct()
         {
            
@@ -109,10 +122,11 @@ namespace GetStartedApp.ViewModels.ProductPages
            
         }
 
+      
         private IObservable<bool> checkIfEditedAllInfoProductAreCorrectlyEdited()
         {
 
-            var canEditProductQuantity = this.WhenAnyValue(
+            var canEditProductInfo = this.WhenAnyValue(
                              x => x.EntredProductName,
                              x => x.EnteredProductDescription,
                              x => x.EntredCost,
@@ -123,29 +137,32 @@ namespace GetStartedApp.ViewModels.ProductPages
                              x => x.CalculatedBenefit,
                              (EntredProductName, EnteredProductDescription, EntredCost, EnteredPrice, EntredStockQuantity, SelectedCategory, SelectedImageToDisplay, CalculatedBenefit) =>
                              !string.IsNullOrEmpty(EntredProductID) &&
-                             !string.IsNullOrEmpty(EntredProductName) &&
-                             EnteredProductDescription!=null &&
+                             !string.IsNullOrEmpty(EntredProductName) && !Is_UiError_Raised_If_TheProductNameToEdit_Is_AlreadyExistInDb()&&
+                             EnteredProductDescription != null &&
                              !string.IsNullOrEmpty(EntredCost) &&
                              !string.IsNullOrEmpty(EnteredPrice) &&
                              !string.IsNullOrEmpty(EntredStockQuantity) &&
                              !string.IsNullOrEmpty(SelectedCategory) &&
                              !string.IsNullOrEmpty(CalculatedBenefit) &&
-                             UserHasEdited_AtLeast_OneSingle_ProductInfo()&&
+                             UserHasEdited_AtLeast_OneSingle_ProductInfo() &&
+                            
+
                              // we check if the attribute are not rasing an error due to wrong input
                              // like non valid character such letters or like * , / and so on
                              UiAttributeChecker.AreThesesAttributesPropertiesValid
                                                                                   (this, nameof(EntredProductName),
                                                                                          nameof(EnteredProductDescription),
-                                                                                         nameof(EntredCost), 
+                                                                                         nameof(EntredCost),
                                                                                          nameof(EnteredPrice),
                                                                                          nameof(EntredStockQuantity),
                                                                                          nameof(SelectedCategory),
-                                                                                         nameof(CalculatedBenefit))
-                         
-                                                                  );
-            return canEditProductQuantity;
+                                                                                         nameof(CalculatedBenefit)));
 
 
+
+            // Combine both observables using CombineLatest
+            return canEditProductInfo;
+            
         }
 
         // this funciton will make all the inputs editable

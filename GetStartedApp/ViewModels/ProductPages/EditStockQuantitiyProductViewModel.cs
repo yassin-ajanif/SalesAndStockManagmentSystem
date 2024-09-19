@@ -37,17 +37,18 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
 
-        protected string _EntredProductName;
+       
         protected string _ProductName;
         [CheckForInvalidCharacters]
-        [StringMustHaveAtLeast_3_Letters]
+        [StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
         [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
-        [ProductNameDoesNotExist("هذا الاسم موجود من قبل",eProductMode.EditProductMode)] 
+     
         public string EntredProductName
         {
             get { return _ProductName; }
-            set { this.RaiseAndSetIfChanged(ref _ProductName, value); }
+            set {  this.RaiseAndSetIfChanged(ref _ProductName, value); }
         }
+
 
 
         //private string _EntredProductDescription;
@@ -87,9 +88,11 @@ namespace GetStartedApp.ViewModels.ProductPages
         public override string ProductBtnOperation => "تعديل كمية المنتج";
 
         private string OriginalProductQuantityStock;
+
+        protected bool _isTheProductNameToEditAlreadyExistInDb;
         // this is teh user when is going to edit product quantitiy 
 
-       
+
         public EditStockQuantitiyProductViewModel(
           
             Bitmap productImage, long productID,
@@ -205,6 +208,8 @@ namespace GetStartedApp.ViewModels.ProductPages
         
         }
 
+        
+
         // to consider if product is edit correctly we must meet theses conditons:
         // the productquantity ui case must be a valid string positive number not empty case
         // the value of the productquantity stock must be different from the old OriginalProductQuantityStock one
@@ -219,7 +224,8 @@ namespace GetStartedApp.ViewModels.ProductPages
                              UserHasEditedTheStockQuantityProduct() &&
                              // we check if the attribute of EntredstockQuanity is not rasing an error due to wrong input
                              // like non valid character such letters or like * , / and so on
-                             UiAttributeChecker.AreThesesAttributesPropertiesValid(this,nameof(EntredStockQuantity))
+                             UiAttributeChecker.AreThesesAttributesPropertiesValid(this,nameof(EntredStockQuantity))&&
+                             !_isTheProductNameToEditAlreadyExistInDb
 
                                                                   ) ;
                 return canEditProductQuantity;

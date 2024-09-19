@@ -50,7 +50,8 @@ namespace GetStartedApp.Models
 
                 bool Are_ProductsUnits_Exceed_Stock = ProductsUnitsNumberExceedTheOneInStock();
                 bool hasError = Are_ProductsUnits_Exceed_Stock; // Example validation condition       
-                ShowError(nameof(ProductsUnits), "لاتوجد هذه الكمية في المخزن", hasError);
+               if(hasError) ShowUiError(nameof(ProductsUnits), "لاتوجد هذه الكمية في المخزن");
+               else DeleteUiError(nameof(ProductsUnits), "لاتوجد هذه الكمية في المخزن");
             }
         }
 
