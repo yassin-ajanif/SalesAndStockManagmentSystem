@@ -200,7 +200,7 @@ public class ClsDataAccessLayer
     }
 
     public static bool AddProduct(long productID, string productName,
-        string description, float price, float cost, int quantityInStock, int categoryID, byte[] selectedProductImage)
+        string description, float price, float cost, int quantityInStock, int quantityInStock2, int quantityInStock3,int categoryID, byte[] selectedProductImage)
     {
         bool operationHasSucceded = false;
 
@@ -230,6 +230,8 @@ public class ClsDataAccessLayer
             command.Parameters.AddWithValue("@Price", price);
             command.Parameters.AddWithValue("@Cost", cost);
             command.Parameters.AddWithValue("@QuantityInStock", quantityInStock);
+            command.Parameters.AddWithValue("@QuantityInStock2", quantityInStock2);
+            command.Parameters.AddWithValue("@QuantityInStock3", quantityInStock3);
             command.Parameters.AddWithValue("@CategoryID", categoryID);
             command.Parameters.AddWithValue("@selectedProductImage", selectedProductImage);
 
@@ -259,7 +261,7 @@ public class ClsDataAccessLayer
     }
 
     public static bool UpdateProduct(long productID, string productName,
-    string description, float price, float cost, int quantityInStock, int categoryID, byte[] selectedProductImage)
+    string description, float price, float cost, int quantityInStock, int quantityInStock2 , int quantityInStock3, int categoryID, byte[] selectedProductImage)
     {
         bool operationHasSucceeded = false;
 
@@ -290,6 +292,8 @@ public class ClsDataAccessLayer
             command.Parameters.AddWithValue("@Price", price);
             command.Parameters.AddWithValue("@Cost", cost);
             command.Parameters.AddWithValue("@QuantityInStock", quantityInStock);
+            command.Parameters.AddWithValue("@QuantityInStock2", quantityInStock2);
+            command.Parameters.AddWithValue("@QuantityInStock3", quantityInStock2);
             command.Parameters.AddWithValue("@CategoryID", categoryID);
             command.Parameters.AddWithValue("@selectedProductImage", selectedProductImage);
 
@@ -315,16 +319,16 @@ public class ClsDataAccessLayer
 
     }
 
-    public static bool UpdateProductQuantity(long productId, int quantityInStock)
+    public static bool UpdateProductQuantity(long productId, int newQuantityOfProduct_StockQuantity, int newQuantityOfProduct_StockQuantity2, int newQuantityOfProduct_StockQuantity3)
     {
         bool isSuccessful = false;
         SqlConnection connection = null;
 
-        if (productId <= 0 || quantityInStock<0 ) return false;
+        if (productId <= 0 || newQuantityOfProduct_StockQuantity < 0 || newQuantityOfProduct_StockQuantity2 <0 || newQuantityOfProduct_StockQuantity3 <0) return false;
 
         if (IsThisNumberOutOfRange(productId)) return false;
 
-        if (IsThisNumberOutOfRange(quantityInStock)) return false;
+        if (IsThisNumberOutOfRange(newQuantityOfProduct_StockQuantity) || IsThisNumberOutOfRange(newQuantityOfProduct_StockQuantity2) || IsThisNumberOutOfRange(newQuantityOfProduct_StockQuantity3)) return false;
 
         if (!IsProductIDExists(productId)) return false;
 
@@ -339,7 +343,9 @@ public class ClsDataAccessLayer
 
                 // Add parameters
                 command.Parameters.Add(new SqlParameter("@productID", productId));
-                command.Parameters.Add(new SqlParameter("@quantityInStock", quantityInStock));
+                command.Parameters.Add(new SqlParameter("@quantityInStock", newQuantityOfProduct_StockQuantity));
+                command.Parameters.Add(new SqlParameter("@quantityInStock2", newQuantityOfProduct_StockQuantity2));
+                command.Parameters.Add(new SqlParameter("@quantityInStock3", newQuantityOfProduct_StockQuantity3));
 
                 // Execute the stored procedure
                 int rowsAffected = command.ExecuteNonQuery();

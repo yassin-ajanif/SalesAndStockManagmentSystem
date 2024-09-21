@@ -13,6 +13,8 @@ namespace GetStartedApp.Models
         private string _name;
         private string _description;
         private int _stockQuantity;
+        private int _stockQuantity2;
+        private int _stockQuantity3;
         private float _price;
         private float _cost;
         private float _profit;
@@ -42,6 +44,18 @@ namespace GetStartedApp.Models
         public int StockQuantity
         {
             get => _stockQuantity;
+            set => SetField(ref _stockQuantity, value);
+        }
+
+        public int StockQuantity2
+        {
+            get => _stockQuantity2;
+            set => SetField(ref _stockQuantity, value);
+        }
+
+        public int StockQuantity3
+        {
+            get => _stockQuantity3;
             set => SetField(ref _stockQuantity, value);
         }
 
@@ -75,12 +89,14 @@ namespace GetStartedApp.Models
             set => SetField(ref _selectedProductImage, value);
         }
 
-        public ProductInfo(long id, string name, string description, int stockQuantity, float price, float cost, Bitmap selectedProductImage, string selectedCategory)
+        public ProductInfo(long id, string name, string description, int stockQuantity,int stockQuantity2,int stockQuantity3, float price, float cost, Bitmap selectedProductImage, string selectedCategory)
         {
             _id = id;
             _name = name;
             _description = description;
             _stockQuantity = stockQuantity;
+            _stockQuantity2 = stockQuantity2;
+            _stockQuantity3 = stockQuantity3;
             _price = price;
             _cost = cost;
             _selectedProductImage = selectedProductImage;

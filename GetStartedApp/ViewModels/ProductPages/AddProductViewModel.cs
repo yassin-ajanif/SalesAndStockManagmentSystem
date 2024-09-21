@@ -42,18 +42,7 @@ namespace GetStartedApp.ViewModels.ProductPages
         protected const float maxPriceProductCanHold = 1_000_000;
         protected const float maxBenifitFromProduct = 100_000;
 
-        protected void DisplayTheBenefitFromPriceAndCost()
-        {
-
-            // we get the benefit by doing this operation Benifit = _Price - _Cost that a user enter
-            
-            string BenefitCalculated = ((decimal)_Price - (decimal)_Cost).ToString();
-
-            _Benefit = float.Parse(BenefitCalculated);
-
-            CalculatedBenefit = BenefitCalculated;
-
-        }
+       
        
         private List<string> _Productcategories;
         public List<string> ProductCategories
@@ -63,9 +52,9 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
         
-        private long _ProductID;
+        protected long _ProductID;
        
-        private string _EntredProductID;
+        protected string _EntredProductID;
         [PositiveIntRange(1, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
         [ProductIdAlreadyExists("هذا الرقم تم تسجيله من قبل")]
         public string EntredProductID
@@ -167,9 +156,9 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
       
-        private string  _EntredStockQuantity;
-        private int     _StockQuantity;
-        [PositiveIntRange(1, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
+        protected string  _EntredStockQuantity;
+        protected int     _StockQuantity;
+        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
         public string EntredStockQuantity
         {
             get { return _EntredStockQuantity; }
@@ -182,6 +171,36 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         }
 
+        protected string _EntredStockQuantity2;
+        protected int _StockQuantity2;
+        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
+        public string EntredStockQuantity2
+        {
+            get { return _EntredStockQuantity2; }
+
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _EntredStockQuantity2, value);
+                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity2);
+            }
+
+        }
+
+        protected string _EntredStockQuantity3;
+        protected int _StockQuantity3;
+
+        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
+        public string EntredStockQuantity3
+        {
+            get { return _EntredStockQuantity3; }
+
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _EntredStockQuantity3, value);
+                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity3);
+            }
+
+        }
         private string _SelectedCategory;
         public string SelectedCategory
         {
@@ -248,6 +267,22 @@ namespace GetStartedApp.ViewModels.ProductPages
             get { return _IsSelectedCategoryEnabled; }
             set { this.RaiseAndSetIfChanged(ref _IsSelectedCategoryEnabled, value); }
         }
+
+        private bool _isStockQuantityReadOnly2;
+        public bool IsStockQuantityReadOnly2
+        {
+            get { return _isStockQuantityReadOnly2; }
+            set { this.RaiseAndSetIfChanged(ref _isStockQuantityReadOnly2, value); }
+        }
+
+        private bool _isStockQuantityReadOnly3;
+        public bool IsStockQuantityReadOnly3
+        {
+            get { return _isStockQuantityReadOnly3; }
+            set { this.RaiseAndSetIfChanged(ref _isStockQuantityReadOnly3, value); }
+        }
+
+     
 
         private bool _isTheProductNameToAddAlreadyExistInDb;
 
@@ -331,10 +366,24 @@ namespace GetStartedApp.ViewModels.ProductPages
             IsCostReadOnly = isEnabled;
             IsPriceReadOnly = isEnabled;
             IsStockQuantityReadOnly = isEnabled;
+            IsStockQuantityReadOnly2 = isEnabled;
+            IsStockQuantityReadOnly3 = isEnabled;
             IsSelectedCategoryEnabled = isEnabled;
-            
-        }
+           
 
+        }
+        protected void DisplayTheBenefitFromPriceAndCost()
+        {
+
+            // we get the benefit by doing this operation Benifit = _Price - _Cost that a user enter
+
+            string BenefitCalculated = ((decimal)_Price - (decimal)_Cost).ToString();
+
+            _Benefit = float.Parse(BenefitCalculated);
+
+            CalculatedBenefit = BenefitCalculated;
+
+        }
         // this function will display a no image Image that indicate a user haven't set the productImage yet 
         protected async Task DisplayNoImage()
         {
@@ -378,7 +427,9 @@ namespace GetStartedApp.ViewModels.ProductPages
                 nameof(EnteredPrice),
                 nameof(EntredCost),
                 nameof(CalculatedBenefit),
-                nameof(EntredStockQuantity));
+                nameof(EntredStockQuantity),
+                nameof(EntredStockQuantity2),
+                nameof(EntredStockQuantity3));
         }
 
 
@@ -400,42 +451,54 @@ namespace GetStartedApp.ViewModels.ProductPages
        
         private IObservable<bool> CheckIfFormIsFilledCorreclty( )
         {
-            var canAddProduct = this.WhenAnyValue(
-                             x => x.EntredProductID,
-                             x => x.EntredProductName,
-                             x => x.EnteredProductDescription,
-                             x => x.EnteredPrice,
-                             x => x.EntredCost,
-                             x => x.CalculatedBenefit,
-                             x => x.EntredStockQuantity,
-                             x => x.SelectedCategory,
-                             (EntredProductID, EntredProductName, EnteredProductDescription, EnteredPrice, EntredCost, CalculatedBenefit, EntredStockQuantity, SelectedCategory) =>
-                             !string.IsNullOrEmpty(EntredProductName)&&
-                             !Is_UiError_Raised_If_TheProductNameToAdd_Is_AlreadyExistInDb()&&
-                             !string.IsNullOrEmpty(EntredProductID) && !string.IsNullOrWhiteSpace(EntredProductID) &&
-                             !string.IsNullOrWhiteSpace(EntredProductName) &&                            
-                             !string.IsNullOrEmpty(EnteredPrice) && !string.IsNullOrWhiteSpace(EnteredPrice) &&                          
-                             !string.IsNullOrEmpty(CalculatedBenefit) && !string.IsNullOrWhiteSpace(CalculatedBenefit) &&                           
-                             !string.IsNullOrEmpty(EntredStockQuantity) && !string.IsNullOrWhiteSpace(EntredStockQuantity)                           
-                             && EnteredProductDescription!=null 
-                             && !string.IsNullOrEmpty(EntredCost)                           
-                             && !string.IsNullOrWhiteSpace(EntredCost) &&                          
-                             !string.IsNullOrEmpty(SelectedCategory) && !string.IsNullOrWhiteSpace(SelectedCategory) 
-                             && AreAllPropertiesAttributeValid()
-                            
-                             
-                                                                  ) ;
-           return canAddProduct;
+            
+                var canAddProduct1 = this.WhenAnyValue(
+                    x => x.EntredProductID,
+                    x => x.EntredProductName,
+                    x => x.EnteredProductDescription,
+                    x => x.EnteredPrice,
+                    x => x.EntredCost,
+                    x => x.CalculatedBenefit,
+                    x => x.EntredStockQuantity,
+                    x => x.SelectedCategory,
+                    (EntredProductID, EntredProductName, EnteredProductDescription, EnteredPrice, EntredCost, CalculatedBenefit, EntredStockQuantity, SelectedCategory) =>
+                        !string.IsNullOrEmpty(EntredProductName) &&
+                        !Is_UiError_Raised_If_TheProductNameToAdd_Is_AlreadyExistInDb() &&
+                        !string.IsNullOrEmpty(EntredProductID) && !string.IsNullOrWhiteSpace(EntredProductID) &&
+                        !string.IsNullOrWhiteSpace(EntredProductName) &&
+                        !string.IsNullOrEmpty(EnteredPrice) && !string.IsNullOrWhiteSpace(EnteredPrice) &&
+                        !string.IsNullOrEmpty(CalculatedBenefit) && !string.IsNullOrWhiteSpace(CalculatedBenefit) &&
+                        !string.IsNullOrEmpty(EntredStockQuantity) && !string.IsNullOrWhiteSpace(EntredStockQuantity) &&
+                        EnteredProductDescription != null &&
+                        !string.IsNullOrEmpty(EntredCost) &&
+                        !string.IsNullOrWhiteSpace(EntredCost) &&
+                        !string.IsNullOrEmpty(SelectedCategory) && !string.IsNullOrWhiteSpace(SelectedCategory) &&
+                        AreAllPropertiesAttributeValid()
+                    );
 
-        }
-      
-     
+                var canAddProduct2 = this.WhenAnyValue(
+                    x => x.EntredStockQuantity2,
+                    x => x.EntredStockQuantity3,
+                    (EntredStockQuantity2, EntredStockQuantity3) =>
+                        !string.IsNullOrEmpty(EntredStockQuantity2) && !string.IsNullOrWhiteSpace(EntredStockQuantity2) &&
+                        !string.IsNullOrEmpty(EntredStockQuantity3) && !string.IsNullOrWhiteSpace(EntredStockQuantity3) &&
+                        AreAllPropertiesAttributeValid()
+                );
+
+                // Combine the two observables using CombineLatest
+                return canAddProduct1.CombineLatest(canAddProduct2, (isValid1, isValid2) => isValid1 && isValid2);
+            }
+
+
+        
+
+
         public async Task<bool> AddProduct()
         {
 
 
             ProductInfo ProductInfoFilledByUser =
-                new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _Price,_Cost, _SelectedImageToDisplay,_SelectedCategory);
+                new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _StockQuantity2, _StockQuantity3, _Price,_Cost, _SelectedImageToDisplay,_SelectedCategory);
 
             if (AccessToClassLibraryBackendProject.AddProductToDataBase(ProductInfoFilledByUser)) { 
                
@@ -492,457 +555,457 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         // this section is for testing ///////////
 
-        string costGlobalVriable;
-
-        protected string GenerateRandomValid_ProductName()
-        {
-            string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                     "0123456789" +
-                                     "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
-                                     " _-@()"; // Include space, underscore, hyphen, at symbol, and parentheses
-
-            string letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                             "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية";
-
-            Random random = new Random();
-            string stringToGenerate;
-
-            do
-            {
-                StringBuilder sb = new StringBuilder();
-                int lengthOfWordToGenerate = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
-
-                for (int i = 0; i < lengthOfWordToGenerate; i++)
-                {
-                    int randomNumberBetween_0_And_validCharactersLength = random.Next(0, validCharacters.Length);
-                    char randomChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
-                    sb.Append(randomChar);
-                }
-
-                stringToGenerate = sb.ToString();
-
-            } while (stringToGenerate.Count(c => letters.Contains(c)) < 3);
-
-            return stringToGenerate;
-        }
-
-        protected string GenerateRandomInvalid_ProductName()
-        {
-            string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
-            string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                     "0123456789" +
-                                     "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
-                                     " _-@()";
-
-            Random random = new Random();
-            StringBuilder sb = new StringBuilder();
-            int lengthOfWordToGenerate = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
-
-            // Ensure at least one valid character is included
-            int randomNumberBetween_0_And_validCharactersLength = random.Next(validCharacters.Length);
-            char randomValidChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
-            sb.Append(randomValidChar);
-
-            // Ensure at least one invalid character is included
-            int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
-            char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
-            sb.Append(randomInvalidChar);
-
-            // Fill the rest of the string with random characters from the combined set
-            string allCharacters = validCharacters + invalidCharacters;
-            for (int i = 2; i < lengthOfWordToGenerate; i++) // Starting from 2 as we already added one valid and one invalid character
-            {
-                int randomNumberBetween_0_And_allCharactersLength = random.Next(allCharacters.Length);
-                char randomChar = allCharacters[randomNumberBetween_0_And_allCharactersLength];
-                sb.Append(randomChar);
-            }
-
-            string invalidStringToGenerate = sb.ToString();
-
-            return invalidStringToGenerate;
-        }
-
-        protected string GenerateRandomValid_ProductDescription()
-        {
-            string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                     "0123456789" +
-                                     "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
-                                     " _-@()"; // Include space, underscore, hyphen, at symbol, and parentheses
-
-            string letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                             "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية";
-
-            Random random = new Random();
-            string stringToGenerate;
-
-            do
-            {
-                StringBuilder sb = new StringBuilder();
-                int lengthOfWordToGenerate = random.Next(5, 50); // Generate a random length between 3 and 20 characters 
-
-                for (int i = 0; i < lengthOfWordToGenerate; i++)
-                {
-                    int randomNumberBetween_0_And_validCharactersLength = random.Next(0, validCharacters.Length);
-                    char randomChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
-                    sb.Append(randomChar);
-                }
-
-                stringToGenerate = sb.ToString();
-
-            } while (stringToGenerate.Count(c => letters.Contains(c)) < 3);
-
-            return stringToGenerate;
-        }
-
-        protected string GenerateRandomInvalid_ProductDescription()
-        {
-            string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
-            string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                     "0123456789" +
-                                     "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
-                                     " _-@()";
-
-            Random random = new Random();
-            StringBuilder sb = new StringBuilder();
-            int lengthOfWordToGenerate = random.Next(3, 50); // Generate a random length between 3 and 20 characters 
-
-            // Ensure at least one valid character is included
-            int randomNumberBetween_0_And_validCharactersLength = random.Next(validCharacters.Length);
-            char randomValidChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
-            sb.Append(randomValidChar);
-
-            // Ensure at least one invalid character is included
-            int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
-            char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
-            sb.Append(randomInvalidChar);
-
-            // Fill the rest of the string with random characters from the combined set
-            string allCharacters = validCharacters + invalidCharacters;
-            for (int i = 2; i < lengthOfWordToGenerate; i++) // Starting from 2 as we already added one valid and one invalid character
-            {
-                int randomNumberBetween_0_And_allCharactersLength = random.Next(allCharacters.Length);
-                char randomChar = allCharacters[randomNumberBetween_0_And_allCharactersLength];
-                sb.Append(randomChar);
-            }
-
-            string invalidStringToGenerate = sb.ToString();
-
-            return invalidStringToGenerate;
-        }
-
-        protected string GenerateRandomInvalid_ProductCost()
-        {
-            Random random = new Random();
-
-            // Generate a random cost that is clearly invalid
-            // For example, a negative cost or a cost exceeding a realistic upper limit
-            double cost = Math.Round(random.NextDouble() * 10000.0 - 5000.0, 2); // Range: -5000.00 to 5000.00
-
-            // Convert the cost to string
-            string costString = cost.ToString("F2");
-
-            // Append some random characters to the cost string to make it invalid
-            string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
-            string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                     "0123456789" +
-                                     "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
-                                     " _-@()";
-
-            StringBuilder sb = new StringBuilder();
-
-            // Ensure at least one valid character is included in the cost string
-            int randomNumberBetween_0_And_validCharactersLength = random.Next(validCharacters.Length);
-            char randomValidChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
-            sb.Append(randomValidChar);
-
-            // Ensure at least one invalid character is included in the cost string
-            int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
-            char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
-            sb.Append(randomInvalidChar);
-
-            // Append the generated cost string
-            sb.Append(costString);
-
-            // Add more random characters to the string
-            int lengthOfWordToGenerate = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
-            string allCharacters = validCharacters + invalidCharacters;
-            for (int i = 2; i < lengthOfWordToGenerate; i++) // Starting from 2 as we already added one valid and one invalid character
-            {
-                int randomNumberBetween_0_And_allCharactersLength = random.Next(allCharacters.Length);
-                char randomChar = allCharacters[randomNumberBetween_0_And_allCharactersLength];
-                sb.Append(randomChar);
-            }
-
-            string invalidStringToGenerate = sb.ToString();
-
-            return invalidStringToGenerate;
-        }
-
-        protected string GenerateRandomValid_ProductCost()
-        {
-            // Define the maximum and minimum values for a valid cost
-            float minCost = 1f;
-            float maxCost = 1000.00f;
-
-            // Generate a random float value within the defined range
-            Random random = new Random();
-            float cost = (float)(random.NextDouble() * (maxCost - minCost) + minCost);
-            string costString = cost.ToString("F2");
-
-            costGlobalVriable = costString;
-            return costString;
-        }
-
-        protected string GenerateRandomValid_ProductPrice()
-        {
-            Random random = new Random();
-            double price;
-
-            do
-            {
-                // Generate a random price between 0.01 and 2000.00
-                price = Math.Round(random.NextDouble() * 2000.0, 2) + 0.01;
-
-            } while (price - float.Parse(costGlobalVriable) < 1.0 && price <= 100_000);
-
-            return price.ToString();
-        }
-
-        protected string GenerateRandomInvalid_ProductPrice()
-        {
-            string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
-
-            Random random = new Random();
-            StringBuilder sb = new StringBuilder();
-            int lengthOfPriceString = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
-
-            // Ensure at least one valid character is included
-            int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
-            char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
-            sb.Append(randomInvalidChar);
-
-            // Fill the rest of the string with random digits and invalid characters
-            for (int i = 1; i < lengthOfPriceString; i++) // Starting from 1 as we already added one invalid character
-            {
-                if (i % 3 == 0)
-                {
-                    sb.Append(randomInvalidChar); // Add invalid character every 3rd character
-                }
-                else
-                {
-                    sb.Append(random.Next(0, 10)); // Add random digit
-                }
-            }
-
-            string invalidPriceString = sb.ToString();
-
-            return invalidPriceString;
-        }
-
-        protected string GenerateRandomValid_StockQuantity()
-        {
-            // Define the maximum value for a valid stock quantity
-            int maxStockQuantity = 1_000_000; // 1 billion
-
-            // Generate a random integer value within the defined range
-            Random random = new Random();
-            int stockQuantity = random.Next(1, maxStockQuantity + 1); // Generate between 1 and maxStockQuantity (inclusive)
-            string stockQuantityString = stockQuantity.ToString();
-
-            return stockQuantityString;
-        }
-
-        protected string GenerateRandomInvalid_StockQuantity()
-        {
-            Random random = new Random();
-            StringBuilder sb = new StringBuilder();
-
-            // Generate a random length between 1 and 10 characters for variety
-            int length = random.Next(1, 11);
-
-            // Add a mix of letters, special characters, and numbers
-            string invalidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                       "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~" +
-                                       "1234567890";
-
-            bool hasNumber = false;
-            for (int i = 0; i < length; i++)
-            {
-                int index = random.Next(0, invalidCharacters.Length);
-                char selectedChar = invalidCharacters[index];
-
-                if (char.IsDigit(selectedChar))
-                {
-                    hasNumber = true;
-                }
-
-                sb.Append(selectedChar);
-            }
-
-            // Ensure that the generated string is not purely numeric
-            if (hasNumber && sb.Length == sb.ToString().Count(char.IsDigit))
-            {
-                // If the string is purely numeric, add an invalid character to make it invalid
-                sb.Append(invalidCharacters[random.Next(0, invalidCharacters.Length - 10)]);
-            }
-
-            return sb.ToString();
-        }
-
-
-        protected void GenerateRandomValid_ProductRecordToAdd()
-        {
-            //  productid is auto generate and selected category is paints already set in the constructor and existing in the datbase
-            string productName = GenerateRandomValid_ProductName();
-            string productDescription = GenerateRandomValid_ProductDescription();
-            string cost = GenerateRandomValid_ProductCost();
-            string price = GenerateRandomValid_ProductPrice();
-            string stockQuantity = GenerateRandomValid_StockQuantity();
-
-            EntredProductName = productName;
-            EnteredProductDescription = productDescription;
-            EntredCost = cost;
-            EnteredPrice = price;
-            EntredStockQuantity = stockQuantity;
-        }
-
-        protected void GenerateRandomInValidProductRecordToAdd()
-        {
-            string productName = GenerateRandomInvalid_ProductName();
-            string productDescription = GenerateRandomInvalid_ProductDescription();
-            string cost = GenerateRandomInvalid_ProductCost();
-            string price = GenerateRandomInvalid_ProductPrice();
-            string stockQuantity = GenerateRandomInvalid_StockQuantity();
-
-            EntredProductName = productName;
-            EnteredProductDescription = productDescription;
-            EntredCost = cost;
-            EnteredPrice = price;
-            EntredStockQuantity = stockQuantity;
-        }
-
-        async void Insert_RandomValidProduct_10_000_Times_MainFunction()
-        {
-            for (int i = 0; i < 10_000; i++)
-            {
-                // Assuming _ProductID, _ProductName, _ProductDescription,
-                // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
-
-                getNewProductIdGeneratedFromDatabase();
-                GenerateRandomValid_ProductRecordToAdd();
-
-                _SelectedCategory = "didi";
-                ProductInfo productInfoFilledByUser = new ProductInfo(
-                     _ProductID,
-                    _ProductName,
-                    _ProductDescription,
-                    _StockQuantity,
-                    _Price,
-                    _Cost,
-                    _SelectedImageToDisplay,
-                    _SelectedCategory);
-
-                bool TheValidRecordIsFailedAtUi = !await CheckIfFormIsFilledCorreclty().FirstAsync();
-
-               if (TheValidRecordIsFailedAtUi) {
-
-                    Debug.WriteLine($"Product failed at Ui Stage:");
-                    Debug.WriteLine($"Product ID: {_ProductID}");
-                    Debug.WriteLine($"Product Name: {_ProductName}");
-                    Debug.WriteLine($"Product Description: {_ProductDescription}");
-                    Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
-                    Debug.WriteLine($"Price: {_Price}");
-                    Debug.WriteLine($"Cost: {_Cost}");
-                    Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
-                    Debug.WriteLine($"Selected Category: {_SelectedCategory}");
-
-                    return;
-                }
-
-
-                if (!AccessToClassLibraryBackendProject.AddProductToDataBase(productInfoFilledByUser))
-                {
-                    Debug.WriteLine($"Product failed to be added :");
-                    Debug.WriteLine($"Product ID: {_ProductID}");
-                    Debug.WriteLine($"Product Name: {_ProductName}");
-                    Debug.WriteLine($"Product Description: {_ProductDescription}");
-                    Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
-                    Debug.WriteLine($"Price: {_Price}");
-                    Debug.WriteLine($"Cost: {_Cost}");
-                    Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
-                    Debug.WriteLine($"Selected Category: {_SelectedCategory}");
-                    return;
-                }
+        //string costGlobalVriable;
+
+        //protected string GenerateRandomValid_ProductName()
+        //{
+        //    string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                             "0123456789" +
+        //                             "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
+        //                             " _-@()"; // Include space, underscore, hyphen, at symbol, and parentheses
+
+        //    string letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                     "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية";
+
+        //    Random random = new Random();
+        //    string stringToGenerate;
+
+        //    do
+        //    {
+        //        StringBuilder sb = new StringBuilder();
+        //        int lengthOfWordToGenerate = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
+
+        //        for (int i = 0; i < lengthOfWordToGenerate; i++)
+        //        {
+        //            int randomNumberBetween_0_And_validCharactersLength = random.Next(0, validCharacters.Length);
+        //            char randomChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
+        //            sb.Append(randomChar);
+        //        }
+
+        //        stringToGenerate = sb.ToString();
+
+        //    } while (stringToGenerate.Count(c => letters.Contains(c)) < 3);
+
+        //    return stringToGenerate;
+        //}
+
+        //protected string GenerateRandomInvalid_ProductName()
+        //{
+        //    string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
+        //    string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                             "0123456789" +
+        //                             "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
+        //                             " _-@()";
+
+        //    Random random = new Random();
+        //    StringBuilder sb = new StringBuilder();
+        //    int lengthOfWordToGenerate = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
+
+        //    // Ensure at least one valid character is included
+        //    int randomNumberBetween_0_And_validCharactersLength = random.Next(validCharacters.Length);
+        //    char randomValidChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
+        //    sb.Append(randomValidChar);
+
+        //    // Ensure at least one invalid character is included
+        //    int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
+        //    char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
+        //    sb.Append(randomInvalidChar);
+
+        //    // Fill the rest of the string with random characters from the combined set
+        //    string allCharacters = validCharacters + invalidCharacters;
+        //    for (int i = 2; i < lengthOfWordToGenerate; i++) // Starting from 2 as we already added one valid and one invalid character
+        //    {
+        //        int randomNumberBetween_0_And_allCharactersLength = random.Next(allCharacters.Length);
+        //        char randomChar = allCharacters[randomNumberBetween_0_And_allCharactersLength];
+        //        sb.Append(randomChar);
+        //    }
+
+        //    string invalidStringToGenerate = sb.ToString();
+
+        //    return invalidStringToGenerate;
+        //}
+
+        //protected string GenerateRandomValid_ProductDescription()
+        //{
+        //    string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                             "0123456789" +
+        //                             "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
+        //                             " _-@()"; // Include space, underscore, hyphen, at symbol, and parentheses
+
+        //    string letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                     "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية";
+
+        //    Random random = new Random();
+        //    string stringToGenerate;
+
+        //    do
+        //    {
+        //        StringBuilder sb = new StringBuilder();
+        //        int lengthOfWordToGenerate = random.Next(5, 50); // Generate a random length between 3 and 20 characters 
+
+        //        for (int i = 0; i < lengthOfWordToGenerate; i++)
+        //        {
+        //            int randomNumberBetween_0_And_validCharactersLength = random.Next(0, validCharacters.Length);
+        //            char randomChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
+        //            sb.Append(randomChar);
+        //        }
+
+        //        stringToGenerate = sb.ToString();
+
+        //    } while (stringToGenerate.Count(c => letters.Contains(c)) < 3);
+
+        //    return stringToGenerate;
+        //}
+
+        //protected string GenerateRandomInvalid_ProductDescription()
+        //{
+        //    string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
+        //    string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                             "0123456789" +
+        //                             "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
+        //                             " _-@()";
+
+        //    Random random = new Random();
+        //    StringBuilder sb = new StringBuilder();
+        //    int lengthOfWordToGenerate = random.Next(3, 50); // Generate a random length between 3 and 20 characters 
+
+        //    // Ensure at least one valid character is included
+        //    int randomNumberBetween_0_And_validCharactersLength = random.Next(validCharacters.Length);
+        //    char randomValidChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
+        //    sb.Append(randomValidChar);
+
+        //    // Ensure at least one invalid character is included
+        //    int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
+        //    char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
+        //    sb.Append(randomInvalidChar);
+
+        //    // Fill the rest of the string with random characters from the combined set
+        //    string allCharacters = validCharacters + invalidCharacters;
+        //    for (int i = 2; i < lengthOfWordToGenerate; i++) // Starting from 2 as we already added one valid and one invalid character
+        //    {
+        //        int randomNumberBetween_0_And_allCharactersLength = random.Next(allCharacters.Length);
+        //        char randomChar = allCharacters[randomNumberBetween_0_And_allCharactersLength];
+        //        sb.Append(randomChar);
+        //    }
+
+        //    string invalidStringToGenerate = sb.ToString();
+
+        //    return invalidStringToGenerate;
+        //}
+
+        //protected string GenerateRandomInvalid_ProductCost()
+        //{
+        //    Random random = new Random();
+
+        //    // Generate a random cost that is clearly invalid
+        //    // For example, a negative cost or a cost exceeding a realistic upper limit
+        //    double cost = Math.Round(random.NextDouble() * 10000.0 - 5000.0, 2); // Range: -5000.00 to 5000.00
+
+        //    // Convert the cost to string
+        //    string costString = cost.ToString("F2");
+
+        //    // Append some random characters to the cost string to make it invalid
+        //    string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
+        //    string validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                             "0123456789" +
+        //                             "ءاأإآابتثجحخدذرزسشصضطظعغفقكلمنهوية" +
+        //                             " _-@()";
+
+        //    StringBuilder sb = new StringBuilder();
+
+        //    // Ensure at least one valid character is included in the cost string
+        //    int randomNumberBetween_0_And_validCharactersLength = random.Next(validCharacters.Length);
+        //    char randomValidChar = validCharacters[randomNumberBetween_0_And_validCharactersLength];
+        //    sb.Append(randomValidChar);
+
+        //    // Ensure at least one invalid character is included in the cost string
+        //    int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
+        //    char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
+        //    sb.Append(randomInvalidChar);
+
+        //    // Append the generated cost string
+        //    sb.Append(costString);
+
+        //    // Add more random characters to the string
+        //    int lengthOfWordToGenerate = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
+        //    string allCharacters = validCharacters + invalidCharacters;
+        //    for (int i = 2; i < lengthOfWordToGenerate; i++) // Starting from 2 as we already added one valid and one invalid character
+        //    {
+        //        int randomNumberBetween_0_And_allCharactersLength = random.Next(allCharacters.Length);
+        //        char randomChar = allCharacters[randomNumberBetween_0_And_allCharactersLength];
+        //        sb.Append(randomChar);
+        //    }
+
+        //    string invalidStringToGenerate = sb.ToString();
+
+        //    return invalidStringToGenerate;
+        //}
+
+        //protected string GenerateRandomValid_ProductCost()
+        //{
+        //    // Define the maximum and minimum values for a valid cost
+        //    float minCost = 1f;
+        //    float maxCost = 1000.00f;
+
+        //    // Generate a random float value within the defined range
+        //    Random random = new Random();
+        //    float cost = (float)(random.NextDouble() * (maxCost - minCost) + minCost);
+        //    string costString = cost.ToString("F2");
+
+        //    costGlobalVriable = costString;
+        //    return costString;
+        //}
+
+        //protected string GenerateRandomValid_ProductPrice()
+        //{
+        //    Random random = new Random();
+        //    double price;
+
+        //    do
+        //    {
+        //        // Generate a random price between 0.01 and 2000.00
+        //        price = Math.Round(random.NextDouble() * 2000.0, 2) + 0.01;
+
+        //    } while (price - float.Parse(costGlobalVriable) < 1.0 && price <= 100_000);
+
+        //    return price.ToString();
+        //}
+
+        //protected string GenerateRandomInvalid_ProductPrice()
+        //{
+        //    string invalidCharacters = @"'""$%&/\\;!?|<>+=\[\]{}:,'\\.*^`#~";
+
+        //    Random random = new Random();
+        //    StringBuilder sb = new StringBuilder();
+        //    int lengthOfPriceString = random.Next(3, 20); // Generate a random length between 3 and 20 characters 
+
+        //    // Ensure at least one valid character is included
+        //    int randomNumberBetween_0_And_invalidCharactersLength = random.Next(invalidCharacters.Length);
+        //    char randomInvalidChar = invalidCharacters[randomNumberBetween_0_And_invalidCharactersLength];
+        //    sb.Append(randomInvalidChar);
+
+        //    // Fill the rest of the string with random digits and invalid characters
+        //    for (int i = 1; i < lengthOfPriceString; i++) // Starting from 1 as we already added one invalid character
+        //    {
+        //        if (i % 3 == 0)
+        //        {
+        //            sb.Append(randomInvalidChar); // Add invalid character every 3rd character
+        //        }
+        //        else
+        //        {
+        //            sb.Append(random.Next(0, 10)); // Add random digit
+        //        }
+        //    }
+
+        //    string invalidPriceString = sb.ToString();
+
+        //    return invalidPriceString;
+        //}
+
+        //protected string GenerateRandomValid_StockQuantity()
+        //{
+        //    // Define the maximum value for a valid stock quantity
+        //    int maxStockQuantity = 1_000_000; // 1 billion
+
+        //    // Generate a random integer value within the defined range
+        //    Random random = new Random();
+        //    int stockQuantity = random.Next(1, maxStockQuantity + 1); // Generate between 1 and maxStockQuantity (inclusive)
+        //    string stockQuantityString = stockQuantity.ToString();
+
+        //    return stockQuantityString;
+        //}
+
+        //protected string GenerateRandomInvalid_StockQuantity()
+        //{
+        //    Random random = new Random();
+        //    StringBuilder sb = new StringBuilder();
+
+        //    // Generate a random length between 1 and 10 characters for variety
+        //    int length = random.Next(1, 11);
+
+        //    // Add a mix of letters, special characters, and numbers
+        //    string invalidCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        //                               "!@#$%^&*()_+-=[]{};:'\"\\|,.<>/?`~" +
+        //                               "1234567890";
+
+        //    bool hasNumber = false;
+        //    for (int i = 0; i < length; i++)
+        //    {
+        //        int index = random.Next(0, invalidCharacters.Length);
+        //        char selectedChar = invalidCharacters[index];
+
+        //        if (char.IsDigit(selectedChar))
+        //        {
+        //            hasNumber = true;
+        //        }
+
+        //        sb.Append(selectedChar);
+        //    }
+
+        //    // Ensure that the generated string is not purely numeric
+        //    if (hasNumber && sb.Length == sb.ToString().Count(char.IsDigit))
+        //    {
+        //        // If the string is purely numeric, add an invalid character to make it invalid
+        //        sb.Append(invalidCharacters[random.Next(0, invalidCharacters.Length - 10)]);
+        //    }
+
+        //    return sb.ToString();
+        //}
+
+
+        //protected void GenerateRandomValid_ProductRecordToAdd()
+        //{
+        //    //  productid is auto generate and selected category is paints already set in the constructor and existing in the datbase
+        //    string productName = GenerateRandomValid_ProductName();
+        //    string productDescription = GenerateRandomValid_ProductDescription();
+        //    string cost = GenerateRandomValid_ProductCost();
+        //    string price = GenerateRandomValid_ProductPrice();
+        //    string stockQuantity = GenerateRandomValid_StockQuantity();
+
+        //    EntredProductName = productName;
+        //    EnteredProductDescription = productDescription;
+        //    EntredCost = cost;
+        //    EnteredPrice = price;
+        //    EntredStockQuantity = stockQuantity;
+        //}
+
+        //protected void GenerateRandomInValidProductRecordToAdd()
+        //{
+        //    string productName = GenerateRandomInvalid_ProductName();
+        //    string productDescription = GenerateRandomInvalid_ProductDescription();
+        //    string cost = GenerateRandomInvalid_ProductCost();
+        //    string price = GenerateRandomInvalid_ProductPrice();
+        //    string stockQuantity = GenerateRandomInvalid_StockQuantity();
+
+        //    EntredProductName = productName;
+        //    EnteredProductDescription = productDescription;
+        //    EntredCost = cost;
+        //    EnteredPrice = price;
+        //    EntredStockQuantity = stockQuantity;
+        //}
+
+        //async void Insert_RandomValidProduct_10_000_Times_MainFunction()
+        //{
+        //    for (int i = 0; i < 10_000; i++)
+        //    {
+        //        // Assuming _ProductID, _ProductName, _ProductDescription,
+        //        // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
+
+        //        getNewProductIdGeneratedFromDatabase();
+        //        GenerateRandomValid_ProductRecordToAdd();
+
+        //        _SelectedCategory = "didi";
+        //        ProductInfo productInfoFilledByUser = new ProductInfo(
+        //             _ProductID,
+        //            _ProductName,
+        //            _ProductDescription,
+        //            _StockQuantity,
+        //            _Price,
+        //            _Cost,
+        //            _SelectedImageToDisplay,
+        //            _SelectedCategory);
+
+        //        bool TheValidRecordIsFailedAtUi = !await CheckIfFormIsFilledCorreclty().FirstAsync();
+
+        //       if (TheValidRecordIsFailedAtUi) {
+
+        //            Debug.WriteLine($"Product failed at Ui Stage:");
+        //            Debug.WriteLine($"Product ID: {_ProductID}");
+        //            Debug.WriteLine($"Product Name: {_ProductName}");
+        //            Debug.WriteLine($"Product Description: {_ProductDescription}");
+        //            Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
+        //            Debug.WriteLine($"Price: {_Price}");
+        //            Debug.WriteLine($"Cost: {_Cost}");
+        //            Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
+        //            Debug.WriteLine($"Selected Category: {_SelectedCategory}");
+
+        //            return;
+        //        }
+
+
+        //        if (!AccessToClassLibraryBackendProject.AddProductToDataBase(productInfoFilledByUser))
+        //        {
+        //            Debug.WriteLine($"Product failed to be added :");
+        //            Debug.WriteLine($"Product ID: {_ProductID}");
+        //            Debug.WriteLine($"Product Name: {_ProductName}");
+        //            Debug.WriteLine($"Product Description: {_ProductDescription}");
+        //            Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
+        //            Debug.WriteLine($"Price: {_Price}");
+        //            Debug.WriteLine($"Cost: {_Cost}");
+        //            Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
+        //            Debug.WriteLine($"Selected Category: {_SelectedCategory}");
+        //            return;
+        //        }
                 
-            }
+        //    }
 
-            Debug.WriteLine("operation succeded ");
-        }
+        //    Debug.WriteLine("operation succeded ");
+        //}
 
-        async void Insert_RandomInValidProduct_10_000_Times_MainFunction()
-        {
-            for (int i = 1; i < 10_000; i++)
-            {
-                // Assuming _ProductID, _ProductName, _ProductDescription,
-                // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
+        //async void Insert_RandomInValidProduct_10_000_Times_MainFunction()
+        //{
+        //    for (int i = 1; i < 10_000; i++)
+        //    {
+        //        // Assuming _ProductID, _ProductName, _ProductDescription,
+        //        // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
 
-                getNewProductIdGeneratedFromDatabase();
-                GenerateRandomInValidProductRecordToAdd();
+        //        getNewProductIdGeneratedFromDatabase();
+        //        GenerateRandomInValidProductRecordToAdd();
 
-                _SelectedCategory = "paints";
-                ProductInfo productInfoFilledByUser = new ProductInfo(
-                    _ProductID,
-                    _ProductName,
-                    _ProductDescription,
-                    _StockQuantity,
-                    _Price,
-                    _Cost,
-                    _SelectedImageToDisplay,
-                    _SelectedCategory);
+        //        _SelectedCategory = "paints";
+        //        ProductInfo productInfoFilledByUser = new ProductInfo(
+        //            _ProductID,
+        //            _ProductName,
+        //            _ProductDescription,
+        //            _StockQuantity,
+        //            _Price,
+        //            _Cost,
+        //            _SelectedImageToDisplay,
+        //            _SelectedCategory);
 
-                bool TheInValidRecordIsSuccedAtUi = await CheckIfFormIsFilledCorreclty().FirstAsync();
+        //        bool TheInValidRecordIsSuccedAtUi = await CheckIfFormIsFilledCorreclty().FirstAsync();
 
-                if (TheInValidRecordIsSuccedAtUi)
-                {
+        //        if (TheInValidRecordIsSuccedAtUi)
+        //        {
 
-                    Debug.WriteLine($"invalid product is passed at Ui Stage:");
-                    Debug.WriteLine($"Product ID: {_ProductID}");
-                    Debug.WriteLine($"Product Name: {_ProductName}");
-                    Debug.WriteLine($"Product Description: {_ProductDescription}");
-                    Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
-                    Debug.WriteLine($"Price: {_Price}");
-                    Debug.WriteLine($"Cost: {_Cost}");
-                    Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
-                    Debug.WriteLine($"Selected Category: {_SelectedCategory}");
-                    return;
-                }
+        //            Debug.WriteLine($"invalid product is passed at Ui Stage:");
+        //            Debug.WriteLine($"Product ID: {_ProductID}");
+        //            Debug.WriteLine($"Product Name: {_ProductName}");
+        //            Debug.WriteLine($"Product Description: {_ProductDescription}");
+        //            Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
+        //            Debug.WriteLine($"Price: {_Price}");
+        //            Debug.WriteLine($"Cost: {_Cost}");
+        //            Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
+        //            Debug.WriteLine($"Selected Category: {_SelectedCategory}");
+        //            return;
+        //        }
 
                 
 
-            }
+        //    }
 
-            Debug.WriteLine("operation succeded ");
-        }
+        //    Debug.WriteLine("operation succeded ");
+        //}
    
 
-        public async Task <bool> AddProductPartOfEndToEndTest( string productname, string productdescription,string stockquantity, string price, string cost,string Theselectedcategory)
-        {
-             getNewProductIdGeneratedFromDatabase();
-            EntredProductName = productname;
-            EnteredProductDescription = productdescription;
-            EntredStockQuantity = stockquantity;
-            _EntredPrice = price;
-            _EntredCost = cost;
-            SelectedCategory = Theselectedcategory;
-            CalculatedBenefit = (double.Parse(price) - double.Parse(cost)).ToString();
+        //public async Task <bool> AddProductPartOfEndToEndTest( string productname, string productdescription,string stockquantity, string price, string cost,string Theselectedcategory)
+        //{
+        //     getNewProductIdGeneratedFromDatabase();
+        //    EntredProductName = productname;
+        //    EnteredProductDescription = productdescription;
+        //    EntredStockQuantity = stockquantity;
+        //    _EntredPrice = price;
+        //    _EntredCost = cost;
+        //    SelectedCategory = Theselectedcategory;
+        //    CalculatedBenefit = (double.Parse(price) - double.Parse(cost)).ToString();
 
-            if (!await CheckIfFormIsFilledCorreclty().FirstAsync()) return false;
+        //    if (!await CheckIfFormIsFilledCorreclty().FirstAsync()) return false;
 
-            ProductInfo ProductInfoFilledByUser =
-                  new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, float.Parse(_EntredPrice), float.Parse(_EntredCost), _SelectedImageToDisplay, _SelectedCategory);
+        //    ProductInfo ProductInfoFilledByUser =
+        //          new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, float.Parse(_EntredPrice), float.Parse(_EntredCost), _SelectedImageToDisplay, _SelectedCategory);
 
-            return AccessToClassLibraryBackendProject.AddProductToDataBase(ProductInfoFilledByUser);
-        }
+        //    return AccessToClassLibraryBackendProject.AddProductToDataBase(ProductInfoFilledByUser);
+        //}
     }
 }
 

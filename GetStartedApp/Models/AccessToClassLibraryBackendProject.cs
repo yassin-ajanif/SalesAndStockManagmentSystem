@@ -57,7 +57,7 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.
             AddProduct(AddedProduct.id, AddedProduct.name,
                        AddedProduct.description, AddedProduct.price,
-                       AddedProduct.cost, AddedProduct.StockQuantity,
+                       AddedProduct.cost, AddedProduct.StockQuantity,AddedProduct.StockQuantity2,AddedProduct.StockQuantity3,
                        AddedProduct.selectedCategory,
                     ImageConverter.BitmapToByteArray(AddedProduct.SelectedProductImage)
                     );
@@ -135,12 +135,14 @@ namespace GetStartedApp.Models
                 var name = reader.GetString(reader.GetOrdinal("ProductName"));
                 var description = reader.GetString(reader.GetOrdinal("Description"));
                 var stockQuantity = reader.GetInt32(reader.GetOrdinal("QuantityInStock"));
+                var stockQuantity2 = reader.GetInt32(reader.GetOrdinal("QuantityInStock2"));
+                var stockQuantity3 = reader.GetInt32(reader.GetOrdinal("QuantityInStock3"));
                 var price = (float)reader.GetDouble(reader.GetOrdinal("Price"));
                 var cost = (float)reader.GetDouble(reader.GetOrdinal("Cost"));
                 var selectedCategory = reader.GetString(reader.GetOrdinal("CategoryName"));
                 // byte[] imageData = reader["ImageData"] as byte[];
                 Bitmap imageData = null;
-                var product = new ProductInfo(id, name, description, stockQuantity, price, cost, imageData, selectedCategory);
+                var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3,price, cost, imageData, selectedCategory);
                 products.Add(product);
             }
 
@@ -164,6 +166,8 @@ namespace GetStartedApp.Models
                 var name = reader.GetString(reader.GetOrdinal("ProductName"));
                 var description = reader.GetString(reader.GetOrdinal("Description"));
                 var stockQuantity = reader.GetInt32(reader.GetOrdinal("QuantityInStock"));
+                var stockQuantity2 = reader.GetInt32(reader.GetOrdinal("QuantityInStock2"));
+                var stockQuantity3 = reader.GetInt32(reader.GetOrdinal("QuantityInStock3"));
                 var price = (float)reader.GetDouble(reader.GetOrdinal("Price"));
                 var cost = (float)reader.GetDouble(reader.GetOrdinal("Cost"));
                 var selectedCategory = reader.GetString(reader.GetOrdinal("CategoryName"));
@@ -171,7 +175,7 @@ namespace GetStartedApp.Models
                 Bitmap imageData = null;
 
 
-                var product = new ProductInfo(id, name, description, stockQuantity, price, cost, imageData, selectedCategory);
+                var product = new ProductInfo(id, name, description, stockQuantity,stockQuantity2,stockQuantity3, price, cost, imageData, selectedCategory);
                 products.Add(product);
             }
 
@@ -194,6 +198,8 @@ namespace GetStartedApp.Models
                 var name = reader.GetString(reader.GetOrdinal("ProductName"));
                 var description = reader.GetString(reader.GetOrdinal("Description"));
                 var stockQuantity = reader.GetInt32(reader.GetOrdinal("QuantityInStock"));
+                var stockQuantity2 = reader.GetInt32(reader.GetOrdinal("QuantityInStock2"));
+                var stockQuantity3 = reader.GetInt32(reader.GetOrdinal("QuantityInStock3"));
                 var price = (float)reader.GetDouble(reader.GetOrdinal("Price"));
                 var cost = (float)reader.GetDouble(reader.GetOrdinal("Cost"));
                 var selectedCategory = reader.GetString(reader.GetOrdinal("CategoryName"));
@@ -201,7 +207,7 @@ namespace GetStartedApp.Models
                 // var DatabaseImageConvertedToBitmp = ReadDbImageAndConvertItToBitmap(reader, "ImageData");
 
 
-                var product = new ProductInfo(id, name, description, stockQuantity, price, cost, imageData, selectedCategory);
+                var product = new ProductInfo(id, name, description, stockQuantity,stockQuantity2,stockQuantity3, price, cost, imageData, selectedCategory);
                 products.Add(product);
             }
 
@@ -224,6 +230,8 @@ namespace GetStartedApp.Models
                 var name = reader.GetString(reader.GetOrdinal("ProductName"));
                 var description = reader.GetString(reader.GetOrdinal("Description"));
                 var stockQuantity = reader.GetInt32(reader.GetOrdinal("QuantityInStock"));
+                var stockQuantity2 = reader.GetInt32(reader.GetOrdinal("QuantityInStock2"));
+                var stockQuantity3 = reader.GetInt32(reader.GetOrdinal("QuantityInStock3"));
                 var price = (float)reader.GetDouble(reader.GetOrdinal("Price"));
                 var cost = (float)reader.GetDouble(reader.GetOrdinal("Cost"));
                 var category = reader.GetString(reader.GetOrdinal("CategoryName"));
@@ -232,7 +240,7 @@ namespace GetStartedApp.Models
                 // Optionally convert database image data to Bitmap
                 // imageData = ReadDbImageAndConvertItToBitmap(reader, "ImageData");
 
-                var product = new ProductInfo(id, name, description, stockQuantity, price, cost, imageData, category);
+                var product = new ProductInfo(id, name, description, stockQuantity,stockQuantity2,stockQuantity3, price, cost, imageData, category);
                 products.Add(product);
             }
 
@@ -256,13 +264,15 @@ namespace GetStartedApp.Models
                     var name = reader.GetString(reader.GetOrdinal("ProductName"));
                     var description = reader.GetString(reader.GetOrdinal("Description"));
                     var stockQuantity = reader.GetInt32(reader.GetOrdinal("QuantityInStock"));
+                    var stockQuantity2 = reader.GetInt32(reader.GetOrdinal("QuantityInStock2"));
+                    var stockQuantity3 = reader.GetInt32(reader.GetOrdinal("QuantityInStock3"));
                     var price = (float)reader.GetDouble(reader.GetOrdinal("Price"));
                     var cost = (float)reader.GetDouble(reader.GetOrdinal("Cost"));
                     var selectedCategory = reader.GetString(reader.GetOrdinal("CategoryName")).ToString();
                     var DatabaseImageConvertedToBitmp = ReadDbImageAndConvertItToBitmap(reader, "ImageData");
 
 
-                    var product = new ProductInfo(id, name, description, stockQuantity, price, cost, DatabaseImageConvertedToBitmp, selectedCategory);
+                    var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3,price, cost, DatabaseImageConvertedToBitmp, selectedCategory);
 
                     reader.Close();
                     return product;
@@ -337,15 +347,16 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.
                   UpdateProduct(EditedProduct.id, EditedProduct.name,
                          EditedProduct.description, EditedProduct.price,
-                         EditedProduct.cost, EditedProduct.StockQuantity,
+                         EditedProduct.cost, EditedProduct.StockQuantity,EditedProduct.StockQuantity2,EditedProduct.StockQuantity3,
                          EditedProduct.selectedCategory,
                       ImageConverter.BitmapToByteArray(EditedProduct.SelectedProductImage)
                       );
 
         }
-        public static bool UpdateProductQuantity(long productId, int newQuantityOfProduct)
+        public static bool UpdateProductQuantity(long productId, int newQuantityOfProduct_StockQuantity, int newQuantityOfProduct_StockQuantity2, int newQuantityOfProduct_StockQuantity3)
         {
-            return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.UpdateProductQuantity(productId, newQuantityOfProduct);
+            return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.UpdateProductQuantity
+                (productId, newQuantityOfProduct_StockQuantity, newQuantityOfProduct_StockQuantity2, newQuantityOfProduct_StockQuantity3);
         }
 
         public static bool UpdateProductPriceOrCost(long productID, float coast, float price)

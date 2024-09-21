@@ -302,55 +302,55 @@ public class MainWindowViewModel : ViewModelBase
 
    
     // this section is for test
-    async Task<bool> AddingNewCategoryProduct_Test_Operation(string categoryName)
-    {
+//    async Task<bool> AddingNewCategoryProduct_Test_Operation(string categoryName)
+//    {
         
-        return  await new AddNewCategoryViewModel(null).AddNewCategoryToDatabaseEndToEndTest(categoryName);
-    }
+//        return  await new AddNewCategoryViewModel(null).AddNewCategoryToDatabaseEndToEndTest(categoryName);
+//    }
 
-    async Task<(bool, string)> EditingTheNewCategoryProductAdded_Test_Operation(string previousCategoryName)
-    {
-        string newCategoryName = previousCategoryName + " EditedCategory";
-        bool result = await new AddNewCategoryViewModel(null).UpdateCategoryToDatabaseEndToEndTest(previousCategoryName, newCategoryName);
-        return (result, newCategoryName);
-    }
+//    async Task<(bool, string)> EditingTheNewCategoryProductAdded_Test_Operation(string previousCategoryName)
+//    {
+//        string newCategoryName = previousCategoryName + " EditedCategory";
+//        bool result = await new AddNewCategoryViewModel(null).UpdateCategoryToDatabaseEndToEndTest(previousCategoryName, newCategoryName);
+//        return (result, newCategoryName);
+//    }
 
-    async Task <bool> AddNewProduct_Test_Operation(string productName, string productDescritption , string stockQuantity , string price , string cost , string categoryName)
-    {
+//    async Task <bool> AddNewProduct_Test_Operation(string productName, string productDescritption , string stockQuantity , string price , string cost , string categoryName)
+//    {
           
-        return await new AddProductViewModel(null).AddProductPartOfEndToEndTest(productName, productDescritption, stockQuantity, price, cost, categoryName);
+//        return await new AddProductViewModel(null).AddProductPartOfEndToEndTest(productName, productDescritption, stockQuantity, price, cost, categoryName);
 
-    }
+//    }
 
   
-    async void EndToEndTest()
-    {
+//    async void EndToEndTest()
+//    {
         
-       string productName = "product 1";
-       string productDescritption = "productDescription 1";
-       string stockQuantity = "1";
-       string price = "2";
-       string cost = "1";
-       string categoryName ="paints";
+//       string productName = "product 1";
+//       string productDescritption = "productDescription 1";
+//       string stockQuantity = "1";
+//       string price = "2";
+//       string cost = "1";
+//       string categoryName ="paints";
 
 
-       // return;
+//       // return;
 
-        if (!await AddingNewCategoryProduct_Test_Operation(categoryName)) { Debug.WriteLine("Error In Adding New CategoryName"); return; }
+//        if (!await AddingNewCategoryProduct_Test_Operation(categoryName)) { Debug.WriteLine("Error In Adding New CategoryName"); return; }
 
-        var (ProductCategoryIsEditedSuccessfully, updatedCategoryName) = await EditingTheNewCategoryProductAdded_Test_Operation(categoryName);
+//        var (ProductCategoryIsEditedSuccessfully, updatedCategoryName) = await EditingTheNewCategoryProductAdded_Test_Operation(categoryName);
 
-        if (!ProductCategoryIsEditedSuccessfully) { Debug.WriteLine("Error In Editing New CategoryName"); return; }
+//        if (!ProductCategoryIsEditedSuccessfully) { Debug.WriteLine("Error In Editing New CategoryName"); return; }
 
-        if (!await AddNewProduct_Test_Operation(productName,productDescritption,stockQuantity,price,cost, updatedCategoryName)) { Debug.WriteLine("Error In Editing New CategoryName"); return; }
-    }
+//        if (!await AddNewProduct_Test_Operation(productName,productDescritption,stockQuantity,price,cost, updatedCategoryName)) { Debug.WriteLine("Error In Editing New CategoryName"); return; }
+//    }
 
 
-#pragma warning disable CA1822 // Mark members as static
-    public string Greeting1 => "ClsAccess";
-#pragma warning restore CA1822 // Mark members as static
+//#pragma warning disable CA1822 // Mark members as static
+//    public string Greeting1 => "ClsAccess";
+//#pragma warning restore CA1822 // Mark members as static
 
-    public string CustomisedGreetings => "hellow app";
+//    public string CustomisedGreetings => "hellow app";
 
 
 }

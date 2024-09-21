@@ -108,7 +108,7 @@ namespace GetStartedApp.ViewModels.ProductPages
         {
            
                 ProductInfo ProductInfoEditedByUser =
-                    new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory);
+                    new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity,_StockQuantity2,_StockQuantity3, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory);
 
                if (AccessToClassLibraryBackendProject.UpdateAllInfoProduct(ProductInfoEditedByUser))
                {
@@ -190,124 +190,124 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         // this section is for testing 
 
-        async void Edit_RandomValidProduct_From_0_To_10_000_MainFunction()
-        {
-            for (long i = 1; i < 10_000; i++)
-            {
-                // Assuming _ProductID, _ProductName, _ProductDescription,
-                // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
+        //async void Edit_RandomValidProduct_From_0_To_10_000_MainFunction()
+        //{
+        //    for (long i = 1; i < 10_000; i++)
+        //    {
+        //        // Assuming _ProductID, _ProductName, _ProductDescription,
+        //        // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
 
-                //  ProductInfo ProductInfoEditedByUser =
-                //   new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory);
-                //
-                //  if (AccessToClassLibraryBackendProject.UpdateAllInfoProduct(ProductInfoEditedByUser))
-                //
-                EntredProductName = GenerateRandomValid_ProductName();
-                EnteredProductDescription = GenerateRandomValid_ProductDescription();
-                EntredCost = GenerateRandomValid_ProductCost();
-                EnteredPrice = GenerateRandomValid_ProductPrice();
-                EntredStockQuantity = GenerateRandomValid_StockQuantity();
+        //        //  ProductInfo ProductInfoEditedByUser =
+        //        //   new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory);
+        //        //
+        //        //  if (AccessToClassLibraryBackendProject.UpdateAllInfoProduct(ProductInfoEditedByUser))
+        //        //
+        //        EntredProductName = GenerateRandomValid_ProductName();
+        //        EnteredProductDescription = GenerateRandomValid_ProductDescription();
+        //        EntredCost = GenerateRandomValid_ProductCost();
+        //        EnteredPrice = GenerateRandomValid_ProductPrice();
+        //        EntredStockQuantity = GenerateRandomValid_StockQuantity();
 
-                _SelectedCategory = "didi";
-                ProductInfo productInfoFilledByUser = new ProductInfo(
-                    i,
-                    _ProductName,
-                    _ProductDescription,
-                    _StockQuantity,
-                    _Price,
-                    _Cost,
-                    _SelectedImageToDisplay,
-                    _SelectedCategory);
+        //        _SelectedCategory = "didi";
+        //        ProductInfo productInfoFilledByUser = new ProductInfo(
+        //            i,
+        //            _ProductName,
+        //            _ProductDescription,
+        //            _StockQuantity,
+        //            _Price,
+        //            _Cost,
+        //            _SelectedImageToDisplay,
+        //            _SelectedCategory);
 
-                bool TheValidRecordIsFailedAtUi = !await checkIfEditedAllInfoProductAreCorrectlyEdited().FirstAsync();
+        //        bool TheValidRecordIsFailedAtUi = !await checkIfEditedAllInfoProductAreCorrectlyEdited().FirstAsync();
 
-                if (TheValidRecordIsFailedAtUi)
-                {
+        //        if (TheValidRecordIsFailedAtUi)
+        //        {
 
-                    Debug.WriteLine($"Product failed at Ui Stage:");
-                    Debug.WriteLine($"Product ID: {_ProductID}");
-                    Debug.WriteLine($"Product Name: {_ProductName}");
-                    Debug.WriteLine($"Product Description: {_ProductDescription}");
-                    Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
-                    Debug.WriteLine($"Price: {_Price}");
-                    Debug.WriteLine($"Cost: {_Cost}");
-                    Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
-                    Debug.WriteLine($"Selected Category: {_SelectedCategory}");
+        //            Debug.WriteLine($"Product failed at Ui Stage:");
+        //            Debug.WriteLine($"Product ID: {_ProductID}");
+        //            Debug.WriteLine($"Product Name: {_ProductName}");
+        //            Debug.WriteLine($"Product Description: {_ProductDescription}");
+        //            Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
+        //            Debug.WriteLine($"Price: {_Price}");
+        //            Debug.WriteLine($"Cost: {_Cost}");
+        //            Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
+        //            Debug.WriteLine($"Selected Category: {_SelectedCategory}");
 
-                    return;
-                }
-
-
-                if (!AccessToClassLibraryBackendProject.UpdateAllInfoProduct(productInfoFilledByUser))
-                {
-                    Debug.WriteLine($" DATABASE STAGE : Product failed to be added :");
-                    Debug.WriteLine($"Product ID: {_ProductID}");
-                    Debug.WriteLine($"Product Name: {_ProductName}");
-                    Debug.WriteLine($"Product Description: {_ProductDescription}");
-                    Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
-                    Debug.WriteLine($"Price: {_Price}");
-                    Debug.WriteLine($"Cost: {_Cost}");
-                    Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
-                    Debug.WriteLine($"Selected Category: {_SelectedCategory}");
-
-                    return;
-                }
-
-            }
-
-            Debug.WriteLine("operation of valid all product info succeded ");
-        }
-
-        async void Edit_RandomInValidProduct_From_0_To_10_000_MainFunction()
-        {
-            for (long i = 0; i <= 10_000; i++)
-            {
-                // Assuming _ProductID, _ProductName, _ProductDescription,
-                // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
+        //            return;
+        //        }
 
 
-                EntredProductName = GenerateRandomInvalid_ProductName();
-                EnteredProductDescription = GenerateRandomInvalid_ProductDescription();
-                EntredCost = GenerateRandomInvalid_ProductCost();
-                EnteredPrice = GenerateRandomInvalid_ProductPrice();
-                EntredStockQuantity = GenerateRandomInvalid_StockQuantity();
+        //        if (!AccessToClassLibraryBackendProject.UpdateAllInfoProduct(productInfoFilledByUser))
+        //        {
+        //            Debug.WriteLine($" DATABASE STAGE : Product failed to be added :");
+        //            Debug.WriteLine($"Product ID: {_ProductID}");
+        //            Debug.WriteLine($"Product Name: {_ProductName}");
+        //            Debug.WriteLine($"Product Description: {_ProductDescription}");
+        //            Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
+        //            Debug.WriteLine($"Price: {_Price}");
+        //            Debug.WriteLine($"Cost: {_Cost}");
+        //            Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
+        //            Debug.WriteLine($"Selected Category: {_SelectedCategory}");
 
-                _SelectedCategory = "didi";
-                ProductInfo productInfoFilledByUser = new ProductInfo(
-                    i,
-                    _ProductName,
-                    _ProductDescription,
-                    _StockQuantity,
-                    _Price,
-                    _Cost,
-                    _SelectedImageToDisplay,
-                    _SelectedCategory);
+        //            return;
+        //        }
 
-                bool TheInValidRecordIsSuccedAtUi = await checkIfEditedAllInfoProductAreCorrectlyEdited().FirstAsync();
+        //    }
 
-                if (TheInValidRecordIsSuccedAtUi)
-                {
+        //    Debug.WriteLine("operation of valid all product info succeded ");
+        //}
 
-                    Debug.WriteLine($"invalid product is passed at Ui Stage:");
-                    Debug.WriteLine($"Product ID: {_ProductID}");
-                    Debug.WriteLine($"Product Name: {_ProductName}");
-                    Debug.WriteLine($"Product Description: {_ProductDescription}");
-                    Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
-                    Debug.WriteLine($"Price: {_Price}");
-                    Debug.WriteLine($"Cost: {_Cost}");
-                    Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
-                    Debug.WriteLine($"Selected Category: {_SelectedCategory}");
+        //async void Edit_RandomInValidProduct_From_0_To_10_000_MainFunction()
+        //{
+        //    for (long i = 0; i <= 10_000; i++)
+        //    {
+        //        // Assuming _ProductID, _ProductName, _ProductDescription,
+        //        // _StockQuantity, _Price, _Cost, _SelectedImageToDisplay, _SelectedCategory are defined somewhere
 
-                    return;
-                }
+
+        //        EntredProductName = GenerateRandomInvalid_ProductName();
+        //        EnteredProductDescription = GenerateRandomInvalid_ProductDescription();
+        //        EntredCost = GenerateRandomInvalid_ProductCost();
+        //        EnteredPrice = GenerateRandomInvalid_ProductPrice();
+        //        EntredStockQuantity = GenerateRandomInvalid_StockQuantity();
+
+        //        _SelectedCategory = "didi";
+        //        ProductInfo productInfoFilledByUser = new ProductInfo(
+        //            i,
+        //            _ProductName,
+        //            _ProductDescription,
+        //            _StockQuantity,
+        //            _Price,
+        //            _Cost,
+        //            _SelectedImageToDisplay,
+        //            _SelectedCategory);
+
+        //        bool TheInValidRecordIsSuccedAtUi = await checkIfEditedAllInfoProductAreCorrectlyEdited().FirstAsync();
+
+        //        if (TheInValidRecordIsSuccedAtUi)
+        //        {
+
+        //            Debug.WriteLine($"invalid product is passed at Ui Stage:");
+        //            Debug.WriteLine($"Product ID: {_ProductID}");
+        //            Debug.WriteLine($"Product Name: {_ProductName}");
+        //            Debug.WriteLine($"Product Description: {_ProductDescription}");
+        //            Debug.WriteLine($"Stock Quantity: {_StockQuantity}");
+        //            Debug.WriteLine($"Price: {_Price}");
+        //            Debug.WriteLine($"Cost: {_Cost}");
+        //            Debug.WriteLine($"Selected Image to Display: {_SelectedImageToDisplay}");
+        //            Debug.WriteLine($"Selected Category: {_SelectedCategory}");
+
+        //            return;
+        //        }
 
 
                
 
-            }
+        //    }
 
-            Debug.WriteLine("operation of non valid all product edition succeded ");
-        }
+        //    Debug.WriteLine("operation of non valid all product edition succeded ");
+        //}
 
 
     }

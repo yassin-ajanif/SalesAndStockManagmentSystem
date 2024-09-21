@@ -63,10 +63,10 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return false;
         
     }
-        public static bool AreNegative(float price, float cost, int quantityInStock)
+        public static bool AreNegative(float price, float cost, int quantityInStock,int quantityInStock2,int quantityInStock3)
         {
 
-            if (price < 0 || cost < 0 || quantityInStock < 0)
+            if (price < 0 || cost < 0 || quantityInStock < 0 || quantityInStock2 < 0 || quantityInStock3 < 0)
             {
 
                 Console.WriteLine("price, cost or quantityInstock is negative or all them");
@@ -77,14 +77,14 @@ namespace SalesProductsManagmentSystemBusinessLayer
         }
 
         public static bool AddProduct(long productID, string productName, string description,
-     float price, float cost, int quantityInStock, string categorySelected, byte[] selectedProductImage)
+     float price, float cost, int quantityInStock,int quantityInStock2,int quantityInStock3, string categorySelected, byte[] selectedProductImage)
         {
             if (IsConnectionClosed())
             {
                 return false;
             }
 
-            if (AreNegative(price, cost, quantityInStock))
+            if (AreNegative(price, cost, quantityInStock,quantityInStock2,quantityInStock3))
             {
                 return false;
             }
@@ -103,13 +103,13 @@ namespace SalesProductsManagmentSystemBusinessLayer
             if (TheCategoryID_oF_ThisCategorySelected == -1) return false;
 
             return ClsDataAccessLayer.AddProduct(
-                productID, productName, description, price, cost, quantityInStock, TheCategoryID_oF_ThisCategorySelected, selectedProductImage);
+                productID, productName, description, price, cost, quantityInStock, quantityInStock2, quantityInStock3,TheCategoryID_oF_ThisCategorySelected, selectedProductImage);
         }
 
 
         public static bool UpdateProduct
             (long productID, string productName, string description,
-            float price, float cost, int quantityInStock, string categorySelected, byte[] selectedProductImage)
+            float price, float cost, int quantityInStock,int quantityInStock2,int quantityInstock3, string categorySelected, byte[] selectedProductImage)
         {
 
             if (IsConnectionClosed())
@@ -118,7 +118,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 return false;
             }
 
-            if (AreNegative(price, cost, quantityInStock))
+            if (AreNegative(price, cost, quantityInStock,quantityInStock2,quantityInstock3))
             {
 
                 return false;
@@ -127,12 +127,12 @@ namespace SalesProductsManagmentSystemBusinessLayer
             int TheCategoryID_oF_ThisCategorySelected = getProductCategoryIdFromProductCategoryName(categorySelected);
 
             return ClsDataAccessLayer.UpdateProduct
-                (productID, productName, description, price, cost, quantityInStock, TheCategoryID_oF_ThisCategorySelected,selectedProductImage);
+                (productID, productName, description, price, cost, quantityInStock,quantityInStock2,quantityInstock3, TheCategoryID_oF_ThisCategorySelected,selectedProductImage);
         }
    
-        public static bool UpdateProductQuantity(long productId, int newQuantityOfProduct)
+        public static bool UpdateProductQuantity(long productId, int newQuantityOfProduct_StockQuantity, int newQuantityOfProduct_StockQuantity2, int newQuantityOfProduct_StockQuantity3)
         {
-            return ClsDataAccessLayer.UpdateProductQuantity(productId, newQuantityOfProduct);
+            return ClsDataAccessLayer.UpdateProductQuantity(productId, newQuantityOfProduct_StockQuantity, newQuantityOfProduct_StockQuantity2, newQuantityOfProduct_StockQuantity3);
         }
 
         public static bool UpdateProductPriceOrCost(long productID, float coast, float price)

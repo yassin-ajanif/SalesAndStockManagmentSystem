@@ -19,11 +19,11 @@ public partial class ReturnProductView : AddProductView
         InitializeComponent();
 
         RemoveTheQuanityInfoAndCategory_From_Screen();
-
+       
         CreateTheNewTagInputs_NumberOfProductUnits_And_Price_Of_SoldProductReturned();
-
+       
         ReplaceTheRemoved_QuantityInfoAndCategory_From_Screen();
-
+       
         BindTheNewInputsCreatedDynamically_To_Viewmodel(ViewmodelToBoundToThisView);
 
     }

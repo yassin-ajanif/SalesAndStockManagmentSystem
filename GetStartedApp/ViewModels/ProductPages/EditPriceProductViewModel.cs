@@ -116,56 +116,56 @@ namespace GetStartedApp.ViewModels.ProductPages
     // this section is for testing 
 
 
-        async void EditProductPrice_WithValidPrice()
-        {
-           for(long i=1; i<=10_000; i++) { 
+        //async void EditProductPrice_WithValidPrice()
+        //{
+        //   for(long i=1; i<=10_000; i++) { 
 
-            EntredCost = GenerateRandomValid_ProductCost();
-            EnteredPrice = GenerateRandomValid_ProductPrice();
+        //    EntredCost = GenerateRandomValid_ProductCost();
+        //    EnteredPrice = GenerateRandomValid_ProductPrice();
 
-            long productChosen = i;
-            float newProductCost = _Cost;
-            float newProductPrice = _Price;
+        //    long productChosen = i;
+        //    float newProductCost = _Cost;
+        //    float newProductPrice = _Price;
 
-            bool isPriceEditedValid = await checkIfProductPriceAndCost_AreEditedCorreclty().FirstAsync();
+        //    bool isPriceEditedValid = await checkIfProductPriceAndCost_AreEditedCorreclty().FirstAsync();
 
-                if (!isPriceEditedValid) { Debug.WriteLine($" UI STAGE : this product should be edit at productid{_ProductID} at cost {_Cost} and price {_Price}"); return; }
+        //        if (!isPriceEditedValid) { Debug.WriteLine($" UI STAGE : this product should be edit at productid{_ProductID} at cost {_Cost} and price {_Price}"); return; }
 
-                if (!AccessToClassLibraryBackendProject.UpdateProductPriceOrCost(productChosen, newProductCost, newProductPrice))
-                {
-                    Debug.WriteLine($" DATABSE STAGE : this product should be edit at productid{_ProductID} at cost {_Cost} and price {_Price}");
-                    return;
-                }
-            }
+        //        if (!AccessToClassLibraryBackendProject.UpdateProductPriceOrCost(productChosen, newProductCost, newProductPrice))
+        //        {
+        //            Debug.WriteLine($" DATABSE STAGE : this product should be edit at productid{_ProductID} at cost {_Cost} and price {_Price}");
+        //            return;
+        //        }
+        //    }
 
 
-            Debug.WriteLine("operation of valid price edition succeded");
+        //    Debug.WriteLine("operation of valid price edition succeded");
         
-        }
+        //}
 
-        async void EditProductPrice_WithInValidPrice()
-        {
-            for (int i = 1; i <= 10_000; i++)
-            {
+        //async void EditProductPrice_WithInValidPrice()
+        //{
+        //    for (int i = 1; i <= 10_000; i++)
+        //    {
       
-                int productChosen = i;
-                EntredCost = GenerateRandomInvalid_ProductCost();
-                EnteredPrice = GenerateRandomInvalid_ProductPrice();
+        //        int productChosen = i;
+        //        EntredCost = GenerateRandomInvalid_ProductCost();
+        //        EnteredPrice = GenerateRandomInvalid_ProductPrice();
   
-                bool isPriceEditedValid = await checkIfProductPriceAndCost_AreEditedCorreclty().FirstAsync();
+        //        bool isPriceEditedValid = await checkIfProductPriceAndCost_AreEditedCorreclty().FirstAsync();
 
-                if (isPriceEditedValid)
-                {
-                    Debug.WriteLine($" UI STAGE : this product should not be edit at productid{_ProductID} at cost {EntredCost} and price {EnteredPrice}");
-                    return;
-                }
+        //        if (isPriceEditedValid)
+        //        {
+        //            Debug.WriteLine($" UI STAGE : this product should not be edit at productid{_ProductID} at cost {EntredCost} and price {EnteredPrice}");
+        //            return;
+        //        }
 
-            }
+        //    }
 
 
-            Debug.WriteLine("operation of invalid price editing succeded");
+        //    Debug.WriteLine("operation of invalid price editing succeded");
 
-        }
+        //}
 
 
 

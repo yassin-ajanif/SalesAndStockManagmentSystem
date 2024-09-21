@@ -3,20 +3,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:GetStartedApp.ViewModels.ProductPages"
-			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="550"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
              x:Class="GetStartedApp.Views.ProductPages.AddProductView"
 			 Background="{DynamicResource myBackgroundFaintBlueColor}"
 			 x:CompileBindings="False"
 			 FontFamily="roboto"
+			 
 			 >
-	<!--
-	 x:DataType="vm:AddProductViewModel"		
-			 x:CompileBindings="True"
-    -->
+	<!-- 
+	 we set compile bidning to false because the view is bound with so many
+	 viewmodels
+   -->
 
 	<UserControl.Styles>
 
-		<Style Selector="TextBox">
+		<Style Selector="TextBox.TextboxStyle">
 			<Setter Property="Margin" Value="10,0,0,10"/>
 			<Setter Property="Background" Value="White"/>
 			<Setter Property="BorderThickness" Value="0"/>
@@ -56,108 +57,191 @@
 	</UserControl.Styles>
 
 
+	<Grid  >
 
-	<Border BorderThickness="1" Width="500" Height="450" CornerRadius="5">
-		
-		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
-			
-			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
-				<StackPanel Orientation="Horizontal">
-					<Border Width="120" Height="120" CornerRadius="10" Margin="50,0,10,15" BoxShadow="0 10 20 1 Gainsboro" BorderBrush="gray" BorderThickness="0">
-						<Border Width="120" Height="120" CornerRadius="10" ClipToBounds="True">
-							<Image x:Name="MyImage" Source="{Binding SelectedImageToDisplay}" >
-								<ToolTip.Tip>
-									<Border Background="White" >
-										<Image Source="{Binding SelectedImageToDisplay}" Height="400" Width="400"/>
-									</Border>
-								</ToolTip.Tip>
-								<ToolTip.Placement>
-									Left
-								</ToolTip.Placement>
-							</Image>
-						</Border>
-					</Border>
-					<StackPanel Margin="0,15,0,0">
-						<Button Width="40" Height="30"  Command="{Binding DeleteImageCommand}">
-							<PathIcon Data="{StaticResource document_header_remove_regular}"
-									  Foreground="red"/>
-						</Button>
-						
-						<Button Width="40" Height="30" 
-								Command="{Binding PickImageCommand}" Margin="0,10,0,0">
-							<PathIcon Data="{StaticResource collections_add_regular}"
-									  Foreground="{DynamicResource myFaintGreenColor}"/>
-						</Button>
+		<Border BorderThickness="1" Width="500"  CornerRadius="5"
+				  Padding="20" VerticalAlignment="Center" >
+
+			<StackPanel>
+
+				<StackPanel >
+
+					<StackPanel HorizontalAlignment="Center" >
+						<StackPanel Orientation="Horizontal">
+							<Border Width="120" Height="120" CornerRadius="10" Margin="50,0,10,15" BoxShadow="0 10 20 1 Gainsboro" BorderBrush="gray" BorderThickness="0">
+								<Border Width="120" Height="120" CornerRadius="10" ClipToBounds="True">
+									<Image x:Name="MyImage" Source="{Binding SelectedImageToDisplay}" >
+										<ToolTip.Tip>
+											<Border Background="White" >
+												<Image Source="{Binding SelectedImageToDisplay}" Height="400" Width="400"/>
+											</Border>
+										</ToolTip.Tip>
+										<ToolTip.Placement>
+											Left
+										</ToolTip.Placement>
+									</Image>
+								</Border>
+							</Border>
+							<StackPanel Margin="0,15,0,0">
+								<Button Width="40" Height="30"  Command="{Binding DeleteImageCommand}">
+									<PathIcon Data="{StaticResource document_header_remove_regular}"
+											  Foreground="red"/>
+								</Button>
+
+								<Button Width="40" Height="30"
+										Command="{Binding PickImageCommand}" Margin="0,10,0,0">
+									<PathIcon Data="{StaticResource collections_add_regular}"
+											  Foreground="{DynamicResource myFaintGreenColor}"/>
+								</Button>
+							</StackPanel>
+						</StackPanel>
 					</StackPanel>
-				</StackPanel>
-			</StackPanel>
 
-
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-				<TextBlock Text="رقم المنتج :" />
-				<TextBox Name="ProductId" Text="{Binding EntredProductID}"
-						 FlowDirection="LeftToRight" IsEnabled="{Binding IsProductIdReadOnly}" />
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-				<TextBlock Text=" اسم المنتج :" />
-				<TextBox Name="ProductName" Text="{Binding EntredProductName}"
-						 FlowDirection="LeftToRight" IsEnabled="{Binding IsProductNameReadOnly}"/>
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-				<TextBlock Text=" الوصف :" Name="DescriptionLable" />
-				<TextBox Name="Description" Text="{Binding EnteredProductDescription}"
-						 FlowDirection="LeftToRight" IsEnabled="{Binding IsProductDescriptionReadOnly}" />
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-				<TextBlock Text="التكلفة :" />
-				<TextBox Name="Cost" Text="{Binding EntredCost}" FlowDirection="LeftToRight" IsEnabled="{Binding IsCostReadOnly}"/>
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-				<TextBlock Text="السعر :"/>
-				<TextBox Name="Price" Text="{Binding EnteredPrice}" FlowDirection="LeftToRight" IsEnabled="{Binding IsPriceReadOnly}"/>
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
-				<TextBlock Text="الربح :" />
-				<TextBox Name="Profit"  FlowDirection="LeftToRight" IsEnabled="False" Text="{Binding CalculatedBenefit }"/>
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" Name="QuantityInStockXamlTagInput"
-						FlowDirection="RightToLeft">
-				<TextBlock Text=" الكمية في المخزون :"
-						   Name="QuantityInStockLabel"/>
-				<TextBox Name="QuantityInStock" Text="{Binding EntredStockQuantity}" FlowDirection="LeftToRight" IsEnabled="{Binding IsStockQuantityReadOnly}"/>
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" 
-						FlowDirection="RightToLeft">
-				<StackPanel Name="ProductCategoriesXamlTagInput" Orientation="Horizontal">
-				<TextBlock Text="اختر صنف المنتج :" Name="CategoryIdLabel" />
-				<ComboBox Name="CategoryId" FlowDirection="RightToLeft"
-						  Margin="10 0" ItemsSource="{Binding ProductCategories}"
-						  SelectedItem="{Binding SelectedCategory}" 
-						  IsEnabled="{Binding IsSelectedCategoryEnabled}">
-				</ComboBox>
 				</StackPanel>
 
-				<Button Margin="50 0 0 0 " FlowDirection="RightToLeft"
-						Command="{Binding AddOrEditOrDeleteProductCommand}"
-						Content="{Binding ProductBtnOperation}"/>
+
+				<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+					<TextBlock Text="رقم المنتج :" />
+					<TextBox Classes="TextboxStyle"  							  Name="ProductId" Text="{Binding EntredProductID}"
+							 FlowDirection="LeftToRight" 
+							 IsEnabled="{Binding IsProductIdReadOnly}"
+						    />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+					<TextBlock Text=" اسم المنتج :" />
+					<TextBox Classes="TextboxStyle"  Name="ProductName" Text="{Binding EntredProductName}"
+							 FlowDirection="LeftToRight" IsEnabled="{Binding IsProductNameReadOnly}"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+					<TextBlock Text=" الوصف :" Name="DescriptionLable" />
+					<TextBox Classes="TextboxStyle"  Name="Description" Text="{Binding EnteredProductDescription}"
+							 FlowDirection="LeftToRight" IsEnabled="{Binding IsProductDescriptionReadOnly}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+					<TextBlock Text="التكلفة :" />
+					<TextBox Classes="TextboxStyle"  Name="Cost" Text="{Binding EntredCost}" FlowDirection="LeftToRight" IsEnabled="{Binding IsCostReadOnly}"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+					<TextBlock Text="السعر :"/>
+					<TextBox Classes="TextboxStyle"  Name="Price1" Text="{Binding EnteredPrice}" FlowDirection="LeftToRight" IsEnabled="{Binding IsPriceReadOnly}"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+					<TextBlock Text="الربح :" />
+					<TextBox Classes="TextboxStyle"  Name="Profit"  FlowDirection="LeftToRight" IsEnabled="False" Text="{Binding CalculatedBenefit }"/>
+				</StackPanel>
+
+				<Grid Name="QuantityInStockGrid1" FlowDirection="RightToLeft"
+		  x:Name="QuantityInStockXamlTagInput" Margin="0,10,0,10">
+					<!-- Define Columns -->
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+
+					<!-- Stock 1 -->
+					<Grid Grid.Column="0">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<!-- For TextBlock -->
+							<RowDefinition Height="Auto"/>
+							<!-- For TextBox -->
+						</Grid.RowDefinitions>
+
+						<TextBlock Text=" الكمية في المحل  :" Grid.Row="0"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Bottom"
+									Margin="0"
+						  />
+					
+						<TextBox Name="QuantityInStock" Grid.Row="1"								 
+								 Text="{Binding EntredStockQuantity}"
+								 Margin="5"
+								 FlowDirection="LeftToRight"
+								 IsEnabled="{Binding IsStockQuantityReadOnly}"
+								 HorizontalAlignment="Center"
+								 TextWrapping="WrapWithOverflow"
+								 />
+						
+					</Grid>
+
+					<!-- Stock 2 -->
+					<Grid Grid.Column="1" >
+						<!-- Optional: Background color for visibility -->
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<!-- For TextBlock -->
+							<RowDefinition Height="Auto"/>
+							<!-- For TextBox -->
+						</Grid.RowDefinitions>
+
+						<TextBlock Text=" الكمية في المستودع 2 :" Grid.Row="0"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Bottom"
+								   Width="150"
+								   Margin="0"/>
+
+						<TextBox   Name="QuantityInStock2" Grid.Row="1"
+								 Text="{Binding EntredStockQuantity2}"
+								  Margin="5"
+								 FlowDirection="LeftToRight"
+								 IsEnabled="{Binding IsStockQuantityReadOnly2}"
+								 HorizontalAlignment="Center"
+								 VerticalAlignment="Top"/>
+					</Grid>
+
+					<!-- Stock 3 -->
+					<Grid Grid.Column="2" >
+						<!-- Optional: Background color for visibility -->
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<!-- For TextBlock -->
+							<RowDefinition Height="Auto"/>
+							<!-- For TextBox -->
+						</Grid.RowDefinitions>
+
+						<TextBlock Text=" الكمية في المستودع 3 :" Grid.Row="0"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Bottom"
+								   Width="150"
+								   Margin="0"/>
+
+						<TextBox   Name="QuantityInStock3" Grid.Row="1"
+								 Text="{Binding EntredStockQuantity3}"
+								  Margin="5"
+								 FlowDirection="LeftToRight"
+								 IsEnabled="{Binding IsStockQuantityReadOnly3}"
+								 HorizontalAlignment="Center"
+								 VerticalAlignment="Top"/>
+					</Grid>
+				</Grid>
+
+				<StackPanel Orientation="Horizontal"
+							FlowDirection="RightToLeft">
+					<StackPanel Name="ProductCategoriesXamlTagInput" Orientation="Horizontal">
+						<TextBlock Text="اختر صنف المنتج :" Name="CategoryIdLabel" />
+						<ComboBox Name="CategoryId" FlowDirection="RightToLeft"
+								  Margin="10 0" ItemsSource="{Binding ProductCategories}"
+								  SelectedItem="{Binding SelectedCategory}"
+								  IsEnabled="{Binding IsSelectedCategoryEnabled}">
+						</ComboBox>
+					</StackPanel>
+
+					<Button Margin="50 0 0 0 " FlowDirection="RightToLeft"
+							Command="{Binding AddOrEditOrDeleteProductCommand}"
+					
+							Content="{Binding ProductBtnOperation}"/>
+				</StackPanel>
+
 			</StackPanel>
-
-
-
-		</StackPanel>
+		</Border>
 		
-	</Border>
 
-
-
-
-
-
+	</Grid>
+	
 </UserControl>

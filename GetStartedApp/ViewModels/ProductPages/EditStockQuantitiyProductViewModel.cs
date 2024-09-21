@@ -18,23 +18,24 @@ namespace GetStartedApp.ViewModels.ProductPages
     public class EditStockQuantitiyProductViewModel : AddProductViewModel
     {
 
-        protected long _ProductID;
-      
-        private string _EntredProductID; 
-        public string EntredProductID
-        {
-            get { return _EntredProductID; }
 
-            set
-            {
-
-                this.RaiseAndSetIfChanged(ref _EntredProductID, value);
-
-                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _ProductID);
-
-
-            }
-        }
+     protected long _ProductID;
+   
+     private string _EntredProductID; 
+     public string EntredProductID
+       {
+           get { return _EntredProductID; }
+   
+           set
+           {
+   
+               this.RaiseAndSetIfChanged(ref _EntredProductID, value);
+   
+               DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _ProductID);
+   
+   
+           }
+       }
 
 
        
@@ -72,11 +73,45 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             set
             {
-                this.RaiseAndSetIfChanged(ref _EntredStockQuantity, value);
-                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity);
+                //this.RaiseAndSetIfChanged(ref _EntredStockQuantity, value);
+                //DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity);
             }
 
         }
+
+        protected string _EntredStockQuantity2;
+        protected int _StockQuantity2;
+
+        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
+        public string EntredStockQuantity2
+        {
+            get { return _EntredStockQuantity; }
+
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _EntredStockQuantity2, value);
+            //    DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity2);
+            }
+
+        }
+
+        protected string _EntredStockQuantity3;
+        protected int _StockQuantity3;
+
+        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
+        public string EntredStockQuantity3
+        {
+            get { return _EntredStockQuantity3; }
+
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _EntredStockQuantity3, value);
+                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity3);
+            }
+
+        }
+
+
 
         protected string _SelectedCategory;
         public string SelectedCategory
@@ -185,8 +220,10 @@ namespace GetStartedApp.ViewModels.ProductPages
         {
             long porductIdChosen = _ProductID;
             int newQuantityOfProduct = _StockQuantity;
+            int newQuantityOfProduct_Stock2 = _StockQuantity2;
+            int newQuantityOfProduct_Stock3 = _StockQuantity3;
 
-            if (AccessToClassLibraryBackendProject.UpdateProductQuantity(porductIdChosen, newQuantityOfProduct))
+            if (AccessToClassLibraryBackendProject.UpdateProductQuantity(porductIdChosen, newQuantityOfProduct, newQuantityOfProduct_Stock2, newQuantityOfProduct_Stock3))
 
             { await ShowMessageBoxDialog.Handle("تم تعديل كمية المنتج بنجاح");
                 ProductsListViewModel.ReloadProductListIntoSceen();
@@ -259,56 +296,56 @@ namespace GetStartedApp.ViewModels.ProductPages
         
 
       
-        async void EditStockQuantity_WithValid_StockInput()
-        {
-            long numberOfRecordAtDatabase = 10_000;
+        //async void EditStockQuantity_WithValid_StockInput()
+        //{
+        //    long numberOfRecordAtDatabase = 10_000;
 
-            for(long i=1; i<=numberOfRecordAtDatabase; i++)
-            {
-                long porductIdChosen = 1;
-               // int newQuantityOfProduct = int.Parse(GenerateRandomValid_StockQuantity());
-                  EntredStockQuantity = GenerateRandomValid_StockQuantity();
+        //    for(long i=1; i<=numberOfRecordAtDatabase; i++)
+        //    {
+        //        long porductIdChosen = 1;
+        //       // int newQuantityOfProduct = int.Parse(GenerateRandomValid_StockQuantity());
+        //          EntredStockQuantity = GenerateRandomValid_StockQuantity();
 
-                bool isStockEditedValidAtUiStage = await checkIfProductQuantityEditedCorreclty().FirstAsync();
+        //        bool isStockEditedValidAtUiStage = await checkIfProductQuantityEditedCorreclty().FirstAsync();
 
-                if (!isStockEditedValidAtUiStage)
-                {
-                    Debug.WriteLine($" UI STAGE : the stock value {EntredStockQuantity} should be edited at productid {porductIdChosen}");
-                    return;
-                }
+        //        if (!isStockEditedValidAtUiStage)
+        //        {
+        //            Debug.WriteLine($" UI STAGE : the stock value {EntredStockQuantity} should be edited at productid {porductIdChosen}");
+        //            return;
+        //        }
 
-                if (!AccessToClassLibraryBackendProject.UpdateProductQuantity(porductIdChosen, int.Parse(EntredStockQuantity)))
-                {
-                    Debug.WriteLine($" DB STAGE : the stock value {EntredStockQuantity} should be edited at productid {porductIdChosen}");
-                    return;
-                }
+        //        if (!AccessToClassLibraryBackendProject.UpdateProductQuantity(porductIdChosen, int.Parse(EntredStockQuantity)))
+        //        {
+        //            Debug.WriteLine($" DB STAGE : the stock value {EntredStockQuantity} should be edited at productid {porductIdChosen}");
+        //            return;
+        //        }
 
-            }
+        //    }
 
-             Debug.WriteLine("operation of edition succeded");
-        }
+        //     Debug.WriteLine("operation of edition succeded");
+        //}
 
-        async void EditStockQuantity_With_InValid_StockInput()
-        {
-            int numberOfRecordAtDatabase = 10_000;
+        //async void EditStockQuantity_With_InValid_StockInput()
+        //{
+        //    int numberOfRecordAtDatabase = 10_000;
 
-            for (int i = 1; i <= numberOfRecordAtDatabase; i++)
-            {
-                int porductIdChosen = 1;
-                 EntredStockQuantity = GenerateRandomInvalid_StockQuantity();
+        //    for (int i = 1; i <= numberOfRecordAtDatabase; i++)
+        //    {
+        //        int porductIdChosen = 1;
+        //         EntredStockQuantity = GenerateRandomInvalid_StockQuantity();
 
-                bool isStockEditedValidAtUiStage = await checkIfProductQuantityEditedCorreclty().FirstAsync();
+        //        bool isStockEditedValidAtUiStage = await checkIfProductQuantityEditedCorreclty().FirstAsync();
 
-                if (isStockEditedValidAtUiStage)
-                {
-                    Debug.WriteLine($" UI STAGE : the stock value {EntredStockQuantity} should not be edited at productid {porductIdChosen}");
-                    return;
-                }
+        //        if (isStockEditedValidAtUiStage)
+        //        {
+        //            Debug.WriteLine($" UI STAGE : the stock value {EntredStockQuantity} should not be edited at productid {porductIdChosen}");
+        //            return;
+        //        }
 
-            }
+        //    }
 
-            Debug.WriteLine("operation of invalid edition succeded");
-        }
+        //    Debug.WriteLine("operation of invalid edition succeded");
+        //}
    
       
     
