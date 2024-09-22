@@ -17,112 +17,45 @@ namespace GetStartedApp.ViewModels.ProductPages
 {
     public class EditStockQuantitiyProductViewModel : AddProductViewModel
     {
-
-
-     protected long _ProductID;
-   
-     private string _EntredProductID; 
-     public string EntredProductID
-       {
-           get { return _EntredProductID; }
-   
-           set
-           {
-   
-               this.RaiseAndSetIfChanged(ref _EntredProductID, value);
-   
-               DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _ProductID);
-   
-   
-           }
-       }
-
-
        
-        protected string _ProductName;
-        [CheckForInvalidCharacters]
-        [StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
-        [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
-     
-        public string EntredProductName
+       
+         protected long _ProductID;
+       
+         protected string _EntredProductID; 
+         public string EntredProductID
         {
-            get { return _ProductName; }
-            set {  this.RaiseAndSetIfChanged(ref _ProductName, value); }
-        }
-
-
-
-        //private string _EntredProductDescription;
-        protected string _ProductDescription;
-        [CheckForInvalidCharacters]
-        [MaxStringLengthAttribute_IS(100, "هذه الجملة طويلة جدا")]
-        public string EnteredProductDescription
-        {
-            get { return _ProductDescription; }
-            set { this.RaiseAndSetIfChanged(ref _ProductDescription, value); }
-        }
-
-
-        protected string _EntredStockQuantity;
-        protected int _StockQuantity;
-
-        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
-        public string EntredStockQuantity
-        {
-            get { return _EntredStockQuantity; }
-
+            get { return _EntredProductID; }
+      
             set
             {
-                //this.RaiseAndSetIfChanged(ref _EntredStockQuantity, value);
-                //DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity);
+      
+                this.RaiseAndSetIfChanged(ref _EntredProductID, value);
+      
+                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _ProductID);
+      
+      
             }
-
-        }
-
-        protected string _EntredStockQuantity2;
-        protected int _StockQuantity2;
-
-        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
-        public string EntredStockQuantity2
-        {
-            get { return _EntredStockQuantity; }
-
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _EntredStockQuantity2, value);
-            //    DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity2);
-            }
-
-        }
-
-        protected string _EntredStockQuantity3;
-        protected int _StockQuantity3;
-
-        [PositiveIntRange(0, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
-        public string EntredStockQuantity3
-        {
-            get { return _EntredStockQuantity3; }
-
-            set
-            {
-                this.RaiseAndSetIfChanged(ref _EntredStockQuantity3, value);
-                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _StockQuantity3);
-            }
-
         }
 
 
 
-        protected string _SelectedCategory;
-        public string SelectedCategory
-        {
-            get { return _SelectedCategory; }
-            set { this.RaiseAndSetIfChanged(ref _SelectedCategory, value); }
-        }
+           protected string _ProductName;
+           [CheckForInvalidCharacters]
+           [StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
+           [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
+        
+           public string EntredProductName
+           {
+               get { return _ProductName; }
+               set {  this.RaiseAndSetIfChanged(ref _ProductName, value); }
+           }
+
 
         public override string ProductBtnOperation => "تعديل كمية المنتج";
 
-        private string OriginalProductQuantityStock;
+        protected string OriginalProductQuantityStock;
+        protected string OriginalProductQuantityStock2;
+        protected string OriginalProductQuantityStock3;
 
         protected bool _isTheProductNameToEditAlreadyExistInDb;
         // this is teh user when is going to edit product quantitiy 
@@ -133,7 +66,8 @@ namespace GetStartedApp.ViewModels.ProductPages
             Bitmap productImage, long productID,
             string productName, string Description,
             float cost,float price,float profit,
-            int stockQuantity,string selectedCategory,
+            int stockQuantity, int stockQuantity2, int stockQuantity3,
+            string selectedCategory,
             ProductsListViewModel ProductsListViewModel
 
            ) : base(ProductsListViewModel)
@@ -143,7 +77,7 @@ namespace GetStartedApp.ViewModels.ProductPages
             // checks if the name sent is matching the list of productCategories
             // you can't set productCategory as a random string , the string must be in the productlistCategory binded with xaml code
 
-            ProductCategories = GetProductsCategoryFromDatabase();
+           //ProductCategories = GetProductsCategoryFromDatabase();
 
            SelectedImageToDisplay = productImage;
            EntredProductID = productID.ToString();
@@ -152,19 +86,23 @@ namespace GetStartedApp.ViewModels.ProductPages
            EntredCost = cost.ToString();
            EnteredPrice = price.ToString();
            EntredStockQuantity = stockQuantity.ToString();
+           EntredStockQuantity2 = stockQuantity2.ToString();
+           EntredStockQuantity3 = stockQuantity3.ToString();
            SelectedCategory = selectedCategory;
           
 
 
             // this is first value of quality product stock we use it as refrence to know if the user has edit the productquanity or not 
             // so we can enable or disable to edit product quantity command
-           OriginalProductQuantityStock = EntredStockQuantity;
+           OriginalProductQuantityStock  = EntredStockQuantity;
+           OriginalProductQuantityStock2 = EntredStockQuantity2;
+           OriginalProductQuantityStock3 = EntredStockQuantity3;
 
-           // this method disable all inputs an their attributes including productname , id , description and others
-           // it allows only for a user to edit a quantity
-           // which is the EditProductQuantity mode allows
+            // this method disable all inputs an their attributes including productname , id , description and others
+            // it allows only for a user to edit a quantity
+            // which is the EditProductQuantity mode allows
 
-           DisableAllInputsAndLet_StockQuantityInputAlone();
+            DisableAllInputsAndLet_StockQuantityInputAlone();
 
             disableImagePickerBtns();
 
@@ -241,7 +179,7 @@ namespace GetStartedApp.ViewModels.ProductPages
         private bool UserHasEditedTheStockQuantityProduct() {
 
 
-            return OriginalProductQuantityStock != EntredStockQuantity;
+            return OriginalProductQuantityStock != EntredStockQuantity || OriginalProductQuantityStock2!=EntredStockQuantity2 || OriginalProductQuantityStock3!=EntredStockQuantity3;
         
         }
 
@@ -255,13 +193,17 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             var canEditProductQuantity = this.WhenAnyValue(
                              x => x.EntredStockQuantity,
-                             (EntredStockQuantity) =>
+                             x=> x.EntredStockQuantity2, 
+                             x=> x.EntredStockQuantity3,
+                             (EntredStockQuantity, EntredStockQuantity2, EntredStockQuantity3) =>
 
                              !string.IsNullOrEmpty(EntredStockQuantity) &&
+                             !string.IsNullOrEmpty(EntredStockQuantity2) &&
+                             !string.IsNullOrEmpty(EntredStockQuantity3) &&
                              UserHasEditedTheStockQuantityProduct() &&
                              // we check if the attribute of EntredstockQuanity is not rasing an error due to wrong input
                              // like non valid character such letters or like * , / and so on
-                             UiAttributeChecker.AreThesesAttributesPropertiesValid(this,nameof(EntredStockQuantity))&&
+                             UiAttributeChecker.AreThesesAttributesPropertiesValid(this,nameof(EntredStockQuantity),nameof(EntredStockQuantity2),nameof(EntredStockQuantity3))&&
                              !_isTheProductNameToEditAlreadyExistInDb
 
                                                                   ) ;

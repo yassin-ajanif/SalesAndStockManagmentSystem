@@ -22,8 +22,10 @@ namespace GetStartedApp.ViewModels.ProductPages
         public EditPriceProductViewModel(Bitmap productImage, long productID,
             string productName, string Description,
             float cost, float price, float profit,
-            int stockQuantity, string selectedCategory,ProductsListViewModel productsList)
-            : base(productImage, productID, productName, Description, cost, price, profit, stockQuantity, selectedCategory,productsList)
+            int stockQuantity, int stockQuantity2, int stockQuantity3,
+            string selectedCategory,ProductsListViewModel productsList)
+            : base(productImage, productID, productName, Description, cost, price, profit, 
+                  stockQuantity,stockQuantity2,stockQuantity3, selectedCategory,productsList)
         {
             
             DisableAllInputsAndLet_ProductCostAndProductPrice_Only();
@@ -50,6 +52,8 @@ namespace GetStartedApp.ViewModels.ProductPages
             // ReadOnly is mean Enabled  i was rushed and didnt have a time to edit this property in all parts of the view and viemodel
          
             IsStockQuantityReadOnly = !true;
+            IsStockQuantityReadOnly2 = !true;
+            IsStockQuantityReadOnly3 = !true;
             IsPriceReadOnly = !false;
             IsCostReadOnly = !false;
 

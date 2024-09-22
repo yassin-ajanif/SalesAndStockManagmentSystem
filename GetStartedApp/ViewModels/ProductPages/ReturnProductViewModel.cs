@@ -53,9 +53,11 @@ namespace GetStartedApp.ViewModels.ProductPages
        
 
         public ReturnProductViewModel
-            (Bitmap productImage,long productid,string productName,string description,float cost,float price,float profit,int stockQuanity,string productCategory,ProductsListViewModel productListTable) 
+            (Bitmap productImage,long productid,string productName,string description,float cost,float price,float profit,
+            int stockQuanity, int stockQuantity2, int stockQuantity3,
+            string productCategory,ProductsListViewModel productListTable) 
             : base
-            (productImage,productid,productName,description,cost,price,profit,stockQuanity,productCategory,productListTable)
+            (productImage,productid,productName,description,cost,price,profit,stockQuanity,stockQuantity2, stockQuantity3,productCategory,productListTable)
         {
             _profitOfProductReturned = profit;
             DisableAllUserInputs_Except_Returned_ProudctsUnits_And_PriceSold();

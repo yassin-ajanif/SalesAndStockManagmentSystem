@@ -665,7 +665,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
                 if (string.IsNullOrEmpty(ProductScanned.ProductsUnits) || string.IsNullOrWhiteSpace(ProductScanned.ProductsUnits) ) return false;
                 if (string.IsNullOrEmpty(ProductScanned.PriceOfProductSold) || string.IsNullOrWhiteSpace(ProductScanned.PriceOfProductSold) ) return false;
-                if (ProductScanned.ProductsUnitsNumberExceedTheOneInStock()) return false;
+                if (ProductScanned.ProductStockHasErrors) return false;
 
                 if (!UiAttributeChecker.AreThesesAttributesPropertiesValid
                     (ProductScanned, nameof(ProductScanned.ProductsUnits), nameof(ProductScanned.PriceOfProductSold)))
@@ -765,9 +765,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
             
             if (UserDidntScanOrEnteredManualBarcode) return;
 
-            bool ThereIsAnErrorShownAtScreen = IsTheScreenShowingError();
+           // bool ThereIsAnErrorShownAtScreen = IsTheScreenShowingError();
 
-            if (ThereIsAnErrorShownAtScreen) return;
+           // if (ThereIsAnErrorShownAtScreen) return;
 
             if (TheProductIsAlreadyAddedToAlist(BarCodeUserHasEntred))
             {
@@ -937,7 +937,14 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     foreach (var product in ProductsListScanned)
                     {
                         // Observe each property of each product
-                        product.WhenAnyValue(p => p.ProductsUnits, p => p.PriceOfProductSold)
+                        product.
+                      WhenAnyValue(
+                            p => p.ProductsUnits,
+                            p => p.PriceOfProductSold,
+                            p => p.ProductsUnitsToReduce_From_Stock1,
+                            p => p.ProductsUnitsToReduce_From_Stock2,
+                            p => p.ProductsUnitsToReduce_From_Stock3
+                            )
                             .Subscribe(_ =>
                             {
                                 if (CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid()) deleteDisplayedError();

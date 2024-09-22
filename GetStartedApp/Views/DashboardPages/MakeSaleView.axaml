@@ -327,6 +327,8 @@
 											<RowDefinition Height="Auto"  />
 											<!-- Product details row -->
 											<RowDefinition Height="Auto"/>
+											<!-- StockError details row -->
+											<RowDefinition Height="Auto"/>
 										</Grid.RowDefinitions>
 
 										<Grid.ColumnDefinitions>
@@ -464,7 +466,101 @@
 												
 										</Grid>
 
-										
+										<Grid Grid.Row="3">
+											<StackPanel Orientation="Horizontal" 
+														FlowDirection="RightToLeft"
+														HorizontalAlignment="Center" >
+												<!-- First Element -->
+												<StackPanel Orientation="Vertical" 
+															>
+													<TextBlock Text="المحل" Width="40"
+															   FontWeight="Bold"
+															   Foreground="Gray"
+															   Opacity=".5"/>
+													<TextBox   FlowDirection="LeftToRight"
+															  Margin="2"
+													 Background="White"
+													 Foreground="red"
+													 FontWeight="Bold"
+													  MaxWidth="100"		   
+													 HorizontalAlignment="Center" 
+													 VerticalAlignment="Center"
+													 BorderThickness="1" 
+													 BorderBrush="#FFCCCCCC"
+													 Text="{Binding ProductsUnitsToReduce_From_Stock1}"	/>
+												</StackPanel>
+
+												<!-- Second Element -->
+												<StackPanel Orientation="Vertical" 
+															>
+													<TextBlock Text="مس1" Width="40" 
+															   FontWeight="Bold"
+															   Foreground="Gray"
+															   Opacity=".5"/>
+													<TextBox 
+														      MaxWidth="100"
+															  FlowDirection="LeftToRight"
+															  Margin="2"
+															  Background="White"
+													 Foreground="red"
+													 FontWeight="Bold"
+													 
+													 HorizontalAlignment="Center" 
+													 VerticalAlignment="Center"
+													 BorderThickness="1" 
+													 BorderBrush="#FFCCCCCC"
+												     Text="{Binding ProductsUnitsToReduce_From_Stock2}"	/>
+													
+												</StackPanel>
+
+												<!-- Third Element -->
+												
+													
+													<StackPanel Orientation="Vertical"
+															HorizontalAlignment="Center">
+
+														<TextBlock Text="مس2" Width="40"
+																   FontWeight="Bold"
+																   Foreground="Gray"
+																   Opacity=".5"/>
+														<TextBox
+																  FlowDirection="LeftToRight"
+																  Margin="2"
+																  Background="White"
+																   MaxWidth="100"
+														 Foreground="red"
+														 FontWeight="Bold"
+														 HorizontalAlignment="Center"
+														 VerticalAlignment="Center"
+														 BorderThickness="1"
+														 BorderBrush="#FFCCCCCC"
+														 Text="{Binding ProductsUnitsToReduce_From_Stock3}"
+															  />
+
+													</StackPanel>
+
+
+
+											
+												
+
+											
+											
+											</StackPanel>
+										</Grid>
+
+										<Grid Grid.Row="4">
+											<TextBlock
+												IsVisible="{Binding NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock}"
+												FlowDirection="RightToLeft"
+												FontWeight="Bold"
+												Foreground="red"
+												MaxWidth="100"
+												TextWrapping="Wrap">
+												ليس هناك تطابق في عدد المنتوجات
+											</TextBlock>
+										</Grid>
+
 									</Grid>
 								</Grid>
 							</Border>

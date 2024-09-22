@@ -52,12 +52,12 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
         
-        protected long _ProductID;
+        private long _ProductID;
        
-        protected string _EntredProductID;
+        private string _EntredProductID;
         [PositiveIntRange(1, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
         [ProductIdAlreadyExists("هذا الرقم تم تسجيله من قبل")]
-        public string EntredProductID
+        public virtual string EntredProductID
         {
             get { return _EntredProductID; }
 
@@ -67,7 +67,7 @@ namespace GetStartedApp.ViewModels.ProductPages
                 this.RaiseAndSetIfChanged(ref _EntredProductID, value);
 
                 
-                    DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _ProductID);
+                DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _ProductID);
 
 
             }
@@ -87,7 +87,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
 
         //private string _EntredProductDescription;
-        private string _ProductDescription;
+        protected string _ProductDescription;
 
         [CheckForInvalidCharacters]
         [MaxStringLengthAttribute_IS(100, "هذه الجملة طويلة جدا")]
@@ -108,7 +108,7 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
 
-        private string _EntredPrice;
+        protected string _EntredPrice;
         protected float _Price;
         [PositiveFloatRange(1, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب فقط")]
         public string EnteredPrice
@@ -126,7 +126,7 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
 
-        private string _EntredCost;
+        protected string _EntredCost;
         protected float _Cost;
         [PositiveFloatRange(1, maxPriceProductCanHold, ErrorMessage = "ادخل رقم موجب فقط")]
         public string EntredCost
@@ -146,8 +146,8 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
 
 
-        private string _CalculatedBenefit;
-        private float  _Benefit;
+        protected string _CalculatedBenefit;
+        protected float  _Benefit;
         [PositiveFloatRange(1, maxBenifitFromProduct, ErrorMessage = "الربح يجب ان يكون على الاقل درهم واحد")]
         public string CalculatedBenefit
         {
@@ -201,7 +201,7 @@ namespace GetStartedApp.ViewModels.ProductPages
             }
 
         }
-        private string _SelectedCategory;
+        protected string _SelectedCategory;
         public string SelectedCategory
         {
             get { return _SelectedCategory; }

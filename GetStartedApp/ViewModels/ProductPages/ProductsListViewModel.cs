@@ -274,7 +274,8 @@ namespace GetStartedApp.ViewModels.ProductPages
 
                 new EditStockQuantitiyProductViewModel
                 (productInfoSelected.SelectedProductImage, productInfoSelected.id, productInfoSelected.name, productInfoSelected.description, productInfoSelected.cost,
-                productInfoSelected.price, productInfoSelected.profit, productInfoSelected.StockQuantity, productInfoSelected.selectedCategory,this);
+                productInfoSelected.price, productInfoSelected.profit, productInfoSelected.StockQuantity,productInfoSelected.StockQuantity2,productInfoSelected.StockQuantity3,
+                productInfoSelected.selectedCategory,this);
 
             
             await ShowEditQuantityDialog.Handle(userControlToShowInsideDialog);
@@ -290,7 +291,8 @@ namespace GetStartedApp.ViewModels.ProductPages
 
                 new EditPriceProductViewModel
                 (productInfoSelected.SelectedProductImage, productInfoSelected.id, productInfoSelected.name, productInfoSelected.description, productInfoSelected.cost,
-                productInfoSelected.price, productInfoSelected.profit, productInfoSelected.StockQuantity, productInfoSelected.selectedCategory,this);
+                productInfoSelected.price, productInfoSelected.profit,
+                productInfoSelected.StockQuantity, productInfoSelected.StockQuantity2, productInfoSelected.StockQuantity3, productInfoSelected.selectedCategory,this);
 
 
             await ShowEditPriceDialog.Handle(userControlToShowInsideDialog);
@@ -305,7 +307,8 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             var userControlToShowInsideDialog = new EditAllProductInfoViewModel
                 (productInfoSelected.SelectedProductImage, productInfoSelected.id, productInfoSelected.name, productInfoSelected.description, productInfoSelected.cost,
-                productInfoSelected.price, productInfoSelected.profit, productInfoSelected.StockQuantity, productInfoSelected.selectedCategory, this);
+                productInfoSelected.price, productInfoSelected.profit, productInfoSelected.StockQuantity, productInfoSelected.StockQuantity2, productInfoSelected.StockQuantity3
+                , productInfoSelected.selectedCategory, this);
 
             await ShowEditAllInfoProductDialog.Handle(userControlToShowInsideDialog);
         }
@@ -364,7 +367,8 @@ namespace GetStartedApp.ViewModels.ProductPages
 
                new ReturnProductViewModel
                (productInfoSelected.SelectedProductImage, productInfoSelected.id, productInfoSelected.name, productInfoSelected.description, productInfoSelected.cost,
-               productInfoSelected.price, productInfoSelected.profit, productInfoSelected.StockQuantity, productInfoSelected.selectedCategory, this);
+               productInfoSelected.price, productInfoSelected.profit, productInfoSelected.StockQuantity, productInfoSelected.StockQuantity2, productInfoSelected.StockQuantity3,
+               productInfoSelected.selectedCategory, this);
 
             await ShowReturnProductDialog.Handle(userControlToShowInsideDialog);
          

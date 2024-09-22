@@ -33,9 +33,10 @@ namespace GetStartedApp.ViewModels.ProductPages
         public EditAllProductInfoViewModel(Bitmap productImage, long productID,
            string productName, string Description,
            float cost, float price, float profit,
-           int stockQuantity, string selectedCategory, ProductsListViewModel productsList)
+           int stockQuantity,int stockQuantity2, int stockQuantity3,
+           string selectedCategory, ProductsListViewModel productsList)
 
-            : base(productImage, productID, productName, Description, cost, price, profit, stockQuantity, selectedCategory, productsList)
+            : base(productImage, productID, productName, Description, cost, price, profit, stockQuantity, stockQuantity2, stockQuantity3,selectedCategory, productsList)
         {
 
            
@@ -175,6 +176,8 @@ namespace GetStartedApp.ViewModels.ProductPages
             IsPriceReadOnly = !false;
             IsCostReadOnly = !false;
             IsStockQuantityReadOnly = !false;
+            IsStockQuantityReadOnly2 = !false;
+            IsStockQuantityReadOnly3 = !false;
             IsSelectedCategoryEnabled = true;
 
             
