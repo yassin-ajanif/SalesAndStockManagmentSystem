@@ -70,13 +70,7 @@ namespace GetStartedApp.Models
 
             {
                 this.RaiseAndSetIfChanged(ref _productsUnitsToReduce_From_Stock1, value);
-                // we used this process validation by implementing intofiyInterfacedataerro in the viewmodel base
-                // we couldn't use attributes because they can't deal with dynamic variable they require const variable which is not in our case
-
-                // bool Are_ProductsUnits_Exceed_Stock = ProductsUnitsNumberExceedTheOneInStock();
-                // bool hasError = Are_ProductsUnits_Exceed_Stock; // Example validation condition       
-                // if(hasError) ShowUiError(nameof(ProductsUnits), "لاتوجد هذه الكمية في المخزن");
-                // else DeleteUiError(nameof(ProductsUnits), "لاتوجد هذه الكمية في المخزن");
+                
             }
         }
 
@@ -90,11 +84,7 @@ namespace GetStartedApp.Models
             set
             {
                 this.RaiseAndSetIfChanged(ref _productsUnitsToReduce_From_Stock2, value);
-                // Similar validation logic for Stock 2
-                // bool Are_ProductsUnits_Exceed_Stock = ProductsUnitsNumberExceedTheOneInStock();
-                // bool hasError = Are_ProductsUnits_Exceed_Stock;
-                // if(hasError) ShowUiError(nameof(ProductsUnitsToReduce_From_Stock2), "لاتوجد هذه الكمية في المخزن");
-                // else DeleteUiError(nameof(ProductsUnitsToReduce_From_Stock2), "لاتوجد هذه الكمية في المخزن");
+                
             }
         }
 
@@ -108,15 +98,9 @@ namespace GetStartedApp.Models
             set
             {
                 this.RaiseAndSetIfChanged(ref _productsUnitsToReduce_From_Stock3, value);
-                // Similar validation logic for Stock 3
-                // bool Are_ProductsUnits_Exceed_Stock = ProductsUnitsNumberExceedTheOneInStock();
-                // bool hasError = Are_ProductsUnits_Exceed_Stock;
-                // if(hasError) ShowUiError(nameof(ProductsUnitsToReduce_From_Stock3), "لاتوجد هذه الكمية في المخزن");
-                // else DeleteUiError(nameof(ProductsUnitsToReduce_From_Stock3), "لاتوجد هذه الكمية في المخزن");
+               
             }
         }
-
-
 
 
         private string _soldProductPriceUnitColor = "Black";
@@ -282,11 +266,8 @@ namespace GetStartedApp.Models
 
                     NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock = !AreProductsUnitsSpreadAcrossAllStock_Correctly();
 
-                    if (Stock_1_IsValid && Stock_2_IsValid && Stock_3_IsValid && !NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock) { 
-                        
-                        ProductStockHasErrors = false;
-                    }
-
+                    if (Stock_1_IsValid && Stock_2_IsValid && Stock_3_IsValid && !NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock) ProductStockHasErrors = false;
+                    
                     else ProductStockHasErrors = true;
 
                 });
@@ -297,28 +278,6 @@ namespace GetStartedApp.Models
         {
             return !string.IsNullOrEmpty(productUnit) && int.TryParse(productUnit, out _);
         }
-
-
-
-
-        //  public bool ProductsUnitsNumberExceedTheOneInStock()
-        //  {
-        //      if (string.IsNullOrEmpty(ProductsUnits) || string.IsNullOrWhiteSpace(ProductsUnits))
-        //      {
-        //          return false;
-        //      }
-        //
-        //      // Try to parse the ProductsUnits value to an integer
-        //      if (int.TryParse(ProductsUnits, out int units))
-        //      {
-        //          return units > ProductInfo.StockQuantity;
-        //      }
-        //
-        //      // Return false if parsing fails
-        //      return false;
-        //  }
-
-
 
 
     }

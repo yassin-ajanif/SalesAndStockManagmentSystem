@@ -296,6 +296,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             DataTable ProductsBoughtTable = new DataTable();
             ProductsBoughtTable.Columns.Add("ProductId", typeof(long));
             ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
+            ProductsBoughtTable.Columns.Add("QuantitySold2", typeof(int));
+            ProductsBoughtTable.Columns.Add("QuantitySold3", typeof(int));
             ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
             ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
             ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
@@ -308,11 +310,25 @@ namespace GetStartedApp.ViewModels.DashboardPages
        if (!float.TryParse(product.PriceOfProductSold, out float priceOfProductSoldConvertedToFloat) || priceOfProductSoldConvertedToFloat < 0 || isThisNumberOutRange(priceOfProductSoldConvertedToFloat)) break;
        if (product.ProductInfo.cost <= 0 || isThisNumberOutRange(product.ProductInfo.cost)) break;
        if (product.ProductInfo.id <= 0 || isThisNumberOutRange(product.ProductInfo.id)) break;
-       if (!int.TryParse(product.ProductsUnits, out int ProductUnitsConvertedToInt) || ProductUnitsConvertedToInt <= 0 || isThisNumberOutRange(ProductUnitsConvertedToInt)) break;
+      
+                if (
+                    
+                    !int.TryParse(product.ProductsUnitsToReduce_From_Stock1, out int ProductsUnitsToReduce_From_Stock1) ||
+                    !int.TryParse(product.ProductsUnitsToReduce_From_Stock2, out int ProductsUnitsToReduce_From_Stock2) ||
+                    !int.TryParse(product.ProductsUnitsToReduce_From_Stock3, out int ProductsUnitsToReduce_From_Stock3) ||
+                    ProductsUnitsToReduce_From_Stock1 < 0 || 
+                    ProductsUnitsToReduce_From_Stock2 < 0 || 
+                    ProductsUnitsToReduce_From_Stock3 < 0 ||
+                    isThisNumberOutRange(ProductsUnitsToReduce_From_Stock1)||
+                    isThisNumberOutRange(ProductsUnitsToReduce_From_Stock2)||
+                    isThisNumberOutRange(ProductsUnitsToReduce_From_Stock3) 
+                    ) break;
 
                 var profitFromSoldProduct = priceOfProductSoldConvertedToFloat - product.ProductInfo.cost;
 
-                ProductsBoughtTable.Rows.Add(product.ProductInfo.id, ProductUnitsConvertedToInt, product.PriceOfProductSold, false, profitFromSoldProduct);
+                ProductsBoughtTable.Rows.Add
+                (product.ProductInfo.id, ProductsUnitsToReduce_From_Stock1, ProductsUnitsToReduce_From_Stock2, 
+                ProductsUnitsToReduce_From_Stock3, product.PriceOfProductSold, false, profitFromSoldProduct);
             }
 
             return ProductsBoughtTable;
@@ -909,24 +925,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                });
       }
 
-        private void WhenUserStartLooking_ForProduct_Manually_DisplayProductsNames_BasedOn_SerachLetter()
-        {
-            this.WhenAnyValue(x => x.SelectedPaymentMethod, x => x.SelectedClientName_PhoneNumber).
-
-                 Subscribe(_ => {
-
-                     deleteDisplayedError();
-                     if (UserHasSelected_Check_PaymentMode())
-                     {
-                         if (User_HasPicked_Known_Client()) ;
-                         else displayErrorMessage("يجب ان تختار زبون لديه رقم هاتف");
-                     }
-
-
-
-                 });
-        }
-
+      
         private void WhenUserSetInvalidProduct_Price_Or_Quantity_Block_TheSystem_From_Adding_NewProducts_AndShowError_Plus_MakeAdditional_Checkings()
           {
         
