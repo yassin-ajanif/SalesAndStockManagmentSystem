@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsDataAccessLayer.cs" />
+    <Compile Include="clsDataLayerCompanies.cs" />
     <Compile Include="clsDataLayerPayments.cs" />
     <Compile Include="clsDataLayerSupplier.cs" />
     <Compile Include="ClsKeyConnection.cs" />

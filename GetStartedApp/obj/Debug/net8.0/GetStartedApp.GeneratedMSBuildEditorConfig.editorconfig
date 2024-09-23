@@ -26,13 +26,13 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/BarCodeGeneratorView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/BLView.axaml]
-build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
-
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/CategoryPages/AddNewCategoryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ClientsPages/AddNewClientView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/CompanyInfosView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/CustomControls/CustomAutoCompleteBox.axaml]

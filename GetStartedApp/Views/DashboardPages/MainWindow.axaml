@@ -36,20 +36,33 @@
 			
 
 				<!-- Third column content -->
-			<Border Width="30" HorizontalAlignment="Right" >
+			<Border Width="90" HorizontalAlignment="Right" >
 
-				<StackPanel>
-					<Image Source="{Binding NotificationBellImage}">
+				<StackPanel Orientation="Horizontal" >
+					<!-- First Image -->
+					<Image Source="{Binding NotificationBellImage}" Width="30">
+					</Image>
+
+					<!-- Second Image -->
+					<Image Source="{SvgImage /Assets/Icons/SettingIcon.svg}" 
+						   Width="30" Margin="20 0 0 0" >
 						<Image.ContextMenu>
 							<ContextMenu>
-								<MenuItem Header="تعديل كمية انتهاء المخزن" 
+								
+								<MenuItem Header="تعديل كمية انتهاء المخزن"
 										  FlowDirection="RightToLeft"
 										  FontFamily="Roboto"
-							Click="OnEditMinStockValue_Before_RaisingBellNotification"			   />
+										  Click="OnEditMinStockValue_Before_RaisingBellNotification"/>
+								<MenuItem Header="تعديل معلومات الشركة "
+										  FlowDirection="RightToLeft"
+										  FontFamily="Roboto"
+										  Click="OnAddOrEditCompanyInfo"/>
+							
 							</ContextMenu>
 						</Image.ContextMenu>
 					</Image>
 				</StackPanel>
+
 			</Border>
 
 

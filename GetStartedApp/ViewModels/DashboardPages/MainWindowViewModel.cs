@@ -88,6 +88,8 @@ public class MainWindowViewModel : ViewModelBase
 
         // CurrentPage = new ClientsListViewModel(this);
 
+       // CurrentPage = new CompanyInfosViewModel();
+
     }
 
     private void DoBackup()

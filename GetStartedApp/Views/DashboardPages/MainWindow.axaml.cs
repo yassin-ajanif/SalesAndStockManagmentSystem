@@ -70,5 +70,24 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
         
     }
 
-   
+    private async void OnAddOrEditCompanyInfo(object sender, RoutedEventArgs e)
+    {
+
+        var dialog = new DialogContainerView();
+
+        // the interaction is an instance of the viewmodel we want to bind to the view we want to display 
+        dialog.Content = new Views.CompanyInfosView() { DataContext = new CompanyInfosViewModel()};
+        dialog.Title = "تعديل معلومات الشركة ";
+        var window = this.GetVisualRoot() as Window;
+        if (window == null)
+        {
+            throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
+        }
+
+        var result = await dialog.ShowDialog<Unit>(window);
+
+
+    }
+
+
 }

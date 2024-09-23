@@ -640,5 +640,12 @@ namespace GetStartedApp.Models
             // Call the data access method to get the ProductID from the product name
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.GetProductIDFromProductName(productName);
         }
+
+        public static void AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
+                                           string ice, string ifs, string email, string patente, string rc, string cnss)
+        {
+          
+            SalesProductsManagmentSystemBusinessLayer.ClsCompanies.AddOrUpdateCompany(companyId, companyLogo, companyName, companyLocation, ice, ifs, email, patente, rc, cnss);
+        }
     }
 }
