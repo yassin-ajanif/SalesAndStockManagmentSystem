@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using GetStartedApp.ViewModels;
 using SalesProductsManagmentSystemDataLayer;
+using System.ComponentModel.Design;
 
 
 namespace GetStartedApp.Models
@@ -641,11 +642,52 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.GetProductIDFromProductName(productName);
         }
 
-        public static void AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
+        public static bool AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
                                            string ice, string ifs, string email, string patente, string rc, string cnss)
         {
           
-            SalesProductsManagmentSystemBusinessLayer.ClsCompanies.AddOrUpdateCompany(companyId, companyLogo, companyName, companyLocation, ice, ifs, email, patente, rc, cnss);
+          return  SalesProductsManagmentSystemBusinessLayer.ClsCompanies.AddOrUpdateCompany(companyId, companyLogo, companyName, companyLocation, ice, ifs, email, patente, rc, cnss);
         }
+
+        public static CompanyInfo LoadCompanyInfo(int companyId)
+        {
+            // Call the business layer to retrieve the SqlDataReader
+            SqlDataReader reader = null;
+            CompanyInfo companyInfo = null;
+
+            try
+            {
+                // Call the business layer function to get the SqlDataReader
+                reader = SalesProductsManagmentSystemBusinessLayer.ClsCompanies.RetrieveCompanyInfo(companyId); // Assuming the business layer provides the reader
+
+                // Check if the reader has any rows (data)
+                if (reader.Read())
+                {
+                    // Load data into the CompanyInfo object
+                    companyInfo = new CompanyInfo(
+                        reader.GetInt32(reader.GetOrdinal("CompanyID")),
+                        reader["CompanyLogo"] != DBNull.Value ? (byte[])reader["CompanyLogo"] : null,
+                        reader.GetString(reader.GetOrdinal("CompanyName")),
+                        reader.GetString(reader.GetOrdinal("CompanyLocation")),
+                        reader["ICE"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("ICE")) : null,
+                        reader["IFs"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("IFs")) : null,
+                        reader["Email"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Email")) : null,
+                        reader["Patente"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Patente")) : null,
+                        reader["RC"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("RC")) : null,
+                        reader["CNSS"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("CNSS")) : null
+                    );
+                }
+            }
+            finally
+            {
+                // Ensure the reader is closed even in case of an exception
+                reader?.Close();
+            }
+
+            // Return the populated CompanyInfo object, or null if no data was found
+            return companyInfo;
+        }
+
+
     }
 }

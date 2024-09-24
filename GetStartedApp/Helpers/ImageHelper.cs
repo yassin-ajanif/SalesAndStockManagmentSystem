@@ -44,6 +44,17 @@ namespace GetStartedApp.Helpers
                     return null;
                 }
             }
+
+
+        public static bool IsTheOriginalImageDifferentFromCurrent(Bitmap Image1, Bitmap Image2)
+        {
+
+            if (Image1 == null || Image2 == null) return false;
+
+            return Image1.Size != Image2.Size;
         }
+
+
+    }
     
 }

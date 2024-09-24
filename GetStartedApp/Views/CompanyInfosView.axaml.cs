@@ -5,6 +5,9 @@ using GetStartedApp.ViewModels;
 using System.Threading.Tasks;
 using System;
 using Avalonia.ReactiveUI;
+using Avalonia.VisualTree;
+using ReactiveUI;
+using System.Reactive;
 
 namespace GetStartedApp.Views;
 
@@ -13,6 +16,7 @@ public partial class CompanyInfosView : ReactiveUserControl<CompanyInfosViewMode
     public CompanyInfosView()
     {
         InitializeComponent();
+        RegisterShowMessageBoxDialogEvents();
     }
 
     protected override void OnDataContextChanged(EventArgs e)
@@ -43,4 +47,33 @@ public partial class CompanyInfosView : ReactiveUserControl<CompanyInfosViewMode
 
         return "";
     }
+
+    private void RegisterShowMessageBoxDialogEvents()
+    {
+        this.WhenActivated(action => {
+
+            action(ViewModel!.ShowMessageBoxDialog.RegisterHandler(ShowMessageBox));   
+        }
+        );
+    }
+
+    private async Task ShowMessageBox(InteractionContext<string, Unit> context)
+    {
+
+
+        var window = this.GetVisualRoot() as Window;
+        var dialog = new ShowMessageBoxContainer(context.Input);
+
+        await dialog.ShowDialog(window);
+
+        //  window.Close();          
+        context.SetOutput(Unit.Default);
+
+        // we won't close windows if the user is going to print barcode , becuase from this windows were going to open barcode widnows
+        // closing that will cause crash in the program
+
+        window.Close();
+
+    }
+
 }

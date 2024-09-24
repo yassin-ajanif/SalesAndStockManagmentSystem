@@ -19,33 +19,71 @@ namespace SalesProductsManagmentSystemDataLayer
             connection = new SqlConnection(connectionString);
         }
 
-        public static void AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
-                                            string ice, string ifs, string email, string patente, string rc, string cnss)
+        public static bool AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
+                                         string ice, string ifs, string email, string patente, string rc, string cnss)
+        {
+            SqlConnection connection = null;
+
+            try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                connection = new SqlConnection(connectionString);
+                using (SqlCommand command = new SqlCommand("AddOrUpdateCompany", connection))
                 {
-                    using (SqlCommand command = new SqlCommand("AddOrUpdateCompany", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
+                    command.CommandType = CommandType.StoredProcedure;
 
-                        command.Parameters.AddWithValue("@CompanyID", companyId);
-                        command.Parameters.AddWithValue("@CompanyLogo", (object)companyLogo ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@CompanyName", companyName);
-                        command.Parameters.AddWithValue("@CompanyLocation", companyLocation);
-                        command.Parameters.AddWithValue("@ICE", (object)ice ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@IFs", (object)ifs ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Email", (object)email ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Patente", (object)patente ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@RC", (object)rc ?? DBNull.Value);
-                        command.Parameters.AddWithValue("@Cnss", (object)cnss ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@CompanyID", companyId);
+                    command.Parameters.AddWithValue("@CompanyLogo", (object)companyLogo ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@CompanyName", companyName);
+                    command.Parameters.AddWithValue("@CompanyLocation", companyLocation);
+                    command.Parameters.AddWithValue("@ICE", (object)ice ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@IFs", (object)ifs ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Email", (object)email ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Patente", (object)patente ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@RC", (object)rc ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@Cnss", (object)cnss ?? DBNull.Value);
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                    }
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                // Return true if the operation was successful
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log the exception as needed
+                Console.WriteLine($"Error: {ex.Message}");
+                return false; // Return false if an exception occurred
+            }
+            finally
+            {
+                // Ensure the connection is closed
+                if (connection != null)
+                {
+                    connection.Close();
                 }
             }
         }
+
+
+
+        public static SqlDataReader GetCompanyInfo(int companyId)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand command = new SqlCommand("GetCompanyInfo", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            command.Parameters.AddWithValue("@CompanyID", companyId);
+
+            connection.Open();
+            return command.ExecuteReader(CommandBehavior.CloseConnection); // Ensure connection closes when reader is closed
+        }
+
+
+
     }
+}
 
 
 

@@ -53,11 +53,13 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         }
 
-        private bool IsTheOriginalImageDifferentFromCurrent(Bitmap Image1 , Bitmap Image2) { 
-        
-               if(Image1==null || Image2==null) return false;
+        private bool IsTheOriginalImageDifferentFromCurrent(Bitmap Image1 , Bitmap Image2) {
 
-               return Image1.Size != Image2.Size;
+            //if(Image1==null || Image2==null) return false;
+            //
+            //return Image1.Size != Image2.Size;
+
+            return ImageHelper.IsTheOriginalImageDifferentFromCurrent(Image1, Image2);
         }
         private void RecordAllOriginalProductInfoBeforeEdition() {
 

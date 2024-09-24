@@ -238,8 +238,8 @@ namespace GetStartedApp.ViewModels
 
           //     var companyLogoConvertedToByteArray = ImageConverter.BitmapToByteArray(SelectedLogoImageToDisplay);
           //    
-          //     var CompanyLogoAndLocationAreUpdatedSuccessfully = 
-          //         await AccessToClassLibraryBackendProject.UpdateCompanyDetailsAsync(companyLogoConvertedToByteArray, CompanyName, CompanyLocation,ICE,NTaxProfessional,IdentifiantFiscal);
+          //  var CompanyLogoAndLocationAreUpdatedSuccessfully = 
+          //      await AccessToClassLibraryBackendProject.UpdateCompanyDetailsAsync(companyLogoConvertedToByteArray, CompanyName, CompanyLocation,ICE,NTaxProfessional,IdentifiantFiscal);
           //    
           //     if (!CompanyLogoAndLocationAreUpdatedSuccessfully) return;
           //
