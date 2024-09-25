@@ -179,6 +179,16 @@
 								</StackPanel>
 							</Button>
 						</Border>
+
+						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="2" Grid.Column="4">
+							<Button Classes="WelcomeBtnsStyles" 
+									Command="{Binding GoToReturnProductPageCommand}">
+								<StackPanel Classes="BtnContainer">
+									<Image Source="avares://GetStartedApp/Assets/Icons/Devis.png"/>
+									<Label Content="Devis انشاء" Classes="WelecomeBtnsStyles"/>
+								</StackPanel>
+							</Button>
+						</Border>
 					</Grid>
 				</ScrollViewer>
 

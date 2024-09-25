@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\productpages\\returnproductview.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\productpages\\returnproductview.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\dashboardview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\dashboardview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\makesaleforcompaniesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\makesaleforcompaniesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\devisview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\devisview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\makesaleforcompaniesview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\makesaleforcompaniesview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\makesaleview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\makesaleview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\devisview.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\devisview.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\devisviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\devisviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,39 +51,63 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ReturnProductView.axaml.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\ProductPages\\ReturnProductView.axaml.cs",
-              "RelativeDocumentMoniker": "Views\\ProductPages\\ReturnProductView.axaml.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\ProductPages\\ReturnProductView.axaml.cs",
-              "RelativeToolTip": "Views\\ProductPages\\ReturnProductView.axaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T13:56:44.591Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MakeSaleForCompaniesViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MakeSaleForCompaniesViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\MakeSaleForCompaniesViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MakeSaleForCompaniesViewModel.cs",
-              "RelativeToolTip": "ViewModels\\DashboardPages\\MakeSaleForCompaniesViewModel.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAewCoAAAAwAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T11:35:21.879Z",
+              "Title": "DashboardView.axaml",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DashboardView.axaml",
+              "RelativeDocumentMoniker": "Views\\DashboardPages\\DashboardView.axaml",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DashboardView.axaml*",
+              "RelativeToolTip": "Views\\DashboardPages\\DashboardView.axaml*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-09-25T19:52:49.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MakeSaleForCompaniesView.axaml",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\MakeSaleForCompaniesView.axaml",
-              "RelativeDocumentMoniker": "Views\\DashboardPages\\MakeSaleForCompaniesView.axaml",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\MakeSaleForCompaniesView.axaml",
-              "RelativeToolTip": "Views\\DashboardPages\\MakeSaleForCompaniesView.axaml",
+              "Title": "MakeSaleView.axaml",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\MakeSaleView.axaml",
+              "RelativeDocumentMoniker": "Views\\DashboardPages\\MakeSaleView.axaml",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\MakeSaleView.axaml",
+              "RelativeToolTip": "Views\\DashboardPages\\MakeSaleView.axaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-09-25T11:04:28.462Z",
+              "WhenOpened": "2024-09-25T19:50:10.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DevisView.axaml",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DevisView.axaml",
+              "RelativeDocumentMoniker": "Views\\DashboardPages\\DevisView.axaml",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DevisView.axaml",
+              "RelativeToolTip": "Views\\DashboardPages\\DevisView.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-09-25T19:47:58.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DevisView.axaml.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DevisView.axaml.cs",
+              "RelativeDocumentMoniker": "Views\\DashboardPages\\DevisView.axaml.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DevisView.axaml.cs",
+              "RelativeToolTip": "Views\\DashboardPages\\DevisView.axaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T19:47:58.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DevisViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\DevisViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\DevisViewModel.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\DevisViewModel.cs",
+              "RelativeToolTip": "ViewModels\\DashboardPages\\DevisViewModel.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAA7wDcBAABhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T16:08:12.683Z",
               "EditorCaption": ""
             }
           ]
