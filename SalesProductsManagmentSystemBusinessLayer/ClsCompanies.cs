@@ -23,7 +23,15 @@ namespace SalesProductsManagmentSystemBusinessLayer
                     return clsDataLayerCompanies.GetCompanyInfo(companyId);
                 
             }
+
+
+        public static Dictionary<string, int> GetAllCompanyNames_And_Ids()
+        {
+            // Business logic could be added here if necessary
+            return clsDataLayerCompanies.GetAllCompanyNames();
         }
+
+    }
 
     }
 

@@ -455,7 +455,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
 
-        private void GoToBlPageGeneratorPage()
+        protected virtual void GoToBlPageGeneratorPage()
         {
             int    lastSaleClientID = GetLastSaleClientID_And_Name().Item1;
             string lastSaleClientName = GetLastSaleClientID_And_Name().Item2;
@@ -541,7 +541,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             catch(Exception ex) { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ماتاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن "); }
         }
 
-        private async void SubmitOperationSalesDataToDatabase
+        public virtual async void SubmitOperationSalesDataToDatabase
         (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
         {
             if (AccessToClassLibraryBackendProject.
@@ -567,7 +567,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             if (UserHasClickedYesToDeleteSaleOperationBtn) ResetAllSellingInfoOperation();
         }
 
-        private void ResetAllSellingInfoOperation()
+        protected void ResetAllSellingInfoOperation()
         {
             deleteAllScannedItems();
             AmountPaid = string.Empty;

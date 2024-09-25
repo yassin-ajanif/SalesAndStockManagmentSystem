@@ -20,6 +20,15 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
         }
 
+        public static bool SaveNewSaleOperationToDatabase_ForCompanies(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList, int companyID,
+            string selectedPaymentMethod, long? chequeNumber = null, decimal? amount = null, DateTime? chequeDate = null)
+        {
+
+            return ClsDataAccessLayer.SaveNewSaleOperationToDatabase_ForCompanies
+            (SaleDateTime, TotalPrice, SoldProductList, companyID, selectedPaymentMethod, chequeNumber, amount, chequeDate);
+
+        }
+
 
         public static decimal GetTotalProfit(DateTime startTime, DateTime endTime)
         {

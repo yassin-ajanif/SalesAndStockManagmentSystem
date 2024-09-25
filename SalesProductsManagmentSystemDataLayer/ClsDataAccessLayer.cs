@@ -1004,7 +1004,99 @@ public class ClsDataAccessLayer
     }
 
 
+    public static bool SaveNewSaleOperationToDatabase_ForCompanies(
+    DateTime saleDateTime,
+    float totalPrice,
+    DataTable productDataTable,
+    int CompanyID,
+    string selectedPaymentMethod,
+    long? chequeNumber = null,  // Nullable long for cheque number
+    decimal? amount = null,     // Nullable decimal for cheque amount
+    DateTime? chequeDate = null) // Nullable DateTime for cheque date
+    {
+        // Validate saleDateTime
+        if (saleDateTime == default(DateTime))
+        {
+            Console.WriteLine("Invalid saleDateTime: DateTime is not provided.");
+            return false;
+        }
 
+        // Validate totalPrice
+        if (totalPrice <= 0 || IsThisFloatOutOfRange(totalPrice))
+        {
+            Console.WriteLine($"Invalid totalPrice: {totalPrice}. Total price must be greater than zero or it is out of range.");
+            return false;
+        }
+
+        // Validate productDataTable
+        if (productDataTable == null || productDataTable.Rows.Count == 0)
+        {
+            Console.WriteLine("Invalid productDataTable: DataTable is null or empty.");
+            return false;
+        }
+
+    
+
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            using (SqlCommand cmd = new SqlCommand("[MakeSaleTransactionForCompanies]", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@SaleDateTime", SqlDbType.DateTime) { Value = saleDateTime });
+                cmd.Parameters.Add(new SqlParameter("@TotalPrice", SqlDbType.Decimal) { Value = totalPrice });
+                cmd.Parameters.Add(new SqlParameter("@ProductDataTable", SqlDbType.Structured)
+                {
+                    TypeName = "dbo.ProductBought",
+                    Value = productDataTable
+                });
+                cmd.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int)
+                {
+                    Value = CompanyID
+                });
+                cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar)
+                {
+                    Value = selectedPaymentMethod
+                });
+
+                // Add cheque-related parameters, allowing them to be null
+                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.BigInt)
+                {
+                    Value = chequeNumber.HasValue ? (object)chequeNumber.Value : DBNull.Value
+                });
+
+                cmd.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Decimal)
+                {
+                    Value = amount.HasValue ? (object)amount.Value : DBNull.Value
+                });
+
+                cmd.Parameters.Add(new SqlParameter("@ChequeDate", SqlDbType.DateTime)
+                {
+                    Value = chequeDate.HasValue ? (object)chequeDate.Value : DBNull.Value
+                });
+
+                var returnValue = new SqlParameter("@ReturnValue", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.ReturnValue
+                };
+                cmd.Parameters.Add(returnValue);
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    int result = (int)returnValue.Value;
+                    return result == 1;
+                }
+                catch (SqlException ex)
+                {
+                    // Handle exception (log it, rethrow it, or handle it as needed)
+                    Console.WriteLine("SQL Error: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+    }
 
 
     public static byte[] GetImageOfProductById(long id)

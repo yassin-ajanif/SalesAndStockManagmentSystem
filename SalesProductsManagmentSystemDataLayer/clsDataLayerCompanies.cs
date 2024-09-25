@@ -80,6 +80,39 @@ namespace SalesProductsManagmentSystemDataLayer
             return command.ExecuteReader(CommandBehavior.CloseConnection); // Ensure connection closes when reader is closed
         }
 
+        public static Dictionary<string, int> GetAllCompanyNames()
+        {
+            Dictionary<string, int> companies = new Dictionary<string, int>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd = new SqlCommand("GetAllCompanyNames", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                conn.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string companyName = reader["CompanyName"].ToString();
+                        int companyID = Convert.ToInt32(reader["CompanyID"]);
+
+                        // Add company name as key and company ID as value
+                        if (!companies.ContainsKey(companyName)) // Prevent duplicate keys
+                        {
+                            companies.Add(companyName, companyID);
+                        }
+                    }
+                }
+            }
+
+            return companies;
+        }
+
+
 
 
     }

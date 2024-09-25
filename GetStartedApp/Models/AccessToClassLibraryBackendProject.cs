@@ -417,6 +417,33 @@ namespace GetStartedApp.Models
             );
         }
 
+        public static bool AddNewSaleToDatabase_ForCompanies(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList,
+   int CompanyID, string selectedPaymentMethod, ChequeInfo userChequeInfo)
+        {
+            // Default values to be used if userChequeInfo is null
+            long? chequeNumber = null;
+            decimal? amount = null;
+            DateTime? chequeDate = null;
+
+            if (userChequeInfo != null)
+            {
+                chequeNumber = userChequeInfo.ChequeNumber;
+                amount = userChequeInfo.Amount;
+                chequeDate = userChequeInfo.ChequeDate; // Convert DateTime to DateTimeOffset
+            }
+
+            return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase_ForCompanies(
+                SaleDateTime,
+                TotalPrice,
+                SoldProductList,
+                CompanyID,
+                selectedPaymentMethod,
+                chequeNumber,
+                amount,
+                chequeDate
+            );
+        }
+
 
 
         public static bool InsertIntoReturnedProducts(long productId, string productName, int quantity, float sellingPrice, float profit)
@@ -688,6 +715,10 @@ namespace GetStartedApp.Models
             return companyInfo;
         }
 
-
+        public static Dictionary<string, int> GetAllCompanyNames_And_IDs()
+        {
+            // Business logic could be added here if necessary
+            return SalesProductsManagmentSystemBusinessLayer.ClsCompanies.GetAllCompanyNames_And_Ids();
+        }
     }
 }

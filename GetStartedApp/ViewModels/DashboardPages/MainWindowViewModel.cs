@@ -145,6 +145,13 @@ public class MainWindowViewModel : ViewModelBase
         HideheaderAndShowBtnBack();
     }
 
+    public void GoToMakeSaleForCompaniesPage()
+    {
+        CurrentPage = new MakeSaleForCompaniesViewModel(this);
+        navigationHistory.Push(CurrentPage);
+        HideheaderAndShowBtnBack();
+    }
+
     public void GoToClientsPage()
     {
         CurrentPage = new ClientsListViewModel(this);
