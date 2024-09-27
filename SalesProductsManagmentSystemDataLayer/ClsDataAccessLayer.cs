@@ -1841,9 +1841,10 @@ public class ClsDataAccessLayer
 
 
     public static bool GetClientInfoByPhoneNumber(
-        string phoneNumber,
-        ref string clientName,
-        ref string email)
+     ref int ClientID,         // Pass ClientID as a reference
+     string phoneNumber,
+     ref string clientName,
+     ref string email)
     {
         bool isClientFound = false;
 
@@ -1861,6 +1862,8 @@ public class ClsDataAccessLayer
                     {
                         if (reader.Read())
                         {
+                            // Retrieve values from the reader
+                            ClientID = (int)reader["ClientID"]; // Get ClientID
                             clientName = reader["ClientName"] as string;
                             email = reader["Email"] as string;
                             isClientFound = true;
@@ -1868,6 +1871,7 @@ public class ClsDataAccessLayer
                         else
                         {
                             // Set default values if client is not found
+                            ClientID = 0; // Or any default value for ClientID
                             clientName = null;
                             email = null;
                         }
@@ -1883,6 +1887,69 @@ public class ClsDataAccessLayer
 
         return isClientFound;
     }
+
+    public static bool GetClientInfoById(
+    int clientID,
+    ref string clientName,
+    ref string phoneNumber,
+    ref string email)
+    {
+        bool isClientFound = false;
+
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("GetClientInfoById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Input parameter
+                    command.Parameters.AddWithValue("@ClientID", clientID);
+
+                    // Output parameters
+                    SqlParameter nameParam = new SqlParameter("@ClientName", SqlDbType.NVarChar, 100)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(nameParam);
+
+                    SqlParameter phoneParam = new SqlParameter("@PhoneNumber", SqlDbType.NVarChar, 20)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(phoneParam);
+
+                    SqlParameter emailParam = new SqlParameter("@Email", SqlDbType.NVarChar, 100)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(emailParam);
+
+                    // Execute the query
+                    command.ExecuteNonQuery();
+
+                    // Set the output values
+                    clientName = nameParam.Value as string;
+                    phoneNumber = phoneParam.Value as string;
+                    email = emailParam.Value as string;
+
+                    // If clientName is not null, assume the client is found
+                    isClientFound = clientName != null;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions (logging, etc.)
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+
+        return isClientFound;
+    }
+
+
 
     public static void GetLastSaleClientInfo(ref int clientID, ref string clientName)
     {
@@ -2029,6 +2096,7 @@ public class ClsDataAccessLayer
 
         return productID; // Returns the ProductID or PRODUCT_ID_NOT_FOUND if not found
     }
+
 
 
 }

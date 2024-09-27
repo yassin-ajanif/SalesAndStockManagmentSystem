@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.ReactiveUI;
 using Avalonia.VisualTree;
 using GetStartedApp.Models;
+using GetStartedApp.Models.Objects;
 using GetStartedApp.ViewModels.DashboardPages;
 using System.Diagnostics;
 using System.Linq;

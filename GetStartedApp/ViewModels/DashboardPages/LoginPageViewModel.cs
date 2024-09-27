@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ExCSS;
 using GetStartedApp.Models;
+using GetStartedApp.Models.Enums;
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {

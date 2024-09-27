@@ -1,6 +1,6 @@
 ﻿using Avalonia.Media.Imaging;
 using GetStartedApp.Helpers;
-using GetStartedApp.Models;
+using GetStartedApp.Models.Objects;
 using GetStartedApp.ViewModels.DashboardPages;
 using ReactiveUI;
 using System;

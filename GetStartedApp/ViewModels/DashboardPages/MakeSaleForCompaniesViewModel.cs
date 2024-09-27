@@ -18,6 +18,7 @@ using System.Data;
 using System.Globalization;
 using Avalonia.Threading;
 using System.Collections.Generic;
+using GetStartedApp.Models.Objects;
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {

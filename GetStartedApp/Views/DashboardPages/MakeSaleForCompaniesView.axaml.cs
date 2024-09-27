@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
-using GetStartedApp.Models;
 using GetStartedApp.ViewModels;
 using ReactiveUI;
 using System.Threading.Tasks;
@@ -11,6 +10,7 @@ using System;
 using GetStartedApp.ViewModels.DashboardPages;
 using Avalonia.ReactiveUI;
 using System.Linq;
+using GetStartedApp.Models.Objects;
 
 namespace GetStartedApp.Views.DashboardPages;
 

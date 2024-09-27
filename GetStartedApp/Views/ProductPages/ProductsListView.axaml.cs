@@ -21,6 +21,7 @@ using Avalonia.Threading;
 using GetStartedApp.Models;
 using Avalonia.Input;
 using GetStartedApp.Helpers;
+using GetStartedApp.Models.Objects;
 
 
 namespace GetStartedApp.Views.ProductPages

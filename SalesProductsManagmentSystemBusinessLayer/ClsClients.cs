@@ -81,10 +81,10 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return ClsDataAccessLayer.DeleteClientByPhoneNumber(phoneNumber);
         }
 
-        public static bool GetClientInfo(string phoneNumber, ref string clientName, ref string email)
+        public static bool GetClientInfo(ref int ClientID ,string phoneNumber, ref string clientName, ref string email)
         {
 
-            return ClsDataAccessLayer.GetClientInfoByPhoneNumber(phoneNumber, ref clientName, ref email);
+            return ClsDataAccessLayer.GetClientInfoByPhoneNumber(ref ClientID,phoneNumber, ref clientName, ref email);
 
 
         }
@@ -93,6 +93,39 @@ namespace SalesProductsManagmentSystemBusinessLayer
         {
             ClsDataAccessLayer.GetLastSaleClientInfo(ref clientID, ref clientName);
         }
-    }
+
+
+            // Function to retrieve client information by ID
+            public static bool GetClientInfoById(int clientId, ref string clientName, ref string phoneNumber, ref string email)
+            {
+                // Initialize out parameters with default values
+           
+
+                // Call the data layer function to retrieve client information
+                bool isClientFound = ClsDataAccessLayer.GetClientInfoById(
+                    clientId,
+                    ref clientName,
+                    ref phoneNumber,
+                    ref email
+                );
+
+                // Optional: Add any business-specific logic here, such as logging or additional validation
+                if (isClientFound)
+                {
+                    // Business logic: Maybe log the success or format the data, etc.
+                    Console.WriteLine("Client information retrieved successfully.");
+                }
+                else
+                {
+                    // Business logic: Handle the case where the client is not found
+                    Console.WriteLine("Client not found.");
+                }
+
+                return isClientFound;
+            }
+        }
+
+
+    
 
 }

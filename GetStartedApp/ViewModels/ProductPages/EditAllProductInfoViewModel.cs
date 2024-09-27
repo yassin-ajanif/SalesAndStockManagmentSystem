@@ -12,6 +12,8 @@ using GetStartedApp.Models;
 using GetStartedApp.Helpers.CustomUIErrorAttributes;
 using System.Diagnostics;
 using System.IO.Pipelines;
+using GetStartedApp.Models.Objects;
+using GetStartedApp.Models.Enums;
 
 namespace GetStartedApp.ViewModels.ProductPages
 {

@@ -33,10 +33,11 @@ namespace GetStartedApp.ViewModels.ClientsPages
             string ClientName = string.Empty;
             string PhoneNumber = ClientPhoneNumber;
             string Email=string.Empty;
+            int ClientID=0;
             // we load this variable to use it to update our client info in case we update phone number we need to have the old one which is the first one loaded to ui before it edited
             oldPhoneNumber = ClientPhoneNumber;
 
-            AccessToClassLibraryBackendProject.GetClientInfo(PhoneNumber, ref ClientName, ref Email);
+            AccessToClassLibraryBackendProject.GetClientInfo(ref ClientID,PhoneNumber, ref ClientName, ref Email);
                 
             base.ClientName = ClientName;
             base.PhoneNumber = PhoneNumber;

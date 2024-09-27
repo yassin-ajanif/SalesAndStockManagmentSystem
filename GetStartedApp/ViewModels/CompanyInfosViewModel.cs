@@ -9,6 +9,7 @@ using GetStartedApp.Helpers;
 using System.Reactive.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.ComponentModel.DataAnnotations;
+using GetStartedApp.Models.Objects;
 
 
 namespace GetStartedApp.ViewModels

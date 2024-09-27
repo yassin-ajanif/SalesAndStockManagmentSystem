@@ -540,15 +540,12 @@
 													</StackPanel>
 
 
-
-											
-												
-
 											
 											
 											</StackPanel>
 										</Grid>
 
+										
 										<Grid Grid.Row="4">
 											<TextBlock
 												IsVisible="{Binding NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock}"

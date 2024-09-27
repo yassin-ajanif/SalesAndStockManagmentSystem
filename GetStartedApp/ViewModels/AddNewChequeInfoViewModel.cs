@@ -1,4 +1,4 @@
-﻿using GetStartedApp.Models;
+﻿using GetStartedApp.Models.Objects;
 using ReactiveUI;
 using System;
 using System.Reactive;

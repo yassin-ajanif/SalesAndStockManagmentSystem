@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Media;
 using GetStartedApp.Models;
+using GetStartedApp.Models.Objects;
 
 namespace GetStartedApp.Views
 {

@@ -1,4 +1,4 @@
-﻿using GetStartedApp.Models;
+﻿using GetStartedApp.Models.Enums;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ICommand GoToLoginPageCommand { get; private set; }
         public ICommand GoToClientsPageCommand { get; private set; }
         public ICommand GoToSuppliersPageCommand { get; private set; }
-        
+        public ICommand GoToDevisPageCommand { get; private set; }
+
 
 
         // this funtion is responsibe for enabling the commands that will be sending through btns
@@ -49,6 +50,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
           GoToClientsPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToClientsPage);
           GoToSuppliersPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToSuppliersPage);
           GoToMakeSaleForCompaniesPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToMakeSaleForCompaniesPage);
+            GoToDevisPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToDevisPage);
 
         }
 

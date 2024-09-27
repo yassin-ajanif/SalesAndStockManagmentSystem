@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using GetStartedApp.ViewModels;
 using SalesProductsManagmentSystemDataLayer;
 using System.ComponentModel.Design;
+using GetStartedApp.Models.Objects;
 
 
 namespace GetStartedApp.Models
@@ -58,7 +59,7 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.
             AddProduct(AddedProduct.id, AddedProduct.name,
                        AddedProduct.description, AddedProduct.price,
-                       AddedProduct.cost, AddedProduct.StockQuantity,AddedProduct.StockQuantity2,AddedProduct.StockQuantity3,
+                       AddedProduct.cost, AddedProduct.StockQuantity, AddedProduct.StockQuantity2, AddedProduct.StockQuantity3,
                        AddedProduct.selectedCategory,
                     ImageConverter.BitmapToByteArray(AddedProduct.SelectedProductImage)
                     );
@@ -143,7 +144,7 @@ namespace GetStartedApp.Models
                 var selectedCategory = reader.GetString(reader.GetOrdinal("CategoryName"));
                 // byte[] imageData = reader["ImageData"] as byte[];
                 Bitmap imageData = null;
-                var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3,price, cost, imageData, selectedCategory);
+                var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3, price, cost, imageData, selectedCategory);
                 products.Add(product);
             }
 
@@ -176,7 +177,7 @@ namespace GetStartedApp.Models
                 Bitmap imageData = null;
 
 
-                var product = new ProductInfo(id, name, description, stockQuantity,stockQuantity2,stockQuantity3, price, cost, imageData, selectedCategory);
+                var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3, price, cost, imageData, selectedCategory);
                 products.Add(product);
             }
 
@@ -208,7 +209,7 @@ namespace GetStartedApp.Models
                 // var DatabaseImageConvertedToBitmp = ReadDbImageAndConvertItToBitmap(reader, "ImageData");
 
 
-                var product = new ProductInfo(id, name, description, stockQuantity,stockQuantity2,stockQuantity3, price, cost, imageData, selectedCategory);
+                var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3, price, cost, imageData, selectedCategory);
                 products.Add(product);
             }
 
@@ -241,7 +242,7 @@ namespace GetStartedApp.Models
                 // Optionally convert database image data to Bitmap
                 // imageData = ReadDbImageAndConvertItToBitmap(reader, "ImageData");
 
-                var product = new ProductInfo(id, name, description, stockQuantity,stockQuantity2,stockQuantity3, price, cost, imageData, category);
+                var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3, price, cost, imageData, category);
                 products.Add(product);
             }
 
@@ -273,7 +274,7 @@ namespace GetStartedApp.Models
                     var DatabaseImageConvertedToBitmp = ReadDbImageAndConvertItToBitmap(reader, "ImageData");
 
 
-                    var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3,price, cost, DatabaseImageConvertedToBitmp, selectedCategory);
+                    var product = new ProductInfo(id, name, description, stockQuantity, stockQuantity2, stockQuantity3, price, cost, DatabaseImageConvertedToBitmp, selectedCategory);
 
                     reader.Close();
                     return product;
@@ -348,7 +349,7 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.
                   UpdateProduct(EditedProduct.id, EditedProduct.name,
                          EditedProduct.description, EditedProduct.price,
-                         EditedProduct.cost, EditedProduct.StockQuantity,EditedProduct.StockQuantity2,EditedProduct.StockQuantity3,
+                         EditedProduct.cost, EditedProduct.StockQuantity, EditedProduct.StockQuantity2, EditedProduct.StockQuantity3,
                          EditedProduct.selectedCategory,
                       ImageConverter.BitmapToByteArray(EditedProduct.SelectedProductImage)
                       );
@@ -521,11 +522,11 @@ namespace GetStartedApp.Models
         }
 
         public static void GenerateBls
-            (DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation, 
-            string ICE, string ProfessionalTaxID, string TaxID,int lastSaleClientID,string lastSaleClientName)
+            (DataTable ProductSoldTable, string companyName, byte[] companyLogo, string companyLocation,
+            string ICE, string ProfessionalTaxID, string TaxID, int lastSaleClientID, string lastSaleClientName)
         {
             SalesProductsManagmentSystemBusinessLayer.ClsPdfGenerator.BlsPdf.
-                GenerateBls(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID,lastSaleClientID,lastSaleClientName);
+                GenerateBls(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);
         }
 
         public static int GetMinimalStockValue()
@@ -567,10 +568,10 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsClients.DeleteClient(phoneNumber);
         }
 
-        public static bool GetClientInfo(string phoneNumber, ref string clientName, ref string email)
+        public static bool GetClientInfo(ref int ClientID, string phoneNumber, ref string clientName, ref string email)
         {
 
-            return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientInfo(phoneNumber, ref clientName, ref email);
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientInfo(ref ClientID, phoneNumber, ref clientName, ref email);
 
 
         }
@@ -672,8 +673,8 @@ namespace GetStartedApp.Models
         public static bool AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
                                            string ice, string ifs, string email, string patente, string rc, string cnss)
         {
-          
-          return  SalesProductsManagmentSystemBusinessLayer.ClsCompanies.AddOrUpdateCompany(companyId, companyLogo, companyName, companyLocation, ice, ifs, email, patente, rc, cnss);
+
+            return SalesProductsManagmentSystemBusinessLayer.ClsCompanies.AddOrUpdateCompany(companyId, companyLogo, companyName, companyLocation, ice, ifs, email, patente, rc, cnss);
         }
 
         public static CompanyInfo LoadCompanyInfo(int companyId)
@@ -719,6 +720,26 @@ namespace GetStartedApp.Models
         {
             // Business logic could be added here if necessary
             return SalesProductsManagmentSystemBusinessLayer.ClsCompanies.GetAllCompanyNames_And_Ids();
+        }
+
+        public static void GenerateDevis_ForClient(DataTable products, int clientID)
+        {
+            SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(products, clientID);
+            // Call further methods on devisGenerator if needed to generate the devis for the client
+            devisGenerator.GenerateDevis_ForClient(clientID);
+        }
+
+        public static void GenerateDevis_ForCompany( int companyID, DataTable products)
+        {
+            SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(companyID, products);
+
+            // Call further methods on devisGenerator if needed to generate the devis for the company
+            devisGenerator.GenerateDevis_ForCompany(companyID);
+        }
+
+        public static bool GetClientInfoById(int clientId, ref string clientName, ref string phoneNumber, ref string email)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientInfoById(clientId, ref clientName, ref phoneNumber, ref email);
         }
     }
 }

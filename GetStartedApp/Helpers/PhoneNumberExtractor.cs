@@ -13,7 +13,7 @@ public static class PhoneNumberExtractor
         // Check if the input is null or empty
         if (string.IsNullOrEmpty(input))
         {
-            throw new ArgumentException("Input cannot be null or empty.");
+            return "";
         }
 
         // Find the index of the '<' character
@@ -33,7 +33,7 @@ public static class PhoneNumberExtractor
         // Ensure the phone number is not empty after extraction
         if (string.IsNullOrEmpty(phoneNumber))
         {
-            throw new FormatException("No phone number found between the angle brackets.");
+            return "";
         }
 
         return phoneNumber;

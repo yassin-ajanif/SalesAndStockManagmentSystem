@@ -3,13 +3,13 @@ using CommunityToolkit.Mvvm;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using GetStartedApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using ExCSS;
+using GetStartedApp.Models.Enums;
 
 namespace GetStartedApp.ViewModels;
 

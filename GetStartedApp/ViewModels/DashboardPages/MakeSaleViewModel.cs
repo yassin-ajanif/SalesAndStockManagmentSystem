@@ -18,6 +18,7 @@ using System.Data;
 using System.Globalization;
 using Avalonia.Threading;
 using System.Collections.Generic;
+using GetStartedApp.Models.Objects;
 
 
 namespace GetStartedApp.ViewModels.DashboardPages
@@ -167,6 +168,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             private set => this.RaiseAndSetIfChanged(ref _productsListScanned, value);
         }
 
+        
+
         private IDisposable ProductListObservationSubsription { get; set; }
 
         public ReactiveCommand<Unit, Unit> SaveSellingOperationCommand { get; }
@@ -212,6 +215,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             whenUserClickToProductSearchedManually_GetItProductID_And_PutIntoBarCodeSearchBar();
 
+          
             SaveSellingOperationCommand =  
                 ReactiveCommand.Create(SaveSellingOperationToDatabse, CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms());
 
@@ -291,10 +295,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return DecimalNumber <= decimal.MinValue || DecimalNumber >= decimal.MaxValue;
         }
         // this function is tested using reflection
-        private DataTable LoadProductBoughtFromScannedListIntoADataTable()
+        protected DataTable LoadProductBoughtFromScannedListIntoADataTable()
         {
             DataTable ProductsBoughtTable = new DataTable();
             ProductsBoughtTable.Columns.Add("ProductId", typeof(long));
+            ProductsBoughtTable.Columns.Add("ProductName", typeof(string));
             ProductsBoughtTable.Columns.Add("QuantitySold", typeof(int));
             ProductsBoughtTable.Columns.Add("QuantitySold2", typeof(int));
             ProductsBoughtTable.Columns.Add("QuantitySold3", typeof(int));
@@ -327,7 +332,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                 var profitFromSoldProduct = priceOfProductSoldConvertedToFloat - product.ProductInfo.cost;
 
                 ProductsBoughtTable.Rows.Add
-                (product.ProductInfo.id, ProductsUnitsToReduce_From_Stock1, ProductsUnitsToReduce_From_Stock2, 
+                (product.ProductInfo.id, product.ProductInfo.name,ProductsUnitsToReduce_From_Stock1, ProductsUnitsToReduce_From_Stock2, 
                 ProductsUnitsToReduce_From_Stock3, product.PriceOfProductSold, false, profitFromSoldProduct);
             }
 
@@ -637,7 +642,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         // this function might cause a memory leak but i let it now for later
         // i don't know if it is garabage collected automatically or not
         
-     private IObservable<bool> CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms()
+     protected IObservable<bool> CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms()
       {
             // Initial condition to keep the observable running indefinitely
 
@@ -656,7 +661,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
        }
 
 
-        private IObservable<bool> CheckIfUserHasScannedAtLeastOneProduct()
+        protected IObservable<bool> CheckIfUserHasScannedAtLeastOneProduct()
         {
             return this.WhenAnyValue(x => x.ProductsListScanned.Count)
                        .Select(count => count > 0);
@@ -675,7 +680,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         // this function check if the uer has missed with a quanity of product by entring weird carachter not a number or empty string
         // also
-        private bool CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid()
+        protected virtual bool CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid()
         {
             foreach (var ProductScanned in ProductsListScanned) {
 
@@ -857,6 +862,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
          });
         }
 
+      
+
+
         private (bool isFound, long productID) GetProductID_Of_SelectedProductName_If_Exist()
         {
             // Try to get the productID from the dictionary
@@ -873,11 +881,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
 
-        private void deleteDisplayedError()
+        protected void deleteDisplayedError()
         {
             isErrorLabelVisible = false;
         }
-        private void displayErrorMessage(string ErrorMessageToShowUser)
+        protected void displayErrorMessage(string ErrorMessageToShowUser)
         {
             ErrorMessage = ErrorMessageToShowUser;
             isErrorLabelVisible = true;
@@ -896,7 +904,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
        }
 
 
-        private bool User_HasPicked_Known_Client()
+        protected virtual bool User_HasPicked_Known_Client()
         {
             // Check if SelectedClientName_PhoneNumber is not "Normal" and exists in _clientList
             bool isKnownClient = !string.Equals(SelectedClientName_PhoneNumber, "Normal", StringComparison.OrdinalIgnoreCase);
@@ -907,7 +915,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
 
 
-        private void WhenUserUserChooseThe_CheckPyament_Or_DebtMode_CheckIfHePickedTheClient_NotUnkownClient()
+        protected virtual void WhenUserUserChooseThe_CheckPyament_Or_DebtMode_CheckIfHePickedTheClient_NotUnkownClient()
       {
           this.WhenAnyValue(x => x.SelectedPaymentMethod, x=>x.SelectedClientName_PhoneNumber).
 
@@ -926,7 +934,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
       }
 
       
-        private void WhenUserSetInvalidProduct_Price_Or_Quantity_Block_TheSystem_From_Adding_NewProducts_AndShowError_Plus_MakeAdditional_Checkings()
+        protected virtual void WhenUserSetInvalidProduct_Price_Or_Quantity_Block_TheSystem_From_Adding_NewProducts_AndShowError_Plus_MakeAdditional_Checkings()
           {
         
             this.WhenAnyValue(x => x.ProductsListScanned.Count)
@@ -995,7 +1003,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() => ManualBarcodeValue = "");
         }
 
-        private bool TheSystemIsShowingError()
+        protected bool TheSystemIsShowingError()
         {
             return isErrorLabelVisible;
         }
@@ -1005,7 +1013,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return !TheSystemIsShowingError();
         }
 
-        private void CalculateTheTotalPriceOfOperation()
+        protected void CalculateTheTotalPriceOfOperation()
         {
             decimal TotoalPriceOfProductsCalculated = 0;
 

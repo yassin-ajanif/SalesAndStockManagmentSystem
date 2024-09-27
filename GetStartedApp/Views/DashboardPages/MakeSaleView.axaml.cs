@@ -8,7 +8,6 @@ using System;
 
 using Avalonia.ReactiveUI;
 using Avalonia.Input;
-using GetStartedApp.Models;
 using Avalonia.VisualTree;
 using ReactiveUI;
 using System.Threading.Tasks;
@@ -18,6 +17,7 @@ using GetStartedApp.ViewModels;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Data;
+using GetStartedApp.Models.Objects;
 
 
 
