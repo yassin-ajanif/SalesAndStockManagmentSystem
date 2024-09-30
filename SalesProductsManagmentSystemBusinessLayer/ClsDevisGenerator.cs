@@ -29,6 +29,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
         protected string My_CompanyName { get; set; } = string.Empty;
         protected string My_CompanyLocation { get; set; } = string.Empty;
         protected string My_Email { get; set; } = string.Empty;
+        protected string My_PhoneNumber { get; set; } = string.Empty;
+        protected string My_City { get; set; } = string.Empty;
 
         // Info about individual client or company to target
         protected int ID_To_GenerateBillFor { get; set; }  // Default value for int is 0
@@ -40,23 +42,29 @@ namespace SalesProductsManagmentSystemBusinessLayer
         protected string RC_To_GenerateBillFor { get; set; } = string.Empty;       
         protected string CompanyLocation_To_GenerateBillFor { get; set; } = string.Empty;
         protected string Email_To_GenerateBillFor { get; set; } = string.Empty;
-
+        protected string City_To_GenerateBillFor { get; set; } = string.Empty;
+        protected string PhoneNumber_To_GenerateBillFor { get; set; } = string.Empty;
+        protected decimal TVA { get; set; } = 20;
 
 
         DataTable TableOfProductsBoughts;
+        string SelectedPaymentMethod;
+        
 
-        public ClsDevisGenerator(DataTable TableOfProductsBoughts,int ClientID)
+        public ClsDevisGenerator(DataTable TableOfProductsBoughts,int ClientID,string SelectedPaymentMethodInFrench,decimal TVA)
         {
             this.TableOfProductsBoughts = TableOfProductsBoughts;
-
+            SelectedPaymentMethod = SelectedPaymentMethodInFrench;
+            this.TVA = TVA;
             LoadMyCompanyInfo();
             LoadInfosOfClientToDisplay(ClientID);
         }
 
-        public ClsDevisGenerator(int CompanyID,DataTable TableOfProductsBoughts )
+        public ClsDevisGenerator(int CompanyID,DataTable TableOfProductsBoughts,string SelectedPaymentMethodInFrench, decimal TVA)
         {
             this.TableOfProductsBoughts = TableOfProductsBoughts;
-
+            SelectedPaymentMethod = SelectedPaymentMethodInFrench;
+            this.TVA = TVA;
             LoadMyCompanyInfo();
             LoadCompanyInfoToDisplay(CompanyID);
         }
@@ -84,7 +92,9 @@ namespace SalesProductsManagmentSystemBusinessLayer
                         My_Email = reader["Email"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Email")) : string.Empty;
                         My_Patente = reader["Patente"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Patente")) : string.Empty;
                         My_RC = reader["RC"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("RC")) : string.Empty;
-                    }
+                        My_PhoneNumber = reader["PhoneNumber"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("PhoneNumber")) : string.Empty;
+                        My_City = reader["City"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("City")) : string.Empty;
+                }
                 }
                 finally
                 {
@@ -106,7 +116,10 @@ namespace SalesProductsManagmentSystemBusinessLayer
                     page.Footer().AlignCenter().Text(x =>
                     {
                         // Tax information with custom font size
-                        x.Span($"ICE : {My_ICE} - N DE TAXE PROFESSIONELLE : {My_Patente} - IDENTIFIANT FISCAL : {My_IFS}")
+                        x.Span($"• NOM DE LA SOCIÉTÉ : {My_CompanyName}\n" +
+                               $"• ADRESSE : {My_CompanyLocation} - VILLE : {My_City}\n" +
+                               $"• ICE : {My_ICE} - Patente : {My_Patente} - IF : {My_IFS}\n" +
+                               $"• RC : {My_RC} - EMAIL : {My_Email} - NUMÉRO DE TÉLÉPHONE : {My_PhoneNumber}")
                          .FontSize(10); // Set your desired font size her
 
                         // Add extra space
@@ -142,7 +155,10 @@ namespace SalesProductsManagmentSystemBusinessLayer
                         //text.Span($"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}").SemiBold();
                         //text.Span($"{DateTime.Now:d}");
                         // text.Span("yass is good and is that is good ");
-                        text.Span($"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("fr-FR"))}").SemiBold();
+                        text.Span($"{My_City} le: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("fr-FR"))}\n\n\n").SemiBold();
+                        text.Span($"DEVIS\n\n\n").Bold();
+                        text.Span($"Mode De Paiment : ").Bold(); 
+                        text.Span($"{SelectedPaymentMethod}");
 
                     });
                 });
@@ -152,7 +168,9 @@ namespace SalesProductsManagmentSystemBusinessLayer
                     column.Item().AlignCenter().Text($"Code Client: {ID_To_GenerateBillFor}").Style(titleStyle);
                     column.Item().AlignCenter().Text($"{CompanyOrClientName_To_GenerateBillFor}").Style(titleStyle);
                     column.Item().AlignCenter().Text(CompanyLocation_To_GenerateBillFor).Style(titleStyle);
+                    column.Item().AlignCenter().Text(City_To_GenerateBillFor).Style(titleStyle);
                     column.Item().AlignCenter().Text(Email_To_GenerateBillFor).Style(titleStyle);
+                    column.Item().AlignCenter().Text(PhoneNumber_To_GenerateBillFor).Style(titleStyle);
                     column.Item().AlignCenter().Text($"ICE  :  {ICE_To_GenerateBillFor}").Style(titleStyle);
 
                 });
@@ -173,62 +191,89 @@ namespace SalesProductsManagmentSystemBusinessLayer
         {
             var TotalBalanceStyle = TextStyle.Default.FontSize(10).SemiBold().FontColor(Colors.Blue.Medium);
 
-            container.Table(table =>
+            container.Background(Colors.Grey.Lighten4).Padding(5).Table(table =>
             {
-                // Step 1: Define columns
-                table.ColumnsDefinition(columns =>
-                {
-                    columns.ConstantColumn(25);       // For the "#" column
-                    columns.RelativeColumn(4);        // For the "Article" column
-                    columns.RelativeColumn(2);        // For the "Prix" column
-                    columns.RelativeColumn(2);        // For the "Quantité" column
-                    columns.RelativeColumn(2);        // For the "Total" column
-                    columns.RelativeColumn(2);        // For the "CodeArticle" column
-                    columns.RelativeColumn(2);        // For the "Remise" column
-                    columns.RelativeColumn(2);        // For the "Montant" column
-                    columns.RelativeColumn(2);        // For the "TVA" column
-                });
+            // Step 1: Define columns
+            table.ColumnsDefinition(columns =>
+            {
+                columns.RelativeColumn(3);        // For the "Article" column
+                columns.RelativeColumn(10);        // For the "Prix" column
+                columns.RelativeColumn(3);        // For the "Quantité" column
+                columns.RelativeColumn(3);        // For the "Total" column
+                columns.RelativeColumn(3);        // For the "CodeArticle" column
+                columns.RelativeColumn(3);        // For the "Remise" column
+                columns.RelativeColumn(3);        // For the "Montant" column
 
-                // Step 2: Define header
-                table.Header(header =>
-                {
-                    header.Cell().Element(HeaderCellStyle).Text("#");
-                    header.Cell().Element(HeaderCellStyle).Text("Article");
-                    header.Cell().Element(HeaderCellStyle).AlignRight().Text("Prix");
-                    header.Cell().Element(HeaderCellStyle).AlignRight().Text("Quantité");
-                    header.Cell().Element(HeaderCellStyle).AlignRight().Text("Total");
-                    header.Cell().Element(HeaderCellStyle).Text("CodeArticle");
-                    header.Cell().Element(HeaderCellStyle).AlignRight().Text("Remise");
-                    header.Cell().Element(HeaderCellStyle).AlignRight().Text("Montant");
-                    header.Cell().Element(HeaderCellStyle).AlignRight().Text("TVA");
-                });
+            });
+
+            // Step 2: Define header
+            table.Header(header =>
+            {
+                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Code Article");
+                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Article");
+                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Quantité");
+                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("PU TTC");
+                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Remise");
+                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Montant");
+                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("TVA");
+            });
+
+            // Step 3: Add rows and calculate total
+            decimal Total_TTC = 0;
+            decimal Total_HT = 0;
+            decimal Total_TVA = 0;
 
 
-                // Step 3: Add rows and calculate total
-                decimal totalAmount = 0;
+            for (int i = 0; i < TableOfProductsBoughts.Rows.Count; i++)
+            {
+                DataRow row = TableOfProductsBoughts.Rows[i];
+                decimal price = Convert.ToDecimal(row["UnitPrice"]);
+                decimal soldPrice = Convert.ToDecimal(row["UnitSoldPrice"]);
+                decimal discount = ((price - soldPrice) / price) * 100;
+                int quantity = Convert.ToInt32(row["QuantitySold"]);
+                decimal Montant = soldPrice * quantity;
 
-                for (int i = 0; i < TableOfProductsBoughts.Rows.Count; i++)
-                {
-                    DataRow row = TableOfProductsBoughts.Rows[i];
-                    decimal price = Convert.ToDecimal(row["UnitPrice"]);
-                    int quantity = Convert.ToInt32(row["QuantitySold"]);
-                    decimal total = price * quantity;
+                Total_TTC += Montant;
 
-                    totalAmount += total;
-
-                    table.Cell().Element(DataCellStyle).Text((i + 1).ToString());
-                    table.Cell().Element(DataCellStyle).Text(row["ProductName"].ToString());
-                    table.Cell().Element(DataCellStyle).AlignRight().Text($"{price}DH");
-                    table.Cell().Element(DataCellStyle).AlignRight().Text(quantity.ToString());
-                    table.Cell().Element(DataCellStyle).AlignRight().Text($"{total}DH");
+                    table.Cell().Padding(2).Element(DataCellStyle).Text(row["ProductId"]);
+                    table.Cell().Padding(2).Element(DataCellStyle).Text(row["ProductName"].ToString());
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text(quantity.ToString());
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{price}DH");
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{discount.ToString("N1")}%");
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{Montant}DH");
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text(TVA);
                 }
 
-                // Step 4: Add footer row for total
+                    Total_HT = Total_TTC /(1+(TVA/100));
+                    Total_TVA = Total_TTC-Total_HT;
+                //  
+                //  // Step 4: Add footer row1 for total
+                //  // Step 4: Add footer row1 for total
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for article name
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for price
-                table.Cell().Element(DataCellStyle).Text("Total:").AlignRight().Style(TotalBalanceStyle);
-                table.Cell().Element(DataCellStyle).AlignRight().Text($"{totalAmount}DH").Style(TotalBalanceStyle);
+                table.Cell().Element(DataCellStyle).Text("Total HT:").AlignRight().Style(TotalBalanceStyle);
+                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_HT, 2, MidpointRounding.AwayFromZero)}DH").Style(TotalBalanceStyle);
+
+                // Step 4: Add footer row2 for total
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for article name
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for price
+                table.Cell().Element(DataCellStyle).Text("TVA:").AlignRight().Style(TotalBalanceStyle);
+                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_TVA, 2, MidpointRounding.AwayFromZero)}DH").Style(TotalBalanceStyle);
+
+                // Step 4: Add footer row2 for total
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for article name
+                table.Cell().Element(DataCellStyle).Text(""); // Empty cell for price
+                table.Cell().Element(DataCellStyle).Text("Total TTC:").AlignRight().Style(TotalBalanceStyle);
+                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_TTC, 2, MidpointRounding.AwayFromZero)}DH").Style(TotalBalanceStyle);
             });
 
 
@@ -336,6 +381,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
                     Email_To_GenerateBillFor = reader["Email"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Email")) : string.Empty;
                     Patente_To_GenerateBillFor = reader["Patente"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Patente")) : string.Empty;
                     RC_To_GenerateBillFor = reader["RC"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("RC")) : string.Empty;
+                    PhoneNumber_To_GenerateBillFor = reader["PhoneNumber"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("PhoneNumber")) : string.Empty;
+                    City_To_GenerateBillFor = reader["City"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("City")) : string.Empty;
                 }
             }
             finally
@@ -345,7 +392,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             }
         }
 
-        public void GenerateDevis_ForClient(int ClientID)
+        public void GenerateDevis_ForClient(int ClientID,decimal TVA)
         {
             QuestPDF.Settings.License = LicenseType.Community;
             //  var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);
@@ -355,7 +402,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
            
             // Generate and save the PDF
-            new ClsDevisGenerator(TableOfProductsBoughts,ClientID).GeneratePdf(filePath);
+            new ClsDevisGenerator(TableOfProductsBoughts,ClientID,SelectedPaymentMethod, TVA).GeneratePdf(filePath);
 
             // Open the PDF file
             try
@@ -373,7 +420,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             }
         }
 
-        public void GenerateDevis_ForCompany(int CompanyID)
+        public void GenerateDevis_ForCompany(int CompanyID,decimal TVA)
         {
             QuestPDF.Settings.License = LicenseType.Community;
             //  var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);
@@ -383,7 +430,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
             LoadCompanyInfoToDisplay(CompanyID);
             // Generate and save the PDF
-            new ClsDevisGenerator(CompanyID,TableOfProductsBoughts).GeneratePdf(filePath);
+            new ClsDevisGenerator(CompanyID, TableOfProductsBoughts,SelectedPaymentMethod, TVA).GeneratePdf(filePath);
 
             // Open the PDF file
             try

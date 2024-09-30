@@ -671,10 +671,10 @@ namespace GetStartedApp.Models
         }
 
         public static bool AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
-                                           string ice, string ifs, string email, string patente, string rc, string cnss)
+                                           string ice, string ifs, string email, string patente, string rc, string cnss,string phoneNumber, string city)
         {
 
-            return SalesProductsManagmentSystemBusinessLayer.ClsCompanies.AddOrUpdateCompany(companyId, companyLogo, companyName, companyLocation, ice, ifs, email, patente, rc, cnss);
+            return SalesProductsManagmentSystemBusinessLayer.ClsCompanies.AddOrUpdateCompany(companyId, companyLogo, companyName, companyLocation, ice, ifs, email, patente, rc, cnss,phoneNumber,city);
         }
 
         public static CompanyInfo LoadCompanyInfo(int companyId)
@@ -702,7 +702,9 @@ namespace GetStartedApp.Models
                         reader["Email"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Email")) : null,
                         reader["Patente"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("Patente")) : null,
                         reader["RC"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("RC")) : null,
-                        reader["CNSS"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("CNSS")) : null
+                        reader["CNSS"] != DBNull.Value ? reader.GetString(reader.GetOrdinal("CNSS")) : null,
+                        reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                        reader.GetString(reader.GetOrdinal("City"))
                     );
                 }
             }
@@ -722,19 +724,19 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsCompanies.GetAllCompanyNames_And_Ids();
         }
 
-        public static void GenerateDevis_ForClient(DataTable products, int clientID)
+        public static void GenerateDevis_ForClient(DataTable products, int clientID,string SelectedPaymentMethodInFrench,decimal TVA)
         {
-            SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(products, clientID);
+            SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(products, clientID, SelectedPaymentMethodInFrench,TVA);
             // Call further methods on devisGenerator if needed to generate the devis for the client
-            devisGenerator.GenerateDevis_ForClient(clientID);
+            devisGenerator.GenerateDevis_ForClient(clientID,TVA);
         }
 
-        public static void GenerateDevis_ForCompany( int companyID, DataTable products)
+        public static void GenerateDevis_ForCompany( int companyID, DataTable products, string SelectedPaymentMethodInFrench,decimal TVA)
         {
-            SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(companyID, products);
+            SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(companyID, products, SelectedPaymentMethodInFrench, TVA);
 
             // Call further methods on devisGenerator if needed to generate the devis for the company
-            devisGenerator.GenerateDevis_ForCompany(companyID);
+            devisGenerator.GenerateDevis_ForCompany(companyID,TVA);
         }
 
         public static bool GetClientInfoById(int clientId, ref string clientName, ref string phoneNumber, ref string email)

@@ -20,7 +20,7 @@ namespace SalesProductsManagmentSystemDataLayer
         }
 
         public static bool AddOrUpdateCompany(int companyId, byte[] companyLogo, string companyName, string companyLocation,
-                                         string ice, string ifs, string email, string patente, string rc, string cnss)
+                                         string ice, string ifs, string email, string patente, string rc, string cnss, string phoneNumber, string city)
         {
             SqlConnection connection = null;
 
@@ -40,6 +40,8 @@ namespace SalesProductsManagmentSystemDataLayer
                     command.Parameters.AddWithValue("@Email", (object)email ?? DBNull.Value);
                     command.Parameters.AddWithValue("@Patente", (object)patente ?? DBNull.Value);
                     command.Parameters.AddWithValue("@RC", (object)rc ?? DBNull.Value);
+                    command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                    command.Parameters.AddWithValue("@City", city);
                     command.Parameters.AddWithValue("@Cnss", (object)cnss ?? DBNull.Value);
 
                     connection.Open();

@@ -50,7 +50,21 @@ namespace GetStartedApp.ViewModels
         private string _patente;
         private string _bankAccountNumber;
         private string _email;
+        private string _phoneNumber;
+        private string _city;
 
+        public string PhoneNumber
+        {
+            get => _phoneNumber;
+            set => this.RaiseAndSetIfChanged(ref _phoneNumber, value);
+        }
+
+        // Property for City
+        public string City
+        {
+            get => _city;
+            set => this.RaiseAndSetIfChanged(ref _city, value);
+        }
         public string ICE
         {
             get => _ice;
@@ -125,6 +139,8 @@ namespace GetStartedApp.ViewModels
             IdentifiantFiscal = myCompanyInfo.IFS;
             CNSS = myCompanyInfo.CNSS;
             Email = myCompanyInfo.Email;
+            PhoneNumber = myCompanyInfo.PhoneNumber;
+            City = myCompanyInfo.City;
            
         }
 
@@ -136,7 +152,7 @@ namespace GetStartedApp.ViewModels
         private async void DisplayLogoImageIfExist_IfNotDisplayNoImage()
         {
 
-            if (myCompanyInfo == null) { DisplayNoImage(); return; }
+            if (myCompanyInfo == null || myCompanyInfo.CompanyLogo==null) { DisplayNoImage(); return; }
 
             var myCompanyLogo = myCompanyInfo.CompanyLogo;
           
@@ -184,7 +200,7 @@ namespace GetStartedApp.ViewModels
            if( AccessToClassLibraryBackendProject.
                 AddOrUpdateCompany
                 (companyIdOfAppUser, companyLogoConvertedToByteArray,CompanyName,
-                CompanyLocation, ICE,IdentifiantFiscal, Email, Patente, RC, CNSS))
+                CompanyLocation, ICE,IdentifiantFiscal, Email, Patente, RC, CNSS,PhoneNumber,City))
             {
                 await ShowMessageBoxDialog.Handle("تمت عملية التسجيل بنجاح");
             }
@@ -203,11 +219,16 @@ namespace GetStartedApp.ViewModels
                 x => x.Email,
                 x => x.CNSS,
                 x => x.Patente,
-                (companyName, companyLocation, SelectedLogoImageToDisplay,RC, IdentifiantFiscal, Email, CNSS, Patente) =>
-                    !string.IsNullOrEmpty(companyName) &&
-                    !string.IsNullOrEmpty(companyLocation) 
+                x => x.PhoneNumber,
+                x => x.City,
+                (companyName, companyLocation, SelectedLogoImageToDisplay,RC, IdentifiantFiscal, Email, CNSS, Patente,PhoneNumber,City) =>
                     
-            ) ;
+                    !string.IsNullOrEmpty(companyName) &&
+                    !string.IsNullOrEmpty(companyLocation)&&
+
+                    !string.IsNullOrEmpty(PhoneNumber)&&
+                    !string.IsNullOrEmpty(City)
+            );
             
         }
 

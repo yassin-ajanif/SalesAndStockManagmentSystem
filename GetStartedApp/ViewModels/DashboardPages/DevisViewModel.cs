@@ -10,6 +10,8 @@ using System.Linq;
 using GetStartedApp.Helpers.CustomUIErrorAttributes;
 using GetStartedApp.Models.Objects;
 using System.Reactive.Linq;
+using GetStartedApp.Helpers;
+using ZXing;
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {
@@ -71,7 +73,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
             }
         }
 
-
         private string _clientTypeLabel;
         public string ClientTypeLabel
         {
@@ -79,9 +80,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
             private set => this.RaiseAndSetIfChanged(ref _clientTypeLabel, value);
         }
 
-        private string _taxValue;
+        private string _taxValue="20";
 
-        [PositiveIntRange(1, 100, ErrorMessage = "الرقم يجب ان يكون بين 1 و 100")]
+        [PositiveFloatRange(1, 100, ErrorMessage = "الرقم يجب ان يكون بين 1 و 100")]
         public string TaxValue
         {
             get => _taxValue;
@@ -91,7 +92,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ReactiveCommand <Unit, Unit> MakeDevisCommand { get; }
         public ReactiveCommand <Unit, Unit> DeleteAllProductsCommand { get; }
 
-        public bool IsTVA_Enabled => false;
+        public bool IsTVA_Enabled => true;
 
         public DevisViewModel
             (MainWindowViewModel mainWindowViewModel):base(mainWindowViewModel)
@@ -101,7 +102,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             LoadTypeOfClientList_Clients_Or_Companies_WheUserChoose_ClientType();
             WhenUserUserSetClienType_Or_PickTheClient_LoadInfo_Of_Client_Or_Company_Choosed();
           
-            MakeDevisCommand =ReactiveCommand.Create(MakeDevisOperation, CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms());
+            MakeDevisCommand =ReactiveCommand.Create(MakeDevisOperation,CheckIfSystemIsNotRaisingError_And_TVA_Is_Valid_Number_And_ProductListIsNotEmpty_Every_500ms());
             DeleteAllProductsCommand = ReactiveCommand.Create(DeleteAllProductsScanned, CheckIfUserHasScannedAtLeastOneProduct());
         }
 
@@ -128,7 +129,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                 });
         }
 
-       protected override bool User_HasPicked_Known_Client()
+        protected override bool User_HasPicked_Known_Client()
        {
             if (string.IsNullOrEmpty(SelectedClientOrCompany)) return false;
             
@@ -147,7 +148,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     !int.TryParse(productScanned.ProductsUnits, out int units) ||
                     units <= 0)
                 {
-                    return false;
+                     return false;
                 }
 
                 // Check if PriceOfProductSold is null, empty, whitespace, or not a valid positive decimal
@@ -156,28 +157,60 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     !decimal.TryParse(productScanned.PriceOfProductSold, out decimal price) ||
                     price <= 0)
                 {
-                    return false;
+                     return false;
                 }
+               //
+               // if (!UiAttributeChecker.AreThesesAttributesPropertiesValid
+               //    (productScanned, nameof(productScanned.ProductsUnits), nameof(productScanned.PriceOfProductSold)))
+               // {
+               //
+               //     return false;
+               // }
             }
 
             return true; // All checks passed
         }
 
+        protected IObservable<bool> CheckIfSystemIsNotRaisingError_And_TVA_Is_Valid_Number_And_ProductListIsNotEmpty_Every_500ms()
+        {
+            // Initial condition to keep the observable running indefinitely
 
+            var observable = Observable.Interval(TimeSpan.FromMilliseconds(500))
+                                       .Select(_ =>
+                                           TheSystemIsNotShowingError() &&
+                                           CheckIf_TVA_Is_Valid_Number() &&
+                                           ProductsListScanned.Count > 0
+                                       )
+                                       .DistinctUntilChanged()
+                                       // .Do(_ => Debug.WriteLine("didi")) // Invoke Debug.WriteLine for each emission                                
+                                       .ObserveOn(RxApp.MainThreadScheduler);
+            // Ensure this observable runs on the UI thread
+
+            return observable;
+        }
+        private void RaiseAnErrorIfUser_Didnt_Introduced_Client_Name_Or_Company_For_CheckAndCredit_PaymentMethods()
+        {
+            deleteDisplayedError();
+
+            if (!User_HasPicked_Known_Client())
+            {
+                displayErrorMessage("ادخل زبون اوشركة موجودة في القائمة");
+            }
+        }
         protected override void WhenUserUserChooseThe_CheckPyament_Or_DebtMode_CheckIfHePickedTheClient_NotUnkownClient()
         {
-            this.WhenAnyValue(x => x.SelectedPaymentMethod,x=>x.SelectedClientOrCompany).
+            this.WhenAnyValue(x => x.SelectedPaymentMethod,x=>x.SelectedClientOrCompany, x=>x.ProductsListScanned.Count).
 
                  Subscribe(_ => {
 
-                     deleteDisplayedError();
-
-                     if (!User_HasPicked_Known_Client())
-                     {
-                         displayErrorMessage("ادخل زبون اوشركة موجودة في القائمة");
-                     }
+                     RaiseAnErrorIfUser_Didnt_Introduced_Client_Name_Or_Company_For_CheckAndCredit_PaymentMethods();
 
                  });
+        }
+
+        private bool CheckIf_TVA_Is_Valid_Number()
+        {
+          return  !string.IsNullOrEmpty(TaxValue) && UiAttributeChecker.AreThesesAttributesPropertiesValid(this,nameof(TaxValue));
         }
 
         protected void WhenUserUserSetClienType_Or_PickTheClient_LoadInfo_Of_Client_Or_Company_Choosed()
@@ -228,9 +261,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
                              
                               deleteDisplayedError();
                               if (CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid() && ProductIsProfitable()) ;
-                              else displayErrorMessage("هناك خطأ في كمية المنتج او السعر");
+                              else { displayErrorMessage("هناك خطأ في كمية المنتج او السعر"); return; };
 
-                              WhenUserUserChooseThe_CheckPyament_Or_DebtMode_CheckIfHePickedTheClient_NotUnkownClient();
+                              RaiseAnErrorIfUser_Didnt_Introduced_Client_Name_Or_Company_For_CheckAndCredit_PaymentMethods();
                               CalculateTheTotalPriceOfOperation();
                           }
                           );
@@ -239,19 +272,46 @@ namespace GetStartedApp.ViewModels.DashboardPages
                 );
         }
 
+        protected virtual void CalculateTheTotalPriceOfOperation()
+        {
+            decimal totalPriceOfProductsCalculated = 0;
+
+            foreach (var product in ProductsListScanned)
+            {
+                // Try to parse PriceOfProductSold and ProductsUnits
+                if (decimal.TryParse(product.PriceOfProductSold, out decimal productPrice) &&
+                    int.TryParse(product.ProductsUnits, out int productUnits))
+                {
+                    // If both values are parsed successfully, calculate the total
+                    totalPriceOfProductsCalculated += productPrice * productUnits;
+                }
+   
+            }
+
+            Total = totalPriceOfProductsCalculated.ToString();
+        }
+
+
         protected async void DeleteAllProductsScanned()
         {
             bool UserHasClickedYesToDeleteSaleOperationBtn = await ShowDeleteSaleDialogInteraction.Handle("هل تريد حذف جميع المنتجات");
 
             if (UserHasClickedYesToDeleteSaleOperationBtn) ResetAllSellingInfoOperation();
+        } 
+
+        private string TranslateTheSelectedPaymentMethodInFrench()
+        {
+            return WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod,"fr");
         }
         private async void MakeDevisOperation()
         {
             TableOfProductsInfoScanned=LoadProductBoughtFromScannedListIntoADataTable();
+            string SelectedPaymentMethodInFrench = TranslateTheSelectedPaymentMethodInFrench();
+            decimal TVA = decimal.Parse(TaxValue);
 
-            if (SelectedClientType == "زبون عادي") AccessToClassLibraryBackendProject.GenerateDevis_ForClient(TableOfProductsInfoScanned,ClientID);
+            if (SelectedClientType == "زبون عادي") AccessToClassLibraryBackendProject.GenerateDevis_ForClient(TableOfProductsInfoScanned,ClientID,SelectedPaymentMethodInFrench,TVA);
 
-            else if (SelectedClientType == "شركة") AccessToClassLibraryBackendProject.GenerateDevis_ForCompany(CompanyID,TableOfProductsInfoScanned );
+            else if (SelectedClientType == "شركة") AccessToClassLibraryBackendProject.GenerateDevis_ForCompany(CompanyID,TableOfProductsInfoScanned,SelectedPaymentMethodInFrench,TVA);
 
         }
 

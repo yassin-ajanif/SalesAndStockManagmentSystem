@@ -304,6 +304,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             ProductsBoughtTable.Columns.Add("QuantitySold2", typeof(int));
             ProductsBoughtTable.Columns.Add("QuantitySold3", typeof(int));
             ProductsBoughtTable.Columns.Add("UnitPrice", typeof(decimal));
+            ProductsBoughtTable.Columns.Add("UnitSoldPrice", typeof(decimal));
             ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
             ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
 
@@ -333,7 +334,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
                 ProductsBoughtTable.Rows.Add
                 (product.ProductInfo.id, product.ProductInfo.name,ProductsUnitsToReduce_From_Stock1, ProductsUnitsToReduce_From_Stock2, 
-                ProductsUnitsToReduce_From_Stock3, product.PriceOfProductSold, false, profitFromSoldProduct);
+                ProductsUnitsToReduce_From_Stock3, product.ProductInfo.price,product.PriceOfProductSold, false, profitFromSoldProduct);
             }
 
             return ProductsBoughtTable;
@@ -642,7 +643,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         // this function might cause a memory leak but i let it now for later
         // i don't know if it is garabage collected automatically or not
         
-     protected IObservable<bool> CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms()
+     protected virtual IObservable<bool> CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms()
       {
             // Initial condition to keep the observable running indefinitely
 
@@ -1008,7 +1009,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return isErrorLabelVisible;
         }
 
-        private bool TheSystemIsNotShowingError()
+        protected bool TheSystemIsNotShowingError()
         {
             return !TheSystemIsShowingError();
         }

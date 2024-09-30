@@ -24,9 +24,12 @@ namespace GetStartedApp.Models.Objects
         public string Patente { get; set; }
         public string RC { get; set; }
         public string CNSS { get; set; }
+        public string PhoneNumber { get; set; }
+        public string City { get; set; }
+
 
         public CompanyInfo(int companyId, byte[] companyLogo, string companyName, string companyLocation,
-                       string ice, string ifs, string email, string patente, string rc, string cnss)
+                       string ice, string ifs, string email, string patente, string rc, string cnss,string phoneNumber,string city)
         {
             CompanyId = companyId;
             CompanyLogo = ImageConverter.ByteArrayToBitmap(companyLogo);
@@ -38,6 +41,8 @@ namespace GetStartedApp.Models.Objects
             Patente = patente;
             RC = rc;
             CNSS = cnss;
+            PhoneNumber = phoneNumber;
+            City = city;
         }
     }
 
