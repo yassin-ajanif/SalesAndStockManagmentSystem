@@ -391,8 +391,13 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.GetNewProductID();
         }
 
-        public static bool AddNewSaleToDatabase(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList,
-     string clientNameAndPhoneNumberOrNormal, string selectedPaymentMethod, ChequeInfo userChequeInfo)
+        public static (bool Success, int SalesId) AddNewSaleToDatabase(
+       DateTime SaleDateTime,
+       float TotalPrice,
+       DataTable SoldProductList,
+       string clientNameAndPhoneNumberOrNormal,
+       string selectedPaymentMethod,
+       ChequeInfo userChequeInfo)
         {
             // Default values to be used if userChequeInfo is null
             long? chequeNumber = null;
@@ -406,6 +411,7 @@ namespace GetStartedApp.Models
                 chequeDate = userChequeInfo.ChequeDate; // Convert DateTime to DateTimeOffset
             }
 
+            // Call the business layer method and return the result
             return SalesProductsManagmentSystemBusinessLayer.ClsSalesManager.SaveNewSaleOperationToDatabase(
                 SaleDateTime,
                 TotalPrice,
@@ -417,6 +423,7 @@ namespace GetStartedApp.Models
                 chequeDate
             );
         }
+
 
         public static bool AddNewSaleToDatabase_ForCompanies(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList,
    int CompanyID, string selectedPaymentMethod, ChequeInfo userChequeInfo)
@@ -739,6 +746,20 @@ namespace GetStartedApp.Models
             devisGenerator.GenerateDevis_ForCompany(companyID,TVA);
         }
 
+        public static void GenerateBonLivraison_ForClient(DataTable products, int clientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
+        {
+            SalesProductsManagmentSystemBusinessLayer.ClsBonLivraisonGenerator BlGenerator = new ClsBonLivraisonGenerator(products, clientID, SelectedPaymentMethodInFrench, TVA, SaleID);
+            // Call further methods on devisGenerator if needed to generate the devis for the client
+            BlGenerator.GenerateBlivraison_ForClient(clientID, TVA,SaleID);
+        }
+
+    //    public static void GenerateBonLivraison_ForCompany(int companyID, DataTable products, string SelectedPaymentMethodInFrench, decimal TVA,int SaleID)
+    //    {
+    //        SalesProductsManagmentSystemBusinessLayer.ClsBonLivraisonGenerator BlGenerator = new ClsBonLivraisonGenerator(companyID, products, SelectedPaymentMethodInFrench, TVA, SaleID);
+    //
+    //        // Call further methods on devisGenerator if needed to generate the devis for the company
+    //        BlGenerator.GenerateDevis_ForCompany(companyID, TVA,SaleID);
+    //    }
         public static bool GetClientInfoById(int clientId, ref string clientName, ref string phoneNumber, ref string email)
         {
             return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientInfoById(clientId, ref clientName, ref phoneNumber, ref email);

@@ -57,21 +57,35 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             int selectedCompanyID_From_selectedCompanyName = getCompanyID_From_Its_Name();
 
-            if (
-                  AccessToClassLibraryBackendProject.
-                  AddNewSaleToDatabase_ForCompanies
-                  (timeOfSellingOpperationIsNow, TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, selectedCompanyID_From_selectedCompanyName, slectedPaymentMethodInEnglish,
-                  userChequeInfo)
-               )
+            var result = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(
+                                                                                 timeOfSellingOpperationIsNow,
+                                                                                 TotalPriceOfSellingOperation,
+                                                                                 ProductsBoughtInThisOperation,
+                                                                                 SelectedClientName_PhoneNumber,
+                                                                                 slectedPaymentMethodInEnglish,
+                                                                                 userChequeInfo);
+
+            if (result.Success)
             {
                 await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
 
-                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ")) GoToBlPageGeneratorPage();
+                // Use result.SalesId if needed for further processing
+                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة وصل الاستلام "))
+                {
+                    int value = result.SalesId;
+                }
+
+                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ايضا "))
+                {
+                    // Logic to print the invoice using result.SalesId if necessary
+                }
 
                 ResetAllSellingInfoOperation();
                 mainWindowViewModel.CheckIfSystemShouldRaiseBellNotificationIcon();
-
             }
+
+
+            else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
         }
     }
 }

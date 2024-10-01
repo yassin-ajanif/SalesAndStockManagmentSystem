@@ -47,8 +47,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
         protected decimal TVA { get; set; } = 20;
 
 
-        DataTable TableOfProductsBoughts;
-        string SelectedPaymentMethod;
+        protected DataTable TableOfProductsBoughts;
+        protected string SelectedPaymentMethod;
         
 
         public ClsDevisGenerator(DataTable TableOfProductsBoughts,int ClientID,string SelectedPaymentMethodInFrench,decimal TVA)
@@ -134,7 +134,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 });
         }
 
-        void ComposeHeader(IContainer container)
+        protected virtual void ComposeHeader(IContainer container)
         {
             var titleStyle = TextStyle.Default.FontSize(12).SemiBold().FontColor(Colors.Blue.Medium).LineHeight(1.5f);
 

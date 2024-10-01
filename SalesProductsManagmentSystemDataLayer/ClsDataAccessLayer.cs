@@ -904,42 +904,42 @@ public class ClsDataAccessLayer
         return reader;
     }
 
-    public static bool SaveNewSaleOperationToDatabase(
+    public static (bool Success, int SalesId) SaveNewSaleOperationToDatabase(
      DateTime saleDateTime,
      float totalPrice,
      DataTable productDataTable,
      string clientNameAndPhoneNumberOrNormal,
      string selectedPaymentMethod,
-     long? chequeNumber = null,  // Nullable long for cheque number
-     decimal? amount = null,     // Nullable decimal for cheque amount
-     DateTime? chequeDate = null) // Nullable DateTime for cheque date
+     long? chequeNumber = null,
+     decimal? amount = null,
+     DateTime? chequeDate = null)
     {
         // Validate saleDateTime
         if (saleDateTime == default(DateTime))
         {
             Console.WriteLine("Invalid saleDateTime: DateTime is not provided.");
-            return false;
+            return (false, -1); // Return -1 to indicate an error
         }
 
         // Validate totalPrice
         if (totalPrice <= 0 || IsThisFloatOutOfRange(totalPrice))
         {
             Console.WriteLine($"Invalid totalPrice: {totalPrice}. Total price must be greater than zero or it is out of range.");
-            return false;
+            return (false, -1);
         }
 
         // Validate productDataTable
         if (productDataTable == null || productDataTable.Rows.Count == 0)
         {
             Console.WriteLine("Invalid productDataTable: DataTable is null or empty.");
-            return false;
+            return (false, -1);
         }
 
         // Validate clientNameAndPhoneNumberOrNormal
         if (string.IsNullOrEmpty(clientNameAndPhoneNumberOrNormal))
         {
             Console.WriteLine("Invalid clientNameAndPhoneNumberOrNormal: The input is null or empty.");
-            return false;
+            return (false, -1);
         }
 
         using (SqlConnection conn = new SqlConnection(connectionString))
@@ -955,53 +955,38 @@ public class ClsDataAccessLayer
                     TypeName = "dbo.ProductBought",
                     Value = productDataTable
                 });
-                cmd.Parameters.Add(new SqlParameter("@CLIENT_NameAndPhoneNumber_Or_Normal", SqlDbType.NVarChar)
-                {
-                    Value = clientNameAndPhoneNumberOrNormal
-                });
-                cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar)
-                {
-                    Value = selectedPaymentMethod
-                });
+                cmd.Parameters.Add(new SqlParameter("@CLIENT_NameAndPhoneNumber_Or_Normal", SqlDbType.NVarChar) { Value = clientNameAndPhoneNumberOrNormal });
+                cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar) { Value = selectedPaymentMethod });
 
                 // Add cheque-related parameters, allowing them to be null
-                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.BigInt)
-                {
-                    Value = chequeNumber.HasValue ? (object)chequeNumber.Value : DBNull.Value
-                });
+                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.BigInt) { Value = chequeNumber.HasValue ? (object)chequeNumber.Value : DBNull.Value });
+                cmd.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Decimal) { Value = amount.HasValue ? (object)amount.Value : DBNull.Value });
+                cmd.Parameters.Add(new SqlParameter("@ChequeDate", SqlDbType.DateTime) { Value = chequeDate.HasValue ? (object)chequeDate.Value : DBNull.Value });
 
-                cmd.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Decimal)
-                {
-                    Value = amount.HasValue ? (object)amount.Value : DBNull.Value
-                });
-
-                cmd.Parameters.Add(new SqlParameter("@ChequeDate", SqlDbType.DateTime)
-                {
-                    Value = chequeDate.HasValue ? (object)chequeDate.Value : DBNull.Value
-                });
-
-                var returnValue = new SqlParameter("@ReturnValue", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.ReturnValue
-                };
-                cmd.Parameters.Add(returnValue);
+                // Add output parameter for the Sales ID
+                var salesIdParam = new SqlParameter("@BonLivraisonNumber", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                cmd.Parameters.Add(salesIdParam);
 
                 try
                 {
                     conn.Open();
                     cmd.ExecuteNonQuery();
-                    int result = (int)returnValue.Value;
-                    return result == 1;
+
+                    // Retrieve the Sales ID from the output parameter
+                    int salesId = (int)salesIdParam.Value;
+
+                    return (true, salesId);
                 }
                 catch (SqlException ex)
                 {
                     // Handle exception (log it, rethrow it, or handle it as needed)
                     Console.WriteLine("SQL Error: " + ex.Message);
-                    return false;
+                    return (false, -1); // Return -1 for an error scenario
                 }
             }
         }
     }
+
 
 
     public static bool SaveNewSaleOperationToDatabase_ForCompanies(

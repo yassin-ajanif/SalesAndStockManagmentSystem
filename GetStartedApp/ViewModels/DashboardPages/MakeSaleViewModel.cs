@@ -115,7 +115,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
 
-
         private List<string> _paymentsMethods;
         public List<string> PaymentsMethods 
         {
@@ -214,8 +213,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             WhenUserStartLookingFroProductManually_GetProductsList_ThatStart_With_SearchTerm();
 
             whenUserClickToProductSearchedManually_GetItProductID_And_PutIntoBarCodeSearchBar();
-
-          
+         
             SaveSellingOperationCommand =  
                 ReactiveCommand.Create(SaveSellingOperationToDatabse, CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms());
 
@@ -228,7 +226,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
             ShowAddChequeInfoDialogInteraction = new Interaction<AddNewChequeInfoViewModel, bool>();
 
           
-
 
     }
 
@@ -461,15 +458,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
 
-        protected virtual void GoToBlPageGeneratorPage()
-        {
-            int    lastSaleClientID = GetLastSaleClientID_And_Name().Item1;
-            string lastSaleClientName = GetLastSaleClientID_And_Name().Item2;
-
-            
-
-            mainWindowViewModel.CurrentPage = new BLViewModel(mainWindowViewModel,this,ProductsListScanned,lastSaleClientID,lastSaleClientName);
-        }
+        
 
         private bool UserHasSelected_Check_PaymentMode()
         {
@@ -547,22 +536,41 @@ namespace GetStartedApp.ViewModels.DashboardPages
             catch(Exception ex) { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ماتاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن "); }
         }
 
+        private void CreateBonLivraison(int saleID)
+        {
+            new BonLivraisonViewModel(mainWindowViewModel).MakeBlOperation(saleID);
+        }
         public virtual async void SubmitOperationSalesDataToDatabase
         (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
         {
-            if (AccessToClassLibraryBackendProject.
-                  AddNewSaleToDatabase
-                  (timeOfSellingOpperationIsNow, TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, SelectedClientName_PhoneNumber, slectedPaymentMethodInEnglish,
-                  userChequeInfo))
+            var result = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(
+                                                                                 timeOfSellingOpperationIsNow,
+                                                                                 TotalPriceOfSellingOperation,
+                                                                                 ProductsBoughtInThisOperation,
+                                                                                 SelectedClientName_PhoneNumber,
+                                                                                 slectedPaymentMethodInEnglish,
+                                                                                 userChequeInfo);
+
+            if (result.Success)
             {
                 await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
 
-                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ")) GoToBlPageGeneratorPage();
+                // Use result.SalesId if needed for further processing
+                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة وصل الاستلام "))
+                {
+                    int lastSaleID = result.SalesId;
+                    CreateBonLivraison(lastSaleID);
+                }
+
+                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ايضا "))
+                {
+                    // Logic to print the invoice using result.SalesId if necessary
+                }
 
                 ResetAllSellingInfoOperation();
                 mainWindowViewModel.CheckIfSystemShouldRaiseBellNotificationIcon();
-
             }
+
 
             else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
         }

@@ -23,8 +23,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
         private string _ClientOrCompanyName;
 
         DataTable TableOfProductsInfoScanned;
-        int         CompanyID;
-        int         ClientID;
+        protected int   CompanyID { get; set; }
+        protected int   ClientID { get; set; }
         MainWindowViewModel mainWindowViewModel;  
         
         public List<string> TypeOfClients => new List<string> { "زبون عادي", "شركة" };
@@ -299,7 +299,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             if (UserHasClickedYesToDeleteSaleOperationBtn) ResetAllSellingInfoOperation();
         } 
 
-        private string TranslateTheSelectedPaymentMethodInFrench()
+        protected string TranslateTheSelectedPaymentMethodInFrench()
         {
             return WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod,"fr");
         }
