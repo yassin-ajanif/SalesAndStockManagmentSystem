@@ -34,14 +34,28 @@ namespace SalesProductsManagmentSystemBusinessLayer
         }
 
 
-        public static bool SaveNewSaleOperationToDatabase_ForCompanies(DateTime SaleDateTime, float TotalPrice, DataTable SoldProductList, int companyID,
-            string selectedPaymentMethod, long? chequeNumber = null, decimal? amount = null, DateTime? chequeDate = null)
+        public static (bool isSuccess, int bonLivraisonNumber) SaveNewSaleOperationToDatabase_ForCompanies(
+      DateTime SaleDateTime,
+      float TotalPrice,
+      DataTable SoldProductList,
+      int companyID,
+      string selectedPaymentMethod,
+      long? chequeNumber = null,
+      decimal? amount = null,
+      DateTime? chequeDate = null)
         {
-
-            return ClsDataAccessLayer.SaveNewSaleOperationToDatabase_ForCompanies
-            (SaleDateTime, TotalPrice, SoldProductList, companyID, selectedPaymentMethod, chequeNumber, amount, chequeDate);
-
+            // Call the data layer function and return its result as a tuple
+            return ClsDataAccessLayer.SaveNewSaleOperationToDatabase_ForCompanies(
+                SaleDateTime,
+                TotalPrice,
+                SoldProductList,
+                companyID,
+                selectedPaymentMethod,
+                chequeNumber,
+                amount,
+                chequeDate);
         }
+
 
 
         public static decimal GetTotalProfit(DateTime startTime, DateTime endTime)

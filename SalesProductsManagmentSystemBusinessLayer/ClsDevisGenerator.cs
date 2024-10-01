@@ -58,6 +58,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             this.TVA = TVA;
             LoadMyCompanyInfo();
             LoadInfosOfClientToDisplay(ClientID);
+            
         }
 
         public ClsDevisGenerator(int CompanyID,DataTable TableOfProductsBoughts,string SelectedPaymentMethodInFrench, decimal TVA)
@@ -67,6 +68,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             this.TVA = TVA;
             LoadMyCompanyInfo();
             LoadCompanyInfoToDisplay(CompanyID);
+           
         }
 
         private void LoadMyCompanyInfo()
@@ -103,7 +105,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 }
             }
  
-        public void Compose(IDocumentContainer container)
+        public virtual void Compose(IDocumentContainer container)
         {
             container
                 .Page(page =>
@@ -134,7 +136,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 });
         }
 
-        protected virtual void ComposeHeader(IContainer container)
+        public virtual void ComposeHeader(IContainer container)
         {
             var titleStyle = TextStyle.Default.FontSize(12).SemiBold().FontColor(Colors.Blue.Medium).LineHeight(1.5f);
 
@@ -177,7 +179,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             });
         }
 
-        void ComposeContent(IContainer container)
+        protected void ComposeContent(IContainer container)
         {
             container.PaddingVertical(40).Column(column =>
             {
@@ -356,7 +358,34 @@ namespace SalesProductsManagmentSystemBusinessLayer
             CompanyOrClientName_To_GenerateBillFor = ClientName;
 
         }
+        protected string set_TheLocationWherePdf_IsgoingToBePrinted()
+        {
+            //  var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);
 
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filePath = Path.Combine(desktopPath, $"BilanAchats_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.pdf");
+
+            return filePath;
+        }
+
+        protected void openThePdfFile(string filePath)
+        {
+
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception (e.g., file not found, no PDF viewer installed)
+                Console.WriteLine($"Failed to open the file: {ex.Message}");
+            }
+
+        }
         // Method to load company info into the properties
         public void LoadCompanyInfoToDisplay(int companyId)
         {
@@ -395,29 +424,13 @@ namespace SalesProductsManagmentSystemBusinessLayer
         public void GenerateDevis_ForClient(int ClientID,decimal TVA)
         {
             QuestPDF.Settings.License = LicenseType.Community;
-            //  var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);
-
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string filePath = Path.Combine(desktopPath, $"BilanAchats_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.pdf");
-
-           
-            // Generate and save the PDF
-            new ClsDevisGenerator(TableOfProductsBoughts,ClientID,SelectedPaymentMethod, TVA).GeneratePdf(filePath);
+         
+            string filePath = set_TheLocationWherePdf_IsgoingToBePrinted();
+       
+            this.GeneratePdf(filePath);
 
             // Open the PDF file
-            try
-            {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = filePath,
-                    UseShellExecute = true
-                });
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception (e.g., file not found, no PDF viewer installed)
-                Console.WriteLine($"Failed to open the file: {ex.Message}");
-            }
+            openThePdfFile(filePath);
         }
 
         public void GenerateDevis_ForCompany(int CompanyID,decimal TVA)
@@ -425,27 +438,13 @@ namespace SalesProductsManagmentSystemBusinessLayer
             QuestPDF.Settings.License = LicenseType.Community;
             //  var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);
 
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string filePath = Path.Combine(desktopPath, $"BilanAchats_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.pdf");
+            string filePath = set_TheLocationWherePdf_IsgoingToBePrinted();
 
-            LoadCompanyInfoToDisplay(CompanyID);
             // Generate and save the PDF
-            new ClsDevisGenerator(CompanyID, TableOfProductsBoughts,SelectedPaymentMethod, TVA).GeneratePdf(filePath);
+            this.GeneratePdf(filePath);
 
             // Open the PDF file
-            try
-            {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = filePath,
-                    UseShellExecute = true
-                });
-            }
-            catch (Exception ex)
-            {
-                // Handle the exception (e.g., file not found, no PDF viewer installed)
-                Console.WriteLine($"Failed to open the file: {ex.Message}");
-            }
+            openThePdfFile(filePath);
         }
 
 

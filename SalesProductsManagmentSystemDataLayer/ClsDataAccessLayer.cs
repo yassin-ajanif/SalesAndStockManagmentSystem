@@ -1015,38 +1015,36 @@ public class ClsDataAccessLayer
 
 
 
-    public static bool SaveNewSaleOperationToDatabase_ForCompanies(
-    DateTime saleDateTime,
-    float totalPrice,
-    DataTable productDataTable,
-    int CompanyID,
-    string selectedPaymentMethod,
-    long? chequeNumber = null,  // Nullable long for cheque number
-    decimal? amount = null,     // Nullable decimal for cheque amount
-    DateTime? chequeDate = null) // Nullable DateTime for cheque date
+    public static (bool isSuccess, int bonLivraisonNumber) SaveNewSaleOperationToDatabase_ForCompanies(
+     DateTime saleDateTime,
+     float totalPrice,
+     DataTable productDataTable,
+     int CompanyID,
+     string selectedPaymentMethod,
+     long? chequeNumber = null,  // Nullable long for cheque number
+     decimal? amount = null,     // Nullable decimal for cheque amount
+     DateTime? chequeDate = null) // Nullable DateTime for cheque date
     {
         // Validate saleDateTime
         if (saleDateTime == default(DateTime))
         {
             Console.WriteLine("Invalid saleDateTime: DateTime is not provided.");
-            return false;
+            return (false, 0);
         }
 
         // Validate totalPrice
         if (totalPrice <= 0 || IsThisFloatOutOfRange(totalPrice))
         {
             Console.WriteLine($"Invalid totalPrice: {totalPrice}. Total price must be greater than zero or it is out of range.");
-            return false;
+            return (false, 0);
         }
 
         // Validate productDataTable
         if (productDataTable == null || productDataTable.Rows.Count == 0)
         {
             Console.WriteLine("Invalid productDataTable: DataTable is null or empty.");
-            return false;
+            return (false, 0);
         }
-
-    
 
         using (SqlConnection conn = new SqlConnection(connectionString))
         {
@@ -1061,14 +1059,8 @@ public class ClsDataAccessLayer
                     TypeName = "dbo.ProductBought",
                     Value = productDataTable
                 });
-                cmd.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int)
-                {
-                    Value = CompanyID
-                });
-                cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar)
-                {
-                    Value = selectedPaymentMethod
-                });
+                cmd.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int) { Value = CompanyID });
+                cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar) { Value = selectedPaymentMethod });
 
                 // Add cheque-related parameters, allowing them to be null
                 cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.BigInt)
@@ -1092,22 +1084,33 @@ public class ClsDataAccessLayer
                 };
                 cmd.Parameters.Add(returnValue);
 
+                // Output parameter for BonLivraisonNumber
+                var bonLivraisonNumberParam = new SqlParameter("@BonLivraisonNumber", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                cmd.Parameters.Add(bonLivraisonNumberParam);
+
                 try
                 {
                     conn.Open();
                     cmd.ExecuteNonQuery();
+
                     int result = (int)returnValue.Value;
-                    return result == 1;
+                    int bonLivraisonNumber = (int)bonLivraisonNumberParam.Value;
+
+                    return (result == 1, bonLivraisonNumber);
                 }
                 catch (SqlException ex)
                 {
                     // Handle exception (log it, rethrow it, or handle it as needed)
                     Console.WriteLine("SQL Error: " + ex.Message);
-                    return false;
+                    return (false, 0);
                 }
             }
         }
     }
+
 
 
     public static byte[] GetImageOfProductById(long id)

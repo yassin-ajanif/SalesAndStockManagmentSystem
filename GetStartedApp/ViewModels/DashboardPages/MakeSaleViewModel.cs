@@ -536,7 +536,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             catch(Exception ex) { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ماتاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن "); }
         }
 
-        private void CreateBonLivraison(int saleID, int ClientID,DataTable ProductsBoughtInThisOperation,string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
+        private void CreateBonLivraison_For_Client(int saleID, int ClientID,DataTable ProductsBoughtInThisOperation,string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
         {
             string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(slectedPaymentMethodInEnglish, "fr");
             decimal TVA = 20;
@@ -559,11 +559,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
                 await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
 
                 // Use result.SalesId if needed for further processing
-                if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة وصل الاستلام "))
+                if (await ShowDeleteSaleDialogInteraction.Handle("هل تريد طباعة وصل الاستلام "))
                 {
                     int lastSaleID = result.SalesId;
                     int ClientID = GetLastSaleClientID_And_Name().Item1;
-                    CreateBonLivraison(lastSaleID,ClientID,ProductsBoughtInThisOperation,SelectedPaymentMethod,userChequeInfo);
+                    CreateBonLivraison_For_Client(lastSaleID,ClientID,ProductsBoughtInThisOperation,SelectedPaymentMethod,userChequeInfo);
                 }
 
                 if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ايضا "))

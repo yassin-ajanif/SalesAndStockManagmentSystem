@@ -4,6 +4,8 @@ using System.Data;
 using QuestPDF.Fluent;
 using System.Globalization;
 using QuestPDF.Helpers;
+using System.IO;
+using System.Diagnostics;
 
 
 namespace SalesProductsManagmentSystemBusinessLayer
@@ -12,7 +14,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
     {
         public int SaleID { get; set; } = 0;
 
-        protected virtual void ComposeHeader(IContainer container)
+        public override void ComposeHeader(IContainer container)
         {
             var titleStyle = TextStyle.Default.FontSize(12).SemiBold().FontColor(Colors.Blue.Medium).LineHeight(1.5f);
 
@@ -53,29 +55,44 @@ namespace SalesProductsManagmentSystemBusinessLayer
             });
         }
 
+       
         public ClsBonLivraisonGenerator(DataTable TableOfProductsBoughts, int ClientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
             :base(TableOfProductsBoughts,ClientID, SelectedPaymentMethodInFrench, TVA)
         {
-            
-        }
-
-        public ClsBonLivraisonGenerator(int CompanyID, DataTable TableOfProductsBoughts, int ClientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
-           : base(TableOfProductsBoughts, ClientID, SelectedPaymentMethodInFrench, TVA)
-        {
-           
+            this.SaleID = SaleID;
 
         }
 
-       public void GenerateBlivraison_ForClient(int clientID, decimal TVA, int SaleID)
+        public ClsBonLivraisonGenerator(int CompanyID, DataTable TableOfProductsBoughts, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
+           : base(CompanyID,TableOfProductsBoughts, SelectedPaymentMethodInFrench, TVA)
         {
             this.SaleID = SaleID;
 
-            GenerateDevis_ForClient(clientID, TVA);
         }
 
-        public void GenerateBlivraison_ForCompany(int companyID, decimal TVA, int SaleID)
+        public void GenerateBlivraison_ForClient(int ClientID, decimal TVA)
         {
-            this.SaleID = SaleID;
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            string filePath = set_TheLocationWherePdf_IsgoingToBePrinted();
+
+            this.GeneratePdf(filePath);
+
+            // Open the PDF file
+            openThePdfFile(filePath);
+        }
+
+        public void GenerateBlivraison_ForCompany(int CompanyID, decimal TVA)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+            //  var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);
+
+            string filePath = set_TheLocationWherePdf_IsgoingToBePrinted();
+
+            this.GeneratePdf(filePath);
+
+            // Open the PDF file
+            openThePdfFile(filePath);
         }
 
     }
