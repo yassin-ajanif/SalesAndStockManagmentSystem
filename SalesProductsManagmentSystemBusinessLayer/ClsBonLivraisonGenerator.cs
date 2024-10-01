@@ -32,7 +32,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                     {
 
                         text.Span($"{My_City} le: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("fr-FR"))}\n\n\n").SemiBold();
-                        text.Span($"DEVIS N°: {SaleID}\n\n\n").Bold();
+                        text.Span($"Bon De Livraison N°: {SaleID}\n\n\n").Bold();
                         text.Span($"Mode De Paiment : ").Bold();
                         text.Span($"{SelectedPaymentMethod}");
 
