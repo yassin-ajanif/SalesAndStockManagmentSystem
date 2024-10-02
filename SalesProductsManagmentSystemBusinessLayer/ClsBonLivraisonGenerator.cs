@@ -70,9 +70,10 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
         }
 
-        public void GenerateBlivraison_ForClient(int ClientID, decimal TVA)
+        public void GenerateBlivraison_ForClient()
         {
             QuestPDF.Settings.License = LicenseType.Community;
+            
 
             string filePath = set_TheLocationWherePdf_IsgoingToBePrinted();
 
@@ -82,7 +83,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             openThePdfFile(filePath);
         }
 
-        public void GenerateBlivraison_ForCompany(int CompanyID, decimal TVA)
+        public void GenerateBlivraison_ForCompany()
         {
             QuestPDF.Settings.License = LicenseType.Community;
             //  var document = new BlsPdf(ProductSoldTable, companyName, companyLogo, companyLocation, ICE, ProfessionalTaxID, TaxID, lastSaleClientID, lastSaleClientName);

@@ -103,6 +103,8 @@
     <Compile Include="ClsClients.cs" />
     <Compile Include="ClsCompanies.cs" />
     <Compile Include="ClsDevisGenerator.cs" />
+    <Compile Include="ClsInvoiceGenerator.cs" />
+    <Compile Include="ClsInvoices.cs" />
     <Compile Include="clsPayments.cs" />
     <Compile Include="ClsPdfGenerator.cs" />
     <Compile Include="ClsBarCodeManager.cs" />

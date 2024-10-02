@@ -541,8 +541,16 @@ namespace GetStartedApp.ViewModels.DashboardPages
             string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(slectedPaymentMethodInEnglish, "fr");
             decimal TVA = 20;
             AccessToClassLibraryBackendProject.GenerateBonLivraison_ForClient(ProductsBoughtInThisOperation, ClientID, selectedPaymentMethodInFrench, TVA, saleID);
-
         }
+
+        private void CreateInvoice_For_Client(int saleID, int InvoiceID,int ClientID, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish, ChequeInfo userChequeInfo)
+        {
+            string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(slectedPaymentMethodInEnglish, "fr");
+            decimal TVA = 20;
+            AccessToClassLibraryBackendProject.GenerateInvoice_ForClient(ProductsBoughtInThisOperation, ClientID, selectedPaymentMethodInFrench, TVA, saleID, InvoiceID);
+        }
+
+
         public virtual async void SubmitOperationSalesDataToDatabase
         (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
         {
@@ -558,17 +566,19 @@ namespace GetStartedApp.ViewModels.DashboardPages
             {
                 await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
 
+                int lastSaleID = result.SalesId;
+                int ClientID = GetLastSaleClientID_And_Name().Item1;
                 // Use result.SalesId if needed for further processing
                 if (await ShowDeleteSaleDialogInteraction.Handle("هل تريد طباعة وصل الاستلام "))
                 {
-                    int lastSaleID = result.SalesId;
-                    int ClientID = GetLastSaleClientID_And_Name().Item1;
+                        
                     CreateBonLivraison_For_Client(lastSaleID,ClientID,ProductsBoughtInThisOperation,SelectedPaymentMethod,userChequeInfo);
                 }
 
                 if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ايضا "))
                 {
-                    // Logic to print the invoice using result.SalesId if necessary
+                   int invoiceNumber = AccessToClassLibraryBackendProject.AddInvoiceIfNotExists(lastSaleID);
+                    CreateInvoice_For_Client(lastSaleID, invoiceNumber, ClientID, ProductsBoughtInThisOperation, SelectedPaymentMethod, userChequeInfo);
                 }
 
                 ResetAllSellingInfoOperation();

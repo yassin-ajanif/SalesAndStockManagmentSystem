@@ -742,13 +742,13 @@ namespace GetStartedApp.Models
         public static void GenerateDevis_ForClient(DataTable products, int clientID,string SelectedPaymentMethodInFrench,decimal TVA)
         {
             SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(products, clientID, SelectedPaymentMethodInFrench,TVA);
-            devisGenerator.GenerateDevis_ForClient(clientID,TVA);
+            devisGenerator.GenerateDevis_ForClient();
         }
 
         public static void GenerateDevis_ForCompany( int companyID, DataTable products, string SelectedPaymentMethodInFrench,decimal TVA)
         {
             SalesProductsManagmentSystemBusinessLayer.ClsDevisGenerator devisGenerator = new ClsDevisGenerator(companyID, products, SelectedPaymentMethodInFrench, TVA);
-            devisGenerator.GenerateDevis_ForCompany(companyID,TVA);
+            devisGenerator.GenerateDevis_ForCompany();
         }
 
         public static void GenerateBonLivraison_ForClient(DataTable products, int clientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
@@ -756,7 +756,7 @@ namespace GetStartedApp.Models
             SalesProductsManagmentSystemBusinessLayer.ClsBonLivraisonGenerator BlGenerator 
                 = new ClsBonLivraisonGenerator(products, clientID, SelectedPaymentMethodInFrench, TVA, SaleID);
 
-            BlGenerator.GenerateBlivraison_ForClient(clientID,TVA);
+            BlGenerator.GenerateBlivraison_ForClient();
         }
 
        public static void GenerateBonLivraison_ForCompany(int companyID, DataTable products, string SelectedPaymentMethodInFrench, decimal TVA,int SaleID)
@@ -765,11 +765,41 @@ namespace GetStartedApp.Models
                 new ClsBonLivraisonGenerator(companyID, products, SelectedPaymentMethodInFrench, TVA, SaleID);
     
            // Call further methods on devisGenerator if needed to generate the devis for the company
-           BlGenerator.GenerateDevis_ForCompany(companyID, TVA);
+           BlGenerator.GenerateBlivraison_ForCompany();
        }
+
+        public static void GenerateInvoice_ForClient(DataTable products, int clientID, string selectedPaymentMethodInFrench, decimal tva, int saleID, int invoiceID)
+        {
+            // Create an instance of ClsInvoiceGenerator
+            SalesProductsManagmentSystemBusinessLayer.ClsInvoiceGenerator invoiceGenerator
+                = new ClsInvoiceGenerator(products, clientID, selectedPaymentMethodInFrench, tva, saleID,invoiceID);
+
+            // Generate the invoice for the client
+            invoiceGenerator.GenerateInvoice_ForClient();
+        }
+
+        public static void GenerateInvoice_ForCompany(int companyID, DataTable products, string selectedPaymentMethodInFrench, decimal tva, int saleID, int invoiceID)
+        {
+            // Create an instance of ClsInvoiceGenerator
+            SalesProductsManagmentSystemBusinessLayer.ClsInvoiceGenerator invoiceGenerator
+                = new ClsInvoiceGenerator(companyID, products, selectedPaymentMethodInFrench, tva, saleID, invoiceID) ;
+
+            // Generate the invoice for the company
+            invoiceGenerator.GenerateInvoice_ForCompany();
+        }
+
+
         public static bool GetClientInfoById(int clientId, ref string clientName, ref string phoneNumber, ref string email)
         {
             return SalesProductsManagmentSystemBusinessLayer.ClsClients.GetClientInfoById(clientId, ref clientName, ref phoneNumber, ref email);
         }
+
+        public static int AddInvoiceIfNotExists(int saleID)
+        {
+
+            return SalesProductsManagmentSystemBusinessLayer.ClsInvoices.AddInvoiceIfNotExists(saleID); 
+        }
+
+        
     }
 }
