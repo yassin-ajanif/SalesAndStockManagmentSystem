@@ -120,9 +120,7 @@ public class MainWindowViewModel : ViewModelBase
 
         // this is the command that will run from ui to go back of the page
         goBackToPreviousPageCommand = ReactiveCommand.Create(GoBackToPreviousPage);
-
-      
-        
+     
     }
 
  
@@ -141,6 +139,13 @@ public class MainWindowViewModel : ViewModelBase
     public void GoToSuppliersPage()
     {
         CurrentPage = new SuppliersListViewModel(this);
+        navigationHistory.Push(CurrentPage);
+        HideheaderAndShowBtnBack();
+    }
+
+    public void GoToBonLivraisonsPage()
+    {
+        CurrentPage = new BonLivraisonsViewModel(this);
         navigationHistory.Push(CurrentPage);
         HideheaderAndShowBtnBack();
     }

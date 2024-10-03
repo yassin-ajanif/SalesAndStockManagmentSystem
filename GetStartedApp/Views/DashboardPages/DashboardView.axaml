@@ -76,7 +76,7 @@
 
 				<ScrollViewer VerticalScrollBarVisibility="Auto" Height="400"
 						   Margin="0 20 0 0" Background="Transparent">
-					<Grid ColumnDefinitions="*,*,*,*" RowDefinitions="200,200,200">
+					<Grid ColumnDefinitions="*,*,*,*" RowDefinitions="200,200,200,200">
 						
 						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="0" Grid.Column="0">
 							<Button Classes="WelcomeBtnsStyles" Command="{Binding GoToMakeSalePageCommand}">
@@ -187,8 +187,21 @@
 									<Image Source="avares://GetStartedApp/Assets/Icons/Devis.png"/>
 									<Label Content="Devis انشاء" Classes="WelecomeBtnsStyles"/>
 								</StackPanel>
-							</Button>
+						</Button>
+					</Border>
+
+						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="3" Grid.Column="0">
+								<Button Classes="WelcomeBtnsStyles"
+										Command="{Binding GoToBonLivraisonsPageCommand}">
+									<StackPanel Classes="BtnContainer">
+										<Image Source="avares://GetStartedApp/Assets/Icons/BonLivraisons.png" />	
+										<Label Content="وصلات الاستلام" Classes="WelecomeBtnsStyles" FontSize="15"/>
+										
+									</StackPanel>
+								</Button>
 						</Border>
+							
+						
 					</Grid>
 				</ScrollViewer>
 
