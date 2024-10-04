@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsDataBonLivraisonsLayer.cs" />
     <Compile Include="ClsDataAccessLayer.cs" />
     <Compile Include="ClsDataInvoicesLayer.cs" />
     <Compile Include="clsDataLayerCompanies.cs" />

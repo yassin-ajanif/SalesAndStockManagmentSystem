@@ -51,7 +51,6 @@ namespace SalesProductsManagmentSystemDataLayer
                 return invoiceID;  // Returns the InvoiceID or -1 if the SaleID already exists
             }
         
-
             public static int GetInvoiceIDBySaleID(int saleID)
         {
             int invoiceID;  // Declare without an initial value

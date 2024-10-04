@@ -800,6 +800,65 @@ namespace GetStartedApp.Models
             return SalesProductsManagmentSystemBusinessLayer.ClsInvoices.AddInvoiceIfNotExists(saleID); 
         }
 
-        
+        public static List<ClientOrCompanySaleInfo> LoadSalesForClientOrCompany(
+    string clientOrCompany,
+    DateTime startDate,
+    DateTime endDate,
+    int paymentType,
+    decimal? minAmount = null,
+    decimal? maxAmount = null,
+    string productID = null,
+    string productName = null,
+    int? saleID = null,
+    int? clientID = null,
+    int? companyID = null)
+        {
+            // List to hold the sales information
+            List<ClientOrCompanySaleInfo> salesList = new List<ClientOrCompanySaleInfo>();
+
+       
+
+            // Get the data using the SqlDataReader
+            using (SqlDataReader reader = clsBonLivraisons.GetSalesForClientsOrCompanies(
+                clientOrCompany,
+                startDate,
+                endDate,
+                paymentType,
+                minAmount,
+                maxAmount,
+                productID,
+                productName,
+                saleID,
+                clientID,
+                companyID))
+            {
+                // Read the data from the reader
+                while (reader.Read())
+                {
+                    // Create a unified ClientOrCompanySaleInfo object
+                    ClientOrCompanySaleInfo saleInfo = new ClientOrCompanySaleInfo(
+                        saleID: reader.GetInt32(reader.GetOrdinal("SaleID")),
+                        timeOfOperation: reader.GetDateTime(reader.GetOrdinal("SaleDateTime")),
+                        totalPrice: reader.GetDecimal(reader.GetOrdinal("TotalPrice")),
+                        paymentID: reader.GetInt32(reader.GetOrdinal("PaymentTypeId")),
+                        paymentName: reader.GetString(reader.GetOrdinal("PaymentName")),
+                        clientOrCompanyID: clientOrCompany == "Client"
+                            ? reader.GetInt32(reader.GetOrdinal("ClientID"))
+                            : reader.GetInt32(reader.GetOrdinal("CompanyID")),
+                        clientOrCompanyName: clientOrCompany == "Client"
+                            ? reader.GetString(reader.GetOrdinal("ClientName"))
+                            : reader.GetString(reader.GetOrdinal("CompanyName"))
+                    );
+
+                    // Add the sale info to the list
+                    salesList.Add(saleInfo);
+                }
+            }
+
+            return salesList;
+        }
+
+
+
     }
 }
