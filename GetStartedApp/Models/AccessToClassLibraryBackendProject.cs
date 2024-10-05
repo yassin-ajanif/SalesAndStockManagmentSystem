@@ -807,7 +807,7 @@ namespace GetStartedApp.Models
     int paymentType,
     decimal? minAmount = null,
     decimal? maxAmount = null,
-    string productID = null,
+    long? productID = null,
     string productName = null,
     int? saleID = null,
     int? clientID = null,
@@ -841,7 +841,7 @@ namespace GetStartedApp.Models
                         timeOfOperation: reader.GetDateTime(reader.GetOrdinal("SaleDateTime")),
                         totalPrice: reader.GetDecimal(reader.GetOrdinal("TotalPrice")),
                         paymentID: reader.GetInt32(reader.GetOrdinal("PaymentTypeId")),
-                        paymentName: reader.GetString(reader.GetOrdinal("PaymentName")),
+                        paymentName: reader.GetString(reader.GetOrdinal("PaymentType")),
                         clientOrCompanyID: clientOrCompany == "Client"
                             ? reader.GetInt32(reader.GetOrdinal("ClientID"))
                             : reader.GetInt32(reader.GetOrdinal("CompanyID")),
@@ -859,6 +859,10 @@ namespace GetStartedApp.Models
         }
 
 
-
+        public static int GetPaymentTypeID(string paymentType)
+        {
+            // Directly call the static method from the business layer
+            return SalesProductsManagmentSystemBusinessLayer.clsPayments.GetPaymentTypeID(paymentType);
+        }
     }
 }

@@ -15,5 +15,11 @@ namespace SalesProductsManagmentSystemBusinessLayer
         {
               return clsDataLayerPayments.GetPaymentTypes();
         }
+
+        public static int GetPaymentTypeID(string paymentType)
+        {
+            // Directly calling the static method from the data access layer
+            return clsDataLayerPayments.GetPaymentTypeIdFromName(paymentType);
+        }
     }
 }

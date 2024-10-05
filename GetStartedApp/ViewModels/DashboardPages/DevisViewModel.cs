@@ -17,19 +17,19 @@ namespace GetStartedApp.ViewModels.DashboardPages
 {
     public class DevisViewModel : MakeSaleViewModel
     {
-       
-      
-        private int    _clientOrCompanyID;
+
+
+        private int _clientOrCompanyID;
         private string _ClientOrCompanyName;
 
         DataTable TableOfProductsInfoScanned;
-        protected int   CompanyID { get; set; }
-        protected int   ClientID { get; set; }
-        MainWindowViewModel mainWindowViewModel;  
-        
+        protected int CompanyID { get; set; }
+        protected int ClientID { get; set; }
+        MainWindowViewModel mainWindowViewModel;
+
         public List<string> TypeOfClients => new List<string> { "زبون عادي", "شركة" };
 
-        private List<string> _clientsListOrCompanyList;
+        protected List<string> _clientsListOrCompanyList;
 
         // Property for ClientsList_Or_CompanyList
         public List<string> ClientsList_Or_CompanyList
@@ -38,8 +38,15 @@ namespace GetStartedApp.ViewModels.DashboardPages
             set => this.RaiseAndSetIfChanged(ref _clientsListOrCompanyList, value);
         }
 
+        private string _clientOrCompanyNameEnteredByUser;
 
-        private Dictionary<string,int> _companyNamesAndTheirIds = AccessToClassLibraryBackendProject.GetAllCompanyNames_And_IDs();
+        public string ClientOrCompanyNameEnteredByUser
+        {
+            get => _clientOrCompanyNameEnteredByUser;
+            set => this.RaiseAndSetIfChanged(ref _clientOrCompanyNameEnteredByUser, value);
+        }
+
+        private Dictionary<string, int> _companyNamesAndTheirIds = AccessToClassLibraryBackendProject.GetAllCompanyNames_And_IDs();
 
         // Property for ClientsList_Or_CompanyList
         public Dictionary<string, int> CompanyNamesAndTheirIds
@@ -55,9 +62,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
             get => _selectedClientType;  // Return "زبون عادي" if _selectedClientType is null
             set
             {
-                
+
                 this.RaiseAndSetIfChanged(ref _selectedClientType, value);
-                 // Call method after setting the value
+                // Call method after setting the value
             }
         }
 
@@ -80,7 +87,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             private set => this.RaiseAndSetIfChanged(ref _clientTypeLabel, value);
         }
 
-        private string _taxValue="20";
+        private string _taxValue = "20";
 
         [PositiveFloatRange(1, 100, ErrorMessage = "الرقم يجب ان يكون بين 1 و 100")]
         public string TaxValue
@@ -89,20 +96,20 @@ namespace GetStartedApp.ViewModels.DashboardPages
             set => this.RaiseAndSetIfChanged(ref _taxValue, value);
         }
 
-        public ReactiveCommand <Unit, Unit> MakeDevisCommand { get; }
-        public ReactiveCommand <Unit, Unit> DeleteAllProductsCommand { get; }
+        public ReactiveCommand<Unit, Unit> MakeDevisCommand { get; }
+        public ReactiveCommand<Unit, Unit> DeleteAllProductsCommand { get; }
 
         public bool IsTVA_Enabled => true;
 
         public DevisViewModel
-            (MainWindowViewModel mainWindowViewModel):base(mainWindowViewModel)
+            (MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
         {
             this.mainWindowViewModel = mainWindowViewModel;
             SelectedClientType = "زبون عادي";
             LoadTypeOfClientList_Clients_Or_Companies_WheUserChoose_ClientType();
             WhenUserUserSetClienType_Or_PickTheClient_LoadInfo_Of_Client_Or_Company_Choosed();
-          
-            MakeDevisCommand =ReactiveCommand.Create(MakeDevisOperation,CheckIfSystemIsNotRaisingError_And_TVA_Is_Valid_Number_And_ProductListIsNotEmpty_Every_500ms());
+
+            MakeDevisCommand = ReactiveCommand.Create(MakeDevisOperation, CheckIfSystemIsNotRaisingError_And_TVA_Is_Valid_Number_And_ProductListIsNotEmpty_Every_500ms());
             DeleteAllProductsCommand = ReactiveCommand.Create(DeleteAllProductsScanned, CheckIfUserHasScannedAtLeastOneProduct());
         }
 
@@ -113,7 +120,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             this.WhenAnyValue(x => x.SelectedClientType)
                 .Subscribe(selectedClientType =>
                 {
-                    SelectedClientOrCompany=string.Empty;
+                    SelectedClientOrCompany = string.Empty;
                     // Handle the SelectedClientType value
                     if (selectedClientType == "زبون عادي")
                     {
@@ -125,18 +132,19 @@ namespace GetStartedApp.ViewModels.DashboardPages
                         ClientTypeLabel = "اسم الشركة:";
                         ClientsList_Or_CompanyList = CompanyNamesAndTheirIds.Keys.ToList();
                     }
-                   
+
                 });
         }
 
-        protected override bool User_HasPicked_Known_Client()
-       {
-            if (string.IsNullOrEmpty(SelectedClientOrCompany)) return false;
-            
-            bool existsInClientListAsCompanyOrClient = _clientsListOrCompanyList.Contains(SelectedClientOrCompany, StringComparer.OrdinalIgnoreCase);
-     
+        // the both valid cases are when user enter a client or company that exist in the list or let the textbox empty 
+        protected bool User_HasPicked_Known_Client_Or_Let_The_Textbox_Empty()
+        {
+            if (string.IsNullOrEmpty(ClientOrCompanyNameEnteredByUser)) return true;
+
+            bool existsInClientListAsCompanyOrClient = _clientsListOrCompanyList.Contains(ClientOrCompanyNameEnteredByUser, StringComparer.OrdinalIgnoreCase);
+
             return existsInClientListAsCompanyOrClient;
-       }
+        }
 
         protected override bool CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid()
         {
@@ -148,7 +156,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     !int.TryParse(productScanned.ProductsUnits, out int units) ||
                     units <= 0)
                 {
-                     return false;
+                    return false;
                 }
 
                 // Check if PriceOfProductSold is null, empty, whitespace, or not a valid positive decimal
@@ -157,15 +165,15 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     !decimal.TryParse(productScanned.PriceOfProductSold, out decimal price) ||
                     price <= 0)
                 {
-                     return false;
+                    return false;
                 }
-               //
-               // if (!UiAttributeChecker.AreThesesAttributesPropertiesValid
-               //    (productScanned, nameof(productScanned.ProductsUnits), nameof(productScanned.PriceOfProductSold)))
-               // {
-               //
-               //     return false;
-               // }
+                //
+                // if (!UiAttributeChecker.AreThesesAttributesPropertiesValid
+                //    (productScanned, nameof(productScanned.ProductsUnits), nameof(productScanned.PriceOfProductSold)))
+                // {
+                //
+                //     return false;
+                // }
             }
 
             return true; // All checks passed
@@ -192,14 +200,14 @@ namespace GetStartedApp.ViewModels.DashboardPages
         {
             deleteDisplayedError();
 
-            if (!User_HasPicked_Known_Client())
+            if (!User_HasPicked_Known_Client_Or_Let_The_Textbox_Empty())
             {
-                displayErrorMessage("ادخل زبون اوشركة موجودة في القائمة");
+                displayErrorMessage("ادخل زبون اوشركة موجودة في القائمة او دع الخانة فارغة ");
             }
         }
         protected override void WhenUserUserChooseThe_CheckPyament_Or_DebtMode_CheckIfHePickedTheClient_NotUnkownClient()
         {
-            this.WhenAnyValue(x => x.SelectedPaymentMethod,x=>x.SelectedClientOrCompany, x=>x.ProductsListScanned.Count).
+            this.WhenAnyValue(x => x.SelectedPaymentMethod, x => x.ClientOrCompanyNameEnteredByUser, x => x.ProductsListScanned.Count).
 
                  Subscribe(_ => {
 
@@ -210,16 +218,16 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         private bool CheckIf_TVA_Is_Valid_Number()
         {
-          return  !string.IsNullOrEmpty(TaxValue) && UiAttributeChecker.AreThesesAttributesPropertiesValid(this,nameof(TaxValue));
+            return !string.IsNullOrEmpty(TaxValue) && UiAttributeChecker.AreThesesAttributesPropertiesValid(this, nameof(TaxValue));
         }
 
         protected void WhenUserUserSetClienType_Or_PickTheClient_LoadInfo_Of_Client_Or_Company_Choosed()
         {
-            this.WhenAnyValue( x => x.SelectedClientOrCompany).
+            this.WhenAnyValue(x => x.ClientOrCompanyNameEnteredByUser).
 
                  Subscribe(_ => {
 
-                     if (string.IsNullOrEmpty(SelectedClientOrCompany)) return;
+                     if (string.IsNullOrEmpty(ClientOrCompanyNameEnteredByUser)) return;
                      if (SelectedClientType == "زبون عادي") LoadChosenClientID();
                      else if (SelectedClientType == "شركة") LoadChosenCompanyID();
                  });
@@ -258,7 +266,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                           )
                           .Subscribe(_ =>
                           {
-                             
+
                               deleteDisplayedError();
                               if (CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid() && ProductIsProfitable()) ;
                               else { displayErrorMessage("هناك خطأ في كمية المنتج او السعر"); return; };
@@ -285,7 +293,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     // If both values are parsed successfully, calculate the total
                     totalPriceOfProductsCalculated += productPrice * productUnits;
                 }
-   
+
             }
 
             Total = totalPriceOfProductsCalculated.ToString();
@@ -297,41 +305,51 @@ namespace GetStartedApp.ViewModels.DashboardPages
             bool UserHasClickedYesToDeleteSaleOperationBtn = await ShowDeleteSaleDialogInteraction.Handle("هل تريد حذف جميع المنتجات");
 
             if (UserHasClickedYesToDeleteSaleOperationBtn) ResetAllSellingInfoOperation();
-        } 
+        }
 
         protected string TranslateTheSelectedPaymentMethodInFrench()
         {
-            return WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod,"fr");
+            return WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod, "fr");
         }
+        
+
+        private bool userHasDecidedToMakeDevisForUnkown_Client_Or_Company()
+        {
+            return string.IsNullOrEmpty(ClientOrCompanyNameEnteredByUser);
+        }
+        
         private async void MakeDevisOperation()
         {
-            TableOfProductsInfoScanned=LoadProductBoughtFromScannedListIntoADataTable();
+            TableOfProductsInfoScanned = LoadProductBoughtFromScannedListIntoADataTable();
             string SelectedPaymentMethodInFrench = TranslateTheSelectedPaymentMethodInFrench();
             decimal TVA = decimal.Parse(TaxValue);
 
-            if (SelectedClientType == "زبون عادي") AccessToClassLibraryBackendProject.GenerateDevis_ForClient(TableOfProductsInfoScanned,ClientID,SelectedPaymentMethodInFrench,TVA);
+            // we do that to prevent happening a bug in case a user has send firstly to a know client then later he decide to send devis for unknow client
+            // the previous info of selected client or company are going to be sent to the unkown or of the name of unkwon client or company
+            if(userHasDecidedToMakeDevisForUnkown_Client_Or_Company()) { ClientID = 0; CompanyID = 0; }
 
-            else if (SelectedClientType == "شركة") AccessToClassLibraryBackendProject.GenerateDevis_ForCompany(CompanyID,TableOfProductsInfoScanned,SelectedPaymentMethodInFrench,TVA);
+            if (SelectedClientType == "زبون عادي") AccessToClassLibraryBackendProject.GenerateDevis_ForClient(TableOfProductsInfoScanned, ClientID, SelectedPaymentMethodInFrench, TVA);
+
+            else if (SelectedClientType == "شركة") AccessToClassLibraryBackendProject.GenerateDevis_ForCompany(CompanyID, TableOfProductsInfoScanned, SelectedPaymentMethodInFrench, TVA);
 
         }
 
         private void LoadChosenClientID()
         {
-                int IDofChoosedClient = 0;
-                string ChoosedClientPhoneNumber = PhoneNumberExtractor.ExtractPhoneNumber(SelectedClientOrCompany);
-                string ClientName = "";
-                string Email = "";
-          
-                AccessToClassLibraryBackendProject.GetClientInfo(ref IDofChoosedClient, ChoosedClientPhoneNumber, ref ClientName, ref Email);
+            int IDofChoosedClient = 0;
+            string ChoosedClientPhoneNumber = PhoneNumberExtractor.ExtractPhoneNumber(ClientOrCompanyNameEnteredByUser);
+            string ClientName = "";
+            string Email = "";
 
-            ClientID = IDofChoosedClient; 
+            AccessToClassLibraryBackendProject.GetClientInfo(ref IDofChoosedClient, ChoosedClientPhoneNumber, ref ClientName, ref Email);
+
+            ClientID = IDofChoosedClient;
         }
 
         private void LoadChosenCompanyID()
         {
-            CompanyID  = CompanyNamesAndTheirIds[SelectedClientOrCompany];
+            CompanyID = CompanyNamesAndTheirIds[SelectedClientOrCompany];
         }
 
     }
 }
-

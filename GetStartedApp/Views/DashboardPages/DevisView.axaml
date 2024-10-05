@@ -254,6 +254,7 @@
 									FontFamily="Roboto"
 									FlowDirection="LeftToRight"
 									SelectedItem="{Binding SelectedClientOrCompany}"
+									Text="{Binding ClientOrCompanyNameEnteredByUser}"
 									ItemsSource="{Binding ClientsList_Or_CompanyList}"		 
 										  />
 						</StackPanel>
@@ -278,12 +279,15 @@
 										VerticalAlignment="Center"
 									  HorizontalAlignment="Center">
 
-							<Label Foreground="#EE4B2B"
-								   FontWeight="Bold"
-								   Content="{Binding ErrorMessage}"
-								   IsVisible="{Binding isErrorLabelVisible}"
-								   FlowDirection="RightToLeft"
-								   />
+							<TextBlock Foreground="#EE4B2B"
+                                       FontWeight="Bold"
+                                       Text="{Binding ErrorMessage}"
+                                       IsVisible="{Binding isErrorLabelVisible}"
+                                       FlowDirection="LeftToRight"
+                                       TextWrapping="Wrap"
+                                       MaxWidth="200" />
+							
+
 
 						</StackPanel>
 

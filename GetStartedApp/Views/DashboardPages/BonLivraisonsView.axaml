@@ -87,6 +87,7 @@
 								<ColumnDefinition Width="Auto" />
 								<ColumnDefinition Width="Auto" />
 								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
 
 							</Grid.ColumnDefinitions>
 
@@ -96,7 +97,8 @@
 										   Foreground="#0096FF"
 										   FontWeight="Bold"
 										   HorizontalAlignment="Center"/>
-								<TextBox Width="70" HorizontalAlignment="Center" Text="{Binding Barcode }"/>
+								<TextBox Width="70" HorizontalAlignment="Center"
+										 Text="{Binding SaleID }"/>
 							</StackPanel>
 							
 							<StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
@@ -104,17 +106,21 @@
 										   Foreground="#0096FF"
 										   FontWeight="Bold"
 										   HorizontalAlignment="Center"/>
-								<TextBox Width="70" HorizontalAlignment="Center" Text="{Binding Barcode }"/>
+								<TextBox Width="70" HorizontalAlignment="Center" 
+										 Text="{Binding BarcodeNumber }"/>
 							</StackPanel>
 
 							<!-- Manual Product Search -->
 							<StackPanel Grid.Row="0" Grid.Column="2" Margin="5">
 								<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
 										   Margin="0,0,0,5">اسم المنتوج:</TextBlock>
-								<CustomControls:CustomAutoCompleteBox SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
-																	  ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch, Mode=TwoWay}"
-																	  SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
-																	  FlowDirection="LeftToRight"/>
+								<CustomControls:CustomAutoCompleteBox 
+							    SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
+							    ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch, 
+							   Mode=TwoWay}"
+								SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
+								FlowDirection="LeftToRight"
+								MinWidth="200"/>
 							</StackPanel>
 
 							<StackPanel Grid.Row="0" Grid.Column="3" Margin="5" >
@@ -142,6 +148,7 @@
 										FontFamily="Roboto"
 										FlowDirection="LeftToRight"
 										SelectedItem="{Binding SelectedClientOrCompany}"
+									    Text="{Binding ClientOrCompanyNameEnteredByUser}"
 										ItemsSource="{Binding ClientsList_Or_CompanyList}"
 										  />
 							</StackPanel>
@@ -159,18 +166,38 @@
 							<StackPanel Grid.Row="0" Grid.Column="6" Margin="5">
 								<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
 										   Margin="0,0,0,5"> المبلغ الأدنى:</TextBlock>
-								<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding }"/>
+								<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MinAmount}"/>
 							</StackPanel>
 
 							<!-- Max Amount Input -->
 							<StackPanel Grid.Row="0" Grid.Column="7" Margin="5">
 								<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
 										   Margin="0,0,0,5"> المبلغ الأقصى:</TextBlock>
-								<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding }"/>
+								<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MaxAmount}"/>
 							</StackPanel>
+
+							<Button Grid.Row="0" Grid.Column="8" 
+									Margin="5 20 0 0"
+									Command="{Binding GetSaleInfoFromDbCommand}">
+								بحث
+							</Button>
 						</Grid>
 
+						<StackPanel Grid.Row="1"
+									Grid.Column="5" Grid.ColumnSpan="6"
+									Margin="5"
+										VerticalAlignment="Center"
+									  HorizontalAlignment="Center"
+									IsVisible="{Binding isErrorLabelVisible}">
 
+							<Label Foreground="#EE4B2B"
+								   FontWeight="Bold"
+								   Content="{Binding ErrorMessage}"
+								   
+								   FlowDirection="RightToLeft"
+								   />
+
+						</StackPanel>
 					</StackPanel>
 
 
@@ -207,19 +234,21 @@
 
 						<DataGrid.Columns>
 							<!-- SaleID -->
-							<DataGridTextColumn Binding="{Binding SaleID}" Header="معرّف البيع" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding SaleID}" Header="رقم المبيعة" Width="auto"/>
 
 							<!-- TotalPrice -->
-							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="السعر الإجمالي" Width="*"/>
+							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="المبلغ" Width="*"/>
 
 							<!-- PaymentName -->
-							<DataGridTextColumn Binding="{Binding PaymentName}" Header="اسم طريقة الدفع" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding PaymentName}" Header="طريقة الدفع" Width="auto"/>
 
 							<!-- ClientOrCompanyID -->
-							<DataGridTextColumn Binding="{Binding ClientOrCompanyID}" Header="معرّف العميل أو الشركة" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding ClientOrCompanyID}" Header="{Binding NumberOfClientOrCompany}" Width="auto"/>
 
 							<!-- ClientOrCompanyName -->
-							<DataGridTextColumn Binding="{Binding ClientOrCompanyName}" Header="اسم العميل أو الشركة" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding ClientOrCompanyName}" Header="{Binding NameOfClientOrCompany}" Width="auto"/>
+							
+							<DataGridTextColumn Binding="{Binding TimeOfOperation}" Header="تاريخ المبيعة" Width="auto"/>
 						</DataGrid.Columns>
 
 

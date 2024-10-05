@@ -25,7 +25,7 @@ namespace GetStartedApp.Models.Objects
             PaymentID = paymentID;
             PaymentName = paymentName;
             ClientOrCompanyID = clientOrCompanyID;
-            ClientOrCompanyName = clientOrCompanyName;
+            if(clientOrCompanyName == "unknownClient") ClientOrCompanyName= "زبون مكتبي";
         }
     }
 

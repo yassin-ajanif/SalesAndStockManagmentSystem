@@ -24,7 +24,7 @@ public static class PhoneNumberExtractor
         // Check if both characters are found and the indices are valid
         if (startIndex == -1 || endIndex == -1 || startIndex >= endIndex)
         {
-            throw new FormatException("The input string is not in the correct format. Expected format: 'name<phoneNumber>'");
+            return "";
         }
 
         // Extract the phone number between '<' and '>'

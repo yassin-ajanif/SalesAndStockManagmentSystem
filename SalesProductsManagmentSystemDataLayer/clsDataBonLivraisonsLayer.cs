@@ -28,7 +28,7 @@ namespace SalesProductsManagmentSystemDataLayer
      int paymentType,
      decimal? minAmount = null,
      decimal? maxAmount = null,
-     string productID = null,
+     long? productID = null,
      string productName = null,
      int? saleID = null,           // SaleID parameter
      int? clientID = null,         // ClientID parameter

@@ -41,6 +41,37 @@ namespace SalesProductsManagmentSystemDataLayer
             return paymentTypes;
         }
 
+        public static int GetPaymentTypeIdFromName(string paymentType)
+        {
+            int paymentTypeID = -1;  // Default value if not found
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("GetPaymentTypeId_FromItsName", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // Input parameter
+                    command.Parameters.AddWithValue("@PaymentType", paymentType);
+
+                    // Output parameter
+                    SqlParameter outputParam = new SqlParameter("@PaymentTypeID", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(outputParam);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    // Retrieve the value of the output parameter
+                    paymentTypeID = (int)command.Parameters["@PaymentTypeID"].Value;
+                }
+            }
+
+            return paymentTypeID;
+        }
+    
+    
     }
 }

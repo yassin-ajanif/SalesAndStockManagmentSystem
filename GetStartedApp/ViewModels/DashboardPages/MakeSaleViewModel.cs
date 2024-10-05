@@ -93,6 +93,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         private string _productNameTermToSerach;
 
+        [NotWhitespaceAttribute(ErrorMessage= "اختر منتج او دع الخانة فارغة")]
+        
         public string ProductNameTermToSerach
         {
             get => _productNameTermToSerach;
