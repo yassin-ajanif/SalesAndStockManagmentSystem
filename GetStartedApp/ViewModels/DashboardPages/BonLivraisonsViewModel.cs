@@ -10,11 +10,14 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using GetStartedApp.Helpers.CustomUIErrorAttributes;
+using Avalonia.Input.Raw;
+using Avalonia.Controls;
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {
     public class BonLivraisonsViewModel : DevisViewModel
     {
+        protected const long maxNumberOfProductsCanSystemHold = 1_000_000_000_000_000_000;
 
         private List<ClientOrCompanySaleInfo> _clientOrCompanySaleInfos;
         
@@ -24,6 +27,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public string NumberOfClientOrCompany { get => _numberOfClientOrCompany; set => this.RaiseAndSetIfChanged(ref _numberOfClientOrCompany, value); }
 
         private string _nameOfClientOrCompany;
+
         public string NameOfClientOrCompany { get => _nameOfClientOrCompany; set => this.RaiseAndSetIfChanged(ref _nameOfClientOrCompany, value); }
 
         private string _saleID;
@@ -35,19 +39,15 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
         private string _barcodeNumber;
+        [PositiveIntRange(1, maxNumberOfProductsCanSystemHold, ErrorMessage = "ادخل رقم موجب وبدون فاصلة ")]
+        [ProductIdIsNotExistingInDb("هذا الرقم لا يوجد")]
         public string BarcodeNumber
         {
             get => _barcodeNumber;
             set => this.RaiseAndSetIfChanged(ref _barcodeNumber, value);
         }
 
-        private string _nameOrCompanyName;
-        public string NameOrCompanyName
-        {
-            get => _nameOrCompanyName;
-            set => this.RaiseAndSetIfChanged(ref _nameOrCompanyName, value);
-        }
-
+    
         private string _minAmount;
         [PositiveFloatRange(1, 1_000_000, ErrorMessage = "ادخل رقم موجب")]
         public string MinAmount
@@ -68,21 +68,99 @@ namespace GetStartedApp.ViewModels.DashboardPages
         
 
         public ReactiveCommand<Unit, Unit> GetSaleInfoFromDbCommand { get; set; }
+        public ReactiveCommand<object, Unit> DisplaySellInfoAsPdfCommand { get; set; }
+        public ReactiveCommand<object, Unit> DisplayInvoiceInfoAsPdfCommand { get; set; }
         public BonLivraisonsViewModel(MainWindowViewModel mainWindowViewModel):base(mainWindowViewModel)
         {
             ThisDayBtnCommand = ReactiveCommand.Create(setStartAndDateOfToday_WhenTodayBtnIsClicked);
             ThisWeekBtnCommand = ReactiveCommand.Create(setStartAndDateThisWeek_WhenWeekBtnIsClicked);
             ThisMonthBtnCommand = ReactiveCommand.Create(setStartAndDateOfThisMonth_WhenThisMonthBtnIsClicked);
 
-            GetSaleInfoFromDbCommand = ReactiveCommand.Create(GetSalesInfoFromDb_For_Clients_Or_Companies);
-            
+            GetSaleInfoFromDbCommand = ReactiveCommand.Create(GetSalesInfoFromDb_For_Clients_Or_Companies, CheckIfUserDidintMakeSearchMistake());
+            DisplaySellInfoAsPdfCommand = ReactiveCommand.Create<object>(DisplaySalePdf_Based_on_SaleID);
+            DisplayInvoiceInfoAsPdfCommand = ReactiveCommand.Create<object>(DisplayInvoicePdf_Based_on_SaleID);
+
+            setTheSearchMode_For_Client_Or_Company(SelectedClientType);
+            when_UserSearchProductByName_DeleteBarcode_SearchText_And_ViceSera();
+
+
         }
+
+        private void when_UserSearchProductByName_DeleteBarcode_SearchText_And_ViceSera()
+        {
+            // Listen to changes in ProductNameTermToSerach
+            this.WhenAnyValue(x => x.ProductNameTermToSerach)
+                .Subscribe(productName =>
+                {
+                    // If the user types in ProductNameTermToSerach, clear BarcodeNumber
+                    if (!string.IsNullOrEmpty(productName))
+                    {
+                        BarcodeNumber = string.Empty;
+                    }
+                });
+
+            // Listen to changes in BarcodeNumber
+            this.WhenAnyValue(x => x.BarcodeNumber)
+                .Subscribe(barcode =>
+                {
+                    // If the user types in BarcodeNumber, clear ProductNameTermToSerach and SelectedProductNameTermSerach
+                    if (!string.IsNullOrEmpty(barcode))
+                    {
+                        ProductNameTermToSerach = string.Empty;
+                        SelectedProductNameTermSerach = string.Empty;
+                    }
+                });
+        }
+
+        private string setTheSearchMode_For_Client_Or_Company(string SelectedClientType)
+        {
+            string SelectedClientOrCompanyInEnglish = SelectedClientType;
+            if (SelectedClientType == "زبون عادي") { SelectedClientOrCompanyInEnglish = "Client"; NumberOfClientOrCompany = "رقم الزبون"; NameOfClientOrCompany = "اسم الزبون"; }
+            else if (SelectedClientType == "شركة") { SelectedClientOrCompanyInEnglish = "Company"; NumberOfClientOrCompany = " رقم الشركة"; NameOfClientOrCompany = "اسم الشركة"; }
+
+            return SelectedClientOrCompanyInEnglish;
+        }
+
+ 
+        private IObservable<bool> CheckIfUserDidintMakeSearchMistake()
+        {
+            var canAddProduct1 = this.WhenAnyValue(
+                x => x.SaleID,
+                x => x.BarcodeNumber,
+                x => x.ProductNameTermToSerach,
+                x => x.SelectedClientType,
+                x => x.SelectedClientOrCompany,
+                x => x.MinAmount,
+                x => x.MaxAmount,
+                x => x.ClientOrCompanyNameEnteredByUser,
+                (SaleID, BarcodeNumber, ProductNameTermToSerach, SelectedClientType, SelectedClientOrCompany, MinAmount, MaxAmount, ClientOrCompanyNameEnteredByUser) =>
+                   
+                UiAttributeChecker.AreThesesAttributesPropertiesValid(
+                        this,
+                        nameof(SaleID),
+                        nameof(BarcodeNumber),
+                        nameof(ProductNameTermToSerach),
+                        nameof(SelectedClientType),
+                        nameof(SelectedClientOrCompany),
+                        nameof(MinAmount),
+                        nameof(MaxAmount),
+                        // this property is inherieted from the base class and and use in this calss
+                        nameof(ClientOrCompanyNameEnteredByUser)) 
+                    && 
+                    TheSystemIsNotShowingError()
+                      
+                    
+
+            );
+
+            return canAddProduct1;
+        }
+
 
         public void GetSalesInfoFromDb_For_Clients_Or_Companies()
         {
-            string SelectedClientOrCompanyInEnglish = SelectedClientType;
-            if (SelectedClientType == "زبون عادي") { SelectedClientOrCompanyInEnglish = "Client";  NumberOfClientOrCompany = "رقم الزبون";  NameOfClientOrCompany = "اسم الزبون"; }
-            else if (SelectedClientType == "شركة") { SelectedClientOrCompanyInEnglish = "Company"; NumberOfClientOrCompany = " رقم الشركة"; NameOfClientOrCompany = "اسم الشركة"; }
+
+            string SelectedClientOrCompanyInEnglish = setTheSearchMode_For_Client_Or_Company(SelectedClientType);
 
             int paymentIdFromSelectedPaymentName = 
                 AccessToClassLibraryBackendProject.GetPaymentTypeID(WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod, "en"));
@@ -109,6 +187,94 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
 
+        private void DisplaySalePdf_Based_on_SaleID(object selectedItem)
+        {
+            // Attempt to cast selectedItem to ClientOrCompanySaleInfo
+            if (selectedItem is ClientOrCompanySaleInfo saleInfo)
+            {
+                // Access the properties of the saleInfo object
+                int saleID = saleInfo.SaleID; // Ensure you access SaleID correctly
+           
+               ProductSoldInfos productsSoldInfo =AccessToClassLibraryBackendProject.LoadProductSoldInfoFromReader(saleID);
+
+                bool TheseProductsSoldInfo_Are_Made_For_Client = productsSoldInfo.ClientID != null;
+                bool TheseProductsSoldInfo_Are_Made_For_Company = productsSoldInfo.CompanyID != null;
+                // Assign the first row's "TVA" column value to a decimal variable becuase in
+                // this current version all products that belong to a sale id have the same TVA the same thing for insertion time
+
+                decimal TVA = (decimal)productsSoldInfo.ProductsBoughtInThisOperation.Rows[0]["TVA"];
+                DateTime SalesTime  = (DateTime)productsSoldInfo.ProductsBoughtInThisOperation.Rows[0]["InsertionTime"];
+
+                int invoiceNumber = AccessToClassLibraryBackendProject.AddInvoiceIfNotExists(saleID);
+                bool DoesUserHasPrintedInvoiceBefore = false;
+                bool invoiceNumberIsAlreadyExisting = invoiceNumber == -1;
+                // if the user has printed before the invoice is going tobe found at the invices table in databse so the addinvoiceifnot exist will return -1 instead of the new invoice created
+
+                DoesUserHasPrintedInvoiceBefore = invoiceNumberIsAlreadyExisting;
+                if (invoiceNumberIsAlreadyExisting) invoiceNumber = AccessToClassLibraryBackendProject.GetInvoiceIDBySaleID(saleID);
+
+
+                if (TheseProductsSoldInfo_Are_Made_For_Client)
+                {
+
+
+                    CreateBonLivraison_For_Client
+                        (productsSoldInfo.SaleID, productsSoldInfo.ClientID.Value, productsSoldInfo.ProductsBoughtInThisOperation,
+                        SelectedPaymentMethod,null,SalesTime);
+                }
+
+                else if (TheseProductsSoldInfo_Are_Made_For_Company)
+                {
+
+                    CreateBonLivraison_For_Company(productsSoldInfo.CompanyID.Value, productsSoldInfo.ProductsBoughtInThisOperation, SelectedPaymentMethod, saleID, SalesTime);
+                }
+                
+            }
+        }
+
+
+        private void DisplayInvoicePdf_Based_on_SaleID(object selectedItem)
+        {
+            // Attempt to cast selectedItem to ClientOrCompanySaleInfo
+            if (selectedItem is ClientOrCompanySaleInfo saleInfo)
+            {
+                // Access the properties of the saleInfo object
+                int saleID = saleInfo.SaleID; // Ensure you access SaleID correctly
+
+                ProductSoldInfos productsSoldInfo = AccessToClassLibraryBackendProject.LoadProductSoldInfoFromReader(saleID);
+
+                bool TheseProductsSoldInfo_Are_Made_For_Client = productsSoldInfo.ClientID != null;
+                bool TheseProductsSoldInfo_Are_Made_For_Company = productsSoldInfo.CompanyID != null;
+                // Assign the first row's "TVA" column value to a decimal variable becuase in
+                // this current version all products that belong to a sale id have the same TVA the same thing for insertion time
+
+                decimal TVA = (decimal)productsSoldInfo.ProductsBoughtInThisOperation.Rows[0]["TVA"];
+                DateTime SalesTime = (DateTime)productsSoldInfo.ProductsBoughtInThisOperation.Rows[0]["InsertionTime"];
+
+                int invoiceNumber = AccessToClassLibraryBackendProject.AddInvoiceIfNotExists(saleID);
+                bool DoesUserHasPrintedInvoiceBefore = false;
+                bool invoiceNumberIsAlreadyExisting = invoiceNumber == -1;
+                // if the user has printed before the invoice is going tobe found at the invices table in databse so the addinvoiceifnot exist will return -1 instead of the new invoice created
+
+                DoesUserHasPrintedInvoiceBefore = invoiceNumberIsAlreadyExisting;
+                if (invoiceNumberIsAlreadyExisting) invoiceNumber = AccessToClassLibraryBackendProject.GetInvoiceIDBySaleID(saleID);
+
+                if (TheseProductsSoldInfo_Are_Made_For_Client)
+                {
+                    
+                    CreateInvoice_For_Client
+                        (productsSoldInfo.SaleID, invoiceNumber, productsSoldInfo.ClientID.Value,
+                        productsSoldInfo.ProductsBoughtInThisOperation, SelectedPaymentMethod,null, DoesUserHasPrintedInvoiceBefore,SalesTime );
+                 
+                }
+
+                else if (TheseProductsSoldInfo_Are_Made_For_Company)
+                {
+                    CreateInvoice_For_Company(productsSoldInfo.SaleID, invoiceNumber, productsSoldInfo.CompanyID.Value,
+                        productsSoldInfo.ProductsBoughtInThisOperation, SelectedPaymentMethod, DoesUserHasPrintedInvoiceBefore, SalesTime);
+                }
+            }
+        }
 
     }
 }

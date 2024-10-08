@@ -49,26 +49,42 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
         protected DataTable TableOfProductsBoughts;
         protected string SelectedPaymentMethod;
-        
+        protected DateTime SalesTime;
 
-        public ClsDevisGenerator(DataTable TableOfProductsBoughts,int ClientID,string SelectedPaymentMethodInFrench,decimal TVA)
+        public ClsDevisGenerator(DataTable TableOfProductsBoughts,int ClientID,string SelectedPaymentMethodInFrench,decimal TVA=20, DateTime salesTime = default)
         {
             this.TableOfProductsBoughts = TableOfProductsBoughts;
             SelectedPaymentMethod = SelectedPaymentMethodInFrench;
             this.TVA = TVA;
             LoadMyCompanyInfo();
             LoadInfosOfClientToDisplay(ClientID);
-            
+            if (salesTime == default)
+            {
+                // Set the default value to the current date and time
+                this.SalesTime = DateTime.Now;
+            }
+
+            else this.SalesTime = salesTime;
+           
+
         }
 
-        public ClsDevisGenerator(int CompanyID,DataTable TableOfProductsBoughts,string SelectedPaymentMethodInFrench, decimal TVA)
+        public ClsDevisGenerator(int CompanyID,DataTable TableOfProductsBoughts,string SelectedPaymentMethodInFrench, decimal TVA=20, DateTime salesTime = default)
         {
             this.TableOfProductsBoughts = TableOfProductsBoughts;
             SelectedPaymentMethod = SelectedPaymentMethodInFrench;
             this.TVA = TVA;
             LoadMyCompanyInfo();
             LoadCompanyInfoToDisplay(CompanyID);
-           
+            if (salesTime == default)
+            {
+                // Set the default value to the current date and time
+                this.SalesTime = DateTime.Now;
+            }
+            else this.SalesTime = salesTime;
+
+
+
         }
 
         private void LoadMyCompanyInfo()
@@ -157,7 +173,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                         //text.Span($"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}").SemiBold();
                         //text.Span($"{DateTime.Now:d}");
                         // text.Span("yass is good and is that is good ");
-                        text.Span($"{My_City} le: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("fr-FR"))}\n\n\n").SemiBold();
+                        text.Span($"{My_City} le: {SalesTime.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("fr-FR"))}\n\n\n").SemiBold();
                         text.Span($"DEVIS\n\n\n").Bold();
                         text.Span($"Mode De Paiment : ").Bold(); 
                         text.Span($"{SelectedPaymentMethod}");
@@ -195,33 +211,36 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
             container.Background(Colors.Grey.Lighten4).Padding(5).Table(table =>
             {
-            // Step 1: Define columns
-            table.ColumnsDefinition(columns =>
-            {
-                columns.RelativeColumn(3);        // For the "Article" column
-                columns.RelativeColumn(10);        // For the "Prix" column
-                columns.RelativeColumn(3);        // For the "Quantité" column
-                columns.RelativeColumn(3);        // For the "Total" column
-                columns.RelativeColumn(3);        // For the "CodeArticle" column
-                columns.RelativeColumn(3);        // For the "Remise" column
-                columns.RelativeColumn(3);        // For the "Montant" column
+                // Step 1: Define columns
+                table.ColumnsDefinition(columns =>
+                {
+                    // Give smaller space to the first few columns (they can overlap or compress)
+                    columns.RelativeColumn();  // For "Code Article"
+                    columns.RelativeColumn(2);  // For "Article"
+                    columns.ConstantColumn(50);  // For "Quantité"
 
-            });
+                    // Give more space to te last four columns to avoid overlap
+                    columns.RelativeColumn();  // For "PU TTC"
+                    columns.RelativeColumn();  // For "Remise"
+                    columns.RelativeColumn();  // For "Montant"
+                    columns.RelativeColumn();  // For "TVA"
+                });
 
-            // Step 2: Define header
-            table.Header(header =>
-            {
-                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Code Article");
-                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Article");
-                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Quantité");
-                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("PU TTC");
-                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Remise");
-                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Montant");
-                header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("TVA");
-            });
+                // Step 2: Define header
+                table.Header(header =>
+                {
+                    header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Code Article");
+                    header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Article");
+                    header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Qté");
+                    header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("PU TTC");
+                    header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Remise");
+                    header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("Montant");
+                    header.Cell().Padding(2).Element(HeaderCellStyle).AlignCenter().Text("TVA");
+                });
 
-            // Step 3: Add rows and calculate total
-            decimal Total_TTC = 0;
+
+                // Step 3: Add rows and calculate total
+                decimal Total_TTC = 0;
             decimal Total_HT = 0;
             decimal Total_TVA = 0;
 
@@ -237,45 +256,49 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
                 Total_TTC += Montant;
 
-                    table.Cell().Padding(2).Element(DataCellStyle).Text(row["ProductId"]);
-                    table.Cell().Padding(2).Element(DataCellStyle).Text(row["ProductName"].ToString());
-                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text(quantity.ToString());
-                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{price}DH");
-                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{discount.ToString("N1")}%");
-                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{Montant}DH");
-                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text(TVA);
+                    table.Cell().Padding(2).Element(DataCellStyle).Text(row["ProductId"]).FontSize(10);
+                    table.Cell().Padding(2).Element(DataCellStyle).Text(row["ProductName"].ToString()).FontSize(10);
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text(quantity.ToString()).FontSize(10);
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{price:N2} DH").FontSize(10); // Formatted price
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{discount.ToString("N1")}%").FontSize(10);
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{Montant:N2} DH").FontSize(10); // Formatted Montant
+                    table.Cell().Padding(2).Element(DataCellStyle).AlignRight().Text($"{TVA:N2}").FontSize(10); // Formatted TVA
+
+
                 }
 
-                    Total_HT = Total_TTC /(1+(TVA/100));
+                Total_HT = Total_TTC /(1+(TVA/100));
                     Total_TVA = Total_TTC-Total_HT;
                 //  
                 //  // Step 4: Add footer row1 for total
                 //  // Step 4: Add footer row1 for total
+                // Add footer row for Total HT
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for article name
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for price
                 table.Cell().Element(DataCellStyle).Text("Total HT:").AlignRight().Style(TotalBalanceStyle);
-                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_HT, 2, MidpointRounding.AwayFromZero)}DH").Style(TotalBalanceStyle);
+                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_HT, 2, MidpointRounding.AwayFromZero):N2} DH").Style(TotalBalanceStyle);
 
-                // Step 4: Add footer row2 for total
+                // Add footer row for TVA
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for article name
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for price
                 table.Cell().Element(DataCellStyle).Text("TVA:").AlignRight().Style(TotalBalanceStyle);
-                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_TVA, 2, MidpointRounding.AwayFromZero)}DH").Style(TotalBalanceStyle);
+                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_TVA, 2, MidpointRounding.AwayFromZero):N2} DH").Style(TotalBalanceStyle);
 
-                // Step 4: Add footer row2 for total
+                // Add footer row for Total TTC
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for row number
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for article name
                 table.Cell().Element(DataCellStyle).Text(""); // Empty cell for price
                 table.Cell().Element(DataCellStyle).Text("Total TTC:").AlignRight().Style(TotalBalanceStyle);
-                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_TTC, 2, MidpointRounding.AwayFromZero)}DH").Style(TotalBalanceStyle);
+                table.Cell().Element(DataCellStyle).AlignRight().Text($"{Math.Round(Total_TTC, 2, MidpointRounding.AwayFromZero):N2} DH").Style(TotalBalanceStyle);
+
             });
 
 

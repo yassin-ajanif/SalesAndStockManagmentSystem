@@ -77,111 +77,116 @@
 					</StackPanel>
 
 
-						<Grid Grid.Row="1" Grid.Column="0" Margin="5">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
+						<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<Grid Grid.Row="1" Grid.Column="0" Margin="5">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+									<!-- Use * to take available space -->
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
 
-							</Grid.ColumnDefinitions>
+								<!-- First Column (Sale ID) -->
+								<StackPanel Grid.Column="0" Margin="5">
+									<TextBlock Text="رقم الوصل" Margin="0 0 0 5"
+											   Foreground="#0096FF"
+											   FontWeight="Bold"
+											   HorizontalAlignment="Center"/>
+									<TextBox Width="70" HorizontalAlignment="Center"
+											 Text="{Binding SaleID}"/>
+								</StackPanel>
 
-							<!-- First Column (Barcode) -->
-							<StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
-								<TextBlock Text="رقم الوصل" Margin="0 0 0 5"
-										   Foreground="#0096FF"
-										   FontWeight="Bold"
-										   HorizontalAlignment="Center"/>
-								<TextBox Width="70" HorizontalAlignment="Center"
-										 Text="{Binding SaleID }"/>
-							</StackPanel>
-							
-							<StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
-								<TextBlock Text="باركود" Margin="0 0 0 5"
-										   Foreground="#0096FF"
-										   FontWeight="Bold"
-										   HorizontalAlignment="Center"/>
-								<TextBox Width="70" HorizontalAlignment="Center" 
-										 Text="{Binding BarcodeNumber }"/>
-							</StackPanel>
+								<!-- Second Column (Barcode) -->
+								<StackPanel Grid.Column="1" Margin="5">
+									<TextBlock Text="باركود" Margin="0 0 0 5"
+											   Foreground="#0096FF"
+											   FontWeight="Bold"
+											   HorizontalAlignment="Center"/>
+									<TextBox Width="70" HorizontalAlignment="Center"
+											 Text="{Binding BarcodeNumber}"/>
+								</StackPanel>
 
-							<!-- Manual Product Search -->
-							<StackPanel Grid.Row="0" Grid.Column="2" Margin="5">
-								<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
-										   Margin="0,0,0,5">اسم المنتوج:</TextBlock>
-								<CustomControls:CustomAutoCompleteBox 
-							    SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
-							    ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch, 
-							   Mode=TwoWay}"
-								SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
-								FlowDirection="LeftToRight"
-								MinWidth="200"/>
-							</StackPanel>
-
-							<StackPanel Grid.Row="0" Grid.Column="3" Margin="5" >
-								<TextBlock Text="نوع الزبون" Margin="0 0 0 5"
-										   Foreground="#0096FF"
-										   FontWeight="Bold"
-										   HorizontalAlignment="Center" />
-								<ComboBox  HorizontalAlignment="Center"
-										   ItemsSource="{Binding TypeOfClients}"
-										  SelectedItem="{Binding SelectedClientType}">
-								</ComboBox>
-							</StackPanel>
-							
-							<!-- Client Name Input -->
-							<StackPanel Grid.Row="0" Grid.Column="4" Margin="5">
-								<TextBlock  FlowDirection="RightToLeft"
-										  Foreground="#0096FF"
-										FontWeight="Bold"
-										Margin="0,0,0,5"
-										Text="{Binding ClientTypeLabel}"
-									/>
-
-								<AutoCompleteBox x:Name="clients"
-										FilterMode="ContainsOrdinal"
-										FontFamily="Roboto"
+								<!-- Manual Product Search -->
+								<StackPanel Grid.Column="2" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">اسم المنتوج:</TextBlock>
+									<CustomControls:CustomAutoCompleteBox
+										SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
+										ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch, 
+                Mode=TwoWay}"
+										SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
 										FlowDirection="LeftToRight"
-										SelectedItem="{Binding SelectedClientOrCompany}"
-									    Text="{Binding ClientOrCompanyNameEnteredByUser}"
-										ItemsSource="{Binding ClientsList_Or_CompanyList}"
-										  />
-							</StackPanel>
-						
-							<!-- Payment Method Selection -->
-							<StackPanel Grid.Row="0" Grid.Column="5" Margin="5">
-								<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
-										   Margin="0,0,0,5"> طريقة الدفع:</TextBlock>
-								<ComboBox FlowDirection="RightToLeft" Margin="10 0"
-										  ItemsSource="{Binding PaymentsMethods}"
-										  SelectedItem="{Binding SelectedPaymentMethod}"/>
-							</StackPanel>
+										MinWidth="200"/>
+								</StackPanel>
 
-							<!-- Min Amount Input -->
-							<StackPanel Grid.Row="0" Grid.Column="6" Margin="5">
-								<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
-										   Margin="0,0,0,5"> المبلغ الأدنى:</TextBlock>
-								<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MinAmount}"/>
-							</StackPanel>
+								<!-- Client Type Selection -->
+								<StackPanel Grid.Column="3" Margin="5">
+									<TextBlock Text="نوع الزبون" Margin="0 0 0 5"
+											   Foreground="#0096FF"
+											   FontWeight="Bold"
+											   HorizontalAlignment="Center" />
+									<ComboBox HorizontalAlignment="Center"
+											   ItemsSource="{Binding TypeOfClients}"
+											   SelectedItem="{Binding SelectedClientType}" />
+								</StackPanel>
 
-							<!-- Max Amount Input -->
-							<StackPanel Grid.Row="0" Grid.Column="7" Margin="5">
-								<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
-										   Margin="0,0,0,5"> المبلغ الأقصى:</TextBlock>
-								<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MaxAmount}"/>
-							</StackPanel>
+								<!-- Client or Company Name Input -->
+								<StackPanel Grid.Column="4" Margin="5">
+									<TextBlock FlowDirection="RightToLeft"
+											   Foreground="#0096FF"
+											   FontWeight="Bold"
+											   Margin="0,0,0,5"
+											   Text="{Binding ClientTypeLabel}" />
+									<AutoCompleteBox x:Name="clients"
+													 FilterMode="ContainsOrdinal"
+													 FontFamily="Roboto"
+													 FlowDirection="LeftToRight"
+													 SelectedItem="{Binding SelectedClientOrCompany}"
+													 Text="{Binding ClientOrCompanyNameEnteredByUser}"
+													 ItemsSource="{Binding ClientsList_Or_CompanyList}" />
+								</StackPanel>
 
-							<Button Grid.Row="0" Grid.Column="8" 
-									Margin="5 20 0 0"
-									Command="{Binding GetSaleInfoFromDbCommand}">
-								بحث
-							</Button>
-						</Grid>
+								<!-- Payment Method Selection -->
+								<StackPanel Grid.Column="5" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">طريقة الدفع:</TextBlock>
+									<ComboBox FlowDirection="RightToLeft" Margin="10 0"
+											   ItemsSource="{Binding PaymentsMethods}"
+											   SelectedItem="{Binding SelectedPaymentMethod}" />
+								</StackPanel>
+
+								<!-- Min Amount Input -->
+								<StackPanel Grid.Column="6" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">المبلغ الأدنى:</TextBlock>
+									<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MinAmount}" />
+								</StackPanel>
+
+								<!-- Max Amount Input -->
+								<StackPanel Grid.Column="7" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">المبلغ الأقصى:</TextBlock>
+									<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MaxAmount}" />
+								</StackPanel>
+
+								<!-- Search Button -->
+								<Button Grid.Column="8"
+										Margin="5 20 20 0"
+										Command="{Binding GetSaleInfoFromDbCommand}"
+										Background="Red"
+										Padding="13 6"
+										Foreground="White"
+										FontWeight="Bold">
+									بحث
+								</Button>
+							</Grid>
+						</ScrollViewer>
 
 						<StackPanel Grid.Row="1"
 									Grid.Column="5" Grid.ColumnSpan="6"
@@ -192,8 +197,7 @@
 
 							<Label Foreground="#EE4B2B"
 								   FontWeight="Bold"
-								   Content="{Binding ErrorMessage}"
-								   
+								   Content="{Binding ErrorMessage}"   
 								   FlowDirection="RightToLeft"
 								   />
 
@@ -206,78 +210,52 @@
 
 		
 			<!-- Second row: Scrollable Image Gallery -->
-			<Grid Grid.Row="1"
-						   Margin="0 20 0 0"
-				  Height="330"
-				 
-			
-				 >
-
-
-
+			<Grid Grid.Row="1" Margin="0 20 0 0" Height="280">
 				<Grid>
-
-
-
 					<DataGrid ItemsSource="{Binding clientOrCompanySaleInfos}"
-				  AutoGenerateColumns="False" IsReadOnly="True"
-				  GridLinesVisibility="All"
-				  FlowDirection="RightToLeft"
-				  Width="680"
-				  Name="ReturnedProductList"
-				  
-							  CanUserResizeColumns="true"
-							  			
-				  >
-
-
+							  AutoGenerateColumns="False"
+							  IsReadOnly="True"
+							  GridLinesVisibility="All"
+							  FlowDirection="RightToLeft"
+							  Width="680"
+							  Name="ReturnedProductList"
+							  CanUserResizeColumns="true">
 
 						<DataGrid.Columns>
-							<!-- SaleID -->
-							<DataGridTextColumn Binding="{Binding SaleID}" Header="رقم المبيعة" Width="auto"/>
-
-							<!-- TotalPrice -->
-							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="المبلغ" Width="*"/>
-
-							<!-- PaymentName -->
-							<DataGridTextColumn Binding="{Binding PaymentName}" Header="طريقة الدفع" Width="auto"/>
-
-							<!-- ClientOrCompanyID -->
-							<DataGridTextColumn Binding="{Binding ClientOrCompanyID}" Header="{Binding NumberOfClientOrCompany}" Width="auto"/>
-
-							<!-- ClientOrCompanyName -->
-							<DataGridTextColumn Binding="{Binding ClientOrCompanyName}" Header="{Binding NameOfClientOrCompany}" Width="auto"/>
-							
-							<DataGridTextColumn Binding="{Binding TimeOfOperation}" Header="تاريخ المبيعة" Width="auto"/>
+							<DataGridTextColumn Binding="{Binding SaleID}" Header="رقم المبيعة" />
+							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="المبلغ" />
+							<DataGridTextColumn Binding="{Binding ClientOrCompanyID}" Header="رقم العميل أو الشركة" />
+							<DataGridTextColumn Binding="{Binding ClientOrCompanyName}" Header="اسم العميل أو الشركة" />
+							<DataGridTextColumn Binding="{Binding TimeOfOperation}" Header="تاريخ المبيعة" Width="*" />
 						</DataGrid.Columns>
 
-
+						<DataGrid.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="تفقد هذه المبيعة " 
+										  Command="{Binding DisplaySellInfoAsPdfCommand}" 
+										  CommandParameter="{Binding SelectedItem, 
+										  ElementName=ReturnedProductList}" 
+										  FontFamily="Roboto"/>
+								<MenuItem Header="طباعة الفاتورة "
+										  Command="{Binding DisplayInvoiceInfoAsPdfCommand}"
+										  CommandParameter="{Binding SelectedItem, 
+										  ElementName=ReturnedProductList}" 
+										  FontFamily="Roboto"/>
+							</ContextMenu>
+						</DataGrid.ContextMenu>
 
 						<DataGrid.Styles>
-
 							<Style Selector="DataGrid">
 								<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
 							</Style>
-
-
 						</DataGrid.Styles>
-
-
-
 					</DataGrid>
-
 				</Grid>
-
-
-
-
-
-
 			</Grid>
 
 
 
-		  
+
 		</Grid>
 	          </Border>
 

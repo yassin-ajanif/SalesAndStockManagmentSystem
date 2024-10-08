@@ -33,7 +33,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                     column.Item().Text(text =>
                     {
 
-                        text.Span($"{My_City} le: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("fr-FR"))}\n\n\n").SemiBold();
+                        text.Span($"{My_City} le: {SalesTime.ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("fr-FR"))}\n\n\n").SemiBold();
                         text.Span($"Bon De Livraison N°: {SaleID}\n\n\n").Bold();
                         text.Span($"Mode De Paiment : ").Bold();
                         text.Span($"{SelectedPaymentMethod}");
@@ -56,15 +56,15 @@ namespace SalesProductsManagmentSystemBusinessLayer
         }
 
        
-        public ClsBonLivraisonGenerator(DataTable TableOfProductsBoughts, int ClientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
-            :base(TableOfProductsBoughts,ClientID, SelectedPaymentMethodInFrench, TVA)
+        public ClsBonLivraisonGenerator(DataTable TableOfProductsBoughts, int ClientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID, DateTime SalesTime)
+            :base(TableOfProductsBoughts,ClientID, SelectedPaymentMethodInFrench, TVA, SalesTime)
         {
             this.SaleID = SaleID;
-
+            
         }
 
-        public ClsBonLivraisonGenerator(int CompanyID, DataTable TableOfProductsBoughts, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
-           : base(CompanyID,TableOfProductsBoughts, SelectedPaymentMethodInFrench, TVA)
+        public ClsBonLivraisonGenerator(int CompanyID, DataTable TableOfProductsBoughts, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID, DateTime SalesTime)
+           : base(CompanyID,TableOfProductsBoughts, SelectedPaymentMethodInFrench, TVA, SalesTime)
         {
             this.SaleID = SaleID;
 

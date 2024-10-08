@@ -47,6 +47,11 @@ namespace SalesProductsManagmentSystemBusinessLayer
             );
         }
 
+        public static SqlDataReader RetrieveSoldItemInfo(int saleID)
+        {
+            // Call the data access layer function
+            return clsDataBonLivraisonsLayer.GetSoldItemInfoBySaleID(saleID);
+        }
 
     }
 }

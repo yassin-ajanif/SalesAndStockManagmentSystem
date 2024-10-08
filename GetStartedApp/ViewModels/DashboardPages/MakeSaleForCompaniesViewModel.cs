@@ -19,6 +19,7 @@ using System.Globalization;
 using Avalonia.Threading;
 using System.Collections.Generic;
 using GetStartedApp.Models.Objects;
+using System.ComponentModel.Design;
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {
@@ -33,7 +34,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             get => _selectedCompanyName;
             set => this.RaiseAndSetIfChanged(ref _selectedCompanyName, value);
         }
-        private Dictionary<string,int> CompanyNames_And_TheirIds => GetAllCompanyNames_And_TheirIds();
+        private Dictionary<string, int> CompanyNames_And_TheirIds => GetAllCompanyNames_And_TheirIds();
         public List<string> CompanyNames => CompanyNames_And_TheirIds.Keys.ToList();
         public MakeSaleForCompaniesViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
         {
@@ -46,18 +47,15 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return CompanyNames_And_TheirIds[SelectedCompanyName];
         }
 
-        public Dictionary<string,int> GetAllCompanyNames_And_TheirIds()
+        public Dictionary<string, int> GetAllCompanyNames_And_TheirIds()
         {
             return AccessToClassLibraryBackendProject.GetAllCompanyNames_And_IDs();
         }
 
-        private void CreateBonLivraison_For_Company(int saleID, int companyID, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish, ChequeInfo userChequeInfo)
-        {
-            string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(slectedPaymentMethodInEnglish, "fr");
-            decimal TVA = 20;
-            AccessToClassLibraryBackendProject.GenerateBonLivraison_ForCompany(companyID, ProductsBoughtInThisOperation, selectedPaymentMethodInFrench, TVA, saleID);
+     
 
-        }
+     
+
 
         public override async void SubmitOperationSalesDataToDatabase
         (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish, ChequeInfo userChequeInfo)
@@ -65,33 +63,38 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             int selectedCompanyID_From_selectedCompanyName = getCompanyID_From_Its_Name();
 
-            var result = 
+
+            var result =
                 AccessToClassLibraryBackendProject.
                 AddNewSaleToDatabase_ForCompanies
-                ( timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation,ProductsBoughtInThisOperation,selectedCompanyID_From_selectedCompanyName,slectedPaymentMethodInEnglish,userChequeInfo);
+                (timeOfSellingOpperationIsNow, TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, selectedCompanyID_From_selectedCompanyName, slectedPaymentMethodInEnglish, userChequeInfo);
+
+            int lastSaleID = result.bonLivraisonNumber;
 
             if (result.isSuccess)
             {
+
                 await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
 
                 // Use result.SalesId if needed for further processing
                 if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة وصل الاستلام "))
                 {
-                    int lastSaleID = result.bonLivraisonNumber;
-                    CreateBonLivraison_For_Company(lastSaleID, selectedCompanyID_From_selectedCompanyName, ProductsBoughtInThisOperation, SelectedPaymentMethod, userChequeInfo);
+
+                    CreateBonLivraison_For_Company(selectedCompanyID_From_selectedCompanyName, ProductsBoughtInThisOperation, slectedPaymentMethodInEnglish, lastSaleID,timeOfSellingOpperationIsNow);
                 }
 
                 if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ايضا "))
                 {
-                    // Logic to print the invoice using result.SalesId if necessary
+                    int invoiceNumber = AccessToClassLibraryBackendProject.AddInvoiceIfNotExists(lastSaleID);
+                    CreateInvoice_For_Company(lastSaleID, invoiceNumber,selectedCompanyID_From_selectedCompanyName, ProductsBoughtInThisOperation, SelectedPaymentMethod);                
+
+                    ResetAllSellingInfoOperation();
+                    mainWindowViewModel.CheckIfSystemShouldRaiseBellNotificationIcon();
                 }
 
-                ResetAllSellingInfoOperation();
-                mainWindowViewModel.CheckIfSystemShouldRaiseBellNotificationIcon();
+
+                else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
             }
-
-
-            else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
         }
     }
 }

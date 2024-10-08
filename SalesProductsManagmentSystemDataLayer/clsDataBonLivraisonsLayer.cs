@@ -60,10 +60,29 @@ namespace SalesProductsManagmentSystemDataLayer
         }
 
 
+        public static SqlDataReader GetSoldItemInfoBySaleID(int saleID)
+        {
+            // Define the stored procedure name
+            string storedProcedureName = "GetSoldItemInfoBySaleID";
 
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand command = new SqlCommand(storedProcedureName, connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
 
+            command.Parameters.AddWithValue("@SaleID", saleID);
+
+            connection.Open();
+
+            // Execute the reader and return it
+            return command.ExecuteReader(CommandBehavior.CloseConnection);
+        }
     }
+
+
 }
+
 
 
 

@@ -12,6 +12,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
 
             public int SaleID { get; set; } = 0;
             public int InvoiceID { get; set; } = 0;
+            public bool DoesUserHasPrintedInvoiceBefore { get; set; } = false;
 
         public override void ComposeHeader(IContainer container)
             {
@@ -34,7 +35,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
                             text.Span($"Facture N°: {InvoiceID}\n").Bold();
                             text.Span($"Bon De Livraison N°: {SaleID}\n\n\n").Bold();
                             text.Span($"Mode De Paiement : ").Bold();
-                            text.Span($"{SelectedPaymentMethod}");
+                            text.Span($"{SelectedPaymentMethod}\n\n\n");
+                            if(DoesUserHasPrintedInvoiceBefore)text.Span($"Duplicata").Bold().Italic();
                         });
                     });
 
@@ -51,22 +53,25 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 });
             }
 
-            public ClsInvoiceGenerator(DataTable TableOfProductsBoughts, int ClientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID, int InvoiceID)
-                : base(TableOfProductsBoughts, ClientID, SelectedPaymentMethodInFrench, TVA, SaleID)
+            public ClsInvoiceGenerator(DataTable TableOfProductsBoughts, int ClientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID, int InvoiceID, DateTime SalesTime, bool DoesUserHasPrintedInvoiceBefore)
+                : base(TableOfProductsBoughts, ClientID, SelectedPaymentMethodInFrench, TVA, SaleID, SalesTime)
             {
                 this.SaleID = SaleID;
                 this.InvoiceID = InvoiceID;
+                this.DoesUserHasPrintedInvoiceBefore= DoesUserHasPrintedInvoiceBefore;
             }
 
-            public ClsInvoiceGenerator(int CompanyID, DataTable TableOfProductsBoughts, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID,int InvoiceID)
-                : base(CompanyID, TableOfProductsBoughts, SelectedPaymentMethodInFrench, TVA, SaleID)
+            public ClsInvoiceGenerator(int CompanyID, DataTable TableOfProductsBoughts, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID,int InvoiceID, DateTime SalesTime, bool DoesUserHasPrintedInvoiceBefore)
+                : base(CompanyID, TableOfProductsBoughts, SelectedPaymentMethodInFrench, TVA, SaleID, SalesTime)
             {
                 this.SaleID = SaleID;
                 this.InvoiceID = InvoiceID;
+                this.DoesUserHasPrintedInvoiceBefore = DoesUserHasPrintedInvoiceBefore;
+
 
         }
 
-            public void GenerateInvoice_ForClient()
+        public void GenerateInvoice_ForClient()
             {
                 QuestPDF.Settings.License = LicenseType.Community;
 

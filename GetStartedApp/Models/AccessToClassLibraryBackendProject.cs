@@ -751,38 +751,40 @@ namespace GetStartedApp.Models
             devisGenerator.GenerateDevis_ForCompany();
         }
 
-        public static void GenerateBonLivraison_ForClient(DataTable products, int clientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID)
+        public static void GenerateBonLivraison_ForClient(DataTable products, int clientID, string SelectedPaymentMethodInFrench, decimal TVA, int SaleID,DateTime SalesTime)
         {
             SalesProductsManagmentSystemBusinessLayer.ClsBonLivraisonGenerator BlGenerator 
-                = new ClsBonLivraisonGenerator(products, clientID, SelectedPaymentMethodInFrench, TVA, SaleID);
+                = new ClsBonLivraisonGenerator(products, clientID, SelectedPaymentMethodInFrench, TVA, SaleID, SalesTime);
 
             BlGenerator.GenerateBlivraison_ForClient();
         }
 
-       public static void GenerateBonLivraison_ForCompany(int companyID, DataTable products, string SelectedPaymentMethodInFrench, decimal TVA,int SaleID)
+       public static void GenerateBonLivraison_ForCompany(int companyID, DataTable products, string SelectedPaymentMethodInFrench, decimal TVA,int SaleID, DateTime SalesTime)
        {
            SalesProductsManagmentSystemBusinessLayer.ClsBonLivraisonGenerator BlGenerator = 
-                new ClsBonLivraisonGenerator(companyID, products, SelectedPaymentMethodInFrench, TVA, SaleID);
+                new ClsBonLivraisonGenerator(companyID, products, SelectedPaymentMethodInFrench, TVA, SaleID, SalesTime);
     
            // Call further methods on devisGenerator if needed to generate the devis for the company
            BlGenerator.GenerateBlivraison_ForCompany();
        }
 
-        public static void GenerateInvoice_ForClient(DataTable products, int clientID, string selectedPaymentMethodInFrench, decimal tva, int saleID, int invoiceID)
+        public static void GenerateInvoice_ForClient(DataTable products, int clientID, string selectedPaymentMethodInFrench, decimal tva, int saleID, int invoiceID, DateTime SalesTime, 
+            bool DoesUserHasPrintedInvoiceBefore)
         {
             // Create an instance of ClsInvoiceGenerator
             SalesProductsManagmentSystemBusinessLayer.ClsInvoiceGenerator invoiceGenerator
-                = new ClsInvoiceGenerator(products, clientID, selectedPaymentMethodInFrench, tva, saleID,invoiceID);
+                = new ClsInvoiceGenerator(products, clientID, selectedPaymentMethodInFrench, tva, saleID,invoiceID, SalesTime, DoesUserHasPrintedInvoiceBefore);
 
             // Generate the invoice for the client
             invoiceGenerator.GenerateInvoice_ForClient();
         }
 
-        public static void GenerateInvoice_ForCompany(int companyID, DataTable products, string selectedPaymentMethodInFrench, decimal tva, int saleID, int invoiceID)
+        public static void GenerateInvoice_ForCompany(int companyID, DataTable products, string selectedPaymentMethodInFrench, decimal tva, int saleID, int invoiceID, DateTime SalesTime, 
+            bool DoesUserHasPrintedInvoiceBefore)
         {
             // Create an instance of ClsInvoiceGenerator
             SalesProductsManagmentSystemBusinessLayer.ClsInvoiceGenerator invoiceGenerator
-                = new ClsInvoiceGenerator(companyID, products, selectedPaymentMethodInFrench, tva, saleID, invoiceID) ;
+                = new ClsInvoiceGenerator(companyID, products, selectedPaymentMethodInFrench, tva, saleID, invoiceID, SalesTime, DoesUserHasPrintedInvoiceBefore) ;
 
             // Generate the invoice for the company
             invoiceGenerator.GenerateInvoice_ForCompany();
@@ -798,6 +800,11 @@ namespace GetStartedApp.Models
         {
 
             return SalesProductsManagmentSystemBusinessLayer.ClsInvoices.AddInvoiceIfNotExists(saleID); 
+        }
+
+        public static int GetInvoiceIDBySaleID(int saleID)
+        {
+            return ClsInvoices.GetInvoiceIDBySaleID(saleID);
         }
 
         public static List<ClientOrCompanySaleInfo> LoadSalesForClientOrCompany(
@@ -864,5 +871,85 @@ namespace GetStartedApp.Models
             // Directly call the static method from the business layer
             return SalesProductsManagmentSystemBusinessLayer.clsPayments.GetPaymentTypeID(paymentType);
         }
+
+        public static ProductSoldInfos LoadProductSoldInfoFromReader(int saleID)
+        {
+            // Retrieve the SqlDataReader from the data access layer
+            using (SqlDataReader reader = clsDataBonLivraisonsLayer.GetSoldItemInfoBySaleID(saleID))
+            {
+                if (reader == null || !reader.HasRows)
+                {
+                    throw new InvalidOperationException("No data found for the specified SaleID.");
+                }
+
+                // Create a DataTable to hold product information with all required columns
+                DataTable productsDataTable = new DataTable();
+                productsDataTable.Columns.Add("SoldItemID", typeof(int));
+                productsDataTable.Columns.Add("ProductID", typeof(long));
+                productsDataTable.Columns.Add("ProductName", typeof(string));
+                productsDataTable.Columns.Add("QuantitySold", typeof(int));
+                productsDataTable.Columns.Add("QuantitySold2", typeof(int));
+                productsDataTable.Columns.Add("QuantitySold3", typeof(int));
+                productsDataTable.Columns.Add("UnitPrice", typeof(decimal));
+                productsDataTable.Columns.Add("UnitSoldPrice", typeof(decimal));
+                productsDataTable.Columns.Add("Profit", typeof(double));
+                productsDataTable.Columns.Add("InsertionTime", typeof(DateTime));
+                productsDataTable.Columns.Add("Tva", typeof(decimal));
+                productsDataTable.Columns.Add("TotalPrice", typeof(decimal));
+
+                // Variables to hold other properties
+                int? clientID = null; // Default to null
+                int? companyID = null; // Default to null
+                string selectedPaymentMethodInEnglish = string.Empty;
+
+                // Read the data from the SqlDataReader
+                while (reader.Read())
+                {
+                    // Load product data into DataTable
+                    DataRow row = productsDataTable.NewRow();
+                    row["SoldItemID"] = reader.GetInt32(reader.GetOrdinal("SoldItemID"));
+                    row["ProductID"] = reader.GetInt64(reader.GetOrdinal("ProductID"));
+                    row["ProductName"] = reader.GetString(reader.GetOrdinal("ProductName"));
+                    row["QuantitySold"] = reader.GetInt32(reader.GetOrdinal("QuantitySold"));
+                    row["QuantitySold2"] = reader.GetInt32(reader.GetOrdinal("QuantitySold2"));
+                    row["QuantitySold3"] = reader.GetInt32(reader.GetOrdinal("QuantitySold3"));
+                    row["UnitPrice"] = reader.GetDecimal(reader.GetOrdinal("UnitPrice"));
+                    row["UnitSoldPrice"] = reader.GetDecimal(reader.GetOrdinal("UnitSoldPrice"));
+                    row["Profit"] = reader.GetDouble(reader.GetOrdinal("Profit"));
+                    row["InsertionTime"] = reader.GetDateTime(reader.GetOrdinal("InsertionTime"));
+                    row["Tva"] = reader.GetDecimal(reader.GetOrdinal("Tva"));
+                    row["TotalPrice"] = reader.GetDecimal(reader.GetOrdinal("TotalPrice"));
+                    productsDataTable.Rows.Add(row);
+
+                    // Read ClientID and CompanyID; they may be null
+                    if (!reader.IsDBNull(reader.GetOrdinal("ClientID")))
+                    {
+                        clientID = reader.GetInt32(reader.GetOrdinal("ClientID"));
+                    }
+
+                    if (!reader.IsDBNull(reader.GetOrdinal("CompanyID")))
+                    {
+                        companyID = reader.GetInt32(reader.GetOrdinal("CompanyID"));
+                    }
+
+                    // Read the selected payment method
+                    selectedPaymentMethodInEnglish = reader.GetString(reader.GetOrdinal("PaymentType"));
+                }
+
+                // Create an instance of ProductSoldInfo
+                var productSoldInfo = new ProductSoldInfos(
+                    saleID: saleID, // Pass the saleID
+                    clientID: clientID, // Nullable ClientID
+                    companyID: companyID, // Nullable CompanyID
+                    productsBoughtInThisOperation: productsDataTable,
+                    selectedPaymentMethodInEnglish: selectedPaymentMethodInEnglish,
+                    userChequeInfo: null // Handle this separately if needed
+                );
+
+                return productSoldInfo;
+            }
+        }
+
+
     }
 }

@@ -40,6 +40,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         private string _clientOrCompanyNameEnteredByUser;
 
+        [NotWhitespaceAttribute(ErrorMessage = "إحذف الفراغ")]
         public string ClientOrCompanyNameEnteredByUser
         {
             get => _clientOrCompanyNameEnteredByUser;
@@ -87,14 +88,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             private set => this.RaiseAndSetIfChanged(ref _clientTypeLabel, value);
         }
 
-        private string _taxValue = "20";
-
-        [PositiveFloatRange(1, 100, ErrorMessage = "الرقم يجب ان يكون بين 1 و 100")]
-        public string TaxValue
-        {
-            get => _taxValue;
-            set => this.RaiseAndSetIfChanged(ref _taxValue, value);
-        }
+        
 
         public ReactiveCommand<Unit, Unit> MakeDevisCommand { get; }
         public ReactiveCommand<Unit, Unit> DeleteAllProductsCommand { get; }
@@ -227,7 +221,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
                  Subscribe(_ => {
 
-                     if (string.IsNullOrEmpty(ClientOrCompanyNameEnteredByUser)) return;
+                    // if (string.IsNullOrEmpty(ClientOrCompanyNameEnteredByUser)) return;
                      if (SelectedClientType == "زبون عادي") LoadChosenClientID();
                      else if (SelectedClientType == "شركة") LoadChosenCompanyID();
                  });
@@ -334,9 +328,15 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         }
 
+        private bool UserHasDeletedClientNameOrCompany =>  string.IsNullOrEmpty(ClientOrCompanyNameEnteredByUser); 
+        private bool userhasEntredInvalidCompanyNameOrClientName => PhoneNumberExtractor.ExtractPhoneNumber(ClientOrCompanyNameEnteredByUser) == "";
         private void LoadChosenClientID()
         {
             int IDofChoosedClient = 0;
+         
+            // we set clientid or companyid to zero if user delte the searchbox or client or company names or has entred invalid or inexistant client or company name
+            if (UserHasDeletedClientNameOrCompany || userhasEntredInvalidCompanyNameOrClientName) { ClientID = IDofChoosedClient; return; }
+
             string ChoosedClientPhoneNumber = PhoneNumberExtractor.ExtractPhoneNumber(ClientOrCompanyNameEnteredByUser);
             string ClientName = "";
             string Email = "";
@@ -348,6 +348,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         private void LoadChosenCompanyID()
         {
+            // we wont search for an empty or null client or company because they re not existing
+            if (UserHasDeletedClientNameOrCompany || userhasEntredInvalidCompanyNameOrClientName) return;
             CompanyID = CompanyNamesAndTheirIds[SelectedClientOrCompany];
         }
 

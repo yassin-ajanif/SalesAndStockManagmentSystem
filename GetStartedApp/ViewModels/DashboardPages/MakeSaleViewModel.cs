@@ -19,6 +19,7 @@ using System.Globalization;
 using Avalonia.Threading;
 using System.Collections.Generic;
 using GetStartedApp.Models.Objects;
+using System.Net;
 
 
 namespace GetStartedApp.ViewModels.DashboardPages
@@ -93,12 +94,17 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         private string _productNameTermToSerach;
 
-        [NotWhitespaceAttribute(ErrorMessage= "اختر منتج او دع الخانة فارغة")]
-        
+      
         public string ProductNameTermToSerach
         {
             get => _productNameTermToSerach;
-            set => this.RaiseAndSetIfChanged(ref _productNameTermToSerach, value);
+            set { 
+
+                this.RaiseAndSetIfChanged(ref _productNameTermToSerach, value);
+                // this opton is useful becuase it dosent allow the user to search in the databse for a whitespace that will not return something
+                // in addtion it is going to be harder to be noticiable if a user forger to delete the whitespace
+                if (string.IsNullOrWhiteSpace(ProductNameTermToSerach)) _productNameTermToSerach = string.Empty;
+            }
         }
 
         private string _selectedProductNameTermSerach;
@@ -169,7 +175,14 @@ namespace GetStartedApp.ViewModels.DashboardPages
             private set => this.RaiseAndSetIfChanged(ref _productsListScanned, value);
         }
 
-        
+        private string _taxValue = "20";
+
+        [PositiveFloatRange(1, 100, ErrorMessage = "الرقم يجب ان يكون بين 1 و 100")]
+        public string TaxValue
+        {
+            get => _taxValue;
+            set => this.RaiseAndSetIfChanged(ref _taxValue, value);
+        }
 
         private IDisposable ProductListObservationSubsription { get; set; }
 
@@ -306,6 +319,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             ProductsBoughtTable.Columns.Add("UnitSoldPrice", typeof(decimal));
             ProductsBoughtTable.Columns.Add("IsReturned", typeof(bool));
             ProductsBoughtTable.Columns.Add("Profit", typeof(decimal));
+            ProductsBoughtTable.Columns.Add("TVA", typeof(decimal));
+         
 
             foreach (var product in ProductsListScanned)
             {
@@ -330,10 +345,10 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     ) break;
 
                 var profitFromSoldProduct = priceOfProductSoldConvertedToFloat - product.ProductInfo.cost;
-
+                
                 ProductsBoughtTable.Rows.Add
                 (product.ProductInfo.id, product.ProductInfo.name,ProductsUnitsToReduce_From_Stock1, ProductsUnitsToReduce_From_Stock2, 
-                ProductsUnitsToReduce_From_Stock3, product.ProductInfo.price,product.PriceOfProductSold, false, profitFromSoldProduct);
+                ProductsUnitsToReduce_From_Stock3, product.ProductInfo.price,product.PriceOfProductSold, false, profitFromSoldProduct,TaxValue);
             }
 
             return ProductsBoughtTable;
@@ -538,18 +553,50 @@ namespace GetStartedApp.ViewModels.DashboardPages
             catch(Exception ex) { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ماتاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن "); }
         }
 
-        private void CreateBonLivraison_For_Client(int saleID, int ClientID,DataTable ProductsBoughtInThisOperation,string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
+        protected void CreateBonLivraison_For_Client(int saleID, int ClientID,DataTable ProductsBoughtInThisOperation,string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo,
+            DateTime SalesTime = default)
         {
             string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(slectedPaymentMethodInEnglish, "fr");
             decimal TVA = 20;
-            AccessToClassLibraryBackendProject.GenerateBonLivraison_ForClient(ProductsBoughtInThisOperation, ClientID, selectedPaymentMethodInFrench, TVA, saleID);
+            AccessToClassLibraryBackendProject.GenerateBonLivraison_ForClient(ProductsBoughtInThisOperation, ClientID, selectedPaymentMethodInFrench, TVA, saleID, SalesTime);
         }
 
-        private void CreateInvoice_For_Client(int saleID, int InvoiceID,int ClientID, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish, ChequeInfo userChequeInfo)
+       
+        protected void CreateInvoice_For_Client(int saleID, int InvoiceID,int ClientID, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish, ChequeInfo userChequeInfo,
+            bool DoesUserHasPrintedInvoiceBefore=false,DateTime SalesTime= default)
         {
             string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(slectedPaymentMethodInEnglish, "fr");
             decimal TVA = 20;
-            AccessToClassLibraryBackendProject.GenerateInvoice_ForClient(ProductsBoughtInThisOperation, ClientID, selectedPaymentMethodInFrench, TVA, saleID, InvoiceID);
+            AccessToClassLibraryBackendProject.GenerateInvoice_ForClient
+                (ProductsBoughtInThisOperation, ClientID, selectedPaymentMethodInFrench, TVA, saleID, InvoiceID, SalesTime, DoesUserHasPrintedInvoiceBefore);
+        }
+
+        protected void CreateBonLivraison_For_Company(int companyID, DataTable products, string selectedPaymentMethodInEnglish, int SaleID, DateTime SalesTime)
+        {
+            string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(selectedPaymentMethodInEnglish, "fr");
+            decimal TVA = 20;
+            AccessToClassLibraryBackendProject.GenerateBonLivraison_ForCompany(companyID, products, selectedPaymentMethodInFrench, TVA, SaleID, SalesTime);
+
+        }
+        protected void CreateInvoice_For_Company(int saleID, int invoiceID, int companyID, DataTable productsBoughtInThisOperation, string selectedPaymentMethodInEnglish,
+     bool doesUserHasPrintedInvoiceBefore = false, DateTime salesTime = default)
+        {
+            // Translate the selected payment method to French
+            string selectedPaymentMethodInFrench = WordTranslation.TranslatePaymentIntoTargetedLanguage(selectedPaymentMethodInEnglish, "fr");
+
+            // Set the default TVA value
+            decimal tva = 20;
+
+            // Call the GenerateInvoice_ForCompany function
+            AccessToClassLibraryBackendProject.GenerateInvoice_ForCompany(
+                companyID,
+                productsBoughtInThisOperation,
+                selectedPaymentMethodInFrench,
+                tva,
+                saleID,
+                invoiceID,
+                salesTime,  // Set to current time if not provided
+                doesUserHasPrintedInvoiceBefore);
         }
 
 
@@ -579,7 +626,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
                 if (await ShowDeleteSaleDialogInteraction.Handle(" هل تريد طباعة الفاتورة ايضا "))
                 {
-                   int invoiceNumber = AccessToClassLibraryBackendProject.AddInvoiceIfNotExists(lastSaleID);
+                    int invoiceNumber = AccessToClassLibraryBackendProject.AddInvoiceIfNotExists(lastSaleID);
                     CreateInvoice_For_Client(lastSaleID, invoiceNumber, ClientID, ProductsBoughtInThisOperation, SelectedPaymentMethod, userChequeInfo);
                 }
 
@@ -1033,7 +1080,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return isErrorLabelVisible;
         }
 
-        protected bool TheSystemIsNotShowingError()
+        protected virtual bool TheSystemIsNotShowingError()
         {
             return !TheSystemIsShowingError();
         }
