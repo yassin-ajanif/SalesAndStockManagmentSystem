@@ -103,6 +103,8 @@ namespace GetStartedApp.Models.Objects
             }
         }
 
+        private bool _thisProductIsExistingInDB;
+        public bool ThisProductIsExistingInDB { get => _thisProductIsExistingInDB; set => this.RaiseAndSetIfChanged(ref _thisProductIsExistingInDB, value); }
 
         private string _soldProductPriceUnitColor = "Black";
         public string SoldProductPriceUnitColor
@@ -118,18 +120,22 @@ namespace GetStartedApp.Models.Objects
             set => this.RaiseAndSetIfChanged(ref _numberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock, value);
         }
 
+       
+
+
         public bool ProductStockHasErrors = false;
 
         // this class will beholidng the product info retrived from database in addtion to the sold price and product units
         // these sold price and product units are not existing in the database so for this reason we decided
         // to make a class that has all info so the info will be encapsulated 
-        public ProductsScannedInfo(ProductInfo ProductRetrivedFromDatabase)
+        public ProductsScannedInfo(ProductInfo ProductRetrivedFromDatabase,bool ThisProductIsExistingInDB = true)
         {
             ProductInfo = ProductRetrivedFromDatabase;
             // we set product unit 1 as user will expect to buy one item but it can be changed if he want more
             ProductsUnits = "1";
             PriceOfProductSold = ProductRetrivedFromDatabase.price.ToString();
 
+            this.ThisProductIsExistingInDB = ThisProductIsExistingInDB;
             whenTheStockValueIsChanged_CheckIfProductUnitsAreDistributedCorrectlyAcrossStocks();
 
 

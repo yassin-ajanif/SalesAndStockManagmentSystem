@@ -18,6 +18,7 @@ using System.Text;
 using System.Globalization;
 using GetStartedApp.Models.Objects;
 using GetStartedApp.Models.Enums;
+using GetStartedApp.ViewModels.DashboardPages;
 //using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
@@ -292,6 +293,8 @@ namespace GetStartedApp.ViewModels.ProductPages
         public int    NumberOfBarcodes { get; set; }
 
         protected ProductsListViewModel ProductsListViewModel;
+       
+        private BonReceptionViewModel BonReceptionViewModel;
 
         public ICommand PickImageCommand { get; set; }
 
@@ -308,52 +311,56 @@ namespace GetStartedApp.ViewModels.ProductPages
             EntredProductID = AccessToClassLibraryBackendProject.GetNewProductIDFromDatabase().ToString();
         }
 
-        public AddProductViewModel(ProductsListViewModel ProductListViewModel)
+        public AddProductViewModel(ProductsListViewModel productsListViewModel)
         {
+            // Call the shared initialization method
+            Initialize();
 
+            // Make the object global to this class
+            this.ProductsListViewModel = productsListViewModel;
+        }
 
-            // i added this modification to make a generation of product id automatically not 
-            // manually as it was but with teh ability to go back to the manual mode later 
-            // if i wanted
-           
-            IsProductIdReadOnly= true;
-            // we set descrption to empty string letting the user the choise of not adding anything because null is creating problems 
-            // in ohter parts of code and requires to alter alot of function so this solution was quick turn around
+        // Constructor that accepts BonReceptionViewModel
+        public AddProductViewModel(BonReceptionViewModel bonReceptionViewModel)
+        {
+            // Call the shared initialization method
+            Initialize();
+
+            // Make the object global to this class
+            this.BonReceptionViewModel = bonReceptionViewModel;
+        }
+
+        // Shared initialization logic
+        private void Initialize()
+        {
+            // I added this modification to make a generation of product id automatically not 
+            // manually as it was but with the ability to go back to the manual mode later 
+            // if I wanted
+            IsProductIdReadOnly = true;
+
+            // We set description to empty string letting the user the choice of not adding anything 
+            // because null is creating problems in other parts of code and requires to alter a lot of 
+            // functions so this solution was a quick turnaround
             EnteredProductDescription = "";
-            
-            getNewProductIdGeneratedFromDatabase();
 
-            // make the object global to this class 
-            this.ProductsListViewModel= ProductListViewModel;
+            getNewProductIdGeneratedFromDatabase();
 
             DisplayNoImage();
 
-            // set the list of products categories a user will choose among
-
+            // Set the list of products categories a user will choose among
             ProductCategories = GetProductsCategoryFromDatabase();
 
             PickImageCommand = ReactiveCommand.CreateFromTask(PickImageProduct);
-
             DeleteImageCommand = ReactiveCommand.CreateFromTask(DisplayNoImage);
+            AddOrEditOrDeleteProductCommand = ReactiveCommand.Create(AddProductToBonReceptionList, CheckIfFormIsFilledCorreclty());
 
-            AddOrEditOrDeleteProductCommand = ReactiveCommand.Create(AddProduct, CheckIfFormIsFilledCorreclty());
-
-            // this is an initialization of command this is going to open a message box when adding productOperation is submited
-             ShowMessageBoxDialog = new Interaction<string, Unit>();
-
+            // This is an initialization of command that is going to open a message box 
+            // when adding productOperation is submitted
+            ShowMessageBoxDialog = new Interaction<string, Unit>();
             ShowMessageBoxDialog_For_BarCodePrintingPersmission = new Interaction<string, bool>();
-
             ShowBarCodePrinterPage = new Interaction<Unit, Unit>();
 
             EnableAllInputsExceptID();
-
-          
-
-            /*****       these are functions for testing             ******/
-
-            // Insert_RandomValidProduct_10_000_Times_MainFunction();
-
-            //Insert_RandomInValidProduct_10_000_Times_MainFunction();
         }
 
         private void EnableAllInputsExceptID()
@@ -491,33 +498,50 @@ namespace GetStartedApp.ViewModels.ProductPages
                 return canAddProduct1.CombineLatest(canAddProduct2, (isValid1, isValid2) => isValid1 && isValid2);
             }
 
+         public async void AddProductToBonReceptionList()
+         {
+       
+       
+             ProductInfo ProductInfoFilledByUser =
+                 new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _StockQuantity2, _StockQuantity3, _Price,_Cost, _SelectedImageToDisplay,_SelectedCategory);
 
-        
+            // ths product to add is new to not existing in databse
+            bool ThisProductIsExistingInDB = false;
 
+            ProductsScannedInfo NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct = new ProductsScannedInfo(ProductInfoFilledByUser, ThisProductIsExistingInDB);
 
-        public async Task<bool> AddProduct()
-        {
-
-
-            ProductInfo ProductInfoFilledByUser =
-                new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _StockQuantity2, _StockQuantity3, _Price,_Cost, _SelectedImageToDisplay,_SelectedCategory);
-
-            if (AccessToClassLibraryBackendProject.AddProductToDataBase(ProductInfoFilledByUser)) { 
-               
-                await ShowMessageBoxDialog.Handle("تمت اضافة المنتج بنجاح");
-             
-                  ProductsListViewModel.ReloadProductListIntoSceen();
-
-                AskUserIfHeWantToPrintBarCodes();
-
-                return true;
-            }
-
-            else await ShowMessageBoxDialog.Handle("هناك مشكلة في اضافة هذا المنتج");
-            return false;
-        }
+            BonReceptionViewModel.ProductsListScanned.Add(NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct);
+           
+            await ShowMessageBoxDialog.Handle("تمت اضافة المنتج بنجاح");
       
-        
+          //  return true;
+         }
+
+
+        // we no longer need this function but we kkep it as reference temporarly 
+        //    public async Task<bool> AddProductToBonReceptionList()
+        //    {
+        //
+        //
+        //        ProductInfo ProductInfoFilledByUser =
+        //            new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _StockQuantity2, _StockQuantity3, _Price,_Cost, _SelectedImageToDisplay,_SelectedCategory);
+        //
+        //        if (AccessToClassLibraryBackendProject.AddProductToDataBase(ProductInfoFilledByUser)) { 
+        //           
+        //            await ShowMessageBoxDialog.Handle("تمت اضافة المنتج بنجاح");
+        //         
+        //              ProductsListViewModel.ReloadProductListIntoSceen();
+        //
+        //            AskUserIfHeWantToPrintBarCodes();
+        //
+        //            return true;
+        //        }
+        //
+        //        else await ShowMessageBoxDialog.Handle("هناك مشكلة في اضافة هذا المنتج");
+        //        return false;
+        //    }
+
+
         protected async void AskUserIfHeWantToPrintBarCodes()
         {
             bool DoesUserWantToPrintBarcodes = await ShowMessageBoxDialog_For_BarCodePrintingPersmission.Handle("هل تريد طباعة الباركود");
@@ -543,7 +567,10 @@ namespace GetStartedApp.ViewModels.ProductPages
             // in this case it will be alowyas true i mean when a user is adding product so it's allowed to printbarcode
             // but in the case of edit productinfo user must comply one condtion
             // for this reason we're going to override this method add the derived class editproduct writing our condition
-            return true;
+
+            //  later one i found that should disable this feature because is not useful so the quick way is to make this function always returning false
+            // later one i can refactore the code
+            return false;
 
         }
 

@@ -91,10 +91,10 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     ResetAllSellingInfoOperation();
                     mainWindowViewModel.CheckIfSystemShouldRaiseBellNotificationIcon();
                 }
+}
 
-
-                else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
-            }
+            else { await ShowAddSaleDialogInteraction.Handle(" لقد حصل خطأ ما تاكد من ان المنتجات اللتي تريد ان تضيف موجودة في المخزن  "); }
+            
         }
     }
 }

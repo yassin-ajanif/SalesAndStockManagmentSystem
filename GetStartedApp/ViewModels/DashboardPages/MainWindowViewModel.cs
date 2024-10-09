@@ -143,6 +143,13 @@ public class MainWindowViewModel : ViewModelBase
         HideheaderAndShowBtnBack();
     }
 
+    public void GoToBonReceptionPage() { 
+
+        CurrentPage = new BonReceptionViewModel(this);
+        navigationHistory.Push(CurrentPage);
+        HideheaderAndShowBtnBack();
+    }
+
     public void GoToBonLivraisonsPage()
     {
         CurrentPage = new BonLivraisonsViewModel(this);

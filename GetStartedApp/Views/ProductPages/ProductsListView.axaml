@@ -56,11 +56,7 @@
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 
-				<!-- Add New Product Button -->
-				<Button Grid.Column="0" Command="{Binding AddNewProductCommand }"
-						FlowDirection="RightToLeft"
-						Margin="0 0 10 0">اضافة منتج جديد +</Button>
-
+				
 				<!-- Category ComboBox -->
 				<ComboBox Grid.Column="1" Name="CategoryId" FlowDirection="RightToLeft"
 						  ItemsSource="{Binding ProductCategories}"

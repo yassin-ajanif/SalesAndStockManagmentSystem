@@ -30,7 +30,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ICommand GoToSuppliersPageCommand { get; private set; }
         public ICommand GoToDevisPageCommand { get; private set; }
         public ICommand GoToBonLivraisonsPageCommand { get; private set; }
-         
+        public ICommand GoToBonReceptionPageCommand { get; private set; }
+
 
 
 
@@ -54,6 +55,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
           GoToMakeSaleForCompaniesPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToMakeSaleForCompaniesPage);
           GoToDevisPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToDevisPage);
           GoToBonLivraisonsPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToBonLivraisonsPage);
+            GoToBonReceptionPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToBonReceptionPage);
 
         }
 

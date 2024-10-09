@@ -169,7 +169,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         private ObservableCollection<ProductsScannedInfo> _productsListScanned;
 
-        public ObservableCollection<ProductsScannedInfo> ProductsListScanned
+        public virtual ObservableCollection<ProductsScannedInfo> ProductsListScanned
         {
             get => _productsListScanned;
             private set => this.RaiseAndSetIfChanged(ref _productsListScanned, value);

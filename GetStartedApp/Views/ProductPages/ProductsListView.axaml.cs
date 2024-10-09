@@ -60,7 +60,7 @@ namespace GetStartedApp.Views.ProductPages
  
             this.WhenActivated(action =>
             {
-                action(ViewModel!.ShowAddProductDialog.RegisterHandler(ShowDialogOfAddProductInfo));
+               // action(ViewModel!.ShowAddProductDialog.RegisterHandler(ShowDialogOfAddProductInfo));
                
                 action(ViewModel!.ShowEditQuantityDialog.RegisterHandler(ShowDialogOfEditQuantityProduct));
                
@@ -116,28 +116,28 @@ namespace GetStartedApp.Views.ProductPages
 
 
         // this function shows the view and set the viewmodel bind to it
-        private async void ShowAddProductViewBoundToViewmodel_(ViewModelBase ViewmodelToBind)
-        {
-            var dialog = new DialogContainerView();
-            dialog.Title = GetTheTitleOfPageToShow_BasedOn_TheViewModelPageIsBoundTo(ViewmodelToBind);
-            // CurrentDialogOpened = dialog;
-            // Create an instance of AddOrEditOrKnowProductView and set it as the Content of the dialog
-            dialog.Content = new AddProductView()
-            {
-                DataContext = ViewmodelToBind
-                
-            };
-
-            var window = this.GetVisualRoot() as Window;
-            if (window == null)
-            {
-                throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
-            }
-
-            
-            var result = await dialog.ShowDialog<Unit>(window);
- 
-        }
+       private async void ShowAddProductViewBoundToViewmodel_(ViewModelBase ViewmodelToBind)
+       {
+           var dialog = new DialogContainerView();
+           dialog.Title = GetTheTitleOfPageToShow_BasedOn_TheViewModelPageIsBoundTo(ViewmodelToBind);
+           // CurrentDialogOpened = dialog;
+           // Create an instance of AddOrEditOrKnowProductView and set it as the Content of the dialog
+           dialog.Content = new AddProductView()
+           {
+               DataContext = ViewmodelToBind
+               
+           };
+   
+           var window = this.GetVisualRoot() as Window;
+           if (window == null)
+           {
+               throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
+           }
+   
+           
+           var result = await dialog.ShowDialog<Unit>(window);
+   
+       }
 
         // this function shows the view and set the viewmodel bind to it
 
@@ -162,14 +162,14 @@ namespace GetStartedApp.Views.ProductPages
 
         }
 
-        private async Task ShowDialogOfAddProductInfo(InteractionContext<AddProductViewModel, Unit> interaction)
-        {
-            ViewModelBase VeiwmodelToBindWithAddProductView = interaction.Input;
-
-            ShowAddProductViewBoundToViewmodel_(VeiwmodelToBindWithAddProductView);
-
-            interaction.SetOutput(Unit.Default);
-        }
+      //  private async Task ShowDialogOfAddProductInfo(InteractionContext<AddProductViewModel, Unit> interaction)
+      //  {
+      //      ViewModelBase VeiwmodelToBindWithAddProductView = interaction.Input;
+      //
+      //      ShowAddProductViewBoundToViewmodel_(VeiwmodelToBindWithAddProductView);
+      //
+      //      interaction.SetOutput(Unit.Default);
+      //  }
 
         private async Task ShowDialogOfEditQuantityProduct(InteractionContext<EditStockQuantitiyProductViewModel, Unit> interaction)
         {

@@ -49,7 +49,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         public long ClickedProductInfoID;
 
-        public Interaction<AddProductViewModel, Unit> ShowAddProductDialog { get; }
+       // public Interaction<AddProductViewModel, Unit> ShowAddProductDialog { get; }
         public Interaction<EditStockQuantitiyProductViewModel, Unit> ShowEditQuantityDialog { get; }
         public Interaction<EditPriceProductViewModel, Unit> ShowEditPriceDialog { get; }
         public Interaction<string, bool> ShowDeleteProductDialog { get; set; }
@@ -58,7 +58,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         public Interaction <long,Unit> ShowBarCodeViewGeneratorDialog { get; }
  
-        public ICommand AddNewProductCommand { get; }
+      //  public ICommand AddNewProductCommand { get; }
 
      
         private ObservableCollection<ProductInfo> _ProductsListObservable;
@@ -86,7 +86,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             IObservable<bool> canDeleteProduct = Observable.Return(true);
 
-            ShowAddProductDialog = new Interaction<AddProductViewModel, Unit>();
+           // ShowAddProductDialog = new Interaction<AddProductViewModel, Unit>();
 
             ShowEditQuantityDialog = new Interaction<EditStockQuantitiyProductViewModel, Unit>();
 
@@ -100,7 +100,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             ShowReturnProductDialog = new Interaction<ReturnProductViewModel, Unit>();
 
-            AddNewProductCommand = ReactiveCommand.Create(AddProductInfoOperation, canExecute);
+            //AddNewProductCommand = ReactiveCommand.Create(AddProductInfoOperation, canExecute);
 
         }
 
@@ -253,18 +253,18 @@ namespace GetStartedApp.ViewModels.ProductPages
             return UserDosentHavePermission;
         }
 
-        public async void AddProductInfoOperation()
-        {
-            // 1 is the default all category string we add which make the count equal 1 once we add a new category a value becomes more than 1
-            // which indicate that there is a category or more added to the system
-            bool ThereIsNoCategoriesAddedYetToSystem = _Productcategories.Count == 1;
-
-            if (ThereIsNoCategoriesAddedYetToSystem) { await ShowDeleteProductDialog.Handle(" لا توجد تصنيفات اضف تصنيف جديد "); return; }
-
-            var userControlToShowInsideDialog = new AddProductViewModel(this);
-
-            await ShowAddProductDialog.Handle(userControlToShowInsideDialog);
-        }
+      //  public async void AddProductInfoOperation()
+      //  {
+      //      // 1 is the default all category string we add which make the count equal 1 once we add a new category a value becomes more than 1
+      //      // which indicate that there is a category or more added to the system
+      //      bool ThereIsNoCategoriesAddedYetToSystem = _Productcategories.Count == 1;
+      //
+      //      if (ThereIsNoCategoriesAddedYetToSystem) { await ShowDeleteProductDialog.Handle(" لا توجد تصنيفات اضف تصنيف جديد "); return; }
+      //
+      //      var userControlToShowInsideDialog = new AddProductViewModel(this);
+      //
+      //      await ShowAddProductDialog.Handle(userControlToShowInsideDialog);
+      //  }
         public async void EditProductQuantityOperation()
         {
 
