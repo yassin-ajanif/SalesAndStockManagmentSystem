@@ -79,7 +79,7 @@ namespace GetStartedApp.ViewModels
         MakeSaleViewModel makeSaleViewModel;
 
         public BLViewModel(MainWindowViewModel mainWindowViewModel,MakeSaleViewModel makeSaleViewModel, 
-            ObservableCollection<ProductsScannedInfo> ProductsListScanned, int lastSaleClientID, string lastSaleClientName)
+            ObservableCollection<ProductsScannedInfo_ToSale> ProductsListScanned, int lastSaleClientID, string lastSaleClientName)
         {
            
                 this.mainWindowViewModel = mainWindowViewModel;
@@ -116,7 +116,7 @@ namespace GetStartedApp.ViewModels
    //                          !string.IsNullOrEmpty(EntredCompanyLocation) && !string.IsNullOrWhiteSpace(EntredCompanyLocation));                                                                        
    //     }
 
-        private DataTable GetFromProductListScanned_PrName_Price_Quantity_TotalPrPrice(ObservableCollection<ProductsScannedInfo> ProductsListScanned)
+        private DataTable GetFromProductListScanned_PrName_Price_Quantity_TotalPrPrice(ObservableCollection<ProductsScannedInfo_ToSale> ProductsListScanned)
         {
             // Create a DataTable to hold the result
             DataTable dataTable = new DataTable();

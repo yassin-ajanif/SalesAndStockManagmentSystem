@@ -8,7 +8,7 @@ namespace GetStartedApp.Models.Enums
 {
     public enum eProductMode
     {
-        addProductMode, EditProductMode
+        addProductMode, EditProductMode, saleProductMode,purchaseProductMode
     }
 
 

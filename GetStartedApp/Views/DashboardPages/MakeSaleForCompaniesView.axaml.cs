@@ -59,7 +59,7 @@ public partial class MakeSaleForCompaniesView : ReactiveUserControl<MakeSaleForC
         var button = sender as Button;
 
         // Get the data context of the button (should be a ProductInfo object)
-        var clickedItem = button?.DataContext as ProductsScannedInfo;
+        var clickedItem = button?.DataContext as ProductsScannedInfo_ToSale;
 
         int index = ViewModel.ProductsListScanned.IndexOf(clickedItem);
 

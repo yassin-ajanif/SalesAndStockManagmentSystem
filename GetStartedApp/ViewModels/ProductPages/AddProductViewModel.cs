@@ -330,6 +330,26 @@ namespace GetStartedApp.ViewModels.ProductPages
             this.BonReceptionViewModel = bonReceptionViewModel;
         }
 
+        public AddProductViewModel(ProductScannedInfo_ToRecieve productScannedInfo_ToRecieve, BonReceptionViewModel bonReceptionViewModel)
+        {
+            // Call the shared initialization method
+            Initialize_For_ProductScanned_ToRecive();
+            this.BonReceptionViewModel = bonReceptionViewModel;
+
+            // load all info of product added to edit at the form
+            EntredProductID = productScannedInfo_ToRecieve.ProductInfo.id.ToString();
+            SelectedImageToDisplay = productScannedInfo_ToRecieve.ProductInfo.SelectedProductImage;
+            EntredProductName = productScannedInfo_ToRecieve.ProductInfo.name;
+            EnteredProductDescription = productScannedInfo_ToRecieve.ProductInfo.description;
+            EntredCost = productScannedInfo_ToRecieve.ProductInfo.cost.ToString();
+            EnteredPrice = productScannedInfo_ToRecieve.ProductInfo.price.ToString();
+            SelectedCategory = productScannedInfo_ToRecieve.ProductInfo.selectedCategory;
+            EntredStockQuantity = productScannedInfo_ToRecieve.ProductInfo.StockQuantity.ToString();
+            EntredStockQuantity2 = productScannedInfo_ToRecieve.ProductInfo.StockQuantity2.ToString();
+            EntredStockQuantity3 = productScannedInfo_ToRecieve.ProductInfo.StockQuantity3.ToString();
+
+        }
+
         // Shared initialization logic
         private void Initialize()
         {
@@ -363,6 +383,27 @@ namespace GetStartedApp.ViewModels.ProductPages
             EnableAllInputsExceptID();
         }
 
+        // this function dosent get new product id from datbase because the info of proudcts are exsitng to  be edited
+        private void Initialize_For_ProductScanned_ToRecive()
+        {
+           
+            DisplayNoImage();
+
+            // Set the list of products categories a user will choose among
+            ProductCategories = GetProductsCategoryFromDatabase();
+
+            PickImageCommand = ReactiveCommand.CreateFromTask(PickImageProduct);
+            DeleteImageCommand = ReactiveCommand.CreateFromTask(DisplayNoImage);
+            AddOrEditOrDeleteProductCommand = ReactiveCommand.Create(EditedProductAddedToBonReceptionList, CheckIfFormIsFilledCorreclty());
+
+            // This is an initialization of command that is going to open a message box 
+            // when adding productOperation is submitted
+            ShowMessageBoxDialog = new Interaction<string, Unit>();
+            ShowMessageBoxDialog_For_BarCodePrintingPersmission = new Interaction<string, bool>();
+            ShowBarCodePrinterPage = new Interaction<Unit, Unit>();
+
+            EnableAllInputsExceptID();
+        }
         private void EnableAllInputsExceptID()
         {
             // i made miskate to set readonly but it must be entable or disabled in tis case it must be isProductIdEnabled 
@@ -504,42 +545,58 @@ namespace GetStartedApp.ViewModels.ProductPages
        
              ProductInfo ProductInfoFilledByUser =
                  new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _StockQuantity2, _StockQuantity3, _Price,_Cost, _SelectedImageToDisplay,_SelectedCategory);
-
+      
             // ths product to add is new to not existing in databse
             bool ThisProductIsExistingInDB = false;
 
-            ProductsScannedInfo NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct = new ProductsScannedInfo(ProductInfoFilledByUser, ThisProductIsExistingInDB);
+            ProductScannedInfo_ToRecieve NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct = new ProductScannedInfo_ToRecieve(ProductInfoFilledByUser, BonReceptionViewModel,ThisProductIsExistingInDB);
 
-            BonReceptionViewModel.ProductsListScanned.Add(NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct);
+            NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnits = (_StockQuantity + _StockQuantity2 + _StockQuantity3).ToString();
+
+            NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnitsToReduce_From_Stock1 = _StockQuantity.ToString();
+            NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnitsToReduce_From_Stock2 = _StockQuantity2.ToString();
+            NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnitsToReduce_From_Stock3 = _StockQuantity3.ToString();
+
+
+            BonReceptionViewModel.ProductsListScanned_To_Recive.Add(NewProductToAdd_Plus_PriceAndUnitsOfSoldProduct);
            
             await ShowMessageBoxDialog.Handle("تمت اضافة المنتج بنجاح");
       
           //  return true;
          }
 
+        public async void EditedProductAddedToBonReceptionList()
+        {
+            ProductInfo productInfoFilledByUser = new ProductInfo(
+                _ProductID, _ProductName, _ProductDescription, _StockQuantity,
+                _StockQuantity2, _StockQuantity3, _Price, _Cost,
+                _SelectedImageToDisplay, _SelectedCategory
+            );
 
-        // we no longer need this function but we kkep it as reference temporarly 
-        //    public async Task<bool> AddProductToBonReceptionList()
-        //    {
-        //
-        //
-        //        ProductInfo ProductInfoFilledByUser =
-        //            new ProductInfo(_ProductID, _ProductName, _ProductDescription, _StockQuantity, _StockQuantity2, _StockQuantity3, _Price,_Cost, _SelectedImageToDisplay,_SelectedCategory);
-        //
-        //        if (AccessToClassLibraryBackendProject.AddProductToDataBase(ProductInfoFilledByUser)) { 
-        //           
-        //            await ShowMessageBoxDialog.Handle("تمت اضافة المنتج بنجاح");
-        //         
-        //              ProductsListViewModel.ReloadProductListIntoSceen();
-        //
-        //            AskUserIfHeWantToPrintBarCodes();
-        //
-        //            return true;
-        //        }
-        //
-        //        else await ShowMessageBoxDialog.Handle("هناك مشكلة في اضافة هذا المنتج");
-        //        return false;
-        //    }
+            bool thisProductIsExistingInDB = false;
+
+            // Remove the existing product with the matching product ID
+            BonReceptionViewModel.ProductsListScanned_To_Recive.Remove(
+                BonReceptionViewModel.ProductsListScanned_To_Recive
+                .FirstOrDefault(p => p.ProductInfo.id == _ProductID)
+            );
+
+            ProductScannedInfo_ToRecieve newProductToAdd_Plus_PriceAndUnitsOfSoldProduct =
+                new ProductScannedInfo_ToRecieve(productInfoFilledByUser, BonReceptionViewModel, thisProductIsExistingInDB);
+     
+            newProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnits = (_StockQuantity + _StockQuantity2 + _StockQuantity3).ToString();
+
+            newProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnitsToReduce_From_Stock1 = _StockQuantity.ToString();
+            newProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnitsToReduce_From_Stock2 = _StockQuantity2.ToString();
+            newProductToAdd_Plus_PriceAndUnitsOfSoldProduct.ProductsUnitsToReduce_From_Stock3 = _StockQuantity3.ToString();
+
+            BonReceptionViewModel.ProductsListScanned_To_Recive.Add(newProductToAdd_Plus_PriceAndUnitsOfSoldProduct);
+
+            await ShowMessageBoxDialog.Handle("تم تعديل المنتج بنجاح");
+        }
+
+
+
 
 
         protected async void AskUserIfHeWantToPrintBarCodes()

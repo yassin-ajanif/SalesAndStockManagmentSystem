@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.IO.Pipelines;
 using GetStartedApp.Models.Objects;
 using GetStartedApp.Models.Enums;
+using GetStartedApp.ViewModels.DashboardPages;
 
 namespace GetStartedApp.ViewModels.ProductPages
 {
@@ -55,6 +56,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         }
 
+      
         private bool IsTheOriginalImageDifferentFromCurrent(Bitmap Image1 , Bitmap Image2) {
 
             //if(Image1==null || Image2==null) return false;

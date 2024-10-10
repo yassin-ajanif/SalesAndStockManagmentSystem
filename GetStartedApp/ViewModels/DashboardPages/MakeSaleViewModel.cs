@@ -24,7 +24,7 @@ using System.Net;
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {
-    public class MakeSaleViewModel : ViewModelBase
+    public class MakeSaleViewModel: ViewModelBase 
     {
         private const long maxNumberOfProductsCanSystemHold = 1_000_000_000_000_000_000;
 
@@ -167,9 +167,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         public ReactiveCommand<Unit, Unit> SubmitBarCodeManually { get; }
 
-        private ObservableCollection<ProductsScannedInfo> _productsListScanned;
+        private ObservableCollection<ProductsScannedInfo_ToSale> _productsListScanned;
 
-        public virtual ObservableCollection<ProductsScannedInfo> ProductsListScanned
+        public ObservableCollection<ProductsScannedInfo_ToSale> ProductsListScanned
         {
             get => _productsListScanned;
             private set => this.RaiseAndSetIfChanged(ref _productsListScanned, value);
@@ -201,7 +201,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         {
             this.mainWindowViewModel = mainWindowViewModel;
 
-            ProductsListScanned = new ObservableCollection<ProductsScannedInfo>();
+            ProductsListScanned = new ObservableCollection<ProductsScannedInfo_ToSale>();
 
             LoadPaymentMethods_InArabic_And_SetDefault_PaymentMode();
 
@@ -784,30 +784,30 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return AccessToClassLibraryBackendProject.IsThisProductIdAlreadyExist(long.Parse(barcodeScanned));
         }
       
-        private ProductInfo RetrieveProductFromDatabaseByBarCodeId(string BarcodeNumberScanned)
+        protected ProductInfo RetrieveProductFromDatabaseByBarCodeId(string BarcodeNumberScanned)
         {
             return AccessToClassLibraryBackendProject.GetProductInfoByBarCode(long.Parse(BarcodeNumberScanned));
         }
 
-        private ProductsScannedInfo Add_UnitsOfSoldProduct_And_SoldProductPrice(string BarcodeNumberScanned)
+        protected virtual ProductsScannedInfo_ToSale Add_UnitsOfSoldProduct_And_SoldProductPrice(string BarcodeNumberScanned)
         {
             ProductInfo ProductFound = RetrieveProductFromDatabaseByBarCodeId(BarcodeNumberScanned);
 
-            // productscannedinfo is a lcass that contans a product retrived from daabase in addtion to the price and units info a user or buyter will submit
-            ProductsScannedInfo ProductFound_Plus_PriceAndUnitsOfSoldProduct = new ProductsScannedInfo(ProductFound);
+            // ProductsScannedInfo_ToSale is a lcass that contans a product retrived from daabase in addtion to the price and units info a user or buyter will submit
+            ProductsScannedInfo_ToSale ProductFound_Plus_PriceAndUnitsOfSoldProduct = new ProductsScannedInfo_ToSale(ProductFound);
 
             return ProductFound_Plus_PriceAndUnitsOfSoldProduct;
         }
-        private void AddProductScannedToProductListScanned(string barcodeRecieved )
+        protected virtual void AddProductScannedToProductListScanned(string barcodeRecieved )
         {
-            ProductsScannedInfo ProductFound = Add_UnitsOfSoldProduct_And_SoldProductPrice(barcodeRecieved);
+            ProductsScannedInfo_ToSale ProductFound = Add_UnitsOfSoldProduct_And_SoldProductPrice(barcodeRecieved);
 
             if (ProductFound == null) return;
            
             ProductsListScanned.Add(ProductFound);
         }
        
-        private bool TheProductIsAlreadyAddedToAlist(string BarcodeNumberScanned)
+        protected  virtual bool TheProductIsAlreadyAddedToAlist(string BarcodeNumberScanned)
         {
             long productId = long.Parse(BarcodeNumberScanned);
 
@@ -817,28 +817,28 @@ namespace GetStartedApp.ViewModels.DashboardPages
         // we detect which barcode textbox a user is filling manual or auto
         // by the way a user can't fill them both 
         // if he start filling one the other get erased
-        private string WhichBarCodeUserIsFillingManualOrAuto()
+        protected string WhichBarCodeUserIsFillingManualOrAuto()
         {
             if (!string.IsNullOrEmpty(Barcode)) return Barcode;
             else return ManualBarcodeValue;
         }
 
-        private string IncreaseByOneTheStringIntNumber(string stringIntNumber)
+        protected string IncreaseByOneTheStringIntNumber(string stringIntNumber)
         { 
             return (int.Parse(stringIntNumber)+1).ToString();
         }
      
-        private ProductsScannedInfo GetTheProductFromScannedListById(long id)
+        protected virtual ProductsScannedInfo_ToSale GetTheProductFromScannedListById(long id)
         {
-            return ProductsListScanned.FirstOrDefault(product => product.ProductInfo.id == id);
+            return ProductsListScanned.FirstOrDefault(product => product.ProductInfo.id == id) ;
         }
        
-        private void Increase_TheNumberByOne_Of_ProductScannedTheSecondTimeInArow(string duplicatedBarCodeEntred)
+        protected virtual void Increase_TheNumberByOne_Of_ProductScannedTheSecondTimeInArow(string duplicatedBarCodeEntred)
         {
 
             long DuplicatedProductId = long.Parse(duplicatedBarCodeEntred);
 
-            ProductsScannedInfo ProductDuplicatedFound = GetTheProductFromScannedListById(DuplicatedProductId);
+            ProductsScannedInfo_ToSale ProductDuplicatedFound = GetTheProductFromScannedListById(DuplicatedProductId);
             //
             // we increment by 1 a string value the increase funciton is converting the value to int to increament it then going back to string to be bound to the ui
             ProductDuplicatedFound.ProductsUnits = IncreaseByOneTheStringIntNumber(ProductDuplicatedFound.ProductsUnits);
@@ -849,7 +849,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         {
             return isErrorLabelVisible;
         }
-        private void AddProductScannedToScreenOperation()
+        protected virtual void AddProductScannedToScreenOperation()
         {
           
             string BarCodeUserHasEntred = WhichBarCodeUserIsFillingManualOrAuto();

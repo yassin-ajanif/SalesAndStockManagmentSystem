@@ -73,11 +73,11 @@ public partial class BonReceptionView : ReactiveUserControl<BonReceptionViewMode
         var button = sender as Button;
 
         // Get the data context of the button (should be a ProductInfo object)
-        var clickedItem = button?.DataContext as ProductsScannedInfo;
+        var clickedItem = button?.DataContext as ProductScannedInfo_ToRecieve;
 
-        int index = ViewModel.ProductsListScanned.IndexOf(clickedItem);
+        int index = ViewModel.ProductsListScanned_To_Recive.IndexOf(clickedItem);
 
-        ViewModel.ProductsListScanned.RemoveAt(index);
+        ViewModel.ProductsListScanned_To_Recive.RemoveAt(index);
     }
 
     private async Task ShowDialogOfDeleteSell(InteractionContext<string, bool> interaction)
