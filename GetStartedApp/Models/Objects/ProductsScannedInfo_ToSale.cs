@@ -31,7 +31,6 @@ namespace GetStartedApp.Models.Objects
            // ProductsUnits = "1";
             PriceOfProductSold = productInfo.price.ToString();
      
-            whenTheStockValueIsChanged_CheckIfProductUnitsAreDistributedCorrectlyAcrossStocks();
 
         }
 
@@ -116,44 +115,44 @@ namespace GetStartedApp.Models.Objects
         }
 
       
-        protected override void whenTheStockValueIsChanged_CheckIfProductUnitsAreDistributedCorrectlyAcrossStocks()
-        {
-            // Observe changes in stock units and product units
-            this.WhenAnyValue(
-                x => x.ProductsUnitsToReduce_From_Stock1,
-                x => x.ProductsUnitsToReduce_From_Stock2,
-                x => x.ProductsUnitsToReduce_From_Stock3,
-                x => x.ProductsUnits)
-                .Subscribe(_ =>
-                {
-                    // Check if any of the properties are null, empty, or non-parsable
-                    if (!TryParseProductUnit(ProductsUnitsToReduce_From_Stock1) ||
-                        !TryParseProductUnit(ProductsUnitsToReduce_From_Stock2) ||
-                        !TryParseProductUnit(ProductsUnitsToReduce_From_Stock3) ||
-                        !TryParseProductUnit(ProductsUnits))
-                    {
-                        ProductStockHasErrors = true;
-                        DeleteAllUi_Erros_WhenUser_DosentSetValidNumber_ForAllThreeTypesOfStocks();
-                        return;
-                    }
-
-                    
-                    // Call the existing validation functions
-                    bool Stock_1_IsValid = Are_ProductsUnitsExceedTheOneInStock_1();
-                    bool Stock_2_IsValid = Are_ProductsUnitsExceedTheOneInStock_2();
-                    bool Stock_3_IsValid = Are_ProductsUnitsExceedTheOneInStock_3();
-
-
-
-                    NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock = !AreProductsUnitsSpreadAcrossAllStock_Correctly();
-
-                    // if the product is not for sale like in bon de reception or in bon de command we won't check the stock status
-                    if ( Stock_1_IsValid && Stock_2_IsValid && Stock_3_IsValid && !NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock) ProductStockHasErrors = false;
-
-                    else ProductStockHasErrors = true;
-
-                });
-        }
+       protected override void whenTheStockValueIsChanged_CheckIfProductUnitsAreDistributedCorrectlyAcrossStocks()
+       {
+           // Observe changes in stock units and product units
+           this.WhenAnyValue(
+               x => x.ProductsUnitsToReduce_From_Stock1,
+               x => x.ProductsUnitsToReduce_From_Stock2,
+               x => x.ProductsUnitsToReduce_From_Stock3,
+               x => x.ProductsUnits)
+               .Subscribe(_ =>
+               {
+                   // Check if any of the properties are null, empty, or non-parsable
+                   if (!TryParseProductUnit(ProductsUnitsToReduce_From_Stock1) ||
+                       !TryParseProductUnit(ProductsUnitsToReduce_From_Stock2) ||
+                       !TryParseProductUnit(ProductsUnitsToReduce_From_Stock3) ||
+                       !TryParseProductUnit(ProductsUnits))
+                   {
+                       ProductStockHasErrors = true;
+                       DeleteAllUi_Erros_WhenUser_DosentSetValidNumber_ForAllThreeTypesOfStocks();
+                       return;
+                   }
+    
+                   
+                   // Call the existing validation functions
+                   bool Stock_1_IsValid = Are_ProductsUnitsExceedTheOneInStock_1();
+                   bool Stock_2_IsValid = Are_ProductsUnitsExceedTheOneInStock_2();
+                   bool Stock_3_IsValid = Are_ProductsUnitsExceedTheOneInStock_3();
+    
+    
+    
+                   NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock = !AreProductsUnitsSpreadAcrossAllStock_Correctly();
+    
+                   // if the product is not for sale like in bon de reception or in bon de command we won't check the stock status
+                   if ( Stock_1_IsValid && Stock_2_IsValid && Stock_3_IsValid && !NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock) ProductStockHasErrors = false;
+    
+                   else ProductStockHasErrors = true;
+    
+               });
+       }
 
 
         // Helper method to try parsing a product unit

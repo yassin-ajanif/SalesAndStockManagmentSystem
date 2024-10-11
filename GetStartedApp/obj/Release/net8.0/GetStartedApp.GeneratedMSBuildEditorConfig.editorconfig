@@ -13,63 +13,93 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GetStartedApp
-build_property.ProjectDir = C:\Users\yassin\source\repos\FullSalesAndMangmentApp\GetStartedApp\
+build_property.ProjectDir = C:\Users\yassin\source\repos\FullSalesAndMangmentApp\SalesAndStockManagmentSystem\GetStartedApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/App.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/BarCodeGeneratorView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/AddNewChequeInfoView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/BLView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/BarCodeGeneratorView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/CategoryPages/AddNewCategoryView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/CategoryPages/AddNewCategoryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/CategoryProductsView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ClientsPages/AddNewClientView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/DashboardView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/CompanyInfosView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/FinancesView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/CustomControls/CustomAutoCompleteBox.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/LoginPageView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/BonLivraisonsView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/MainWindow.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/BonReceptionView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/MakeSaleView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/CategoryProductsView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/ReturnedProductsView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/ClientsListView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/SetMinimalStockQuanityToNotifyUserView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/DashboardView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DashboardPages/SoldProductsView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/DevisView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/DialogContainerView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/FinancesView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/LisenceKeyVerificationView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/LoginPageView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/ProductPages/AddProductView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/ProductPages/ProductsListView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/MakeSaleForCompaniesView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/ProductPages/ReturnProductView.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/MakeSaleView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/GetStartedApp/Views/ShowMessageBoxContainer.axaml]
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/ReturnedProductsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/SetMinimalStockQuanityToNotifyUserView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/SoldProductsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/SuppliersListView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DialogContainerView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/LisenceKeyVerificationView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ProductPages/AddProductView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ProductPages/ProductsListView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ProductPages/ReturnProductView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ShowMessageBoxContainer.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/SupplierPages/AddNewSupplierView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

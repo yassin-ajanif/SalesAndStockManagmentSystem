@@ -83,13 +83,15 @@ public class ViewModelBase : ReactiveObject ,INotifyDataErrorInfo
      {
            // Clear existing errors for the property
         
-
+   
            GetActuallAttributesErros_And_LoadThem(propertyName,errorMessage);
            propertyAttributeErrors.Add(errorMessage);
      
            OnErrorsChanged(propertyName);
         
     }
+
+
 
     protected void DeleteUiError(string propertyName, string errorMessage)
     {
@@ -110,6 +112,26 @@ public class ViewModelBase : ReactiveObject ,INotifyDataErrorInfo
         }
     
     }
+
+    protected void DeleteAllUiErrorsProperty(string propertyName)
+    {
+        // Load the actual attribute errors for the property
+        GetActuallAttributesErros_And_LoadThem(propertyName, null); // errorMessage not needed
+
+        // Check if the property has any errors
+        if (_errors.ContainsKey(propertyName))
+        {
+            // Remove all errors for the specified property
+            _errors[propertyName].Clear();
+
+            // Optionally remove the property from the dictionary if no errors are left
+            _errors.Remove(propertyName);
+
+            // Notify UI that the errors have changed
+            OnErrorsChanged(propertyName);
+        }
+    }
+
 
     /////////////////////////////////////
     /// <summary>

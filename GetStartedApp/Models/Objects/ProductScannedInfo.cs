@@ -162,9 +162,9 @@ namespace GetStartedApp.Models.Objects
         // then when he fixes that erros others erros are going to be shown
         public void DeleteAllUi_Erros_WhenUser_DosentSetValidNumber_ForAllThreeTypesOfStocks()
         {
-            DeleteUiError(nameof(ProductsUnitsToReduce_From_Stock1), string.Empty);
-            DeleteUiError(nameof(ProductsUnitsToReduce_From_Stock2), string.Empty);
-            DeleteUiError(nameof(ProductsUnitsToReduce_From_Stock3), string.Empty);
+            DeleteAllUiErrorsProperty(nameof(ProductsUnitsToReduce_From_Stock1));
+            DeleteAllUiErrorsProperty(nameof(ProductsUnitsToReduce_From_Stock2));
+            DeleteAllUiErrorsProperty(nameof(ProductsUnitsToReduce_From_Stock3));
             NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock = false;
         }
         public bool AreProductsUnitsSpreadAcrossAllStock_Correctly()
@@ -184,7 +184,8 @@ namespace GetStartedApp.Models.Objects
                 x => x.ProductsUnitsToReduce_From_Stock1,
                 x => x.ProductsUnitsToReduce_From_Stock2,
                 x => x.ProductsUnitsToReduce_From_Stock3,
-                x => x.ProductsUnits)
+                x => x.ProductsUnits
+                )
                 .Subscribe(_ =>
                 {
                     // Check if any of the properties are null, empty, or non-parsable

@@ -406,7 +406,8 @@
 													   HorizontalAlignment="Center"
 													   Grid.Column="1"
 													   Foreground="#0096FF"
-													   FontWeight="Bold">
+													   FontWeight="Bold"
+													   >
 												<ToolTip.Tip>سعر البيع</ToolTip.Tip>
 											</TextBlock>
 										</Grid>
@@ -444,7 +445,8 @@
 														 BorderBrush="#FFCCCCCC"
 														 MaxWidth="80"
 														 Foreground="{Binding SoldProductPriceUnitColor}"
-														 FontWeight="Bold">
+														 FontWeight="Bold"
+														 IsHitTestVisible="False">
 													<ToolTip.Tip>
 														<TextBlock Text="ثمن البيع" FontFamily="Roboto"/>
 													</ToolTip.Tip>

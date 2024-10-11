@@ -38,7 +38,6 @@ namespace GetStartedApp.Models.Objects
                 this.ThisProductIsExistingInDB = ThisProductIsExistingInDb;
                 this.bonReceptionViewModel = bonReceptionViewModel;
 
-                whenTheStockValueIsChanged_CheckIfProductUnitsAreDistributedCorrectlyAcrossStocks();
 
             }
 
