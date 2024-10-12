@@ -15,12 +15,32 @@ namespace GetStartedApp.Models.Objects
     public class ProductScannedInfo_ToRecieve : ProductScannedInfo
     {
 
-        private bool _thisProductIsExistingInDB;
+        private string _productBackgroundColor;
+        public string ProductBackgroundColor
+        {
+            get => _productBackgroundColor;
+            set => this.RaiseAndSetIfChanged(ref _productBackgroundColor, value);
+        }
 
+        private string _productStatusMessage;
+        public string ProductStatusMessage
+        {
+            get => _productStatusMessage;
+            set => this.RaiseAndSetIfChanged(ref _productStatusMessage, value);
+        }
+
+        private bool _thisProductIsExistingInDB;
         public bool ThisProductIsExistingInDB
         {
             get => _thisProductIsExistingInDB;
-            set => this.RaiseAndSetIfChanged(ref _thisProductIsExistingInDB, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _thisProductIsExistingInDB, value);
+
+                // Update background color based on whether the product exists in DB
+                ProductBackgroundColor = _thisProductIsExistingInDB ? "Gray" : "Red";
+                ProductStatusMessage = _thisProductIsExistingInDB ? "منتج قديم" : "منتج جديد";
+            }
         }
 
         public ReactiveCommand<Unit, Unit> EditNewProductToReceiveInfoCommand { get; }
@@ -49,9 +69,9 @@ namespace GetStartedApp.Models.Objects
         private async void OpenTheNewProductAdded_In_AddOrEditProductView_To_EditItsInfo()
         {
 
-            bool ThereIsNoCategoriesAddedYetToSystem = getProductListCategoriesFromDb().Count == 0;
+            bool isThisProductAlreadyExistingInDb = AccessToClassLibraryBackendProject.IsThisProductIdAlreadyExist(ProductInfo.id);
 
-            var viewModelToBindWidthAddProductView = new AddProductViewModel(this, bonReceptionViewModel);
+            var viewModelToBindWidthAddProductView = new AddProductViewModel(this, bonReceptionViewModel, isThisProductAlreadyExistingInDb);
 
             await bonReceptionViewModel.ShowAddProductDialog.Handle(viewModelToBindWidthAddProductView);
 

@@ -341,21 +341,20 @@
 										</Grid.ColumnDefinitions>
 
 										<!-- New Product Label (New Row: 0) -->
-										<Grid Grid.Row="0" Background="Red"
-											  IsVisible="{Binding !ThisProductIsExistingInDB}">
-											
-										<Button Content="منتج جديد"
-											FontWeight="Bold"
-											FontSize="12"
-											Foreground="White"
-											HorizontalAlignment="Center"
-											Padding="5"
-											Background="Transparent"
-											Command="{Binding EditNewProductToReceiveInfoCommand}"
-											/>
-											
+										<Grid Grid.Row="0" 
+											  Background="{Binding ProductBackgroundColor}">
+											<Button Content="{Binding ProductStatusMessage}"
+													FontWeight="Bold"
+													FontSize="12"
+													Foreground="White"
+													HorizontalAlignment="Center"
+													Padding="5"
+													Background="Transparent"
+													Command="{Binding EditNewProductToReceiveInfoCommand}" />
+
 										</Grid>
-												  
+
+
 
 										<!-- Image -->
 										<Grid Grid.Row="1" Margin="0 0 0 5"

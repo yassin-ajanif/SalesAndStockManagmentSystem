@@ -59,9 +59,8 @@ public class ViewModelBase : ReactiveObject ,INotifyDataErrorInfo
 
     public IEnumerable GetErrors(string propertyName)
   {
-      
-      
-        if (string.IsNullOrEmpty(propertyName) || !_errors.ContainsKey(propertyName))
+       
+      if (string.IsNullOrEmpty(propertyName) || !_errors.ContainsKey(propertyName))
       {
           return null;
       }

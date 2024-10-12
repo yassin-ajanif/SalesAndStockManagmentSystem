@@ -72,7 +72,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
         protected virtual ProductScannedInfo_ToRecieve Add_UnitsOfSoldProduct_And_SoldProductPrice(string BarcodeNumberScanned)
         {
             ProductInfo ProductFound = RetrieveProductFromDatabaseByBarCodeId(BarcodeNumberScanned);
-
             // productscannedinfo is a lcass that contans a product retrived from daabase in addtion to the price and units info a user or buyter will submit
             ProductScannedInfo_ToRecieve ProductFound_Plus_PriceAndUnitsOfSoldProduct = new ProductScannedInfo_ToRecieve(ProductFound,this);
 

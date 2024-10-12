@@ -29,6 +29,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 {
     public class AddProductViewModel : ViewModelBase
     {
+       
         public Func<Task<string>> PickProductImageFunc { get; set; }
 
         public Interaction<string, Unit> ShowMessageBoxDialog { get; set; }
@@ -56,6 +57,7 @@ namespace GetStartedApp.ViewModels.ProductPages
             set { this.RaiseAndSetIfChanged(ref _Productcategories, value); }
         }
 
+       
         
         private long _ProductID;
        
@@ -69,11 +71,10 @@ namespace GetStartedApp.ViewModels.ProductPages
             set
             {
 
-                this.RaiseAndSetIfChanged(ref _EntredProductID, value);
+                 this.RaiseAndSetIfChanged(ref _EntredProductID, value);
 
                 
                 DataEntryPropertyLoader.ConvertStringToIntAndLoadPrivateProperty(value, ref _ProductID);
-
 
             }
         }
@@ -325,7 +326,7 @@ namespace GetStartedApp.ViewModels.ProductPages
             this.ProductsListViewModel = productsListViewModel;
         }
 
-        // Constructor that add product
+        // Constructor that add new product
         public AddProductViewModel(BonReceptionViewModel bonReceptionViewModel)
         {         
             // Make the object global to this class
@@ -338,10 +339,10 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         // Constructor that edit product
 
-        public AddProductViewModel(ProductScannedInfo_ToRecieve productScannedInfo_ToRecieve, BonReceptionViewModel bonReceptionViewModel)
+        public AddProductViewModel(ProductScannedInfo_ToRecieve productScannedInfo_ToRecieve, BonReceptionViewModel bonReceptionViewModel, bool IsthisProductExistInDb=false)
         {
             
-            this.BonReceptionViewModel = bonReceptionViewModel;
+            BonReceptionViewModel = bonReceptionViewModel;
 
             // load all info of product added to edit at the form
             EntredProductID = productScannedInfo_ToRecieve.ProductInfo.id.ToString();
@@ -360,10 +361,11 @@ namespace GetStartedApp.ViewModels.ProductPages
             _currentProductName = EntredProductName;
 
             // Call the shared initialization method
-            Initialize_For_ProductScanned_ToRecive_EditProductMode();
+            Initialize_For_ProductScanned_ToRecive_EditProductMode(IsthisProductExistInDb);
 
 
         }
+
 
         // Shared initialization logic
         private void Initialize()
@@ -429,14 +431,20 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             EnableAllInputsExceptID();
         }
+
+        private void Set_TheRight_AddOrEditOrDeleteProductCommand_Based_If_The_Product_ExistInDb_Or_Its_New(bool isThisProduct_To_Edit_ExistInDb)
+        {
+            if(isThisProduct_To_Edit_ExistInDb) AddOrEditOrDeleteProductCommand = ReactiveCommand.Create(EditedProductAddedToBonReceptionList, CheckIfFormIsFilledCorreclty_WhenWeEdit_TheExistingProductInDb_Added());
+
+            else AddOrEditOrDeleteProductCommand = ReactiveCommand.Create(EditedProductAddedToBonReceptionList, CheckIfFormIsFilledCorreclty_WhenWeEdit_TheNewProductAdded());
+        }
         // this function dosent get new product id from datbase because the info of proudcts are exsitng to  be edited
-        private void Initialize_For_ProductScanned_ToRecive_EditProductMode()
+        private void Initialize_For_ProductScanned_ToRecive_EditProductMode(bool isThisProduct_To_Edit_ExistInDb)
         {
 
-            // I added this modification to make a generation of product id automatically not 
-            // manually as it was but with the ability to go back to the manual mode later 
-            // if I wanted
-            IsProductIdReadOnly = true;
+
+            if (isThisProduct_To_Edit_ExistInDb) EnableAllInputsExceptID_ProductName();
+            else EnableAllInputs();
 
             DisplayNoImage();
 
@@ -446,7 +454,8 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             PickImageCommand = ReactiveCommand.CreateFromTask(PickImageProduct);
             DeleteImageCommand = ReactiveCommand.CreateFromTask(DisplayNoImage);
-            AddOrEditOrDeleteProductCommand = ReactiveCommand.Create(EditedProductAddedToBonReceptionList, CheckIfFormIsFilledCorreclty_WhenWeEdit_TheNewProductAdded());
+
+            Set_TheRight_AddOrEditOrDeleteProductCommand_Based_If_The_Product_ExistInDb_Or_Its_New(isThisProduct_To_Edit_ExistInDb);
 
             // This is an initialization of command that is going to open a message box 
             // when adding productOperation is submitted
@@ -454,7 +463,7 @@ namespace GetStartedApp.ViewModels.ProductPages
             ShowMessageBoxDialog_For_BarCodePrintingPersmission = new Interaction<string, bool>();
             ShowBarCodePrinterPage = new Interaction<Unit, Unit>();
 
-            EnableAllInputsExceptID();
+           
         }
 
         private void getProductID_Automatically(ObservableCollection<ProductScannedInfo_ToRecieve> ProductsListScanned_To_Recive)
@@ -522,6 +531,18 @@ namespace GetStartedApp.ViewModels.ProductPages
            
 
         }
+       
+        private void EnableAllInputsExceptID_ProductName()
+        {
+            EnableAllInputsExceptID();
+            IsProductNameReadOnly = false;
+        }
+
+        private void EnableAllInputs()
+        {
+            EnableAllInputsExceptID();
+            IsProductIdReadOnly = false;
+        }
         protected void DisplayTheBenefitFromPriceAndCost()
         {
 
@@ -574,6 +595,25 @@ namespace GetStartedApp.ViewModels.ProductPages
                 (this, nameof(EntredProductID), 
                 nameof(EnteredProductDescription),
                 nameof(EntredProductName), 
+                nameof(EnteredPrice),
+                nameof(EntredCost),
+                nameof(CalculatedBenefit),
+                nameof(EntredStockQuantity),
+                nameof(EntredStockQuantity2),
+                nameof(EntredStockQuantity3));
+        }
+
+        private bool AreAllPropertiesAttributeValid_ExcludeProductID_And_ProductName()
+        {
+            // this function checks the attribute of each property bound to ui
+            // if one property rasing an error uiAttribueckher will return false which will block the button add product command
+            // for exampe EntredProductID has a property PositiveRange so it checks if the property is valid 
+            // the same thing applies to all property names we pass
+            DeleteAllUiErrorsProperty(nameof(EntredProductID));
+            DeleteAllUiErrorsProperty(nameof(EntredProductName));
+            return UiAttributeChecker.AreThesesAttributesPropertiesValid
+                (this,
+                nameof(EnteredProductDescription),
                 nameof(EnteredPrice),
                 nameof(EntredCost),
                 nameof(CalculatedBenefit),
@@ -804,6 +844,48 @@ namespace GetStartedApp.ViewModels.ProductPages
                     !string.IsNullOrEmpty(EntredStockQuantity2) && !string.IsNullOrWhiteSpace(EntredStockQuantity2) &&
                     !string.IsNullOrEmpty(EntredStockQuantity3) && !string.IsNullOrWhiteSpace(EntredStockQuantity3) &&
                     AreAllPropertiesAttributeValid()
+
+            );
+
+            // Combine the two observables using CombineLatest
+            return canAddProduct1.CombineLatest(canAddProduct2, (isValid1, isValid2) => isValid1 && isValid2);
+        }
+
+        // in this cde we excluded the check of productName and productid from attribute checker so the productid and product name is existing indb not raise 
+        // because in this case we're going to disable the productid and productname cases
+        private IObservable<bool> CheckIfFormIsFilledCorreclty_WhenWeEdit_TheExistingProductInDb_Added()
+        {
+            var canAddProduct1 = this.WhenAnyValue(
+                      x => x.EntredProductID,
+                      x => x.EntredProductName,
+                      x => x.EnteredProductDescription,
+                      x => x.EnteredPrice,
+                      x => x.EntredCost,
+                      x => x.CalculatedBenefit,
+                      x => x.EntredStockQuantity,
+                      x => x.SelectedCategory,
+                      (EntredProductID, EntredProductName, EnteredProductDescription, EnteredPrice, EntredCost, CalculatedBenefit, EntredStockQuantity, SelectedCategory) =>
+                          !string.IsNullOrEmpty(EntredProductID) && !string.IsNullOrWhiteSpace(EntredProductID) &&
+                          !Is_UiError_Raised_If_TheProduct_ID_Is_AlreadyExistInBonReceptionList_WhenEditing() &&
+                          !string.IsNullOrEmpty(EntredProductName) && !string.IsNullOrWhiteSpace(EntredProductName) &&
+                          !Is_UiError_Raised_If_TheProduct_Name_Is_AlreadyExistInBonReceptionList_WhenEditing() &&
+                          !string.IsNullOrEmpty(EnteredPrice) && !string.IsNullOrWhiteSpace(EnteredPrice) &&
+                          !string.IsNullOrEmpty(CalculatedBenefit) && !string.IsNullOrWhiteSpace(CalculatedBenefit) &&
+                          !string.IsNullOrEmpty(EntredStockQuantity) && !string.IsNullOrWhiteSpace(EntredStockQuantity) &&
+                          EnteredProductDescription != null &&
+                          !string.IsNullOrEmpty(EntredCost) &&
+                          !string.IsNullOrWhiteSpace(EntredCost) &&
+                          !string.IsNullOrEmpty(SelectedCategory) && !string.IsNullOrWhiteSpace(SelectedCategory)                         
+                          &&AreAllPropertiesAttributeValid_ExcludeProductID_And_ProductName()
+                      );
+
+            var canAddProduct2 = this.WhenAnyValue(
+                x => x.EntredStockQuantity2,
+                x => x.EntredStockQuantity3,
+                (EntredStockQuantity2, EntredStockQuantity3) =>
+                    !string.IsNullOrEmpty(EntredStockQuantity2) && !string.IsNullOrWhiteSpace(EntredStockQuantity2) &&
+                    !string.IsNullOrEmpty(EntredStockQuantity3) && !string.IsNullOrWhiteSpace(EntredStockQuantity3)
+                    && AreAllPropertiesAttributeValid_ExcludeProductID_And_ProductName()
 
             );
 
