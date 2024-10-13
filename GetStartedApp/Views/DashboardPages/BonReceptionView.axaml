@@ -201,7 +201,7 @@
 								FontWeight="Bold"
 								Padding="5 8 5 8"
 								Background="#EE4B2B"
-								Command="{Binding SaveSellingOperationCommand}"
+								Command="{Binding SaveRecieveOperationCommand}"
 								FontSize="14">
 								تسجيل الاستلام 
 							</Button>

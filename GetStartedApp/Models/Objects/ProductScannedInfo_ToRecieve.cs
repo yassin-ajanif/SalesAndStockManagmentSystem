@@ -32,6 +32,7 @@ namespace GetStartedApp.Models.Objects
         private bool _thisProductIsExistingInDB;
         public bool ThisProductIsExistingInDB
         {
+
             get => _thisProductIsExistingInDB;
             set
             {
@@ -39,7 +40,7 @@ namespace GetStartedApp.Models.Objects
 
                 // Update background color based on whether the product exists in DB
                 ProductBackgroundColor = _thisProductIsExistingInDB ? "Gray" : "Red";
-                ProductStatusMessage = _thisProductIsExistingInDB ? "منتج قديم" : "منتج جديد";
+                ProductStatusMessage = _thisProductIsExistingInDB ? "تعديل منتج موجود" : "تعديل منتج جديد";
             }
         }
 
@@ -58,7 +59,6 @@ namespace GetStartedApp.Models.Objects
                 this.ThisProductIsExistingInDB = ThisProductIsExistingInDb;
                 this.bonReceptionViewModel = bonReceptionViewModel;
 
-
             }
 
 
@@ -66,16 +66,31 @@ namespace GetStartedApp.Models.Objects
         {
             return AccessToClassLibraryBackendProject.GetProductsCategoryFromDatabase();
         }
+
         private async void OpenTheNewProductAdded_In_AddOrEditProductView_To_EditItsInfo()
         {
+            // Check if the product ID already exists in the database
+            bool isProductExistingInDb = AccessToClassLibraryBackendProject.IsThisProductIdAlreadyExist(ProductInfo.id);
 
-            bool isThisProductAlreadyExistingInDb = AccessToClassLibraryBackendProject.IsThisProductIdAlreadyExist(ProductInfo.id);
+            // Declare specific view model type based on condition
+            if (isProductExistingInDb)
+            {
+                var viewModelToBindWithAddProductView = new EditProductExistBeforeInDb_AtReceptionList_ViewModel(this, bonReceptionViewModel);
 
-            var viewModelToBindWidthAddProductView = new AddProductViewModel(this, bonReceptionViewModel, isThisProductAlreadyExistingInDb);
+                // Open the dialog to edit the existing product
+                await bonReceptionViewModel.ShowAddProductDialog.Handle(viewModelToBindWithAddProductView);
+            }
+            else
+            {
+                var viewModelToBindWithAddProductView = new EditNewProductAdded_AtReceptionList_ViewModel(this, bonReceptionViewModel);
 
-            await bonReceptionViewModel.ShowAddProductDialog.Handle(viewModelToBindWidthAddProductView);
-
+                // Open the dialog to add a new product
+                await bonReceptionViewModel.ShowAddProductDialog.Handle(viewModelToBindWithAddProductView);
+            }
         }
+
+
+
         // the number of prudct untis must be equal to the sum of number porducts in shop in addtion to stock 1 and stock 2
         private bool Is_TheNumberOfProductsUnits_Equal_To_SumOfAllStocks()
             {

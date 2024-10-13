@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Reactive;
 using GetStartedApp.ViewModels.ProductPages;
 using System.Windows.Input;
-
+using GetStartedApp.Helpers;
 using System.Reactive.Linq;
 using GetStartedApp.Models.Objects;
 using System.Collections.ObjectModel;
-
 using System.Linq;
+using System.Data;
+using System.Diagnostics;
+
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {
@@ -28,8 +30,9 @@ namespace GetStartedApp.ViewModels.DashboardPages
             private set => this.RaiseAndSetIfChanged(ref _productsListScanned_To_Recive, value);
         }
 
-        public ICommand AddNewProductCommand { get; set; }
+        public ReactiveCommand<Unit, Unit> AddNewProductCommand { get; set; }
 
+        public ReactiveCommand<Unit, Unit> SaveRecieveOperationCommand { get; }
         public Interaction<AddProductViewModel, Unit> ShowAddProductDialog { get; }
 
         public BonReceptionViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
@@ -37,10 +40,100 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // addProductViewModel = new ProductsListViewModel(mainWindowViewModel);
             AddNewProductCommand = ReactiveCommand.Create(AddProductInfoOperation);
             ShowAddProductDialog = new Interaction<AddProductViewModel, Unit>();
+            SaveRecieveOperationCommand =  ReactiveCommand.Create(AddListOfProductRecivedToDatabase);
             ProductsListScanned_To_Recive = new ObservableCollection<ProductScannedInfo_ToRecieve>();
             SuppliersList = getSuppliers();
         }
 
+        private DataTable CreateTableOfProductInfoRecived_To_Send_To_Database()
+        {
+            DataTable productTable = new DataTable("Products");
+
+            // Define columns based on the object properties
+            productTable.Columns.Add("Id", typeof(long));
+            productTable.Columns.Add("Name", typeof(string));
+            productTable.Columns.Add("Description", typeof(string));
+            productTable.Columns.Add("StockQuantity", typeof(int));
+            productTable.Columns.Add("StockQuantity2", typeof(int));
+            productTable.Columns.Add("StockQuantity3", typeof(int));
+            productTable.Columns.Add("Price", typeof(float));
+            productTable.Columns.Add("Cost", typeof(float));
+            productTable.Columns.Add("Profit", typeof(float));
+            productTable.Columns.Add("SelectedCategory", typeof(string));
+            productTable.Columns.Add("SelectedProductImage", typeof(byte[]));
+            productTable.Columns.Add("ProductsUnits", typeof(string));
+            productTable.Columns.Add("ProductsUnitsToAddToStock1", typeof(string));
+            productTable.Columns.Add("ProductsUnitsToAddToStock2", typeof(string));
+            productTable.Columns.Add("ProductsUnitsToAddToStock3", typeof(string));
+            productTable.Columns.Add("ThisProductIsExistingInDB", typeof(bool));
+
+            return productTable;
+        }
+
+        void LoadListOfProductsRecived_To_Table()
+        {
+            DataTable productTable = CreateTableOfProductInfoRecived_To_Send_To_Database();
+
+            foreach (var product in ProductsListScanned_To_Recive)
+            {
+                // Create a new row for the DataTable
+                DataRow row = productTable.NewRow();
+
+                // Assign values to the row
+                row["Id"] = product.ProductInfo.id;
+                row["Name"] = product.ProductInfo.name;
+                row["Description"] = product.ProductInfo.description;
+                row["StockQuantity"] = product.ProductInfo.StockQuantity;
+                row["StockQuantity2"] = product.ProductInfo.StockQuantity2;
+                row["StockQuantity3"] = product.ProductInfo.StockQuantity3;
+                row["Price"] = product.ProductInfo.price;
+                row["Cost"] = product.ProductInfo.cost;
+                row["Profit"] = product.ProductInfo.profit;
+                row["SelectedCategory"] = product.ProductInfo.selectedCategory;
+                row["SelectedProductImage"] = ImageConverter.BitmapToByteArray(product.ProductInfo.SelectedProductImage);
+                // the naming are not matching becuase the productsunit to reduce from stock belong to anohter class that actually reduces the stock which is make sale
+                // i didn't have the time to create another properties with corrected description so for this reason i decided 
+                row["ProductsUnitsToAddToStock1"] = product.ProductsUnitsToReduce_From_Stock1;
+                row["ProductsUnitsToAddToStock2"] = product.ProductsUnitsToReduce_From_Stock2;
+                row["ProductsUnitsToAddToStock3"] = product.ProductsUnitsToReduce_From_Stock3;
+                row["ThisProductIsExistingInDB"] = product.ThisProductIsExistingInDB;
+
+                // Add the row to the DataTable
+                productTable.Rows.Add(row);
+            }
+
+            DisplayDataTable(productTable);
+
+            // Optional: You can return the DataTable or do something with it
+        }
+
+        private void DisplayDataTable(DataTable table)
+        {
+            // Ensure the table is not null
+            if (table == null)
+            {
+                Debug.WriteLine("DataTable is null.");
+                return;
+            }
+
+            // Display table name
+            Debug.WriteLine($"Table: {table.TableName}");
+
+            // Display each row with formatted output
+            foreach (DataRow row in table.Rows)
+            {
+                foreach (DataColumn column in table.Columns)
+                {
+                    Debug.Write($"{column.ColumnName} => {row[column]}\t");
+                }
+                Debug.WriteLine(""); // New line after each row
+            }
+        }
+
+        private void AddListOfProductRecivedToDatabase()
+        {
+            LoadListOfProductsRecived_To_Table();
+        }
         private List<string> getSuppliers()
         {
            return AccessToClassLibraryBackendProject.GetSupplierNamePhoneNumberCombo();

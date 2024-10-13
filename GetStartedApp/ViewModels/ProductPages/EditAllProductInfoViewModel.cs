@@ -56,7 +56,8 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         }
 
-      
+    
+
         private bool IsTheOriginalImageDifferentFromCurrent(Bitmap Image1 , Bitmap Image2) {
 
             //if(Image1==null || Image2==null) return false;
