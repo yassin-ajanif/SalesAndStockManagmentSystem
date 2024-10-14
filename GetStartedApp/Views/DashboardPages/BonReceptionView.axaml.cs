@@ -31,12 +31,14 @@ public partial class BonReceptionView : ReactiveUserControl<BonReceptionViewMode
         this.WhenActivated(action =>
         {
             action(ViewModel!.ShowAddProductDialog.RegisterHandler(ShowDialogOfAddProductInfo));
-   
+            action(ViewModel!.ShowAddSaleDialogInteraction.RegisterHandler(ShowDialogOfAddSell));
+            action(ViewModel!.ShowDeleteSaleDialogInteraction.RegisterHandler(ShowDialogOfDeleteSell));
+            
         });
 
 
     }
-
+    
     private async void ShowAddProductViewBoundToViewmodel_(ViewModelBase ViewmodelToBind)
     {
         var dialog = new DialogContainerView();

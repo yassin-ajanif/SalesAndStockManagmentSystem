@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Data;
 using System.Diagnostics;
+using GetStartedApp.Views;
 
 
 namespace GetStartedApp.ViewModels.DashboardPages
@@ -33,6 +34,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ReactiveCommand<Unit, Unit> AddNewProductCommand { get; set; }
 
         public ReactiveCommand<Unit, Unit> SaveRecieveOperationCommand { get; }
+        public ReactiveCommand<Unit, Unit> DeleteAllProductScannedCommand { get; }
         public Interaction<AddProductViewModel, Unit> ShowAddProductDialog { get; }
 
         public BonReceptionViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
@@ -41,6 +43,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             AddNewProductCommand = ReactiveCommand.Create(AddProductInfoOperation);
             ShowAddProductDialog = new Interaction<AddProductViewModel, Unit>();
             SaveRecieveOperationCommand =  ReactiveCommand.Create(AddListOfProductRecivedToDatabase);
+            DeleteAllProductScannedCommand = ReactiveCommand.Create(DeleteAllProductAddedToReceptionList);
             ProductsListScanned_To_Recive = new ObservableCollection<ProductScannedInfo_ToRecieve>();
             SuppliersList = getSuppliers();
         }
@@ -56,21 +59,20 @@ namespace GetStartedApp.ViewModels.DashboardPages
             productTable.Columns.Add("StockQuantity", typeof(int));
             productTable.Columns.Add("StockQuantity2", typeof(int));
             productTable.Columns.Add("StockQuantity3", typeof(int));
-            productTable.Columns.Add("Price", typeof(float));
-            productTable.Columns.Add("Cost", typeof(float));
-            productTable.Columns.Add("Profit", typeof(float));
+            productTable.Columns.Add("Price", typeof(decimal));
+            productTable.Columns.Add("Cost", typeof(decimal));
+            productTable.Columns.Add("Profit", typeof(decimal));
             productTable.Columns.Add("SelectedCategory", typeof(string));
             productTable.Columns.Add("SelectedProductImage", typeof(byte[]));
-            productTable.Columns.Add("ProductsUnits", typeof(string));
-            productTable.Columns.Add("ProductsUnitsToAddToStock1", typeof(string));
-            productTable.Columns.Add("ProductsUnitsToAddToStock2", typeof(string));
-            productTable.Columns.Add("ProductsUnitsToAddToStock3", typeof(string));
+            productTable.Columns.Add("ProductsUnitsToAddToStock1", typeof(int));
+            productTable.Columns.Add("ProductsUnitsToAddToStock2", typeof(int));
+            productTable.Columns.Add("ProductsUnitsToAddToStock3", typeof(int));
             productTable.Columns.Add("ThisProductIsExistingInDB", typeof(bool));
 
             return productTable;
         }
 
-        void LoadListOfProductsRecived_To_Table()
+       private DataTable LoadListOfProductsRecived_To_Table()
         {
             DataTable productTable = CreateTableOfProductInfoRecived_To_Send_To_Database();
 
@@ -102,37 +104,32 @@ namespace GetStartedApp.ViewModels.DashboardPages
                 productTable.Rows.Add(row);
             }
 
-            DisplayDataTable(productTable);
-
-            // Optional: You can return the DataTable or do something with it
+            return productTable;
         }
 
-        private void DisplayDataTable(DataTable table)
+        protected void ClearAllReceptionListItems()
         {
-            // Ensure the table is not null
-            if (table == null)
-            {
-                Debug.WriteLine("DataTable is null.");
-                return;
-            }
-
-            // Display table name
-            Debug.WriteLine($"Table: {table.TableName}");
-
-            // Display each row with formatted output
-            foreach (DataRow row in table.Rows)
-            {
-                foreach (DataColumn column in table.Columns)
-                {
-                    Debug.Write($"{column.ColumnName} => {row[column]}\t");
-                }
-                Debug.WriteLine(""); // New line after each row
-            }
+            ProductsListScanned_To_Recive.Clear();
         }
 
-        private void AddListOfProductRecivedToDatabase()
+        private async void DeleteAllProductAddedToReceptionList()
         {
-            LoadListOfProductsRecived_To_Table();
+            bool UserHasClickedYesToDeleteSaleOperationBtn = await ShowDeleteSaleDialogInteraction.Handle("هل تريد حقا حذف جميع المنتوجات");
+
+            if (UserHasClickedYesToDeleteSaleOperationBtn) ClearAllReceptionListItems();
+        }
+        private async void AddListOfProductRecivedToDatabase()
+        {
+            DataTable productToAddOrUpdateTable = LoadListOfProductsRecived_To_Table();
+
+            if (AccessToClassLibraryBackendProject.AddOrUpdateProducts(productToAddOrUpdateTable))
+            {
+                await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
+
+                ClearAllReceptionListItems();
+            }
+         
+            else await ShowAddSaleDialogInteraction.Handle("لقد حصل خطأ ما");
         }
         private List<string> getSuppliers()
         {

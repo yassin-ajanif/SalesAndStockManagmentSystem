@@ -239,5 +239,61 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return ClsDataAccessLayer.GetProductIDFromProductName(productName);
         }
 
+        public static bool AddOrUpdateProducts(DataTable productTable)
+        {
+            // Validate the DataTable before proceeding
+            if (productTable == null || productTable.Rows.Count == 0)
+            {
+                Console.WriteLine("Error: The product table is null or empty.");
+                return false;
+            }
+
+            foreach (DataRow row in productTable.Rows)
+            {
+                // Perform validation for each row
+                if (row["Name"] == DBNull.Value || string.IsNullOrWhiteSpace(row["Name"].ToString()))
+                {
+                    Console.WriteLine("Error: Product Name is required.");
+                    return false;
+                }
+
+                if (row["Price"] == DBNull.Value || Convert.ToDecimal(row["Price"]) < 0)
+                {
+                    Console.WriteLine("Error: Product Price must be a non-negative value.");
+                    return false;
+                }
+
+                if (row["StockQuantity"] == DBNull.Value || Convert.ToInt32(row["StockQuantity"]) < 0)
+                {
+                    Console.WriteLine("Error: Stock Quantity must be a non-negative value.");
+                    return false;
+                }
+
+                // Additional validations for other columns can be added as needed
+                // For example, if SelectedCategory should be an integer, you might want to validate it as well
+                if (row["SelectedCategory"] == DBNull.Value || string.IsNullOrWhiteSpace(row["SelectedCategory"].ToString()))
+                {
+                    Console.WriteLine("Error: Selected Category is required.");
+                    return false;
+                }
+            }
+
+            // Call the data layer function if all validations pass
+            bool result = ClsDataAccessLayer.AddOrUpdateProducts(productTable);
+
+            if (result)
+            {
+                Console.WriteLine("Products added/updated successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Failed to add/update products.");
+            }
+
+            return result;
+        }
     }
+
+
 }
+

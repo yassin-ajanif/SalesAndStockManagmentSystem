@@ -2112,8 +2112,36 @@ public class ClsDataAccessLayer
     }
 
 
+    public static bool AddOrUpdateProducts(DataTable productTable)
+    {
+        try
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("AddOrUpdateProduct", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
 
+                    // Define the TVP parameter
+                    SqlParameter tvpParam = command.Parameters.AddWithValue("@ProductTable", productTable);
+                    tvpParam.SqlDbType = SqlDbType.Structured;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+            return true; // Return true if the operation was successful
+        }
+        catch (Exception ex)
+        {
+            // Log the exception as needed
+            Console.WriteLine($"An error occurred: {ex.Message}");
+            return false; // Return false if there was an error
+        }
+    }
 }
+
+
 
 
 

@@ -218,7 +218,7 @@
 						Foreground="White"
 						FontWeight="Bold"
 						Background="#EE4B2B"
-						Command="{Binding MakeNewSellingOperationCommand}">
+						Command="{Binding DeleteAllProductScannedCommand}">
 							<TextBlock
 								Text=" انشاء عملية استلام جديدة "
 								TextWrapping="Wrap"     />

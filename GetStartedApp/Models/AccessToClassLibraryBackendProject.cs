@@ -950,6 +950,10 @@ namespace GetStartedApp.Models
             }
         }
 
+       public static bool AddOrUpdateProducts(DataTable productsTable_To_Add_Or_Update)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.AddOrUpdateProducts(productsTable_To_Add_Or_Update);
+        }
 
     }
 }
