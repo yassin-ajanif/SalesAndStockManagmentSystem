@@ -136,6 +136,16 @@ public class MainWindowViewModel : ViewModelBase
         CurrentPage = PageToGoAfterCheckingLicenseKey;
     }
 
+    public void GoToProductsBoughtsPage()
+    {
+      
+        CurrentPage = new ProductsBoughtsViewModel(this);
+        navigationHistory.Push(CurrentPage);
+        HideheaderAndShowBtnBack();
+    }
+
+    
+
     public void GoToSuppliersPage()
     {
         CurrentPage = new SuppliersListViewModel(this);

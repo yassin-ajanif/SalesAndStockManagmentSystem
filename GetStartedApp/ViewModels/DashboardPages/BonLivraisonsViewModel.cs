@@ -122,7 +122,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
  
-        private IObservable<bool> CheckIfUserDidintMakeSearchMistake()
+        protected virtual IObservable<bool> CheckIfUserDidintMakeSearchMistake()
         {
             var canAddProduct1 = this.WhenAnyValue(
                 x => x.SaleID,

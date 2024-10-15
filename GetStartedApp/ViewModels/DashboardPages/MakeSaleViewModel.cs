@@ -274,7 +274,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
 
-        private void LoadPaymentMethods_InArabic_And_SetDefault_PaymentMode()
+        public void LoadPaymentMethods_InArabic_And_SetDefault_PaymentMode()
         {
             PaymentsMethods = TranslatePaymentMethodsListToArabic(AccessToClassLibraryBackendProject.GetPaymentTypes(),"ar");
 

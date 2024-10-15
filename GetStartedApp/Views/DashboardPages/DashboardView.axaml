@@ -195,7 +195,7 @@
 										Command="{Binding GoToBonLivraisonsPageCommand}">
 									<StackPanel Classes="BtnContainer">
 										<Image Source="avares://GetStartedApp/Assets/Icons/BonLivraisons.png" />	
-										<Label Content="وصلات الاستلام" Classes="WelecomeBtnsStyles" FontSize="15"/>
+										<Label Content="قائمة المبيعات" Classes="WelecomeBtnsStyles" FontSize="15"/>
 										
 									</StackPanel>
 								</Button>
@@ -207,6 +207,17 @@
 								<StackPanel Classes="BtnContainer">
 									<Image Source="avares://GetStartedApp/Assets/Icons/BonReception.png" />
 									<Label Content="استلام السلع" Classes="WelecomeBtnsStyles" FontSize="15"/>
+
+								</StackPanel>
+							</Button>
+						</Border>
+
+						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="3" Grid.Column="2">
+							<Button Classes="WelcomeBtnsStyles"
+									Command="{Binding GoToProductsBoughtsPageCommand}">
+								<StackPanel Classes="BtnContainer">
+									<Image Source="avares://GetStartedApp/Assets/Icons/Purchases.png" />
+									<Label Content="مشتريات" Classes="WelecomeBtnsStyles" FontSize="16"/>
 
 								</StackPanel>
 							</Button>

@@ -101,6 +101,7 @@
     <Compile Include="ClsBackup.cs" />
     <Compile Include="ClsBonLivraisonGenerator.cs" />
     <Compile Include="clsBonLivraisons.cs" />
+    <Compile Include="clsBonReception.cs" />
     <Compile Include="ClsClients.cs" />
     <Compile Include="ClsCompanies.cs" />
     <Compile Include="ClsDevisGenerator.cs" />

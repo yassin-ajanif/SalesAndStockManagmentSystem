@@ -62,6 +62,7 @@
     <Compile Include="clsDataBonLivraisonsLayer.cs" />
     <Compile Include="ClsDataAccessLayer.cs" />
     <Compile Include="ClsDataInvoicesLayer.cs" />
+    <Compile Include="clsDataLayerBonReception.cs" />
     <Compile Include="clsDataLayerCompanies.cs" />
     <Compile Include="clsDataLayerPayments.cs" />
     <Compile Include="clsDataLayerSupplier.cs" />

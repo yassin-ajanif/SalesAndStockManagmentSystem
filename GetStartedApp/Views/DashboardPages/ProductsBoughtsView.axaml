@@ -1,0 +1,246 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GetStartedApp.Views.DashboardPages.ProductsBoughtsView"
+			 xmlns:CustomControls="clr-namespace:GetStartedApp.Views.CustomControls"
+			 xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+	         x:DataType="vm:ProductsBoughtsViewModel"
+	         FontFamily="Roboto"
+	         Background="{DynamicResource myBackgroundFaintBlueColor}"
+	         x:CompileBindings="True">
+
+
+
+	<Border Padding="9,10" Margin="20" MaxWidth="1024" Height="500"
+			   BoxShadow="0 1 20 5 Gainsboro"
+			   BorderBrush="Gainsboro">
+
+		<Grid>
+			<!-- Define Rows -->
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<!-- Row for Date Range Picker and Buttons -->
+				<RowDefinition Height="Auto" />
+				<!-- Row for other elements -->
+			</Grid.RowDefinitions>
+
+			<!-- First row: Date Range Picker and Filtering Buttons -->
+			<Border BoxShadow="0 1 20 5 Gainsboro"
+                    Margin="-10"
+                    Background="AliceBlue">
+
+				<Border BorderBrush="Gray" BorderThickness="0"
+                        BoxShadow="0 1 10 5 Transparent"
+                        Margin="5">
+
+					<StackPanel FlowDirection="RightToLeft">
+
+						<StackPanel Grid.Row="0">
+							<!-- Title -->
+							<Grid HorizontalAlignment="Center">
+								<TextBlock Text="المشتريات" FontSize="16" FontWeight="Bold"
+										   Margin="10,8,10,0" Foreground="DarkSlateBlue"/>
+							</Grid>
+
+							<!-- Date Range Picker -->
+							<StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+								<TextBlock Text="اختر نطاق التاريخ : " FontSize="16" FontWeight="Bold"
+										   Margin="10,8,10,0" Foreground="DarkSlateBlue"/>
+								<StackPanel Orientation="Horizontal" Margin="0" Spacing="10"
+											FlowDirection="RightToLeft">
+									<DatePicker Name="startDatePicker" FlowDirection="LeftToRight"
+												Foreground="DarkSlateBlue" SelectedDate="{Binding StartDate}"/>
+									<TextBlock Text="إلى" Foreground="DarkSlateBlue" Margin="0 10 1 10"
+											   FontSize="16" HorizontalAlignment="Left"/>
+									<DatePicker Name="endDatePicker" FlowDirection="LeftToRight"
+												Foreground="DarkSlateBlue" SelectedDate="{Binding EndDate}"/>
+								</StackPanel>
+							</StackPanel>
+
+							<!-- Buttons for Date Filtering -->
+							<Grid HorizontalAlignment="Center">
+								<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft"
+											Margin="0 10 13 5" Spacing="40" HorizontalAlignment="Center">
+									<Button Content="هذا اليوم" Padding="10" Foreground="White"
+											FontWeight="Bold" Background="{Binding IsClickedOrNotColorOfThisDayBtn}"
+											Command="{Binding ThisDayBtnCommand}"/>
+									<Button Content="هذا الاسبوع" Padding="10" Foreground="White"
+											FontWeight="Bold" Background="{Binding IsClickedOrNotColorOfThisWeekBtn}"
+											Command="{Binding ThisWeekBtnCommand}"/>
+									<Button Content="هذا الشهر" Padding="10" Foreground="White"
+											FontWeight="Bold" Background="{Binding IsClickedOrNotColorOfThisMonthBtn}"
+											Command="{Binding ThisMonthBtnCommand}"/>
+								</StackPanel>
+							</Grid>
+						</StackPanel>
+
+
+						<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+							<Grid Grid.Row="1" Grid.Column="0" Margin="5">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+									<!-- Use * to take available space -->
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+
+								<!-- First Column (Sale ID) -->
+								<StackPanel Grid.Column="0" Margin="5">
+									<TextBlock Text="رقم الوصل" Margin="0 0 0 5"
+											   Foreground="#0096FF"
+											   FontWeight="Bold"
+											   HorizontalAlignment="Center"/>
+									<TextBox Width="70" HorizontalAlignment="Center"
+											 Text="{Binding BonReceptionID}"/>
+								</StackPanel>
+
+								<!-- Second Column (Barcode) -->
+								<StackPanel Grid.Column="1" Margin="5">
+									<TextBlock Text="باركود" Margin="0 0 0 5"
+											   Foreground="#0096FF"
+											   FontWeight="Bold"
+											   HorizontalAlignment="Center"/>
+									<TextBox Width="70" HorizontalAlignment="Center"
+											 Text="{Binding BarcodeNumber}"/>
+								</StackPanel>
+
+								<!-- Manual Product Search -->
+								<StackPanel Grid.Column="2" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">اسم المنتوج:</TextBlock>
+									<CustomControls:CustomAutoCompleteBox
+										SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
+										ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch, 
+                Mode=TwoWay}"
+										SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
+										FlowDirection="LeftToRight"
+										MinWidth="200"/>
+								</StackPanel>
+
+
+								<!-- Client or Company Name Input -->
+								<StackPanel Grid.Column="4" Margin="5">
+									<TextBlock FlowDirection="RightToLeft"
+											   Foreground="#0096FF"
+											   FontWeight="Bold"
+											   Margin="0,0,0,5"
+											   Text="اسم المزود" />
+									<AutoCompleteBox x:Name="clients"
+													 FilterMode="ContainsOrdinal"
+													 FontFamily="Roboto"
+													 FlowDirection="LeftToRight"
+													 SelectedItem="{Binding SelectedSupplier}"
+													 Text="{Binding SupplierNameEnteredByUser}"
+													 ItemsSource="{Binding SuppliersList}" />
+								</StackPanel>
+
+								<!-- Payment Method Selection -->
+								<StackPanel Grid.Column="5" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">طريقة الدفع:</TextBlock>
+									<ComboBox FlowDirection="RightToLeft" Margin="10 0"
+											   ItemsSource="{Binding PaymentsMethods}"
+											   SelectedItem="{Binding SelectedPaymentMethod}" />
+								</StackPanel>
+
+								<!-- Min Amount Input -->
+								<StackPanel Grid.Column="6" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">المبلغ الأدنى:</TextBlock>
+									<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MinAmount}" />
+								</StackPanel>
+
+								<!-- Max Amount Input -->
+								<StackPanel Grid.Column="7" Margin="5">
+									<TextBlock FlowDirection="RightToLeft" Foreground="#0096FF" FontWeight="Bold"
+											   Margin="0,0,0,5">المبلغ الأقصى:</TextBlock>
+									<TextBox MaxWidth="100" HorizontalAlignment="Center" Text="{Binding MaxAmount}" />
+								</StackPanel>
+
+								<!-- Search Button -->
+								<Button Grid.Column="8"
+										Margin="5 20 20 0"
+										Command="{Binding }"
+										Background="Red"
+										Padding="13 6"
+										Foreground="White"
+										FontWeight="Bold">
+									بحث
+								</Button>
+							</Grid>
+						</ScrollViewer>
+
+						<StackPanel Grid.Row="1"
+									Grid.Column="5" Grid.ColumnSpan="6"
+									Margin="5"
+										VerticalAlignment="Center"
+									  HorizontalAlignment="Center"
+									IsVisible="{Binding isErrorLabelVisible}">
+
+							<Label Foreground="#EE4B2B"
+								   FontWeight="Bold"
+								   Content="{Binding ErrorMessage}"
+								   FlowDirection="RightToLeft"
+								   />
+
+						</StackPanel>
+					</StackPanel>
+
+
+				</Border>
+			</Border>
+
+
+			<!-- Second row: Scrollable Image Gallery -->
+			<Grid Grid.Row="1" Margin="0 20 0 0" Height="280">
+				<Grid>
+					<DataGrid ItemsSource="{Binding BonReceptions}"
+							  AutoGenerateColumns="False"
+							  IsReadOnly="True"
+							  GridLinesVisibility="All"
+							  FlowDirection="RightToLeft"
+							  Width="680"
+							  Name="ReturnedProductList"
+							  CanUserResizeColumns="true">
+
+						<DataGrid.Columns>
+							<DataGridTextColumn Binding="{Binding BonReceptionID}" Header="رقم المبيعة" />
+							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="المبلغ" />
+							<DataGridTextColumn Binding="{Binding }" Header="رقم العميل أو الشركة" />
+							<DataGridTextColumn Binding="{Binding }" Header="اسم العميل أو الشركة" />
+							<DataGridTextColumn Binding="{Binding OperationTime}" Header="تاريخ المبيعة" Width="*" />
+						</DataGrid.Columns>
+
+					
+
+						<DataGrid.Styles>
+							<Style Selector="DataGrid">
+								<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+							</Style>
+						</DataGrid.Styles>
+					</DataGrid>
+				</Grid>
+			</Grid>
+
+
+
+
+		</Grid>
+	</Border>
+
+
+
+
+
+
+
+
+</UserControl>
