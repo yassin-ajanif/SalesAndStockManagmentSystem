@@ -8,7 +8,7 @@ namespace GetStartedApp.Models.Objects
 {
     public class BonReception
     {
-        public int BonReceptionID { get; set; }
+        public string SupplierBlNumber { get; set; }
         public long ProductID { get; set; }
         public string ProductName { get; set; }
         public string SupplierName { get; set; }
@@ -23,13 +23,14 @@ namespace GetStartedApp.Models.Objects
   
 
         // Parameterized constructor for easy instantiation
-        public BonReception(int bonReceptionID, long productID, string productName,
+        public BonReception(string supplierBlNumber, long productID, string productName,
                            string supplierName, string operationTypeName,
                            decimal costProduct, DateTime operationTime,
                            int addedStock1, int addedStock2,
                            int addedStock3, decimal totalPrice)
         {
-            BonReceptionID = bonReceptionID;
+            if(supplierBlNumber== null) SupplierBlNumber= string.Empty;
+            else SupplierBlNumber= supplierBlNumber;
             ProductID = productID;
             ProductName = productName;
             SupplierName = supplierName;

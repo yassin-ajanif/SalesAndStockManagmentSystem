@@ -956,57 +956,55 @@ namespace GetStartedApp.Models
         }
 
         public static List<BonReception> RetrieveBonReceptions(
-       int? bonReceptionID = null,
+       DateTime operationTimeStartDate,  // Non-nullable parameters first
+       DateTime operationTimeEndDate,
+       string supplierBLNumber = null,
        string supplierName = null,
        long? productID = null,
        string productName = null,
        string operationTypeName = null,
        decimal? costProduct = null,
-       DateTime? operationTime = null,
        decimal? minTotalPrice = null,
        decimal? maxTotalPrice = null)
         {
-            // Initialize the list to hold retrieved BonReception objects
             List<BonReception> bonReceptions = new List<BonReception>();
 
-            // Call the data layer function to retrieve the SqlDataReader
             using (SqlDataReader reader = SalesProductsManagmentSystemBusinessLayer.clsBonReception.RetrieveBonReceptions(
-                bonReceptionID,
+                operationTimeStartDate,
+                operationTimeEndDate,
+                supplierBLNumber,
                 supplierName,
                 productID,
                 productName,
                 operationTypeName,
                 costProduct,
-                operationTime,
                 minTotalPrice,
                 maxTotalPrice))
             {
-                // Read the data and populate the list of BonReception objects
                 while (reader.Read())
                 {
-                    // Create a new BonReception object and populate its properties
                     BonReception bonReception = new BonReception(
-                                reader.GetInt32(reader.GetOrdinal("BonReceptionID")),
-                                reader.GetInt64(reader.GetOrdinal("ProductID")),
-                                reader.GetString(reader.GetOrdinal("ProductName")),
-                                reader.GetString(reader.GetOrdinal("SupplierName")),
-                                reader.GetString(reader.GetOrdinal("OperationTypeName")),
-                                reader.GetDecimal(reader.GetOrdinal("CostProduct")),
-                                reader.GetDateTime(reader.GetOrdinal("OperationTime")),
-                                reader.GetInt32(reader.GetOrdinal("Added_Stock1")),
-                                reader.GetInt32(reader.GetOrdinal("Added_Stock2")),
-                                reader.GetInt32(reader.GetOrdinal("Added_Stock3")),
-                                reader.GetDecimal(reader.GetOrdinal("TotalPrice"))
-                             );
+                        reader.IsDBNull(reader.GetOrdinal("SupplierBLNumber")) ? null : reader.GetString(reader.GetOrdinal("SupplierBLNumber")),
+                        reader.GetInt64(reader.GetOrdinal("ProductID")),
+                        reader.GetString(reader.GetOrdinal("ProductName")),
+                        reader.GetString(reader.GetOrdinal("SupplierName")),
+                        reader.GetString(reader.GetOrdinal("OperationTypeName")),
+                        reader.GetDecimal(reader.GetOrdinal("CostProduct")),
+                        reader.GetDateTime(reader.GetOrdinal("OperationTime")),
+                        reader.GetInt32(reader.GetOrdinal("Added_Stock1")),
+                        reader.GetInt32(reader.GetOrdinal("Added_Stock2")),
+                        reader.GetInt32(reader.GetOrdinal("Added_Stock3")),
+                        reader.GetDecimal(reader.GetOrdinal("TotalPrice"))
+                    );
 
-
-                    // Add the populated BonReception object to the list
                     bonReceptions.Add(bonReception);
                 }
             }
 
             return bonReceptions;
         }
+
+
 
         public static bool IsSupplierBLNumberAlreadyExisitg_For_ThisSupplierName(string supplierName, string supplierBLNumber)
         {

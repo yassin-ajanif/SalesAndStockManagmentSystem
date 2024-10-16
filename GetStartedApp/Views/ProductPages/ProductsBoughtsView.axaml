@@ -3,9 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="GetStartedApp.Views.DashboardPages.ProductsBoughtsView"
+             x:Class="GetStartedApp.Views.ProductPages.ProductsBoughtsView"
 			 xmlns:CustomControls="clr-namespace:GetStartedApp.Views.CustomControls"
-			 xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+			 xmlns:vm="using:GetStartedApp.ViewModels.ProductPages"
 	         x:DataType="vm:ProductsBoughtsViewModel"
 	         FontFamily="Roboto"
 	         Background="{DynamicResource myBackgroundFaintBlueColor}"
@@ -168,7 +168,7 @@
 								<!-- Search Button -->
 								<Button Grid.Column="8"
 										Margin="5 20 20 0"
-										Command="{Binding }"
+										Command="{Binding GetBoughtProductListFromDbCommand}"
 										Background="Red"
 										Padding="13 6"
 										Foreground="White"
@@ -212,7 +212,7 @@
 							  CanUserResizeColumns="true">
 
 						<DataGrid.Columns>
-							<DataGridTextColumn Binding="{Binding BonReceptionID}" Header="رقم المبيعة" />
+							<DataGridTextColumn Binding="{Binding }" Header="رقم المبيعة" />
 							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="المبلغ" />
 							<DataGridTextColumn Binding="{Binding }" Header="رقم العميل أو الشركة" />
 							<DataGridTextColumn Binding="{Binding }" Header="اسم العميل أو الشركة" />

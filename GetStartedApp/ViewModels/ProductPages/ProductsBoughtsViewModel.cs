@@ -8,9 +8,9 @@ using GetStartedApp.Helpers.CustomUIErrorAttributes;
 using System.Collections.Generic;
 using GetStartedApp.Helpers;
 using GetStartedApp.Models;
+using GetStartedApp.ViewModels.DashboardPages;
 
-
-namespace GetStartedApp.ViewModels.DashboardPages
+namespace GetStartedApp.ViewModels.ProductPages
 {
     public class ProductsBoughtsViewModel : BonLivraisonsViewModel
     {
@@ -51,8 +51,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
         }
 
         // ObservableCollection for the list of BonReception objects
-        private ObservableCollection<BonReception> _bonReceptions;
-        public ObservableCollection<BonReception> BonReceptions
+        private List<BonReception> _bonReceptions;
+        public List<BonReception> BonReceptions
         {
             get => _bonReceptions;
             set => this.RaiseAndSetIfChanged(ref _bonReceptions, value);
@@ -100,21 +100,43 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
 
 
-        public ProductsBoughtsViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel) {
+        public ProductsBoughtsViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
+        {
 
-            GetBoughtProductListFromDbCommand = ReactiveCommand.Create(GetBoughtProductListFromDatabse);
+            GetBoughtProductListFromDbCommand = ReactiveCommand.Create(GetBoughtProductListFromDatabase);
             SuppliersList = AccessToClassLibraryBackendProject.GetSupplierNamePhoneNumberCombo();
         }
 
 
-        private void GetBoughtProductListFromDatabse()
+        private void GetBoughtProductListFromDatabase()
         {
-            BonReceptions = new ObservableCollection<BonReception>();
-          
+            // Extract supplier name from the selected combo box input
+            string supplierName = StringHelper.ExtractNameFrom_Combo_NamePhoneNumber(SelectedSupplier);
+
+            // Convert the barcode number, min amount, and max amount from strings to their respective types
+            long? barcodeNumber = long.TryParse(BarcodeNumber, out long result) ? result : (long?)null;
+            decimal? minAmount = decimal.TryParse(MinAmount, out decimal minResult) ? minResult : (decimal?)null;
+            decimal? maxAmount = decimal.TryParse(MaxAmount, out decimal maxResult) ? maxResult : (decimal?)null;
+
+
+            // Retrieve the list of BonReceptions from the backend
+            BonReceptions = AccessToClassLibraryBackendProject.RetrieveBonReceptions(
+                StartDate.DateTime,
+                EndDate.DateTime,
+                BonReceptionID,
+                supplierName,
+                barcodeNumber,
+                ProductNameTermToSerach,
+                operationTypeName: null,
+                costProduct: null,
+                minAmount,
+                maxAmount
+            );
         }
 
 
-     
+
+
 
     }
 }

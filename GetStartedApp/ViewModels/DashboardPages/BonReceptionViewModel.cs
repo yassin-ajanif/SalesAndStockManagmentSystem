@@ -126,7 +126,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
       
         private bool IsUiShowingError_Of_AlreadyExisted_BlSupplierName()
         {
-            return false;
+            
             if (IsBonReception_And_SelectedSupplierName_Filled) {
 
                  string SupplierName = StringHelper.ExtractNameFrom_Combo_NamePhoneNumber(EntredSupplierName_PhoneNumber);
