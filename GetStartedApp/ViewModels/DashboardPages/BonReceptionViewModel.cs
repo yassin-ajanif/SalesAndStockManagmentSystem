@@ -12,16 +12,61 @@ using System.Linq;
 using System.Data;
 using System.Diagnostics;
 using GetStartedApp.Views;
+using System;
+using GetStartedApp.Helpers.CustomUIErrorAttributes;
 
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {
 
     public class BonReceptionViewModel : MakeSaleViewModel
-       {
+    {
+        
+        private string _selectedSupplierName_PhoneNumber;
+
+        public string SelectedSupplierName_PhoneNumber
+        {
+            get => _selectedSupplierName_PhoneNumber;
+            set => this.RaiseAndSetIfChanged(ref _selectedSupplierName_PhoneNumber, value);
+        }
+
+
+        private string _bonReceptionNumber;
+        [CheckForInvalidCharacters]
+        [MaxStringLengthAttribute_IS(50, "هذه الرقم طويل جدا")]
+        public string BonReceptionNumber
+        {
+            get => _bonReceptionNumber;
+            set
+            {
+                // Check if value is null or whitespace, and set to null
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    value = null;
+                }
+                this.RaiseAndSetIfChanged(ref _bonReceptionNumber, value);
+            }
+        }
+
+        private string _entredSupplierName_PhoneNumber;
+        public string EntredSupplierName_PhoneNumber
+        {
+            get => _entredSupplierName_PhoneNumber;
+            set
+            {
+                // Check if value is null or whitespace, and set to null
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    value = null;
+                }
+                this.RaiseAndSetIfChanged(ref _entredSupplierName_PhoneNumber, value);
+            }
+        }
+
 
         private List<string> _suppliersList;
-        public  List<string> SuppliersList { get => _suppliersList; set => this.RaiseAndSetIfChanged(ref _suppliersList , value); }
+        private string _supplierName;
+        public List<string> SuppliersList { get => _suppliersList; set => this.RaiseAndSetIfChanged(ref _suppliersList, value); }
 
         private ObservableCollection<ProductScannedInfo_ToRecieve> _productsListScanned_To_Recive;
 
@@ -42,11 +87,143 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // addProductViewModel = new ProductsListViewModel(mainWindowViewModel);
             AddNewProductCommand = ReactiveCommand.Create(AddProductInfoOperation);
             ShowAddProductDialog = new Interaction<AddProductViewModel, Unit>();
-            SaveRecieveOperationCommand =  ReactiveCommand.Create(AddListOfProductRecivedToDatabase);
+            SaveRecieveOperationCommand = ReactiveCommand.Create(AddListOfProductRecivedToDatabase, CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms());
             DeleteAllProductScannedCommand = ReactiveCommand.Create(DeleteAllProductAddedToReceptionList);
             ProductsListScanned_To_Recive = new ObservableCollection<ProductScannedInfo_ToRecieve>();
             SuppliersList = getSuppliers();
+           
         }
+
+
+
+        private bool IsEntredSupplierName_PhoneNumber_IsNotExisting()
+        {
+      
+            return (!SuppliersList.Contains(EntredSupplierName_PhoneNumber));           
+                   
+        }
+
+        protected override IObservable<bool> CheckIfSystemIsNotRaisingError_And_ExchangeIsPositiveNumber_And_ProductListIsNotEmpty_Every_500ms()
+        {
+            // Initial condition to keep the observable running indefinitely
+
+            var observable = Observable.Interval(TimeSpan.FromMilliseconds(500))
+                                       .Select(_ =>
+                                           TheSystemIsNotShowingError() &&
+                                           ProductsListScanned_To_Recive.Count > 0
+                                           
+                                       )
+                                       .DistinctUntilChanged()
+                                       // .Do(_ => Debug.WriteLine("didi")) // Invoke Debug.WriteLine for each emission                                
+                                       .ObserveOn(RxApp.MainThreadScheduler);
+            // Ensure this observable runs on the UI thread
+
+            return observable;
+        }
+
+        bool IsBonReception_And_SelectedSupplierName_Empty => string.IsNullOrWhiteSpace(BonReceptionNumber) && string.IsNullOrWhiteSpace(EntredSupplierName_PhoneNumber);
+        bool IsBonReception_And_SelectedSupplierName_Filled => !string.IsNullOrWhiteSpace(BonReceptionNumber) && !string.IsNullOrWhiteSpace(EntredSupplierName_PhoneNumber);
+      
+        private bool IsUiShowingError_Of_AlreadyExisted_BlSupplierName()
+        {
+            return false;
+            if (IsBonReception_And_SelectedSupplierName_Filled) {
+
+                 string SupplierName = StringHelper.ExtractNameFrom_Combo_NamePhoneNumber(EntredSupplierName_PhoneNumber);
+                bool ThisBlNumberAlreadyExistingForThisSupplierName =   AccessToClassLibraryBackendProject.IsSupplierBLNumberAlreadyExisitg_For_ThisSupplierName(SupplierName, BonReceptionNumber);
+
+                if (ThisBlNumberAlreadyExistingForThisSupplierName) { ShowUiError(nameof(BonReceptionNumber), "هذا الرقم موجود من قبل"); return true; }
+
+            }
+            DeleteUiError(nameof(BonReceptionNumber), "هذا الرقم موجود من قبل");
+         
+            return false;
+        }
+        protected override bool CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid()
+        {
+            foreach (var ProductScanned in ProductsListScanned_To_Recive)
+            {
+   
+                if (string.IsNullOrEmpty(ProductScanned.ProductsUnits) || string.IsNullOrWhiteSpace(ProductScanned.ProductsUnits)) return false;
+                if (string.IsNullOrEmpty(ProductScanned.PriceOfProductSold) || string.IsNullOrWhiteSpace(ProductScanned.PriceOfProductSold)) return false;
+                if (ProductScanned.ProductStockHasErrors) return false;
+   
+                if (!UiAttributeChecker.AreThesesAttributesPropertiesValid
+                    (ProductScanned, nameof(ProductScanned.ProductsUnits), nameof(ProductScanned.PriceOfProductSold)))
+                {
+   
+                    return false;
+                }
+   
+            }
+   
+            return true;
+        }
+
+        private bool Are_SuppplierName_And_BlSupplier_Valid()
+        {
+
+            // Check if either of the fields is null or contains only whitespace
+            if (IsBonReception_And_SelectedSupplierName_Empty || IsBonReception_And_SelectedSupplierName_Filled)
+            {
+
+                if (IsBonReception_And_SelectedSupplierName_Filled && IsEntredSupplierName_PhoneNumber_IsNotExisting()) { displayErrorMessage("يرجى إدخال مورد مسجل."); return false; }
+                else if (IsBonReception_And_SelectedSupplierName_Filled && IsUiShowingError_Of_AlreadyExisted_BlSupplierName()) { displayErrorMessage("هناك خطأ في معلومات المزود"); return false; }
+
+                else { deleteDisplayedError(); return true; }
+            }
+
+
+
+            else { displayErrorMessage("ادخل الموزع ورقم الوصل او دعهما فارغين"); return false; }
+
+                    
+               
+        }
+
+        private void deleteAllErrors_When_ProductList_Empty() { 
+          
+            deleteDisplayedError();
+            DeleteAllUiErrorsProperty(nameof(BonReceptionNumber));
+        }
+        protected override void WhenUserSetInvalidProduct_Price_Or_Quantity_Block_TheSystem_From_Adding_NewProducts_AndShowError_Plus_MakeAdditional_Checkings()
+        {
+
+            this.WhenAnyValue(x => x.ProductsListScanned_To_Recive.Count, x => x.BonReceptionNumber, x => x.EntredSupplierName_PhoneNumber)
+              .Subscribe(async BarcodeNumberScanned =>
+              {
+                 
+                  deleteAllErrors_When_ProductList_Empty();
+
+                  foreach (var product in ProductsListScanned_To_Recive)
+                  {
+                      // Observe each property of each product
+                      product.
+                    WhenAnyValue(
+                          p => p.ProductsUnits,
+                          p => p.PriceOfProductSold,
+                          p => p.ProductsUnitsToReduce_From_Stock1,
+                          p => p.ProductsUnitsToReduce_From_Stock2,
+                          p => p.ProductsUnitsToReduce_From_Stock3
+                         
+
+                          )
+                          .Subscribe(_ =>
+                          {
+                              // this function iside has error to show
+                              if (!Are_SuppplierName_And_BlSupplier_Valid()) ;
+                              else if (!CheckIf_ProductsUnits_And_SoldPrices_Of_ScannedProducts_Are_Valid()) displayErrorMessage("هناك خطأ في كمية المنتج او السعر");
+                              else deleteDisplayedError();
+
+                              CalculateTheTotalPriceOfOperation();
+
+                          }
+                          );
+                  }
+              }
+                );
+        }
+
 
         private DataTable CreateTableOfProductInfoRecived_To_Send_To_Database()
         {
@@ -121,8 +298,10 @@ namespace GetStartedApp.ViewModels.DashboardPages
         private async void AddListOfProductRecivedToDatabase()
         {
             DataTable productToAddOrUpdateTable = LoadListOfProductsRecived_To_Table();
+            string SupplierName = StringHelper.ExtractNameFrom_Combo_NamePhoneNumber(EntredSupplierName_PhoneNumber);
+            string SelectedPaymentMethodInArabic = WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod, "en");
 
-            if (AccessToClassLibraryBackendProject.AddOrUpdateProducts(productToAddOrUpdateTable))
+            if (AccessToClassLibraryBackendProject.AddOrUpdateProducts(productToAddOrUpdateTable, SupplierName, BonReceptionNumber, SelectedPaymentMethodInArabic))
             {
                 await ShowAddSaleDialogInteraction.Handle("لقد تمت العملية بنجاح");
 
@@ -202,10 +381,6 @@ namespace GetStartedApp.ViewModels.DashboardPages
             bool UserDidntScanOrEnteredManualBarcode = string.IsNullOrEmpty(BarCodeUserHasEntred);
 
             if (UserDidntScanOrEnteredManualBarcode) return;
-
-            // bool ThereIsAnErrorShownAtScreen = IsTheScreenShowingError();
-
-            // if (ThereIsAnErrorShownAtScreen) return;
 
             if (TheProductIsAlreadyAddedToAlist(BarCodeUserHasEntred))
             {

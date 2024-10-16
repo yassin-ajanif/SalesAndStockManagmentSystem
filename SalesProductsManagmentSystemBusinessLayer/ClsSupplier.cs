@@ -103,5 +103,13 @@ namespace SalesProductsManagmentSystemBusinessLayer
             clsDataLayerSupplier.GetSupplierInfoByPhoneNumber(phoneNumber, ref supplierName, ref bankAccount, ref fiscalIdentifier, ref rc, ref ice, ref patented, ref cnss,ref address);
         }
 
+   
+            public static bool IsSupplierBLNumberAlreadyExisitg_For_ThisSupplierName(string supplierName, string supplierBLNumber)
+            {
+                // Call the data layer function
+                return clsDataLayerSupplier.CheckSupplierBLNumberExists(supplierName, supplierBLNumber);
+            }
+        
+
     }
 }

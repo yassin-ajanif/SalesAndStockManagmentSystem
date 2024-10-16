@@ -3,40 +3,30 @@
   "WorkspaceRootPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\productsboughtsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\productsboughtsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\bonreceptionviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\bonreceptionviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\bonlivraisonsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\bonlivraisonsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4C032E06-9DCE-402C-9BA3-AEEAD85B5010}|..\\SalesProductsManagmentSystemDataLayer\\SalesProductsManagmentSystemDataLayer.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\salesproductsmanagmentsystemdatalayer\\clsdataaccesslayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\supplierslistviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\supplierslistviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\helpers\\stringhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:helpers\\stringhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D40D95C5-D801-424D-81C4-3B01E0BBDBF4}|..\\SalesProductsManagmentSystemBusinessLayer\\SalesProductsManagmentSystemBusinessLayer.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\salesproductsmanagmentsystembusinesslayer\\clsproductmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\productsboughtsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\productsboughtsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\models\\accesstoclasslibrarybackendproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:models\\accesstoclasslibrarybackendproject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\makesaleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\makesaleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\devisviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\devisviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\models\\objects\\bonreception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:models\\objects\\bonreception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\bonlivraisonsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\bonlivraisonsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\bonreceptionview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\bonreceptionview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
     }
   ],
   "DocumentGroupContainers": [
@@ -67,116 +57,91 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "SuppliersListViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\SuppliersListViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\SuppliersListViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\SuppliersListViewModel.cs",
-              "RelativeToolTip": "ViewModels\\DashboardPages\\SuppliersListViewModel.cs",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAiwFQAAAAMAAAA",
+              "Title": "StringHelper.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Helpers\\StringHelper.cs",
+              "RelativeDocumentMoniker": "Helpers\\StringHelper.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Helpers\\StringHelper.cs",
+              "RelativeToolTip": "Helpers\\StringHelper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T15:10:50.173Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "MakeSaleViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MakeSaleViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\MakeSaleViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MakeSaleViewModel.cs",
-              "RelativeToolTip": "ViewModels\\DashboardPages\\MakeSaleViewModel.cs",
-              "ViewState": "AQIAAFgAAAAAAAAAAAA4wH4AAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T14:31:07.617Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BonLivraisonsView.axaml",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\BonLivraisonsView.axaml",
-              "RelativeDocumentMoniker": "Views\\DashboardPages\\BonLivraisonsView.axaml",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\BonLivraisonsView.axaml",
-              "RelativeToolTip": "Views\\DashboardPages\\BonLivraisonsView.axaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-10-15T13:46:59.921Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "BonReception.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Models\\Objects\\BonReception.cs",
-              "RelativeDocumentMoniker": "Models\\Objects\\BonReception.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Models\\Objects\\BonReception.cs",
-              "RelativeToolTip": "Models\\Objects\\BonReception.cs",
-              "ViewState": "AQIAAAIAAAAAAAAAAAAwwBAAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T13:27:25.56Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainWindowViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MainWindowViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\MainWindowViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MainWindowViewModel.cs",
-              "RelativeToolTip": "ViewModels\\DashboardPages\\MainWindowViewModel.cs",
-              "ViewState": "AQIAAHsAAAAAAAAAAAAiwI0AAAA3AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T13:08:25.052Z",
+              "WhenOpened": "2024-10-16T17:08:54.435Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BonLivraisonsViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\BonLivraisonsViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\BonLivraisonsViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\BonLivraisonsViewModel.cs",
-              "RelativeToolTip": "ViewModels\\DashboardPages\\BonLivraisonsViewModel.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAuwCEAAAAIAAAA",
+              "Title": "ClsDataAccessLayer.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemDataLayer\\ClsDataAccessLayer.cs",
+              "RelativeDocumentMoniker": "..\\SalesProductsManagmentSystemDataLayer\\ClsDataAccessLayer.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemDataLayer\\ClsDataAccessLayer.cs",
+              "RelativeToolTip": "..\\SalesProductsManagmentSystemDataLayer\\ClsDataAccessLayer.cs",
+              "ViewState": "AQIAAEwIAAAAAAAAAAAEwF8IAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T13:38:27.74Z",
+              "WhenOpened": "2024-10-16T15:45:17.264Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ProductsBoughtsViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\ProductsBoughtsViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\ProductsBoughtsViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\ProductsBoughtsViewModel.cs*",
-              "RelativeToolTip": "ViewModels\\DashboardPages\\ProductsBoughtsViewModel.cs*",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABoAAABUAAAA",
+              "DocumentIndex": 3,
+              "Title": "ClsProductManager.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\ClsProductManager.cs",
+              "RelativeDocumentMoniker": "..\\SalesProductsManagmentSystemBusinessLayer\\ClsProductManager.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\SalesProductsManagmentSystemBusinessLayer\\ClsProductManager.cs",
+              "RelativeToolTip": "..\\SalesProductsManagmentSystemBusinessLayer\\ClsProductManager.cs",
+              "ViewState": "AQIAAAQBAAAAAAAAAAAEwBkBAAA5AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T13:07:21.776Z",
+              "WhenOpened": "2024-10-16T14:50:19.621Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ProductsBoughtsView.axaml",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\ProductsBoughtsView.axaml",
-              "RelativeDocumentMoniker": "Views\\DashboardPages\\ProductsBoughtsView.axaml",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\ProductsBoughtsView.axaml",
-              "RelativeToolTip": "Views\\DashboardPages\\ProductsBoughtsView.axaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-10-15T13:04:29.796Z",
+              "Title": "AccessToClassLibraryBackendProject.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Models\\AccessToClassLibraryBackendProject.cs",
+              "RelativeDocumentMoniker": "Models\\AccessToClassLibraryBackendProject.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Models\\AccessToClassLibraryBackendProject.cs",
+              "RelativeToolTip": "Models\\AccessToClassLibraryBackendProject.cs",
+              "ViewState": "AQIAAKoDAAAAAAAAAAAvwLoDAABfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T14:49:38.101Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\ViewModelBase.cs",
+              "RelativeDocumentMoniker": "ViewModels\\ViewModelBase.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\ViewModelBase.cs",
+              "RelativeToolTip": "ViewModels\\ViewModelBase.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAvwEUAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T08:03:18.443Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "DevisViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\DevisViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\DevisViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\DevisViewModel.cs",
-              "RelativeToolTip": "ViewModels\\DashboardPages\\DevisViewModel.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAqwBEAAAAtAAAA",
+              "Title": "BonReceptionView.axaml",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\BonReceptionView.axaml",
+              "RelativeDocumentMoniker": "Views\\DashboardPages\\BonReceptionView.axaml",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\BonReceptionView.axaml",
+              "RelativeToolTip": "Views\\DashboardPages\\BonReceptionView.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-16T07:58:37.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BonReceptionViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\BonReceptionViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\BonReceptionViewModel.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\BonReceptionViewModel.cs*",
+              "RelativeToolTip": "ViewModels\\DashboardPages\\BonReceptionViewModel.cs*",
+              "ViewState": "AQIAAH0AAAAAAAAAAAAUwH8AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-15T09:37:49.658Z",
+              "WhenOpened": "2024-10-16T07:58:31.582Z",
               "EditorCaption": ""
             }
           ]

@@ -2112,7 +2112,7 @@ public class ClsDataAccessLayer
     }
 
 
-    public static bool AddOrUpdateProducts(DataTable productTable)
+    public static bool AddOrUpdateProducts(DataTable productTable, string supplierName, string bonReceptionNumber, string paymentType)
     {
         try
         {
@@ -2122,9 +2122,22 @@ public class ClsDataAccessLayer
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    // Define the TVP parameter
+                    // Define the TVP parameter (Table-Valued Parameter)
                     SqlParameter tvpParam = command.Parameters.AddWithValue("@ProductTable", productTable);
                     tvpParam.SqlDbType = SqlDbType.Structured;
+
+                    // Add SupplierName parameter
+                    SqlParameter supplierNameParam = command.Parameters.AddWithValue("@SupplierName", supplierName ?? (object)DBNull.Value);
+                    supplierNameParam.SqlDbType = SqlDbType.NVarChar;
+
+                    // Add BonReceptionNumber parameter
+                    SqlParameter bonReceptionNumberParam = command.Parameters.AddWithValue("@BonReceptionNumber", bonReceptionNumber ?? (object)DBNull.Value);
+                    bonReceptionNumberParam.SqlDbType = SqlDbType.NVarChar;
+
+
+                    // Add PaymentType parameter
+                    SqlParameter paymentTypeParam = command.Parameters.AddWithValue("@PaymentType", paymentType ?? (object)DBNull.Value);
+
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -2139,6 +2152,8 @@ public class ClsDataAccessLayer
             return false; // Return false if there was an error
         }
     }
+
+
 }
 
 

@@ -203,9 +203,9 @@ namespace GetStartedApp.Models.Objects
                     NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock = !AreProductsUnitsSpreadAcrossAllStock_Correctly();
 
                     // if the product is not for sale like in bon de reception or in bon de command we won't check the stock status
-                    if (NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock) ProductStockHasErrors = false;
+                    if (NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock) ProductStockHasErrors = true;
 
-                    else ProductStockHasErrors = true;
+                    else ProductStockHasErrors = false;
 
                 });
         }

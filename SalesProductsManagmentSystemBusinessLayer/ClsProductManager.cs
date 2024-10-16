@@ -239,7 +239,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             return ClsDataAccessLayer.GetProductIDFromProductName(productName);
         }
 
-        public static bool AddOrUpdateProducts(DataTable productTable)
+        public static bool AddOrUpdateProducts(DataTable productTable, string supplierName, string bonReceptionNumber,string paymentType)
         {
             // Validate the DataTable before proceeding
             if (productTable == null || productTable.Rows.Count == 0)
@@ -279,7 +279,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             }
 
             // Call the data layer function if all validations pass
-            bool result = ClsDataAccessLayer.AddOrUpdateProducts(productTable);
+            bool result = ClsDataAccessLayer.AddOrUpdateProducts(productTable,supplierName,bonReceptionNumber,paymentType);
 
             if (result)
             {

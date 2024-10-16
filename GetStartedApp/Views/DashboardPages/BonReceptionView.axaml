@@ -232,7 +232,7 @@
 						
 						<StackPanel Margin="0,0,5,0"
 									Grid.Row="1"
-									Grid.Column="0" Grid.ColumnSpan="2">
+									Grid.Column="2" Grid.ColumnSpan="2">
 							<TextBlock  FlowDirection="RightToLeft"
 										  Foreground="#0096FF"
 										FontWeight="Bold"
@@ -240,30 +240,47 @@
 									> بحث عن منتوج يدويا:</TextBlock>
 
 							<CustomControls:CustomAutoCompleteBox
+								
 		               SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
 		               ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch,
 					   Mode=TwoWay}"
 		               SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
-		               FlowDirection="LeftToRight"
-					   
+		               FlowDirection="LeftToRight"					   
 		                         />
 
 						</StackPanel>
 
 						<StackPanel Margin="0,0,5,0"
 									Grid.Row="1"
-									Grid.Column="2"  Grid.ColumnSpan="2">
+									Grid.Column="0" >
 							<TextBlock  FlowDirection="RightToLeft"
 										  Foreground="#0096FF"
 										FontWeight="Bold"
 										Margin="0,0,0,5"
+										Grid.ColumnSpan="2"
+									> رقم الوصل:</TextBlock>
+
+							<TextBox Text= "{Binding BonReceptionNumber}" />
+
+						</StackPanel>
+						
+						<StackPanel Margin="0,0,5,0"
+									Grid.Row="1"
+									Grid.Column="1" 
+									>
+							<TextBlock  FlowDirection="RightToLeft"
+										  Foreground="#0096FF"
+										FontWeight="Bold"
+										Margin="0,0,0,5"
+										Grid.ColumnSpan="2"
 									> اسم المزود:</TextBlock>
 							<AutoCompleteBox x:Name="clients"
 											 FilterMode="ContainsOrdinal"
 											 FontFamily="Roboto"
 											 FlowDirection="LeftToRight"
 											 ItemsSource="{Binding SuppliersList}"
-											 SelectedItem="{Binding SelectedClientName_PhoneNumber}"
+											 Text="{Binding EntredSupplierName_PhoneNumber}"
+											 SelectedItem="{Binding SelectedSupplierName_PhoneNumber}"
 										  />
 						</StackPanel>
 

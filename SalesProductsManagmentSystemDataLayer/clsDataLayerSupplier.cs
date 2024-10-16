@@ -281,7 +281,28 @@ namespace SalesProductsManagmentSystemDataLayer
         }
 
 
+        public static bool CheckSupplierBLNumberExists(string supplierName, string supplierBLNumber)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("CheckSupplierBLNumberExists", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@SupplierName", supplierName);
+                    command.Parameters.AddWithValue("@SupplierBLNumber", supplierBLNumber);
 
+                    SqlParameter existsParam = new SqlParameter("@Exists", SqlDbType.Bit)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    command.Parameters.Add(existsParam);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    return (bool)existsParam.Value;
+                }
+            }
+        }
 
     }
 }

@@ -950,9 +950,9 @@ namespace GetStartedApp.Models
             }
         }
 
-       public static bool AddOrUpdateProducts(DataTable productsTable_To_Add_Or_Update)
+       public static bool AddOrUpdateProducts(DataTable productsTable_To_Add_Or_Update,string supplierName,string bonReceptionNumber,string paymentType)
         {
-            return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.AddOrUpdateProducts(productsTable_To_Add_Or_Update);
+            return SalesProductsManagmentSystemBusinessLayer.ClsProductManager.AddOrUpdateProducts(productsTable_To_Add_Or_Update, supplierName, bonReceptionNumber,paymentType);
         }
 
         public static List<BonReception> RetrieveBonReceptions(
@@ -1008,6 +1008,10 @@ namespace GetStartedApp.Models
             return bonReceptions;
         }
 
-
+        public static bool IsSupplierBLNumberAlreadyExisitg_For_ThisSupplierName(string supplierName, string supplierBLNumber)
+        {
+            // Call the data layer function
+            return SalesProductsManagmentSystemBusinessLayer.ClsSupplier.IsSupplierBLNumberAlreadyExisitg_For_ThisSupplierName(supplierName, supplierBLNumber);
+        }
     }
 }
