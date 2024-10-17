@@ -207,16 +207,25 @@
 							  IsReadOnly="True"
 							  GridLinesVisibility="All"
 							  FlowDirection="RightToLeft"
-							  Width="680"
 							  Name="ReturnedProductList"
 							  CanUserResizeColumns="true">
 
 						<DataGrid.Columns>
-							<DataGridTextColumn Binding="{Binding }" Header="رقم المبيعة" />
-							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="المبلغ" />
-							<DataGridTextColumn Binding="{Binding }" Header="رقم العميل أو الشركة" />
-							<DataGridTextColumn Binding="{Binding }" Header="اسم العميل أو الشركة" />
-							<DataGridTextColumn Binding="{Binding OperationTime}" Header="تاريخ المبيعة" Width="*" />
+							<DataGridTextColumn Binding="{Binding SupplierBlNumber}" Header="رقم الوصل" />
+							<DataGridTextColumn Binding="{Binding CostProduct}" Header="السعر" />
+							<DataGridTextColumn Binding="{Binding ProductName }" Header="اسم المنتج" />
+							<DataGridTextColumn Binding="{Binding ProductID}" Header="رقم المنتج" />
+							<DataGridTextColumn Binding="{Binding SupplierName}" Header="اسم المزود" />
+							<DataGridTextColumn Binding="{Binding OperationTypeName}" Header="نوع العملية " />
+							<DataGridTextColumn Binding="{Binding OperationTime}" Header="تاريخ العملية " />
+							<DataGridTextColumn Binding="{Binding AddedStock1}" Header="المحل" />
+							<DataGridTextColumn Binding="{Binding AddedStock2}" Header="مستودع 1" />
+							<DataGridTextColumn Binding="{Binding AddedStock3}" Header="مستودع 2" />
+							<DataGridTextColumn Binding="{Binding TotalStock}" Header="المجموع" />
+							<DataGridTextColumn Binding="{Binding TotalPrice}" Header="المبلغ الاجمالي لعملية الاستلام " />
+							<DataGridTextColumn Binding="{Binding ProductsNumberPerReception}" Header="العدد الاجمالي للمنتجات المستلمة" />
+							<DataGridTextColumn Binding="{Binding PaymentType}" Header="طريقة الدفع" />
+
 						</DataGrid.Columns>
 
 					

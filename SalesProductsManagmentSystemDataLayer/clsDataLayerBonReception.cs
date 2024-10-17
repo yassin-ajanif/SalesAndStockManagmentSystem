@@ -30,7 +30,8 @@ namespace SalesProductsManagmentSystemDataLayer
            string operationTypeName = null,
            decimal? costProduct = null,
            decimal? minTotalPrice = null,
-           decimal? maxTotalPrice = null
+           decimal? maxTotalPrice = null,
+           string PaymentType = null
        )
         {
             SqlConnection conn = new SqlConnection(connectionString);
@@ -49,7 +50,8 @@ namespace SalesProductsManagmentSystemDataLayer
             cmd.Parameters.AddWithValue("@OperationTimeStartDate", operationTimeStartDate);  // Directly pass the non-nullable value
             cmd.Parameters.AddWithValue("@OperationTimeEndDate", operationTimeEndDate);      // Directly pass the non-nullable value
             cmd.Parameters.AddWithValue("@MinTotalPrice", (object)minTotalPrice ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@MaxTotalPrice", (object)maxTotalPrice ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@MaxTotalPrice", (object)maxTotalPrice ?? DBNull.Value); 
+            cmd.Parameters.AddWithValue("@PaymentType", (object)PaymentType ?? DBNull.Value); 
 
             conn.Open();
 

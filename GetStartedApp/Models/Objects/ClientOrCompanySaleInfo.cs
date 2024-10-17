@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetStartedApp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace GetStartedApp.Models.Objects
         public ClientOrCompanySaleInfo(int saleID, DateTime timeOfOperation, decimal totalPrice, int paymentID, string paymentName, int? clientOrCompanyID, string clientOrCompanyName)
         {
             SaleID = saleID;
-            TimeOfOperation = timeOfOperation.ToString("dddd dd/MM/yyyy HH:mm:ss");  // Include day name in date string
+            TimeOfOperation = TimeHelper.FormatDateWithDayInArabic(timeOfOperation);  // Include day name in date string
             TotalPrice = totalPrice;
             PaymentID = paymentID;
             PaymentName = paymentName;

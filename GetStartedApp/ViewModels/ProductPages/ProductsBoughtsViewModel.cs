@@ -24,7 +24,8 @@ namespace GetStartedApp.ViewModels.ProductPages
         }
         //
         private string _bonReceptionID;
-        [PositiveIntRange(1, 1_000_000, ErrorMessage = "ادخل رقم موجب وبدون فاصلة")]
+        [CheckForInvalidCharacters]
+        [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
         public string BonReceptionID { get => _bonReceptionID; set => this.RaiseAndSetIfChanged(ref _bonReceptionID, value); }
 
         private string _timeOfOperation;
@@ -69,6 +70,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         public ReactiveCommand<Unit, Unit> GetBoughtProductListFromDbCommand { get; set; }
 
+       
         protected override IObservable<bool> CheckIfUserDidintMakeSearchMistake()
         {
             var canAddProduct = this.WhenAnyValue(
@@ -82,10 +84,10 @@ namespace GetStartedApp.ViewModels.ProductPages
                 x => x.isErrorLabelVisible,
                 (BonReceptionID, BarCodeNumber, ProductNameTermToSerach, SelectedSupplier, SupplierNameEnteredByUser, MinAmount, MaxAmount, isErrorLabelVisible) =>
 
-                UiAttributeChecker.AreThesesAttributesPropertiesValid(
+               UiAttributeChecker.AreThesesAttributesPropertiesValid(
                     this,
                     nameof(BonReceptionID),
-                    nameof(BarCodeNumber),
+                    nameof(BarcodeNumber),
                     nameof(ProductNameTermToSerach),
                     nameof(SelectedSupplier),
                     nameof(SupplierNameEnteredByUser),
@@ -93,7 +95,7 @@ namespace GetStartedApp.ViewModels.ProductPages
                     nameof(MaxAmount))
                 &&
                 TheSystemIsNotShowingError()
-            );
+            ) ;
 
             return canAddProduct;
         }
@@ -103,34 +105,63 @@ namespace GetStartedApp.ViewModels.ProductPages
         public ProductsBoughtsViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
         {
 
-            GetBoughtProductListFromDbCommand = ReactiveCommand.Create(GetBoughtProductListFromDatabase);
+            GetBoughtProductListFromDbCommand = ReactiveCommand.Create(GetBoughtProductListFromDatabase, CheckIfUserDidintMakeSearchMistake());
             SuppliersList = AccessToClassLibraryBackendProject.GetSupplierNamePhoneNumberCombo();
         }
 
+    //    protected override void when_UserSearchProductByName_DeleteBarcode_SearchText_And_ViceSera()
+    //    {
+    //        // Listen to changes in ProductNameTermToSerach
+    //        this.WhenAnyValue(x => x.ProductNameTermToSerach)
+    //            .Subscribe(productName =>
+    //            {
+    //                // If the user types in ProductNameTermToSerach, clear BarcodeNumber
+    //                if (!string.IsNullOrWhiteSpace(productName))
+    //                {
+    //                    BarcodeNumber = null;
+    //                }
+    //            });
+    //
+    //        // Listen to changes in BarcodeNumber
+    //        this.WhenAnyValue(x => x.BarcodeNumber)
+    //            .Subscribe(barcode =>
+    //            {
+    //                // If the user types in BarcodeNumber, clear ProductNameTermToSerach and SelectedProductNameTermSerach
+    //                if (!string.IsNullOrWhiteSpace(barcode))
+    //                {
+    //                    ProductNameTermToSerach = null;
+    //                    SelectedProductNameTermSerach = null;
+    //                }
+    //            });
+    //    }
 
         private void GetBoughtProductListFromDatabase()
         {
             // Extract supplier name from the selected combo box input
             string supplierName = StringHelper.ExtractNameFrom_Combo_NamePhoneNumber(SelectedSupplier);
-
             // Convert the barcode number, min amount, and max amount from strings to their respective types
             long? barcodeNumber = long.TryParse(BarcodeNumber, out long result) ? result : (long?)null;
             decimal? minAmount = decimal.TryParse(MinAmount, out decimal minResult) ? minResult : (decimal?)null;
             decimal? maxAmount = decimal.TryParse(MaxAmount, out decimal maxResult) ? maxResult : (decimal?)null;
-
+            // productNameTermtoserach when you set it to null it dosent it get back to string to empty this is due the algroithm of custom tag i made it a bug so
+            // for this reason i defined this variable to ensure the nullability
+            string ProductName = string.IsNullOrEmpty(ProductNameTermToSerach) ? null : ProductNameTermToSerach;
+            string SupplierNumber = string.IsNullOrEmpty(BonReceptionID) ? null : BonReceptionID;
+            string selectedPaymentMethodInEnglish = WordTranslation.TranslatePaymentIntoTargetedLanguage(SelectedPaymentMethod, "en");
 
             // Retrieve the list of BonReceptions from the backend
             BonReceptions = AccessToClassLibraryBackendProject.RetrieveBonReceptions(
                 StartDate.DateTime,
                 EndDate.DateTime,
-                BonReceptionID,
+                SupplierNumber,
                 supplierName,
                 barcodeNumber,
-                ProductNameTermToSerach,
+                ProductName,
                 operationTypeName: null,
                 costProduct: null,
                 minAmount,
-                maxAmount
+                maxAmount,
+                selectedPaymentMethodInEnglish
             );
         }
 

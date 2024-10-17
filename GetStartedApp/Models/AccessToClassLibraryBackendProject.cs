@@ -16,6 +16,7 @@ using GetStartedApp.ViewModels;
 using SalesProductsManagmentSystemDataLayer;
 using System.ComponentModel.Design;
 using GetStartedApp.Models.Objects;
+using Splat;
 
 
 namespace GetStartedApp.Models
@@ -965,7 +966,8 @@ namespace GetStartedApp.Models
        string operationTypeName = null,
        decimal? costProduct = null,
        decimal? minTotalPrice = null,
-       decimal? maxTotalPrice = null)
+       decimal? maxTotalPrice = null,
+       string PaymentType = null)
         {
             List<BonReception> bonReceptions = new List<BonReception>();
 
@@ -979,7 +981,8 @@ namespace GetStartedApp.Models
                 operationTypeName,
                 costProduct,
                 minTotalPrice,
-                maxTotalPrice))
+                maxTotalPrice,
+                PaymentType))
             {
                 while (reader.Read())
                 {
@@ -987,14 +990,16 @@ namespace GetStartedApp.Models
                         reader.IsDBNull(reader.GetOrdinal("SupplierBLNumber")) ? null : reader.GetString(reader.GetOrdinal("SupplierBLNumber")),
                         reader.GetInt64(reader.GetOrdinal("ProductID")),
                         reader.GetString(reader.GetOrdinal("ProductName")),
-                        reader.GetString(reader.GetOrdinal("SupplierName")),
+                        reader.IsDBNull(reader.GetOrdinal("SupplierBLNumber")) ? null : reader.GetString(reader.GetOrdinal("SupplierName")),
                         reader.GetString(reader.GetOrdinal("OperationTypeName")),
                         reader.GetDecimal(reader.GetOrdinal("CostProduct")),
                         reader.GetDateTime(reader.GetOrdinal("OperationTime")),
                         reader.GetInt32(reader.GetOrdinal("Added_Stock1")),
                         reader.GetInt32(reader.GetOrdinal("Added_Stock2")),
                         reader.GetInt32(reader.GetOrdinal("Added_Stock3")),
-                        reader.GetDecimal(reader.GetOrdinal("TotalPrice"))
+                        reader.GetDecimal(reader.GetOrdinal("TotalPrice")),
+                        reader.GetInt32(reader.GetOrdinal("ProductsNumber")),
+                        reader.GetString(reader.GetOrdinal("PaymentType"))
                     );
 
                     bonReceptions.Add(bonReception);

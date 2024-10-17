@@ -82,7 +82,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
         //private string _EntredProductName;
         private string  _ProductName;
-        [CheckForInvalidCharacters]
+        [CheckForInvalidCharacters] 
         [StringMustHaveAtLeast_3_Letters(ErrorMessage = "اسم المنتج يجب ان يحتوي على الاقل ثلاث حروف")]
         [MaxStringLengthAttribute_IS(50, "هذه الجملة طويلة جدا")]
         public string EntredProductName

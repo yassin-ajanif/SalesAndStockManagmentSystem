@@ -21,7 +21,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
             string operationTypeName = null,
             decimal? costProduct = null,
             decimal? minTotalPrice = null,
-            decimal? maxTotalPrice = null)
+            decimal? maxTotalPrice = null,
+            string PaymentType = null)
         {
             // Call the data layer function
             return clsDataLayerBonReception.GetBonReceptionsData(
@@ -34,7 +35,8 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 operationTypeName,
                 costProduct,
                 minTotalPrice,
-                maxTotalPrice);
+                maxTotalPrice,
+                PaymentType);
         }
 
 

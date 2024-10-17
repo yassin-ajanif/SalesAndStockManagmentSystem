@@ -86,7 +86,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         }
 
-        private void when_UserSearchProductByName_DeleteBarcode_SearchText_And_ViceSera()
+        protected virtual void when_UserSearchProductByName_DeleteBarcode_SearchText_And_ViceSera()
         {
             // Listen to changes in ProductNameTermToSerach
             this.WhenAnyValue(x => x.ProductNameTermToSerach)
