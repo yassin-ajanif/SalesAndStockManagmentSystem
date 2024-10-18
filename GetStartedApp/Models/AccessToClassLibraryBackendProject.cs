@@ -791,6 +791,37 @@ namespace GetStartedApp.Models
             invoiceGenerator.GenerateInvoice_ForCompany();
         }
 
+        public static void GenerateBonCommand(
+       int companyID,
+       DataTable products,
+       string selectedPaymentMethodInFrench,
+       decimal tva,
+       int saleID,
+       int invoiceID,
+       DateTime salesTime,
+       string supplierName,
+       string phoneNumber,
+       string email,
+       string bankAccount,
+       string fiscalIdentifier,
+       string rc,
+       string ice,
+       string patented,
+       string cnss,
+       string address)
+        {
+
+            SalesProductsManagmentSystemBusinessLayer.clsBonCommandGenerator bonCommandGenerator =
+                new clsBonCommandGenerator(
+                    companyID,products,  selectedPaymentMethodInFrench, tva,saleID,salesTime, 
+                    supplierName, phoneNumber,email,bankAccount,fiscalIdentifier,rc,ice,patented,cnss,address
+                );
+
+            bonCommandGenerator.GenerateBonCommand();
+        }
+
+
+
 
         public static bool GetClientInfoById(int clientId, ref string clientName, ref string phoneNumber, ref string email)
         {

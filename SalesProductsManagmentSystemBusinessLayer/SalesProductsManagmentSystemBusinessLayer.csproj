@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClsBackup.cs" />
+    <Compile Include="clsBonCommandGenerator.cs" />
     <Compile Include="ClsBonLivraisonGenerator.cs" />
     <Compile Include="clsBonLivraisons.cs" />
     <Compile Include="clsBonReception.cs" />

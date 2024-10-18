@@ -144,7 +144,13 @@ public class MainWindowViewModel : ViewModelBase
         HideheaderAndShowBtnBack();
     }
 
-    
+    public void GoToBonCommandPage()
+    {
+
+        CurrentPage = new BonCommandViewModel(this);
+        navigationHistory.Push(CurrentPage);
+        HideheaderAndShowBtnBack();
+    }
 
     public void GoToSuppliersPage()
     {

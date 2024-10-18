@@ -96,7 +96,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
 
 
-        private bool IsEntredSupplierName_PhoneNumber_IsNotExisting()
+        protected bool IsEntredSupplierName_PhoneNumber_IsNotExisting()
         {
       
             return (!SuppliersList.Contains(EntredSupplierName_PhoneNumber));           
@@ -181,7 +181,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
                
         }
 
-        private void deleteAllErrors_When_ProductList_Empty() { 
+        protected void deleteAllErrors_When_ProductList_Empty() { 
           
             deleteDisplayedError();
             DeleteAllUiErrorsProperty(nameof(BonReceptionNumber));
@@ -249,7 +249,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return productTable;
         }
 
-       private DataTable LoadListOfProductsRecived_To_Table()
+       protected DataTable LoadListOfProductsRecived_To_Table()
         {
             DataTable productTable = CreateTableOfProductInfoRecived_To_Send_To_Database();
 

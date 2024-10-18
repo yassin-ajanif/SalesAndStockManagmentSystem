@@ -1,0 +1,493 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:CustomControls="clr-namespace:GetStartedApp.Views.CustomControls"
+			 xmlns:vm="using:GetStartedApp.ViewModels.DashboardPages"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GetStartedApp.Views.DashboardPages.BonCommandView"
+			 x:CompileBindings="True"
+			 x:DataType="vm:BonCommandViewModel"
+			 FontFamily="Roboto"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+			
+			 >
+
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, 
+			 set the DataContext property in code (look at App.axaml.cs) -->
+
+		vm:MakeSaleViewModel/>
+	</Design.DataContext>
+
+	<UserControl.Styles>
+
+		<Style Selector="Border">
+
+			<Setter Property="BoxShadow" Value="0 10 20 5 Transparent"/>
+			<Setter Property="CornerRadius"        Value="0"/>
+			<Setter Property="Margin"              Value="0"/>
+			<Setter Property="BorderThickness" Value="1"></Setter>
+			<Setter Property="BorderBrush" Value="Gainsboro"></Setter>
+
+		</Style>
+
+		<Style Selector ="AutoCompleteBox">
+			<Setter Property="BorderBrush" Value="Gainsboro"/>
+			<Setter Property="BorderThickness" Value="1"/>
+		</Style>
+
+
+
+	</UserControl.Styles>
+
+	<Border Padding="10" Margin="20" MaxWidth="1024" Height="500"
+			BoxShadow="0 1  20  5  Gainsboro"
+			BorderBrush="Gainsboro"
+			
+			>
+
+		<Grid >
+			<!-- Define Rows -->
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+
+			</Grid.RowDefinitions>
+
+			<!-- First row: Grid -->
+			<Border
+					 BoxShadow="0 1  20  5  Gainsboro"
+					Margin="-10"
+					Background="AliceBlue"
+					 >
+
+				<Border BorderBrush="Gray" BorderThickness="0"
+						BoxShadow= "0 1 10 5 Transparent"
+						Margin="5"
+						>
+
+					<Grid Grid.Row="0" FlowDirection="RightToLeft" >
+						<!-- Define Columns -->
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<!-- New column added -->
+						</Grid.ColumnDefinitions>
+
+						<!-- Define Rows -->
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="50" />
+
+						</Grid.RowDefinitions>
+
+						<!-- First Column (Barcode) -->
+						<StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
+							<TextBlock Text="باركود اوتوماتيكي" Margin="0 0 0 5"
+									   Foreground="#0096FF"
+									   FontWeight="Bold"
+									   HorizontalAlignment="Center"
+									   />
+
+							<TextBox Width="100" HorizontalAlignment="Center"
+									 Text="{Binding Barcode}"
+								 
+									 >
+								<TextBox.Styles>
+									<Style Selector="TextBox">
+										<Setter Property="BorderBrush" Value="Gainsboro"/>
+										<Setter Property="BorderThickness" Value="1"/>
+									</Style>
+								</TextBox.Styles>
+							</TextBox>
+
+						</StackPanel>
+
+						<StackPanel Grid.Row="0" Grid.Column="1" Margin="5"
+									HorizontalAlignment="Center"
+									
+									>
+							<!-- TextBlock -->
+							<TextBlock Text="باركود يدوي" Margin="5 0 0 5"
+									   Foreground="#0096FF"
+									   FontWeight="Bold"
+									   HorizontalAlignment="Left"
+										    />
+
+							<!-- Horizontal StackPanel for TextBox and Button -->
+							<StackPanel Orientation="Horizontal">
+								<!-- TextBox -->
+
+								<TextBox Width="100"
+										 Text="{Binding ManualBarcodeValue}"
+										 Margin="0 0 1 0"
+										 Name="BarcodeTextBox"
+											 >
+									<TextBox.Styles>
+										<Style Selector="TextBox">
+											<Setter Property="BorderBrush" Value="Gainsboro"/>
+											<Setter Property="BorderThickness" Value="1"/>
+										</Style>
+									</TextBox.Styles>
+								</TextBox>
+
+
+
+
+								<!-- Button -->
+								<Button Cursor="Hand"
+										Content="تأكيد"
+										FontFamily="Roboto"
+										FontWeight="Bold"
+										Foreground="White"
+										Background="Red"
+										FontSize="12"
+										Padding="5 3"
+										Command="{Binding SubmitBarCodeManually}">
+								</Button>
+
+							</StackPanel>
+						</StackPanel>
+
+
+						<!-- Second Column (Total) -->
+						<StackPanel Grid.Row="0" Grid.Column="2" Margin="5">
+							<Label Content="المجموع"
+								   Foreground="#0096FF" FontWeight="Bold"
+								   HorizontalAlignment="Center" />
+							<Label Content="{Binding Total, StringFormat={}{0:N2} Dh}"
+								   HorizontalAlignment="Center"
+								FlowDirection="LeftToRight"
+								   FontWeight="Bold"/>
+						</StackPanel>
+
+
+						<!-- Fifth Column (Number of Products) -->
+						<StackPanel Grid.Row="0" Grid.Column="3" Margin="5">
+
+							<Label Content="عدد المنتجات"
+								   Foreground="#0096FF"
+								   FontWeight="Bold"
+								   HorizontalAlignment="Center" />
+
+							<Label Content="{Binding TotalNumberOfProducts}"
+								   HorizontalAlignment="Center"
+								   FontWeight="Bold"/>
+
+						</StackPanel>
+
+						<StackPanel Grid.Row="0" Grid.Column="4" Margin="5">
+							<Button
+								Foreground="White"
+								FontWeight="Bold"
+								Padding="5 8 5 8"
+								Background="#EE4B2B"
+								Command="{Binding AddNewProductCommand}"
+								
+								>اضافة منتج جديد</Button>
+						</StackPanel>
+
+						<StackPanel Grid.Row="0" Grid.Column="6" Margin="5"
+									>
+							<Button
+								Foreground="White"
+								FontWeight="Bold"
+								Padding="5 8 5 8"
+								Background="#EE4B2B"
+								Command="{Binding GenerateBonCommand_Command}"
+								FontSize="14">
+								طباعة وصل الشراء
+							</Button>
+
+
+
+						</StackPanel>
+
+						<StackPanel Grid.Row="0" Grid.Column="5">
+							<Button
+							Margin="0 5 0 0"
+							Padding="8 5 8 0"
+							Height="50"
+							Foreground="White"
+							FontWeight="Bold"
+							Background="#EE4B2B"
+							Command="{Binding DeleteAllProductScannedCommand}">
+								<TextBlock
+									Text=" حذف جميع المنتوجات "
+									TextWrapping="Wrap"     />
+							</Button>
+						</StackPanel>
+
+
+						<StackPanel Margin="0,0,5,0"
+									Grid.Row="1"
+									Grid.Column="1" Grid.ColumnSpan="2">
+							<TextBlock  FlowDirection="RightToLeft"
+										  Foreground="#0096FF"
+										FontWeight="Bold"
+										Margin="0,0,0,5"
+									> بحث عن منتوج يدويا:</TextBlock>
+
+							<CustomControls:CustomAutoCompleteBox
+								
+		               SearchText="{Binding ProductNameTermToSerach, Mode=TwoWay}"
+		               ItemListBySearchTerm="{Binding ProductSuggestionsAfterManualSearch,
+					   Mode=TwoWay}"
+		               SelectedItem="{Binding SelectedProductNameTermSerach, Mode=TwoWay}"
+		               FlowDirection="LeftToRight"
+		                         />
+
+						</StackPanel>
+
+						
+
+						<StackPanel Margin="0,0,5,0"
+									Grid.Row="1"
+									Grid.Column="0"
+									>
+							<TextBlock  FlowDirection="RightToLeft"
+										  Foreground="#0096FF"
+										FontWeight="Bold"
+										Margin="0,0,0,5"
+										Grid.ColumnSpan="2"
+									> اسم المزود:</TextBlock>
+							<AutoCompleteBox x:Name="clients"
+											 FilterMode="ContainsOrdinal"
+											 FontFamily="Roboto"
+											 FlowDirection="LeftToRight"
+											 ItemsSource="{Binding SuppliersList}"
+											 Text="{Binding EntredSupplierName_PhoneNumber}"
+											 SelectedItem="{Binding SelectedSupplierName_PhoneNumber}"
+										  />
+						</StackPanel>
+
+						<StackPanel Margin="0,0,5,0"
+						Grid.Row="1" Grid.Column="3"  >
+							<TextBlock  FlowDirection="RightToLeft"
+										  Foreground="#0096FF"
+										FontWeight="Bold"
+										Margin="0,0,0,5"
+									> طريقة الدفع:</TextBlock>
+							<ComboBox FlowDirection="RightToLeft"
+						  Margin="10 0" ItemsSource="{Binding PaymentsMethods}"
+						  SelectedItem="{Binding SelectedPaymentMethod}"
+						>
+							</ComboBox>
+
+						</StackPanel>
+						<StackPanel Grid.Row="1"
+									Grid.Column="5" Grid.ColumnSpan="6"
+									Margin="5"
+										VerticalAlignment="Center"
+									  HorizontalAlignment="Center">
+
+							<Label Foreground="#EE4B2B"
+								   FontWeight="Bold"
+								   Content="{Binding ErrorMessage}"
+								   IsVisible="{Binding isErrorLabelVisible}"
+								   FlowDirection="RightToLeft"
+								   />
+
+						</StackPanel>
+
+					</Grid>
+
+				</Border>
+
+			</Border>
+
+
+
+			<!-- Second row: Scrollable Image Gallery  Background="AliceBlue"-->
+			<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Height="380"
+						   Margin="0 20 0 0" Background="Transparent">
+				<ItemsControl ItemsSource="{Binding ProductsListScanned_To_Recive}"
+							  HorizontalAlignment="Center"
+							  
+							  >
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<Border Margin="5" Padding="5" BoxShadow="0 3 5 2 Gainsboro"
+									Background="AliceBlue">
+
+								<Grid HorizontalAlignment="Stretch">
+									<!-- Image and Product Details -->
+									<Grid>
+										<Grid.RowDefinitions>
+											<!-- New Product row -->
+											<RowDefinition Height="Auto" />
+											<!-- Image row -->
+											<RowDefinition Height="Auto" />
+											<!-- Product Name row -->
+											<RowDefinition Height="Auto" />
+											<!-- Prices row -->
+											<RowDefinition Height="Auto" />
+											<!-- Product details row -->
+											<RowDefinition Height="Auto"/>
+											<!-- StockError details row -->
+											<RowDefinition Height="Auto"/>
+										</Grid.RowDefinitions>
+
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="*"/>
+										</Grid.ColumnDefinitions>
+
+										<!-- New Product Label (New Row: 0) -->
+										<Grid Grid.Row="0"
+											  Background="{Binding ProductBackgroundColor}">
+											<Button Content="{Binding ProductStatusMessage}"
+													FontWeight="Bold"
+													FontSize="12"
+													Foreground="White"
+													HorizontalAlignment="Center"
+													Padding="5"
+													Background="Transparent"
+													Command="{Binding EditNewProductToReceiveInfoCommand}" />
+
+										</Grid>
+
+
+
+										<!-- Image -->
+										<Grid Grid.Row="1" Margin="0 0 0 5"
+											  Background="#E5F3FD">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="Auto"/>
+											</Grid.ColumnDefinitions>
+
+											<!-- Image -->
+											<Image Source="{Binding ProductInfo.SelectedProductImage}" ClipToBounds="True" Width="20" Height="20" VerticalAlignment="Center">
+												<ToolTip.Tip>
+													<Border Background="White" Padding="0">
+														<Image Source="{Binding ProductInfo.SelectedProductImage}" MaxHeight="400" MaxWidth="400"/>
+													</Border>
+												</ToolTip.Tip>
+												<ToolTip.Placement>
+													Bottom
+												</ToolTip.Placement>
+											</Image>
+
+											<!-- Product Name -->
+											<TextBlock Text="{Binding ProductInfo.name}"
+													   FontWeight="Bold"
+													   FontSize="14"
+													   HorizontalAlignment="Center"
+													   Margin="5"
+													   Grid.Column="1"/>
+										</Grid>
+
+										<!-- Prices row (Row 2) -->
+										<Grid Grid.Row="2" Margin="0 5 0 5">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="*"/>
+											</Grid.ColumnDefinitions>
+
+											<!-- Bought Price -->
+											<TextBlock Text="{Binding ProductInfo.cost, StringFormat={}{0}Dh}"
+													   HorizontalAlignment="Center" Grid.Column="0"
+													   Foreground="#EE4B2B"
+													   FontWeight="Bold">
+												<ToolTip.Tip>اشتريت بسعر</ToolTip.Tip>
+											</TextBlock>
+
+											<!-- Selling Price -->
+											<TextBlock Text="{Binding ProductInfo.price, StringFormat={}{0}Dh}"
+													   HorizontalAlignment="Center"
+													   Grid.Column="1"
+													   Foreground="#0096FF"
+													   FontWeight="Bold"
+													   >
+												<ToolTip.Tip>سعر البيع</ToolTip.Tip>
+											</TextBlock>
+										</Grid>
+
+										<!-- Product details (Row 3) -->
+										<Grid Grid.Row="3"
+											  Margin="0 5 0 0"
+											  Background="#E5F3FD"
+											  HorizontalAlignment="Center">
+
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="*"/>
+												<ColumnDefinition Width="*"/>
+											</Grid.ColumnDefinitions>
+
+											<!-- Remove button -->
+											<Button Grid.Column="0" Content="-"
+													HorizontalAlignment="Center"
+													Padding="11 4 11 4"
+													Background="red"
+													Foreground="White" BorderThickness="0"
+													FontWeight="Bold" FontSize="14"
+													VerticalAlignment="Center"
+													Margin="5"
+													Click="OnDeleteProductClicked"/>
+
+										
+											<!-- Quantity -->
+											<TextBox Grid.Column="2"
+													 Text="{Binding ProductsUnits}"
+													 Background="White"
+													 Foreground="#00cc33"
+													 FontWeight="Bold"
+													 Margin="5"
+													 MaxWidth="80"
+													 HorizontalAlignment="Center"
+													 VerticalAlignment="Center"
+													 BorderThickness="1"
+													 BorderBrush="#FFCCCCCC"/>
+										</Grid>
+
+									
+
+										<!-- Error message (Row 5) -->
+										<Grid Grid.Row="5">
+											<TextBlock
+												IsVisible="{Binding NumberOfProductsUnits_NotEqual_TheSumOf_SumOfThreeStock}"
+												FlowDirection="RightToLeft"
+												FontWeight="Bold"
+												Foreground="red"
+												MaxWidth="100"
+												TextWrapping="Wrap">
+												ليس هناك تطابق في عدد المنتوجات
+											</TextBlock>
+										</Grid>
+									</Grid>
+								</Grid>
+							</Border>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+
+					<ItemsControl.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel />
+						</ItemsPanelTemplate>
+					</ItemsControl.ItemsPanel>
+				</ItemsControl>
+			</ScrollViewer>
+
+
+
+		</Grid>
+
+	</Border>
+
+
+
+
+
+
+
+</UserControl>

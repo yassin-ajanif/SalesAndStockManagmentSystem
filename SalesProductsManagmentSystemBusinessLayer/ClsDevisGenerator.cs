@@ -205,7 +205,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             });
         }
 
-        void ComposeTable(IContainer container)
+        protected virtual void ComposeTable(IContainer container)
         {
             var TotalBalanceStyle = TextStyle.Default.FontSize(10).SemiBold().FontColor(Colors.Blue.Medium);
 
@@ -306,7 +306,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
         }
 
         // Style methods
-        static IContainer HeaderCellStyle(IContainer container)
+       protected static IContainer HeaderCellStyle(IContainer container)
         {
             return container.DefaultTextStyle(x => x.SemiBold())
                             .PaddingVertical(5)
@@ -314,7 +314,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                             .BorderColor(Colors.Black);
         }
 
-        static IContainer DataCellStyle(IContainer container)
+       protected static IContainer DataCellStyle(IContainer container)
         {
             return container.BorderBottom(1)
                             .BorderColor(Colors.Grey.Lighten2)

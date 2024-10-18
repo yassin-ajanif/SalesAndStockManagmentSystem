@@ -222,6 +222,17 @@
 								</StackPanel>
 							</Button>
 						</Border>
+
+						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="3" Grid.Column="3">
+							<Button Classes="WelcomeBtnsStyles"
+									Command="{Binding GoToBonCommandPageCommand}">
+								<StackPanel Classes="BtnContainer">
+									<Image Source="avares://GetStartedApp/Assets/Icons/BonCommand.png" />
+									<Label Content="وصل الشراء" Classes="WelecomeBtnsStyles" FontSize="16"/>
+
+								</StackPanel>
+							</Button>
+						</Border>
 							
 						
 					</Grid>
