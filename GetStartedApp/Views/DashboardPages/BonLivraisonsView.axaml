@@ -241,7 +241,12 @@
 										  CommandParameter="{Binding SelectedItem, 
 										  ElementName=ReturnedProductList}" 
 										  FontFamily="Roboto"/>
-							</ContextMenu>
+							<MenuItem Header="إرجاع منتجات"
+										  Command="{Binding OpenProductBoughtBySaleID_Command}"
+										  CommandParameter="{Binding SelectedItem, 
+										  ElementName=ReturnedProductList}"
+										  FontFamily="Roboto"/>
+						</ContextMenu>
 						</DataGrid.ContextMenu>
 
 						<DataGrid.Styles>

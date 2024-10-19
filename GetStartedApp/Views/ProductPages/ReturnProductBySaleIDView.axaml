@@ -1,0 +1,172 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GetStartedApp.Views.ProductPages.ReturnProductBySaleIDView"
+			 xmlns:vm="using:GetStartedApp.ViewModels.ProductPages"
+			 x:DataType="vm:ReturnProductBySaleIDViewModel"
+			 x:CompileBindings="True"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+             FontFamily="Roboto">
+
+
+	<Border  Margin="10 10 10 50" Height="520" >
+
+
+
+		<StackPanel Margin="10 10 10 0 " Width="700" Height="510">
+
+			<Grid Margin="10">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+			</Grid>
+
+			<Grid >
+				<ScrollViewer VerticalScrollBarVisibility="Auto" >
+					<DataGrid ItemsSource="{Binding ProductsToReturnList}"
+							  AutoGenerateColumns="False" IsReadOnly="False"
+							  GridLinesVisibility="All"
+							  FlowDirection="RightToLeft"
+							  Width="700" Height="450"
+							  Name="ProductsListGrid"
+							  CanUserResizeColumns="True"
+							  HorizontalScrollBarVisibility="Visible"
+							 >
+
+						<DataGrid.Columns>
+							<!-- ProductId column -->
+							<DataGridTemplateColumn CanUserSort="True" SortMemberPath="ProductId">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="10" MaxWidth="80">
+											<TextBlock>رقم المنتوج</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="10" MaxWidth="80" Text="{Binding ProductId}" TextWrapping="Wrap"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<!-- ProductName column -->
+							<DataGridTemplateColumn CanUserSort="True" Width="*" SortMemberPath="ProductName">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="10" >
+											<TextBlock>اسم المنتوج</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="10" MaxWidth="120" 
+												   Text="{Binding ProductName}" TextWrapping="Wrap"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<!-- SoldPrice column -->
+							<DataGridTemplateColumn CanUserSort="True" SortMemberPath="SoldPrice">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="10" MaxWidth="100">
+											<TextBlock>سعر البيع</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="10" Text="{Binding SoldPrice}" TextWrapping="Wrap"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<!-- Quantity column -->
+							<DataGridTemplateColumn CanUserSort="True" SortMemberPath="Quantity">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="10" >
+											<TextBlock>الكمية</TextBlock>
+											<TextBlock>المباعة</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="10" Text="{Binding Quantity}" TextWrapping="Wrap"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<DataGridTemplateColumn CanUserSort="True" >
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="10" >
+											<TextBlock>الكمية</TextBlock>
+											<TextBlock>المسترجعة</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+
+								<!-- Display template (when not editing) -->
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="10" MaxWidth="50" Text="50" TextWrapping="Wrap"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+
+								<!-- Edit template (when editing) -->
+								<DataGridTemplateColumn.CellEditingTemplate>
+									<DataTemplate>
+										<TextBox Margin="10" MaxWidth="50" 
+												 MaxLength="5" Text="50" TextWrapping="Wrap"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellEditingTemplate>
+							</DataGridTemplateColumn>
+
+
+							<!-- Return Checkbox column -->
+							<DataGridTemplateColumn CanUserSort="True" >
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="10" MaxWidth="50">
+											<TextBlock>إرجاع</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<CheckBox IsChecked="{Binding }" HorizontalAlignment="Center"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
+
+
+					</DataGrid>
+				</ScrollViewer>
+			</Grid>
+
+
+
+		</StackPanel>
+
+
+
+
+
+	</Border>
+	
+	
+</UserControl>

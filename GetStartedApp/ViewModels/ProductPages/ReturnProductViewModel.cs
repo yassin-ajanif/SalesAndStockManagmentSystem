@@ -124,8 +124,6 @@ namespace GetStartedApp.ViewModels.ProductPages
             IsPriceReadOnly = false;
             IsCostReadOnly = false;
             IsStockQuantityReadOnly = false;
-           
-
 
         }
 

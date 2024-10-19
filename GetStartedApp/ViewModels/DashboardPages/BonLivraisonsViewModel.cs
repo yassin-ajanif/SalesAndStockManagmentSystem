@@ -7,11 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 using GetStartedApp.Helpers.CustomUIErrorAttributes;
-using Avalonia.Input.Raw;
-using Avalonia.Controls;
+using System.Reactive.Linq;
+
 
 namespace GetStartedApp.ViewModels.DashboardPages
 {
@@ -70,15 +68,22 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ReactiveCommand<Unit, Unit> GetSaleInfoFromDbCommand { get; set; }
         public ReactiveCommand<object, Unit> DisplaySellInfoAsPdfCommand { get; set; }
         public ReactiveCommand<object, Unit> DisplayInvoiceInfoAsPdfCommand { get; set; }
+        public ReactiveCommand<object, Unit> OpenProductBoughtBySaleID_Command { get; set; }
+        
+        public Interaction  <int,Unit> OpenProductsListToReturn { get; }
+
         public BonLivraisonsViewModel(MainWindowViewModel mainWindowViewModel):base(mainWindowViewModel)
         {
             ThisDayBtnCommand = ReactiveCommand.Create(setStartAndDateOfToday_WhenTodayBtnIsClicked);
             ThisWeekBtnCommand = ReactiveCommand.Create(setStartAndDateThisWeek_WhenWeekBtnIsClicked);
             ThisMonthBtnCommand = ReactiveCommand.Create(setStartAndDateOfThisMonth_WhenThisMonthBtnIsClicked);
+           
+            OpenProductsListToReturn = new Interaction<int, Unit>();
 
             GetSaleInfoFromDbCommand = ReactiveCommand.Create(GetSalesInfoFromDb_For_Clients_Or_Companies, CheckIfUserDidintMakeSearchMistake());
             DisplaySellInfoAsPdfCommand = ReactiveCommand.Create<object>(DisplaySalePdf_Based_on_SaleID);
             DisplayInvoiceInfoAsPdfCommand = ReactiveCommand.Create<object>(DisplayInvoicePdf_Based_on_SaleID);
+            OpenProductBoughtBySaleID_Command = ReactiveCommand.Create<object>(DisplayProductListToReturn);
 
             setTheSearchMode_For_Client_Or_Company(SelectedClientType);
             when_UserSearchProductByName_DeleteBarcode_SearchText_And_ViceSera();
@@ -276,5 +281,18 @@ namespace GetStartedApp.ViewModels.DashboardPages
             }
         }
 
+   
+        private async void DisplayProductListToReturn(object SelectedItem)
+        {
+            // Attempt to cast selectedItem to ClientOrCompanySaleInfo
+            if (SelectedItem is ClientOrCompanySaleInfo saleInfo)
+            {
+                // Access the properties of the saleInfo object
+                int saleID = saleInfo.SaleID; // Ensure you access SaleID correctly
+
+                await OpenProductsListToReturn.Handle(saleID);
+            }
+        }
+    
     }
 }
