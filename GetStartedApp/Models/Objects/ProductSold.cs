@@ -1,4 +1,5 @@
 ﻿using Avalonia.Media.Imaging;
+using GetStartedApp.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -6,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace GetStartedApp.Models.Objects
 {
-    public class ProductSold : INotifyPropertyChanged
+    public class ProductSold : ViewModelBase , INotifyPropertyChanged
     {
         private long _productId;
         private string _productName;

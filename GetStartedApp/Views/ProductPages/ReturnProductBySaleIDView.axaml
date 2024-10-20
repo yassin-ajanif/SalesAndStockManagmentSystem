@@ -8,7 +8,9 @@
 			 x:DataType="vm:ReturnProductBySaleIDViewModel"
 			 x:CompileBindings="True"
 			 Background="{DynamicResource myBackgroundFaintBlueColor}"
-             FontFamily="Roboto">
+             FontFamily="Roboto"
+			 Name="MyUserControlName"
+			 >
 
 
 	<Border  Margin="10 10 10 50" Height="520" >
@@ -29,8 +31,11 @@
 				</Grid.ColumnDefinitions>
 
 			</Grid>
-
+		
 			<Grid >
+
+		
+				
 				<ScrollViewer VerticalScrollBarVisibility="Auto" >
 					<DataGrid ItemsSource="{Binding ProductsToReturnList}"
 							  AutoGenerateColumns="False" IsReadOnly="False"
@@ -136,21 +141,40 @@
 							</DataGridTemplateColumn>
 
 
-							<!-- Return Checkbox column -->
-							<DataGridTemplateColumn CanUserSort="True" >
-								<DataGridTemplateColumn.HeaderTemplate>
+
+							<DataGridTemplateColumn Header="Actions" Width="120" >
+
+								<DataGridTemplateColumn.HeaderTemplate >
 									<DataTemplate>
-										<StackPanel Margin="10" MaxWidth="50">
-											<TextBlock>إرجاع</TextBlock>
-										</StackPanel>
+
+						<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" 
+												HorizontalAlignment="Center" >
+							
+							<TextBlock  Text="ارجاع الكل" 
+										VerticalAlignment="Center" Margin="0 0 5 0"
+										FontSize="14"/>
+
+							<Viewbox Height="25">
+							<CheckBox 
+						IsChecked="{Binding $parent[DataGrid].
+						((vm:ReturnProductBySaleIDViewModel)DataContext).IsAllChecked}"/>
+							</Viewbox>
+											
+						</StackPanel>
+										
+										
 									</DataTemplate>
 								</DataGridTemplateColumn.HeaderTemplate>
+
 								<DataGridTemplateColumn.CellTemplate>
 									<DataTemplate>
-										<CheckBox IsChecked="{Binding }" HorizontalAlignment="Center"/>
+										<TextBlock Text=""/>
 									</DataTemplate>
 								</DataGridTemplateColumn.CellTemplate>
+
 							</DataGridTemplateColumn>
+						
+						
 						</DataGrid.Columns>
 
 

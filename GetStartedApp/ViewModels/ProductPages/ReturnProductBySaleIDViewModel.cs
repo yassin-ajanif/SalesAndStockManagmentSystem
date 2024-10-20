@@ -12,40 +12,56 @@ namespace GetStartedApp.ViewModels.ProductPages
 {
     public class ReturnProductBySaleIDViewModel : ViewModelBase
     {
-        ProductSoldInfos productsSoldInfo;
-        DataTable ProductsSoldTable;
 
-        private List<ProductSold> _productsToReturnList;
-        public List<ProductSold> ProductsToReturnList { get => _productsToReturnList; set => this.RaiseAndSetIfChanged(ref _productsToReturnList, value); }
+      ProductSoldInfos productsSoldInfo;
+      DataTable ProductsSoldTable;
 
+      private List<ReturnedProduct> _productsToReturnList;
+      public List<ReturnedProduct> ProductsToReturnList { get => _productsToReturnList; set => this.RaiseAndSetIfChanged(ref _productsToReturnList, value); }
+
+     
+      private bool _isAllChecked;
+      public bool IsAllChecked
+      {
+          get => _isAllChecked;
+          set
+          {
+              this.RaiseAndSetIfChanged(ref _isAllChecked, value);
+              // When header checkbox is toggled, update all items
+              foreach (var product in ProductsToReturnList)
+              {
+                  product.IsCheckedForReturn = value;
+              }
+          }
+      }
         public ReturnProductBySaleIDViewModel(int saleID) {
 
              productsSoldInfo = AccessToClassLibraryBackendProject.LoadProductSoldInfoFromReader(saleID);
              ProductsToReturnList = ConvertDataTableToProductSoldList(productsSoldInfo.ProductsBoughtInThisOperation);
         }
 
-        public List<ProductSold> ConvertDataTableToProductSoldList(DataTable productsDataTable)
+        public List<ReturnedProduct> ConvertDataTableToProductSoldList(DataTable productsDataTable)
         {
-            List<ProductSold> productSoldList = new List<ProductSold>();
+            List<ReturnedProduct> returnedProductsList = new List<ReturnedProduct>();
 
             foreach (DataRow row in productsDataTable.Rows)
             {
                 // Create a new ProductSold object using values from the DataRow
-                var productSold = new ProductSold(
+                var productSold = new ReturnedProduct(
                     productId: row.Field<long>("ProductID"),
                     productName: row.Field<string>("ProductName"),
                     originalPrice: Convert.ToSingle(row.Field<decimal>("UnitPrice")),  // Convert from decimal to float
                     soldPrice: Convert.ToSingle(row.Field<decimal>("UnitSoldPrice")),  // Convert from decimal to float
-                    quantity: row.Field<int>("QuantitySold"),
-                    image: null
+                    quantitiy: row.Field<int>("QuantitySold"),
+                    Image: null
                 );
 
 
                 // Add the ProductSold object to the list
-                productSoldList.Add(productSold);
+                returnedProductsList.Add(productSold);
             }
 
-            return productSoldList;
+            return returnedProductsList;
         }
     }
 }
