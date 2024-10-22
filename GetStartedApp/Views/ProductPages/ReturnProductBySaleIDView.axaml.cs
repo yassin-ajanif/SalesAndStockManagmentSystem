@@ -1,24 +1,21 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Avalonia.VisualTree;
-using GetStartedApp.ViewModels;
-using ReactiveUI;
-using System.Threading.Tasks;
+using Avalonia.Input;
+using Avalonia.Media;
+using System.Xml.Schema;
 using System;
-using System.Reactive;
-using Avalonia.ReactiveUI;
-using GetStartedApp.ViewModels.ProductPages;
 
-namespace GetStartedApp.Views.ProductPages;
-
-public partial class ReturnProductBySaleIDView : UserControl
+namespace GetStartedApp.Views.ProductPages
 {
-    public ReturnProductBySaleIDView()
+    public partial class ReturnProductBySaleIDView : UserControl
     {
-        InitializeComponent();
-      
+        public ReturnProductBySaleIDView()
+        {
+            InitializeComponent();
+
+        }
+
+
     }
-
-
 }

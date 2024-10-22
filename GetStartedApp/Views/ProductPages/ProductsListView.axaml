@@ -146,9 +146,6 @@
 										Value="{Binding 
 										Converter={StaticResource StockQuantityToColorConverter}}" />
 
-
-							
-						
 						</Style>
 
 					

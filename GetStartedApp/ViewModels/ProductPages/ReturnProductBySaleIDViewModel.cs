@@ -3,6 +3,7 @@ using GetStartedApp.Models.Objects;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,11 @@ namespace GetStartedApp.ViewModels.ProductPages
       ProductSoldInfos productsSoldInfo;
       DataTable ProductsSoldTable;
 
-      private List<ReturnedProduct> _productsToReturnList;
-      public List<ReturnedProduct> ProductsToReturnList { get => _productsToReturnList; set => this.RaiseAndSetIfChanged(ref _productsToReturnList, value); }
+      private ObservableCollection<ReturnedProduct> _productsToReturnList;
+      public ObservableCollection<ReturnedProduct> ProductsToReturnList { 
+            get => _productsToReturnList; 
+            set => this.RaiseAndSetIfChanged(ref _productsToReturnList, value);
+        }
 
      
       private bool _isAllChecked;
@@ -30,19 +34,24 @@ namespace GetStartedApp.ViewModels.ProductPages
               // When header checkbox is toggled, update all items
               foreach (var product in ProductsToReturnList)
               {
+                  //product.IsCheckedForReturn = value;
                   product.IsCheckedForReturn = value;
+                 
               }
           }
       }
+
+       
+        
         public ReturnProductBySaleIDViewModel(int saleID) {
 
              productsSoldInfo = AccessToClassLibraryBackendProject.LoadProductSoldInfoFromReader(saleID);
              ProductsToReturnList = ConvertDataTableToProductSoldList(productsSoldInfo.ProductsBoughtInThisOperation);
         }
 
-        public List<ReturnedProduct> ConvertDataTableToProductSoldList(DataTable productsDataTable)
+        public ObservableCollection<ReturnedProduct> ConvertDataTableToProductSoldList(DataTable productsDataTable)
         {
-            List<ReturnedProduct> returnedProductsList = new List<ReturnedProduct>();
+            ObservableCollection<ReturnedProduct> returnedProductsList = new ObservableCollection<ReturnedProduct>();
 
             foreach (DataRow row in productsDataTable.Rows)
             {
@@ -63,5 +72,8 @@ namespace GetStartedApp.ViewModels.ProductPages
 
             return returnedProductsList;
         }
+  
+        
+    
     }
 }

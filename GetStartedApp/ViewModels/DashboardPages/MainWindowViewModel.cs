@@ -78,9 +78,11 @@ public class MainWindowViewModel : ViewModelBase
         CheckIfSystemShouldRaiseBellNotificationIcon();
 
         CultureHelper.SetLanguageSystem("ar-Ma");
-       // GoToLiscencePage();
-        
-        GoToDashboardPage();
+        // GoToLiscencePage();
+
+        //GoToDashboardPage();
+
+        GoToBonLivraisonsPage();
         // ObservableCollection<ProductsScannedInfo> productsScannedInfos = new ObservableCollection<ProductsScannedInfo>();
 
         // CurrentPage = new BLViewModel(this,new MakeSaleViewModel(this), productsScannedInfos);

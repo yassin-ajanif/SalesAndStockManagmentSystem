@@ -16,13 +16,14 @@ namespace GetStartedApp.Views
     // to give a user a warning to fill up the stock 
     public class StockQuantityToColorConverter : IValueConverter
     {
+        int minimalProductStockValue = AccessToClassLibraryBackendProject.GetMinimalStockValue();
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // Check if the value is a ProductInfo object
             if (value is ProductInfo productInfo)
             {
                 // Access the StockQuantity property and check if it meets the condition
-                if (productInfo.StockQuantity <= AccessToClassLibraryBackendProject.GetMinimalStockValue())
+                if (productInfo.StockQuantity <= minimalProductStockValue)
                 {
                     // Return red color if stock quantity is less than 10
                     return Brushes.Red;
