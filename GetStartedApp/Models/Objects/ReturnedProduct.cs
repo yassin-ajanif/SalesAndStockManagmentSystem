@@ -58,12 +58,24 @@ namespace GetStartedApp.Models.Objects
 
         public int maximumProductsUserCanReturn => Quantity - int.Parse(PreviousReturnedQuantity);
 
+        public int SoldItemID { get; }
 
-        public ReturnedProduct(long productId, string productName, float originalPrice, float soldPrice, int quantitiy, Bitmap Image)
+        // this constructor is made when we return product without introducing the saleid normally is made for unkown clients
+        public ReturnedProduct( long productId, string productName, float originalPrice, float soldPrice, int quantitiy, Bitmap Image)
+           : base(productId, productName, originalPrice, soldPrice, quantitiy, Image)
+        {
+
+      
+       
+        }
+
+        // this constructor is made for know saleid operations so in this case we need to have solditemid that we want to return
+        public ReturnedProduct(int soldItemID, long productId, string productName, float originalPrice, float soldPrice, int quantitiy, Bitmap Image)
             : base(productId, productName, originalPrice, soldPrice, quantitiy, Image)
         {
 
             IsProductReturnable = IsThisProductReturnable();
+            SoldItemID = soldItemID;
 
         }
 

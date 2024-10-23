@@ -79,7 +79,8 @@ namespace GetStartedApp.ViewModels.ProductPages
                     originalPrice: Convert.ToSingle(row.Field<decimal>("UnitPrice")),  // Convert from decimal to float
                     soldPrice: Convert.ToSingle(row.Field<decimal>("UnitSoldPrice")),  // Convert from decimal to float
                     quantitiy: row.Field<int>("QuantitySold"),
-                    Image: null
+                    Image: null,
+                    soldItemID : row.Field<int>("SoldItemID")
                 );
 
 
@@ -141,6 +142,8 @@ namespace GetStartedApp.ViewModels.ProductPages
             productsTable.Columns.Add("Quantity", typeof(int));
             productsTable.Columns.Add("QuantityToReturn", typeof(string));
             productsTable.Columns.Add("PreviousReturnedQuantity", typeof(string));
+            productsTable.Columns.Add("SoldItemID", typeof(int));
+
 
             // Iterate over the ProductsToReturnList observable collection
             foreach (var product in ProductsToReturnList)
@@ -159,6 +162,7 @@ namespace GetStartedApp.ViewModels.ProductPages
                     row["Quantity"] = product.Quantity;
                     row["QuantityToReturn"] = product.QuanityToReturn;
                     row["PreviousReturnedQuantity"] = product.PreviousReturnedQuantity;
+                    row["SoldItemID"] = product.SoldItemID;
 
                     // Add the row to the DataTable
                     productsTable.Rows.Add(row);
