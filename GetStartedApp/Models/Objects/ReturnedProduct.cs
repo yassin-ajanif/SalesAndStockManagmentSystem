@@ -32,10 +32,11 @@ namespace GetStartedApp.Models.Objects
 
                 SetField(ref _quanityToReturn, value);
                 RaiseAnUiError_If_UserEntredInvalid_ProudctsNumber_To_Return(value);
+                CheckTheBoxIfProductQuantityToReturnIsEdited(value);
             }
         }
 
-        private string _previousReturnedQuantity = "1";
+        private string _previousReturnedQuantity = "0";
         public string PreviousReturnedQuantity
         {
             get => _previousReturnedQuantity;
@@ -52,19 +53,17 @@ namespace GetStartedApp.Models.Objects
         public bool IsProductReturnable
         {
             get => _isProductReturnable;
-            set
-                {
-                if (IsThisProductReturnable()) SetField(ref _isProductReturnable, true);
-                else SetField(ref _isProductReturnable, false);
-                }
+            set => SetField(ref _isProductReturnable, value);   
         }
+
+        public int maximumProductsUserCanReturn => Quantity - int.Parse(PreviousReturnedQuantity);
 
 
         public ReturnedProduct(long productId, string productName, float originalPrice, float soldPrice, int quantitiy, Bitmap Image)
             : base(productId, productName, originalPrice, soldPrice, quantitiy, Image)
         {
 
-
+            IsProductReturnable = IsThisProductReturnable();
 
         }
 
@@ -75,7 +74,7 @@ namespace GetStartedApp.Models.Objects
                 int.TryParse(PreviousReturnedQuantity, out int previousQuantityReturned))
             {
                 int quantitySold = Quantity;
-                int maximumProductsUserCanReturn = quantitySold - previousQuantityReturned;
+               // int maximumProductsUserCanReturn = quantitySold - previousQuantityReturned;
 
                 // Ensure returned quantity does not exceed the sold quantity
                 if (quantityToReturn > maximumProductsUserCanReturn)
@@ -100,5 +99,30 @@ namespace GetStartedApp.Models.Objects
 
             return QuantitySold > PreviousQuantity;
         }
+
+
+        private void CheckTheBoxIfProductQuantityToReturnIsEdited(string quantityToReturn)
+        {
+            // Try to parse the string input to an integer
+            if (int.TryParse(quantityToReturn, out int quantity))
+            {
+                // Check if the quantity is greater than zero and doesn't exceed the maximum allowed return quantity
+                if (quantity > 0 && quantity <= maximumProductsUserCanReturn)
+                {
+                    IsCheckedForReturn = true;
+                }
+                else
+                {
+                    IsCheckedForReturn = false; // Quantity is either zero or exceeds allowed quantity
+                }
+            }
+            else
+            {
+                // Invalid input (e.g., not a number)
+                IsCheckedForReturn = false;
+            }
+        }
+
+
     }
 }

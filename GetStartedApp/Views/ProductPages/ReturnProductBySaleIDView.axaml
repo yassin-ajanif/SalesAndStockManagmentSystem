@@ -24,24 +24,35 @@
 			
 		</Style>
 
-		<Style Selector="DataGridRow:isDisabled">
-			<Setter Property="IsEnabled" Value="False" />
-			<Setter Property="Background" Value="Gray" />
+
+		<Style Selector="DataGridRow:disabled">
+			<Setter Property="Background" Value="LightGray" />
+			<Setter Property="Foreground" Value="Gray" />
+			<!-- Optional, change text color -->
 		</Style>
-		
+
+		<Style Selector="Border.ReturnedProductsTable">
+
+			<!---->
+			<Setter Property="BoxShadow" Value="0 10 20 5 Gainsboro"/>
+			<Setter Property="CornerRadius"        Value="1"/>
+			<Setter Property="Margin"              Value="1"/>
+			
+
+		</Style>
 		
 
 	</UserControl.Styles>
 
 
 
-	<Border  Margin="0 10 0 50" Height="520" >
+	<Border  Width="780" Height="520" Classes ="ReturnedProductsTable" 
+			
+			 >
 
+		<StackPanel  Width="760" Height="500" VerticalAlignment="Center" HorizontalAlignment="Center" >
 
-
-		<StackPanel Margin="0 10 0 0 " Width="780" Height="510">
-
-			<Grid Margin="0">
+			<Grid  >
 
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
@@ -64,11 +75,12 @@
 							  AutoGenerateColumns="False" IsReadOnly="False"
 							  GridLinesVisibility="All"
 							  FlowDirection="RightToLeft"
-							  Width="780" Height="450"
+							  Width="760" Height="450"
 							  Name="ProductsListGrid"
 							  CanUserResizeColumns="True"
 							  HorizontalScrollBarVisibility="Visible"
-  
+                              BorderBrush="Gainsboro"
+							  BorderThickness="1"
 							 >
 
 
@@ -102,10 +114,10 @@
 								</DataGridTemplateColumn.HeaderTemplate>
 								<DataGridTemplateColumn.CellTemplate>
 									<DataTemplate>
-										<TextBlock Margin="5" MaxWidth="180" Text="{Binding ProductName}" 
-												   TextWrapping="WrapWithOverflow" 
+										<TextBlock Margin="5" MaxWidth="180" Text="{Binding ProductName}"
+												   TextWrapping="WrapWithOverflow"
 												   HorizontalAlignment="Center" VerticalAlignment="Center"
-												   />
+											   />
 									</DataTemplate>
 								</DataGridTemplateColumn.CellTemplate>
 							</DataGridTemplateColumn>
@@ -141,8 +153,8 @@
 								<DataGridTemplateColumn.CellTemplate>
 									<DataTemplate>
 										<TextBlock  Text="{Binding Quantity}" FlowDirection="LeftToRight"
-												    HorizontalAlignment="Center" VerticalAlignment="Center"/>
-											</DataTemplate>
+													HorizontalAlignment="Center" VerticalAlignment="Center"/>
+									</DataTemplate>
 								</DataGridTemplateColumn.CellTemplate>
 							</DataGridTemplateColumn>
 
@@ -159,7 +171,7 @@
 								<DataGridTemplateColumn.CellTemplate>
 									<DataTemplate>
 										<TextBlock  Text="{Binding PreviousReturnedQuantity}" FlowDirection="LeftToRight"
-												    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+													HorizontalAlignment="Center" VerticalAlignment="Center"/>
 									</DataTemplate>
 								</DataGridTemplateColumn.CellTemplate>
 							</DataGridTemplateColumn>
@@ -188,8 +200,8 @@
 								<DataGridTemplateColumn.CellEditingTemplate>
 									<DataTemplate>
 										<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-											<TextBox MaxWidth="100" MaxLength="5" 
-													 FlowDirection="LeftToRight" 
+											<TextBox MaxWidth="100" MaxLength="5"
+													 FlowDirection="LeftToRight"
 													 Text="{Binding QuanityToReturn}" HorizontalAlignment="Center"/>
 										</StackPanel>
 									</DataTemplate>
@@ -211,7 +223,9 @@
 								</DataGridTemplateColumn.HeaderTemplate>
 								<DataGridTemplateColumn.CellTemplate>
 									<DataTemplate>
-										<CheckBox IsChecked="{Binding IsCheckedForReturn}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+										<CheckBox IsChecked="{Binding IsCheckedForReturn}" IsHitTestVisible="False"
+												  HorizontalAlignment="Center" VerticalAlignment="Center"
+											  />
 									</DataTemplate>
 								</DataGridTemplateColumn.CellTemplate>
 							</DataGridTemplateColumn>
@@ -224,6 +238,12 @@
 				</ScrollViewer>
 			</Grid>
 
+			<Button HorizontalAlignment="Center" Margin="10" Foreground="White"
+					Background="{ DynamicResource RedColorButtonValidated}" 
+					Command="{Binding ReturnCommand}" 
+					Padding="15 10"
+					FontWeight="Bold"
+					Content="ارجاع"/>
 
 
 		</StackPanel>
