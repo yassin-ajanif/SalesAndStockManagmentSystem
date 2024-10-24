@@ -36,7 +36,7 @@ namespace GetStartedApp.Models.Objects
             }
         }
 
-        private string _previousReturnedQuantity = "0";
+        private string _previousReturnedQuantity;
         public string PreviousReturnedQuantity
         {
             get => _previousReturnedQuantity;
@@ -61,21 +61,18 @@ namespace GetStartedApp.Models.Objects
         public int SoldItemID { get; }
 
         // this constructor is made when we return product without introducing the saleid normally is made for unkown clients
-        public ReturnedProduct( long productId, string productName, float originalPrice, float soldPrice, int quantitiy, Bitmap Image)
-           : base(productId, productName, originalPrice, soldPrice, quantitiy, Image)
-        {
-
-      
+        public ReturnedProduct(long productId, string productName, float originalPrice, float soldPrice, int quantitiy, Bitmap Image)
+           : base(productId, productName, originalPrice, soldPrice, quantitiy, Image) { }
        
-        }
 
         // this constructor is made for know saleid operations so in this case we need to have solditemid that we want to return
-        public ReturnedProduct(int soldItemID, long productId, string productName, float originalPrice, float soldPrice, int quantitiy, Bitmap Image)
+        public ReturnedProduct(int soldItemID, long productId, string productName, float originalPrice, float soldPrice, int quantitiy, int PreviousReturnedUnits, Bitmap Image)
             : base(productId, productName, originalPrice, soldPrice, quantitiy, Image)
         {
-
-            IsProductReturnable = IsThisProductReturnable();
+            
+            PreviousReturnedQuantity = PreviousReturnedUnits.ToString();
             SoldItemID = soldItemID;
+            IsProductReturnable = IsThisProductReturnable();
 
         }
 
@@ -104,7 +101,7 @@ namespace GetStartedApp.Models.Objects
         }
 
 
-        private bool IsThisProductReturnable()
+        public bool IsThisProductReturnable()
         {
             int QuantitySold = Quantity;
             int PreviousQuantity = int.Parse(PreviousReturnedQuantity);

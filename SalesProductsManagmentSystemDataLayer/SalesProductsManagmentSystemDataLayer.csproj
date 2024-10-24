@@ -133,6 +133,7 @@
     <Compile Include="clsDataLayerBonReception.cs" />
     <Compile Include="clsDataLayerCompanies.cs" />
     <Compile Include="clsDataLayerPayments.cs" />
+    <Compile Include="clsDataLayerReturnProducts.cs" />
     <Compile Include="clsDataLayerSupplier.cs" />
     <Compile Include="ClsKeyConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

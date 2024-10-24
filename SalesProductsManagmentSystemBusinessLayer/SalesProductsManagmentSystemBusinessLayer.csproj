@@ -115,6 +115,7 @@
     <Compile Include="ClsLoginManager.cs" />
     <Compile Include="ClsProductManager.cs" />
     <Compile Include="ClsProgramPrameters.cs" />
+    <Compile Include="ClsReturnedProduct.cs" />
     <Compile Include="ClsSalesManager.cs" />
     <Compile Include="ClsSupplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

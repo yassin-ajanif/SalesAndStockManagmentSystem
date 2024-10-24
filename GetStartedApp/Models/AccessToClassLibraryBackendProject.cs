@@ -922,6 +922,7 @@ namespace GetStartedApp.Models
                 productsDataTable.Columns.Add("QuantitySold", typeof(int));
                 productsDataTable.Columns.Add("QuantitySold2", typeof(int));
                 productsDataTable.Columns.Add("QuantitySold3", typeof(int));
+                productsDataTable.Columns.Add("ReturnedUnits", typeof(int));
                 productsDataTable.Columns.Add("UnitPrice", typeof(decimal));
                 productsDataTable.Columns.Add("UnitSoldPrice", typeof(decimal));
                 productsDataTable.Columns.Add("Profit", typeof(double));
@@ -945,6 +946,7 @@ namespace GetStartedApp.Models
                     row["QuantitySold"] = reader.GetInt32(reader.GetOrdinal("QuantitySold"));
                     row["QuantitySold2"] = reader.GetInt32(reader.GetOrdinal("QuantitySold2"));
                     row["QuantitySold3"] = reader.GetInt32(reader.GetOrdinal("QuantitySold3"));
+                    row["ReturnedUnits"] = reader.GetInt32(reader.GetOrdinal("ReturnedUnits"));
                     row["UnitPrice"] = reader.GetDecimal(reader.GetOrdinal("UnitPrice"));
                     row["UnitSoldPrice"] = reader.GetDecimal(reader.GetOrdinal("UnitSoldPrice"));
                     row["Profit"] = reader.GetDouble(reader.GetOrdinal("Profit"));
@@ -1047,5 +1049,21 @@ namespace GetStartedApp.Models
             // Call the data layer function
             return SalesProductsManagmentSystemBusinessLayer.ClsSupplier.IsSupplierBLNumberAlreadyExisitg_For_ThisSupplierName(supplierName, supplierBLNumber);
         }
-    }
+
+
+        public static bool ProcessProductReturns(int saleID, DataTable productsToReturn)
+        {
+            // Call the data layer function
+            bool isSuccess = clsDataLayerReturnProducts.ReturnProductsBySaleID(saleID, productsToReturn);
+
+            if (!isSuccess)
+            {
+                // Optionally handle logging or error handling here
+                Console.WriteLine($"Product return process failed for SaleID: {saleID}");
+            }
+
+            return isSuccess;
+        }
+    
+}
 }

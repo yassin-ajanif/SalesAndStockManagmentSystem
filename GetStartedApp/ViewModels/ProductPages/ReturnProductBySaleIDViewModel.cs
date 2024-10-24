@@ -21,6 +21,7 @@ namespace GetStartedApp.ViewModels.ProductPages
 
       ProductSoldInfos productsSoldInfo;
       DataTable ProductsSoldTable;
+      private int _saleID;
 
       private ObservableCollection<ReturnedProduct> _productsToReturnList;
       public ObservableCollection<ReturnedProduct> ProductsToReturnList { 
@@ -28,7 +29,8 @@ namespace GetStartedApp.ViewModels.ProductPages
             set => this.RaiseAndSetIfChanged(ref _productsToReturnList, value);
         }
 
-     
+      public Interaction<string,Unit> ShowMessageBoxDialog { get; }
+
       private bool _isAllChecked;
       public bool IsAllChecked
       {
@@ -36,20 +38,7 @@ namespace GetStartedApp.ViewModels.ProductPages
           set
           {
               this.RaiseAndSetIfChanged(ref _isAllChecked, value);
-              // When header checkbox is toggled, update all items
-              foreach (var product in ProductsToReturnList)
-              {
-                    //product.IsCheckedForReturn = value;
-                    if (product.IsProductReturnable)
-                    {
-                        product.IsCheckedForReturn = value;
-
-                        // when we check all the products must be returned all and each prduct must have the maximum quanity to return this is the job of the first if statement
-                        if (isThisProductCheckedForReturn(value)) SetTheMaximumUnitsToReturnPerThisProduct(product);
-                        // else if we do the reverse we uncheck the all product all product are going back to their original values 
-                        else if (isThisProductUnCheckedForReturn(value)) SetThePreviousUnitsReturnedToPerThisProduct(product);
-                    }              
-              }
+            
           }
       }
 
@@ -62,7 +51,9 @@ namespace GetStartedApp.ViewModels.ProductPages
              productsSoldInfo = AccessToClassLibraryBackendProject.LoadProductSoldInfoFromReader(saleID);
              ProductsToReturnList = ConvertDataTableToProductSoldList(productsSoldInfo.ProductsBoughtInThisOperation);
              ReturnCommand = ReactiveCommand.Create(saveReturnedProductsToDatabase, IsOneOfProductToReturnIsEdited);
-
+             _saleID = saleID;
+             ShowMessageBoxDialog = new Interaction<string, Unit>();
+             WhenUserCheckAllItemsReturnAllProducts();
              CheckIfUserHasEditedProductsToReturnEvery500ms();
         }
 
@@ -80,6 +71,7 @@ namespace GetStartedApp.ViewModels.ProductPages
                     soldPrice: Convert.ToSingle(row.Field<decimal>("UnitSoldPrice")),  // Convert from decimal to float
                     quantitiy: row.Field<int>("QuantitySold"),
                     Image: null,
+                    PreviousReturnedUnits: row.Field<int>("ReturnedUnits"),
                     soldItemID : row.Field<int>("SoldItemID")
                 );
 
@@ -91,15 +83,13 @@ namespace GetStartedApp.ViewModels.ProductPages
             return returnedProductsList;
         }
    
-        private bool isThisProductCheckedForReturn(bool isChecked) => isChecked;
-        private bool isThisProductUnCheckedForReturn(bool isChecked) => !isChecked;
         private void SetTheMaximumUnitsToReturnPerThisProduct(ReturnedProduct returnedProduct)
         {
            returnedProduct.QuanityToReturn= returnedProduct.maximumProductsUserCanReturn.ToString();
         }
-        private void SetThePreviousUnitsReturnedToPerThisProduct(ReturnedProduct returnedProduct)
+        private void SetTheUnitsReturnedPerThisProductToZero(ReturnedProduct returnedProduct)
         {
-            returnedProduct.QuanityToReturn = returnedProduct.PreviousReturnedQuantity;
+            returnedProduct.QuanityToReturn = "0";
         }
         private bool userHasEditedOneOrMoreProductsToReturn()
         {
@@ -119,15 +109,35 @@ namespace GetStartedApp.ViewModels.ProductPages
         {
             Observable.Interval(TimeSpan.FromMilliseconds(500))
                 .Select(_ => userHasEditedOneOrMoreProductsToReturn())
-                .DistinctUntilChanged()
-                .ObserveOn(RxApp.MainThreadScheduler)
+                .ObserveOn(RxApp.MainThreadScheduler)  // Ensures the code runs on the main thread for UI updates
                 .Subscribe(isEdited =>
                 {
                     // Emit the new value into the BehaviorSubject
                     _isOneOfProductToReturnIsEdited.OnNext(isEdited);
+
+                    // Call the SetReturnAllCheckbox function to check the remaining quantities
+                    SetReturnAllCheckbox_When_User_HasReturnAllProducts_And_Their_Remaining_Quantities();
                 });
         }
 
+        public void WhenUserCheckAllItemsReturnAllProducts()
+        {
+            // Observe changes to the IsAllChecked property
+            this.WhenAnyValue(x => x.IsAllChecked).Subscribe(value => { 
+                
+                if (IsAllChecked) ReturnAllProducts(); });
+
+        }
+
+        private void ReturnAllProducts()
+        {
+            foreach (var product in ProductsToReturnList)
+            {
+                //product.IsCheckedForReturn = value;
+                if (product.IsProductReturnable) SetTheMaximumUnitsToReturnPerThisProduct(product);
+            }
+
+        }
         // check products to return are proudct being detected to return 
         public DataTable GetCheckedProductsToReturnAsDataTable()
         {
@@ -173,9 +183,38 @@ namespace GetStartedApp.ViewModels.ProductPages
             return productsTable;
         }
 
-        private void saveReturnedProductsToDatabase()
+        private void SetReturnAllCheckbox_When_User_HasReturnAllProducts_And_Their_Remaining_Quantities()
+        {
+            foreach (ReturnedProduct product in ProductsToReturnList)
+            {
+                bool isQuanityToReturnValid = int.TryParse(product.QuanityToReturn, out int _);
+
+                if (!isQuanityToReturnValid) { IsAllChecked = false; return; }
+             
+                // Calculate the difference between sold quantity, to be returned, and previously returned quantity
+                int remainingQuantity = product.Quantity - (int.Parse(product.QuanityToReturn) + int.Parse(product.PreviousReturnedQuantity));
+                bool userDidnt_ReturnAllItemsOfThisProduct = remainingQuantity > 0;
+                bool userWantedToReturnQuantityMoreThanSold = remainingQuantity < 0;
+
+                // If either condition is met, return early and don't check 'All Checked'
+                if (userDidnt_ReturnAllItemsOfThisProduct || userWantedToReturnQuantityMoreThanSold) { IsAllChecked = false; return; }
+               
+            }
+
+            // If all products are fully returned, check the 'All Checked' checkbox
+            IsAllChecked = true;
+        }
+      
+        private async void saveReturnedProductsToDatabase()
         {
             var productsTableToReturn = GetCheckedProductsToReturnAsDataTable();
+
+            if(AccessToClassLibraryBackendProject.ProcessProductReturns(_saleID, productsTableToReturn))
+            {
+                await ShowMessageBoxDialog.Handle("تمت العملية بنجاح");
+            }
+
+            else { await ShowMessageBoxDialog.Handle("حصل خطأ ما"); }
         }
     }
 }
