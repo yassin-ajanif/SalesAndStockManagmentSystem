@@ -230,7 +230,7 @@
 						</DataGrid.Columns>
 
 						<DataGrid.ContextMenu>
-							<ContextMenu>
+							<ContextMenu >
 								<MenuItem Header="تفقد هذه المبيعة " 
 										  Command="{Binding DisplaySellInfoAsPdfCommand}" 
 										  CommandParameter="{Binding SelectedItem, 

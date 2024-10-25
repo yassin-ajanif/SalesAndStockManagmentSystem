@@ -1,0 +1,260 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		     xmlns:vm="using:GetStartedApp.ViewModels.ClientsPages" 
+             x:Class="GetStartedApp.Views.ClientsPages.ClientsPaymentPageView"
+	         x:DataType="vm:ClientsPaymentPageViewModel"
+			 FontFamily="Roboto"
+			  Background="{DynamicResource myBackgroundFaintBlueColor}"
+	         x:CompileBindings="True">
+
+
+
+	<UserControl.Styles>
+
+		<!--this tag if for removing the border from selected cell-->
+		<Style Selector="DataGridCell:current /template/ Grid#FocusVisual">
+			<Setter Property="IsVisible" Value="false" />
+		</Style>
+
+		<!--this tag if for changing the color of the selected row-->
+		<Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+			<Setter Property="Fill" Value="#A3D6F2"/>
+
+		</Style>
+
+
+		<Style Selector="DataGridRow:disabled">
+			<Setter Property="Background" Value="LightGray" />
+			<Setter Property="Foreground" Value="Gray" />
+			<!-- Optional, change text color -->
+		</Style>
+
+		<Style Selector="Border.ReturnedProductsTable">
+
+			<!---->
+			<Setter Property="BoxShadow" Value="0 10 20 5 Gainsboro"/>
+			<Setter Property="CornerRadius"        Value="1"/>
+			<Setter Property="Margin"              Value="1"/>
+
+
+		</Style>
+
+
+	</UserControl.Styles>
+
+
+	<Border  Width="780" Height="520" Classes ="ReturnedProductsTable">
+
+	<StackPanel>
+
+		<StackPanel HorizontalAlignment="Center">
+			<Label Content="{Binding ChangingPaymentOperation}"/>
+		</StackPanel>
+		<StackPanel Margin="20" FlowDirection="RightToLeft">
+			<TextBlock Text="اختر طريقة الدفع نقدا:" FontWeight="Bold" Margin="0,0,0,10"/>
+
+			<!-- Grid for Payment Options -->
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<!-- For the partial payment input -->
+					<ColumnDefinition Width="Auto" />
+					<!-- For the radio buttons -->
+				</Grid.ColumnDefinitions>
+
+				<!-- StackPanel for Radio Buttons on the right -->
+				<StackPanel Orientation="Vertical" Grid.Column="0">
+					<!-- Radio Button for Paying Fully -->
+					<RadioButton Name="PayFullyRadioButton"
+								 Content="الدفع بالكامل"
+								 GroupName="PaymentOptions"
+								 Margin="0,0,5,0"
+							     Checked="PayFullyRadioButton_Checked"/>
+
+					<!-- Radio Button for Paying Partially -->
+					<RadioButton Name="PayPartiallyRadioButton"
+								 Content="الدفع جزئياً"
+								 GroupName="PaymentOptions"
+								 Margin="0,0,5,0"
+								 Checked="PayPartiallyRadioButton_Checked"/>
+				</StackPanel>
+
+				<!-- StackPanel for Partial Payment Input on the left -->
+				<StackPanel Orientation="Horizontal" Margin="0,0,10,0" Grid.Column="1" Name="PartialPaymentTemplate" >
+					<TextBlock Text="التسبيق:"
+							   VerticalAlignment="Center" Margin="0,0,10,0" />
+					<TextBox Name="PartialAmountTextBox" Watermark="المبلغ الجزئي"
+							 Width="100" Height="20" MaxLength="6" FlowDirection="LeftToRight"/>
+				</StackPanel>
+				
+				
+			</Grid>
+	
+			
+		
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal" Margin="10" FlowDirection="RightToLeft">
+			<TextBlock Text="أدخل رقم الشيك:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+			<TextBox Name="CheckNumberTextBox" Width="100" MaxLength="10" VerticalAlignment="Center"/>
+			<Button Content="إدخال شيك جديد" Margin="10,0,0,0" VerticalAlignment="Center"/>
+		</StackPanel>
+
+		<StackPanel  Width="760" Height="500" VerticalAlignment="Center" HorizontalAlignment="Center" >
+
+			<Grid  >
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+
+			</Grid>
+
+			<Grid >
+
+
+				
+				
+				<ScrollViewer VerticalScrollBarVisibility="Auto" >
+
+					<DataGrid ItemsSource="{Binding ProductsToReturnList}"
+							  AutoGenerateColumns="False" IsReadOnly="False"
+							  GridLinesVisibility="All"
+							  FlowDirection="RightToLeft"
+							  Width="760" Height="350"
+							  Name="ProductsListGrid"
+							  CanUserResizeColumns="True"
+							  HorizontalScrollBarVisibility="Visible"
+                              BorderBrush="Gainsboro"
+							  BorderThickness="1"
+							 >
+
+
+						<DataGrid.Columns>
+							<!-- ProductId column -->
+							<DataGridTemplateColumn CanUserSort="True" SortMemberPath="ProductId">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="10">
+											<TextBlock HorizontalAlignment="Center">رقم المنتوج</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="10" FlowDirection="LeftToRight"
+												   MaxWidth="80" Text="{Binding ProductId}"
+												   TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<!-- ProductName column -->
+							<DataGridTemplateColumn CanUserSort="True" Width="*" SortMemberPath="ProductName">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="0 5 0 5" >
+											<TextBlock HorizontalAlignment="Center">اسم المنتوج</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="5" MaxWidth="180" Text="{Binding ProductName}"
+												   TextWrapping="WrapWithOverflow"
+												   HorizontalAlignment="Center" VerticalAlignment="Center"
+											   />
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<!-- SoldPrice column -->
+							<DataGridTemplateColumn CanUserSort="True" SortMemberPath="SoldPrice">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="0" >
+											<TextBlock HorizontalAlignment="Center">سعر </TextBlock>
+											<TextBlock HorizontalAlignment="Center">البيع</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock Margin="10" Text="{Binding SoldPrice}" FlowDirection="LeftToRight"
+												   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<!-- Quantity column -->
+							<DataGridTemplateColumn CanUserSort="True" SortMemberPath="Quantity">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="0 5 0 5">
+											<TextBlock HorizontalAlignment="Center">الكمية</TextBlock>
+											<TextBlock HorizontalAlignment="Center">المباعة</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock  Text="{Binding Quantity}" FlowDirection="LeftToRight"
+													HorizontalAlignment="Center" VerticalAlignment="Center"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+							<!-- New Returns Count column -->
+							<DataGridTemplateColumn CanUserSort="True">
+								<DataGridTemplateColumn.HeaderTemplate>
+									<DataTemplate>
+										<StackPanel Margin="0 5 0 5">
+											<TextBlock HorizontalAlignment="Center">استرجع</TextBlock>
+											<TextBlock HorizontalAlignment="Center">من قبل</TextBlock>
+										</StackPanel>
+									</DataTemplate>
+								</DataGridTemplateColumn.HeaderTemplate>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<TextBlock  Text="{Binding PreviousReturnedQuantity}" FlowDirection="LeftToRight"
+													HorizontalAlignment="Center" VerticalAlignment="Center"/>
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+
+						</DataGrid.Columns>
+
+
+
+
+					</DataGrid>
+				</ScrollViewer>
+			
+			</Grid>
+
+			<Button HorizontalAlignment="Center" Margin="10" Foreground="White"
+					Background="{ DynamicResource RedColorButtonValidated}"
+					Command="{Binding }"
+					Padding="15 10"
+					FontWeight="Bold"
+					Content="تسجيل"/>
+
+
+		</StackPanel>
+
+	</StackPanel>
+
+
+
+	</Border>
+	
+
+</UserControl>

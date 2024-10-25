@@ -14,11 +14,11 @@ namespace GetStartedApp.Models.Objects
         public decimal TotalPrice { get; set; }
         public int PaymentID { get; set; }
         public string PaymentName { get; set; }
-        public int? ClientOrCompanyID { get; set; }  // Can be either ClientID or CompanyID
+        public int ClientOrCompanyID { get; set; }  // Can be either ClientID or CompanyID
         public string ClientOrCompanyName { get; set; }  // Can be either ClientName or CompanyName
 
         // Constructor
-        public ClientOrCompanySaleInfo(int saleID, DateTime timeOfOperation, decimal totalPrice, int paymentID, string paymentName, int? clientOrCompanyID, string clientOrCompanyName)
+        public ClientOrCompanySaleInfo(int saleID, DateTime timeOfOperation, decimal totalPrice, int paymentID, string paymentName, int clientOrCompanyID, string clientOrCompanyName)
         {
             SaleID = saleID;
             TimeOfOperation = TimeHelper.FormatDateWithDayInArabic(timeOfOperation);  // Include day name in date string

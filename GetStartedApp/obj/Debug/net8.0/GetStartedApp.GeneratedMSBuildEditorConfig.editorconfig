@@ -32,6 +32,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ClientsPages/AddNewClientView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/ClientsPages/ClientsPaymentPageView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/CompanyInfosView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
@@ -72,6 +75,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/MakeSaleView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/PayClientCreditsView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/ReturnedProductsView.axaml]

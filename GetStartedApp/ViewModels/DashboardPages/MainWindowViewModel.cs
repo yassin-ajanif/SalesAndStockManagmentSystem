@@ -80,9 +80,9 @@ public class MainWindowViewModel : ViewModelBase
         CultureHelper.SetLanguageSystem("ar-Ma");
         // GoToLiscencePage();
 
-        //GoToDashboardPage();
+        GoToDashboardPage();
 
-        GoToBonLivraisonsPage();
+        
         // ObservableCollection<ProductsScannedInfo> productsScannedInfos = new ObservableCollection<ProductsScannedInfo>();
 
         // CurrentPage = new BLViewModel(this,new MakeSaleViewModel(this), productsScannedInfos);
@@ -136,6 +136,14 @@ public class MainWindowViewModel : ViewModelBase
         ViewModelBase PageToGoAfterCheckingLicenseKey = new LisenceKeyVerificationViewModel(this).CheckIfAdminIsRegistredBeforeOrNot_And_returnThePageToGoOn();
         
         CurrentPage = PageToGoAfterCheckingLicenseKey;
+    }
+
+    public void GoToPayCreditsClientsPage()
+    {
+
+        CurrentPage = new PayClientCreditsViewModel(this);
+        navigationHistory.Push(CurrentPage);
+        HideheaderAndShowBtnBack();
     }
 
     public void GoToProductsBoughtsPage()

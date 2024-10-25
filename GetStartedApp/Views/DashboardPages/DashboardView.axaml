@@ -153,6 +153,7 @@
 							</Button>
 						</Border>
 
+						<!--
 						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="1" Grid.Column="1">
 							<Button Classes="WelcomeBtnsStyles" Command="{Binding GoToSoldItemsPageCommand}">
 								<StackPanel Classes="BtnContainer">
@@ -161,6 +162,7 @@
 								</StackPanel>
 							</Button>
 						</Border>
+						-->
 
 						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="1" Grid.Column="2">
 							<Button Classes="WelcomeBtnsStyles" Command="{Binding GoToProductsPageCommand}">
@@ -190,7 +192,7 @@
 						</Button>
 					</Border>
 
-						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="3" Grid.Column="0">
+						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="1" Grid.Column="1">
 								<Button Classes="WelcomeBtnsStyles"
 										Command="{Binding GoToBonLivraisonsPageCommand}">
 									<StackPanel Classes="BtnContainer">
@@ -199,6 +201,17 @@
 										
 									</StackPanel>
 								</Button>
+						</Border>
+
+						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="3" Grid.Column="0">
+							<Button Classes="WelcomeBtnsStyles"
+									Command="{Binding GoToPayClientsCreditCommand}">
+								<StackPanel Classes="BtnContainer">
+									<Image Source="avares://GetStartedApp/Assets/Icons/ReciveMoney.png" Width="80"/>
+									<Label Content="تسديد "        Classes="WelecomeBtnsStyles" FontSize="15"/>
+									<Label Content="فواتير الزبون" Classes="WelecomeBtnsStyles" FontSize="15"/>
+								</StackPanel>
+							</Button>
 						</Border>
 
 						<Border Classes="WelcomeBtnsBorderStyles" Grid.Row="3" Grid.Column="1">
