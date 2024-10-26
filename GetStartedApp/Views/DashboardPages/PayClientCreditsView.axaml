@@ -239,19 +239,19 @@
 										  FontFamily="Roboto"/>
 								
 								<MenuItem Header="تسديد بالشيك"
-										  Command="{Binding DisplaySellInfoAsPdfCommand}"
+										  Command="{Binding PayClientCreditAsCheckCommand}"
 										  CommandParameter="{Binding SelectedItem, 
 										  ElementName=ReturnedProductList}"
 										  FontFamily="Roboto"/>
 								
 								<MenuItem Header="تسديد tpe"
-										  Command="{Binding DisplaySellInfoAsPdfCommand}"
+										  Command="{Binding PayClientCreditAsTpeCommand}"
 										  CommandParameter="{Binding SelectedItem, 
 										  ElementName=ReturnedProductList}"
 										  FontFamily="Roboto"/>
 								
 								<MenuItem Header="تحويل الى دين"
-									  Command="{Binding DisplaySellInfoAsPdfCommand}"
+									  Command="{Binding ConvertClientCreditToCreditCommand}"
 									  CommandParameter="{Binding SelectedItem, 
 										  ElementName=ReturnedProductList}"
 									  FontFamily="Roboto"/>

@@ -1,3 +1,4 @@
+
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -50,60 +51,83 @@
 
 	<StackPanel>
 
-		<StackPanel HorizontalAlignment="Center">
-			<Label Content="{Binding ChangingPaymentOperation}"/>
+
+		<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Margin="10" HorizontalAlignment="Center">
+			<TextBlock FontWeight="Bold">طريقة الدفع المسبقة هي :</TextBlock>
+			<TextBlock FontWeight="Bold" Margin="5 0" Foreground="Blue" Text="{Binding PreviousPaymentMethod}"></TextBlock>
+			<TextBlock FontWeight="Bold" Foreground="Red" Text="{Binding PreviousPaymentMethodDetails}"></TextBlock>
 		</StackPanel>
-		<StackPanel Margin="20" FlowDirection="RightToLeft">
-			<TextBlock Text="اختر طريقة الدفع نقدا:" FontWeight="Bold" Margin="0,0,0,10"/>
-
-			<!-- Grid for Payment Options -->
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<!-- For the partial payment input -->
-					<ColumnDefinition Width="Auto" />
-					<!-- For the radio buttons -->
-				</Grid.ColumnDefinitions>
-
-				<!-- StackPanel for Radio Buttons on the right -->
-				<StackPanel Orientation="Vertical" Grid.Column="0">
-					<!-- Radio Button for Paying Fully -->
-					<RadioButton Name="PayFullyRadioButton"
-								 Content="الدفع بالكامل"
-								 GroupName="PaymentOptions"
-								 Margin="0,0,5,0"
-							     Checked="PayFullyRadioButton_Checked"/>
-
-					<!-- Radio Button for Paying Partially -->
-					<RadioButton Name="PayPartiallyRadioButton"
-								 Content="الدفع جزئياً"
-								 GroupName="PaymentOptions"
-								 Margin="0,0,5,0"
-								 Checked="PayPartiallyRadioButton_Checked"/>
-				</StackPanel>
-
-				<!-- StackPanel for Partial Payment Input on the left -->
-				<StackPanel Orientation="Horizontal" Margin="0,0,10,0" Grid.Column="1" Name="PartialPaymentTemplate" >
-					<TextBlock Text="التسبيق:"
-							   VerticalAlignment="Center" Margin="0,0,10,0" />
-					<TextBox Name="PartialAmountTextBox" Watermark="المبلغ الجزئي"
-							 Width="100" Height="20" MaxLength="6" FlowDirection="LeftToRight"/>
-				</StackPanel>
-				
-				
-			</Grid>
-	
-			
 		
-		</StackPanel>
+		<StackPanel>
+			
+			<StackPanel Margin="20" FlowDirection="RightToLeft" IsVisible="{Binding IsCashPaymentMethodVisible}">
+				<TextBlock Text="اختر طريقة الدفع نقدا:" FontWeight="Bold" Margin="0,0,0,10"/>
 
-		<StackPanel Orientation="Horizontal" Margin="10" FlowDirection="RightToLeft">
-			<TextBlock Text="أدخل رقم الشيك:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-			<TextBox Name="CheckNumberTextBox" Width="100" MaxLength="10" VerticalAlignment="Center"/>
-			<Button Content="إدخال شيك جديد" Margin="10,0,0,0" VerticalAlignment="Center"/>
-		</StackPanel>
+				<!-- Grid for Payment Options -->
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<!-- For the partial payment input -->
+						<ColumnDefinition Width="Auto" />
+						<!-- For the radio buttons -->
+					</Grid.ColumnDefinitions>
 
-		<StackPanel  Width="760" Height="500" VerticalAlignment="Center" HorizontalAlignment="Center" >
+					<!-- StackPanel for Radio Buttons on the right -->
+					<StackPanel Orientation="Vertical" Grid.Column="0">
+						<!-- Radio Button for Paying Fully -->
+						<RadioButton Name="PayFullyRadioButton"
+									 Content="الدفع بالكامل"
+									 GroupName="PaymentOptions"
+									 Margin="0,0,5,0"
+									 Checked="PayFullyRadioButton_Checked"/>
+
+						<!-- Radio Button for Paying Partially -->
+						<RadioButton Name="PayPartiallyRadioButton"
+									 Content="الدفع جزئياً"
+									 GroupName="PaymentOptions"
+									 Margin="0,0,5,0"
+									 Checked="PayPartiallyRadioButton_Checked"/>
+					</StackPanel>
+
+					<!-- StackPanel for Partial Payment Input on the left -->
+					<StackPanel Orientation="Horizontal" Margin="0,0,10,0" Grid.Column="1" Name="PartialPaymentTemplate" >
+						<TextBlock Text="التسبيق:"
+								   VerticalAlignment="Center" Margin="0,0,10,0" />
+						<TextBox Name="PartialAmountTextBox" Watermark="المبلغ الجزئي"
+								 Width="100" Height="20" MaxLength="6" FlowDirection="LeftToRight"/>
+					</StackPanel>
+
+
+				</Grid>
+
+
+
+			</StackPanel>
+
+			<StackPanel Orientation="Horizontal" Margin="10" FlowDirection="RightToLeft"
+						IsVisible="{Binding IsCheckPaymentMethodVisible}">
+				<TextBlock Text="أدخل رقم الشيك:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+				<TextBox Name="CheckNumberTextBox" Width="100" MaxLength="10" VerticalAlignment="Center"/>
+				<Button Content="إدخال شيك جديد" Margin="10,0,0,0" VerticalAlignment="Center"/>
+			</StackPanel>
+
+			<StackPanel  FlowDirection="RightToLeft" Margin="10" Orientation="Horizontal"
+						 IsVisible="{Binding IsCreditPaymentMethodVisible}">
+				<TextBlock FontWeight="Bold">تحويل طريقة الدفع الى : </TextBlock>
+				<TextBlock FontWeight="Bold" Foreground="Red" Text=" دين"/>
+			</StackPanel>
+
+			<StackPanel  FlowDirection="RightToLeft" Margin="10" Orientation="Horizontal"
+						  IsVisible="{Binding IsTpePaymentMethodVisible}">
+				<TextBlock FontWeight="Bold">تحويل طريقة الدفع الى :</TextBlock>
+				<TextBlock FontWeight="Bold" Foreground="Red" Text=" TPE"/>
+			</StackPanel>
+
+
+		</StackPanel>
+	      		
+
+		<StackPanel  Width="760" VerticalAlignment="Center" HorizontalAlignment="Center" >
 
 			<Grid  >
 
@@ -129,12 +153,13 @@
 							  AutoGenerateColumns="False" IsReadOnly="False"
 							  GridLinesVisibility="All"
 							  FlowDirection="RightToLeft"
-							  Width="760" Height="350"
+							  Width="760" Height="300"
 							  Name="ProductsListGrid"
 							  CanUserResizeColumns="True"
 							  HorizontalScrollBarVisibility="Visible"
                               BorderBrush="Gainsboro"
 							  BorderThickness="1"
+							  Background="Red"
 							 >
 
 
@@ -240,18 +265,19 @@
 			
 			</Grid>
 
-			<Button HorizontalAlignment="Center" Margin="10" Foreground="White"
+			
+
+
+		</StackPanel>
+
+
+		<Button HorizontalAlignment="Center" Margin="10" Foreground="White"
 					Background="{ DynamicResource RedColorButtonValidated}"
 					Command="{Binding }"
 					Padding="15 10"
 					FontWeight="Bold"
 					Content="تسجيل"/>
-
-
-		</StackPanel>
-
-	</StackPanel>
-
+	</StackPanel >
 
 
 	</Border>

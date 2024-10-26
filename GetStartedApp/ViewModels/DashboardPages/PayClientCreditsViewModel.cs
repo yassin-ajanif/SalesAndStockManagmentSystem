@@ -17,17 +17,17 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ReactiveCommand<object, Unit> PayClientCreditAsTpeCommand { get; set; }
         public ReactiveCommand<object, Unit> ConvertClientCreditToCreditCommand { get; set; }
 
-        public Interaction<int, Unit> OpenPayClientCreditPage { get; }
-        public Interaction<int, Unit> OpenPayClientCreditAsCheckPage { get; }
-        public Interaction<int, Unit> OpenPayClientCreditAsTpePage { get; }
-        public Interaction<int, Unit> OpenConvertClientCreditToCreditPage { get; }
+        public Interaction<ClientOrCompanySaleInfo, Unit> OpenPayClientCreditPage { get; }
+        public Interaction<ClientOrCompanySaleInfo, Unit> OpenPayClientCreditAsCheckPage { get; }
+        public Interaction<ClientOrCompanySaleInfo, Unit> OpenPayClientCreditAsTpePage { get; }
+        public Interaction<ClientOrCompanySaleInfo, Unit> OpenConvertClientCreditToCreditPage { get; }
 
         public PayClientCreditsViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
         {
-            OpenPayClientCreditPage = new Interaction<int, Unit>();
-            OpenPayClientCreditAsCheckPage = new Interaction<int, Unit>();
-            OpenPayClientCreditAsTpePage = new Interaction<int, Unit>();
-            OpenConvertClientCreditToCreditPage = new Interaction<int, Unit>();
+            OpenPayClientCreditPage = new Interaction<ClientOrCompanySaleInfo, Unit>();
+            OpenPayClientCreditAsCheckPage = new Interaction<ClientOrCompanySaleInfo, Unit>();
+            OpenPayClientCreditAsTpePage = new Interaction<ClientOrCompanySaleInfo, Unit>();
+            OpenConvertClientCreditToCreditPage = new Interaction<ClientOrCompanySaleInfo, Unit>();
             // Initialize commands by directly referencing the methods
             PayClientCreditAsCashCommand = ReactiveCommand.Create<object>(PayClientCreditAsCash);
             PayClientCreditAsCheckCommand = ReactiveCommand.Create<object>(PayClientCreditAsCheck);
@@ -43,10 +43,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // Attempt to cast selectedItem to ClientOrCompanySaleInfo
             if (selectedItem is ClientOrCompanySaleInfo saleInfo)
             {
-                // Access the properties of the saleInfo object
-                int saleID = saleInfo.SaleID; // Ensure you access SaleID correctly
-
-                await OpenPayClientCreditPage.Handle(saleID);
+            
+                await OpenPayClientCreditPage.Handle(saleInfo);
             }
         
     }
@@ -56,10 +54,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // Attempt to cast selectedItem to ClientOrCompanySaleInfo
             if (selectedItem is ClientOrCompanySaleInfo saleInfo)
             {
-                // Access the properties of the saleInfo object
-                int saleID = saleInfo.SaleID; // Ensure you access SaleID correctly
 
-                await OpenPayClientCreditAsCheckPage.Handle(saleID);
+                await OpenPayClientCreditAsCheckPage.Handle(saleInfo);
             }
         }
 
@@ -68,10 +64,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // Attempt to cast selectedItem to ClientOrCompanySaleInfo
             if (selectedItem is ClientOrCompanySaleInfo saleInfo)
             {
-                // Access the properties of the saleInfo object
-                int saleID = saleInfo.SaleID; // Ensure you access SaleID correctly
-
-                await OpenPayClientCreditAsTpePage.Handle(saleID);
+                await OpenPayClientCreditAsTpePage.Handle(saleInfo);
             }
         }
 
@@ -80,10 +73,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             // Attempt to cast selectedItem to ClientOrCompanySaleInfo
             if (selectedItem is ClientOrCompanySaleInfo saleInfo)
             {
-                // Access the properties of the saleInfo object
-                int saleID = saleInfo.SaleID; // Ensure you access SaleID correctly
 
-                await OpenConvertClientCreditToCreditPage.Handle(saleID);
+                await OpenConvertClientCreditToCreditPage.Handle(saleInfo);
             }
         }
 
