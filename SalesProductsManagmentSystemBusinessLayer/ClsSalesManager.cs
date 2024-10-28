@@ -17,6 +17,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             DataTable SoldProductList,
             string clientNameAndPhoneNumberOrNormal,
             string selectedPaymentMethod,
+            decimal loadedDepositAmount,
             long? chequeNumber = null,
             decimal? amount = null,
             DateTime? chequeDate = null)
@@ -28,9 +29,11 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 SoldProductList,
                 clientNameAndPhoneNumberOrNormal,
                 selectedPaymentMethod,
+                loadedDepositAmount,
                 chequeNumber,
                 amount,
-                chequeDate);
+                chequeDate
+                );
         }
 
 
@@ -40,6 +43,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
       DataTable SoldProductList,
       int companyID,
       string selectedPaymentMethod,
+      decimal loadedDepositAmount,
       long? chequeNumber = null,
       decimal? amount = null,
       DateTime? chequeDate = null)
@@ -51,6 +55,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
                 SoldProductList,
                 companyID,
                 selectedPaymentMethod,
+                loadedDepositAmount,
                 chequeNumber,
                 amount,
                 chequeDate);

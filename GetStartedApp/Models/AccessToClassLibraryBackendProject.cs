@@ -398,7 +398,8 @@ namespace GetStartedApp.Models
        DataTable SoldProductList,
        string clientNameAndPhoneNumberOrNormal,
        string selectedPaymentMethod,
-       ChequeInfo userChequeInfo)
+       ChequeInfo userChequeInfo,
+       decimal loadedDepositAmount)
         {
             // Default values to be used if userChequeInfo is null
             long? chequeNumber = null;
@@ -419,9 +420,11 @@ namespace GetStartedApp.Models
                 SoldProductList,
                 clientNameAndPhoneNumberOrNormal,
                 selectedPaymentMethod,
+                loadedDepositAmount,
                 chequeNumber,
                 amount,
                 chequeDate
+                
             );
         }
 
@@ -432,7 +435,8 @@ namespace GetStartedApp.Models
      DataTable SoldProductList,
      int CompanyID,
      string selectedPaymentMethod,
-     ChequeInfo userChequeInfo)
+     ChequeInfo userChequeInfo,
+     decimal loadedDepositAmount)
         {
             // Default values to be used if userChequeInfo is null
             long? chequeNumber = null;
@@ -454,6 +458,7 @@ namespace GetStartedApp.Models
                 SoldProductList,
                 CompanyID,
                 selectedPaymentMethod,
+                loadedDepositAmount,
                 chequeNumber,
                 amount,
                 chequeDate
@@ -1064,6 +1069,16 @@ namespace GetStartedApp.Models
 
             return isSuccess;
         }
-    
-}
+
+        public static long GetCustomerChequeIDBySaleID(int saleID)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.clsChecks.GetCustomerChequeIDBySaleID(saleID);
+        }
+
+        public static decimal RetrieveDepositAmountBySaleID(int saleID)
+        {
+            return SalesProductsManagmentSystemBusinessLayer.clsDeposits.RetrieveDepositAmountBySaleID(saleID);
+        }
+
+    }
 }

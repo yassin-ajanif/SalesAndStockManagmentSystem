@@ -256,6 +256,8 @@
 										  ElementName=ReturnedProductList}"
 									  FontFamily="Roboto"/>
 								
+							
+								
 							</ContextMenu>
 						</DataGrid.ContextMenu>
 

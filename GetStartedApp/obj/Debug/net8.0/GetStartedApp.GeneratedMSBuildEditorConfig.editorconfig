@@ -20,6 +20,9 @@ build_property.EnableGeneratedComInterfaceComImportInterop =
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/AddDepositView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/AddNewChequeInfoView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

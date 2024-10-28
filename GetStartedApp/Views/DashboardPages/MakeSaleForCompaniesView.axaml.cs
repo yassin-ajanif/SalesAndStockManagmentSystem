@@ -46,6 +46,8 @@ public partial class MakeSaleForCompaniesView : ReactiveUserControl<MakeSaleForC
 
             action(ViewModel!.ShowAddChequeInfoDialogInteraction.RegisterHandler(ShowDialogOfAddNewChequeInfo));
 
+            action(ViewModel!.ShowAddDepositInfoDialogInteraction.RegisterHandler(ShowDialogOfAddNewDepositInfo));
+
 
 
         });
@@ -130,5 +132,24 @@ public partial class MakeSaleForCompaniesView : ReactiveUserControl<MakeSaleForC
 
 
         interaction.SetOutput(userHasClosedTheAddNewWindow_Or_SubmitedTheChequeInfo);
+    }
+
+    private async Task ShowDialogOfAddNewDepositInfo(InteractionContext<AddDepositViewModel, bool> interaction)
+    {
+        var dialog = new DialogContainerView();
+
+        // the interaction is an instance of the viewmodel we want to bind to the view we want to display 
+        dialog.Content = new AddDepositView() { DataContext = interaction.Input };
+        dialog.Title = "اضافة تسبيق";
+        var window = this.GetVisualRoot() as Window;
+        if (window == null)
+        {
+            throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
+        }
+
+        var userHasClosedTheAddNewWindow_Or_SubmitedTheDepositInfo = await dialog.ShowDialog<bool>(window);
+
+
+        interaction.SetOutput(userHasClosedTheAddNewWindow_Or_SubmitedTheDepositInfo);
     }
 }

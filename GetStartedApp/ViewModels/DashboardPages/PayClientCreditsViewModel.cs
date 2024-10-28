@@ -16,11 +16,13 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public ReactiveCommand<object, Unit> PayClientCreditAsCheckCommand { get; set; }
         public ReactiveCommand<object, Unit> PayClientCreditAsTpeCommand { get; set; }
         public ReactiveCommand<object, Unit> ConvertClientCreditToCreditCommand { get; set; }
+       // public ReactiveCommand<object, Unit> ConvertClientCreditToDepositCommand { get; set; }
 
         public Interaction<ClientOrCompanySaleInfo, Unit> OpenPayClientCreditPage { get; }
         public Interaction<ClientOrCompanySaleInfo, Unit> OpenPayClientCreditAsCheckPage { get; }
         public Interaction<ClientOrCompanySaleInfo, Unit> OpenPayClientCreditAsTpePage { get; }
         public Interaction<ClientOrCompanySaleInfo, Unit> OpenConvertClientCreditToCreditPage { get; }
+        public Interaction<ClientOrCompanySaleInfo, Unit> OpenConvertClientCreditToDepositPage { get; }
 
         public PayClientCreditsViewModel(MainWindowViewModel mainWindowViewModel) : base(mainWindowViewModel)
         {
@@ -28,11 +30,14 @@ namespace GetStartedApp.ViewModels.DashboardPages
             OpenPayClientCreditAsCheckPage = new Interaction<ClientOrCompanySaleInfo, Unit>();
             OpenPayClientCreditAsTpePage = new Interaction<ClientOrCompanySaleInfo, Unit>();
             OpenConvertClientCreditToCreditPage = new Interaction<ClientOrCompanySaleInfo, Unit>();
+      //      OpenConvertClientCreditToDepositPage = new Interaction<ClientOrCompanySaleInfo, Unit>();
+            
             // Initialize commands by directly referencing the methods
             PayClientCreditAsCashCommand = ReactiveCommand.Create<object>(PayClientCreditAsCash);
             PayClientCreditAsCheckCommand = ReactiveCommand.Create<object>(PayClientCreditAsCheck);
             PayClientCreditAsTpeCommand = ReactiveCommand.Create<object>(PayClientCreditAsTpe);
             ConvertClientCreditToCreditCommand = ReactiveCommand.Create<object>(ConvertClientCreditToCredit);
+        //    ConvertClientCreditToDepositCommand = ReactiveCommand.Create<object>(ConvertClientCreditToCredit);
 
 
         }
@@ -77,6 +82,16 @@ namespace GetStartedApp.ViewModels.DashboardPages
                 await OpenConvertClientCreditToCreditPage.Handle(saleInfo);
             }
         }
+
+      //  private async void ConvertClientCreditToDeposit(object selectedItem)
+     //  {
+     //      // Attempt to cast selectedItem to ClientOrCompanySaleInfo
+     //      if (selectedItem is ClientOrCompanySaleInfo saleInfo)
+     //      {
+     //
+     //          await OpenConvertClientCreditToDepositPage.Handle(saleInfo);
+     //      }
+     //  }
 
 
     }

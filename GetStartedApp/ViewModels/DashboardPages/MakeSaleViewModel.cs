@@ -165,6 +165,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
         private ChequeInfo _loadedCheckInfoByUser_When_Choosing_CheckPaymentType;
 
+        private decimal _loadedDepositAmount_When_Choosing_DepositPaymentType;
+
         public ReactiveCommand<Unit, Unit> SubmitBarCodeManually { get; }
 
         private ObservableCollection<ProductsScannedInfo_ToSale> _productsListScanned;
@@ -195,6 +197,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
         public Interaction<string,bool> ShowDeleteSaleDialogInteraction { get; set; }
 
         public Interaction<AddNewChequeInfoViewModel, bool> ShowAddChequeInfoDialogInteraction { get; set; }
+        public Interaction<AddDepositViewModel, bool> ShowAddDepositInfoDialogInteraction { get; set; }
+        
 
         MainWindowViewModel mainWindowViewModel { get; set; }
         public MakeSaleViewModel(MainWindowViewModel mainWindowViewModel)
@@ -240,9 +244,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
             ShowAddChequeInfoDialogInteraction = new Interaction<AddNewChequeInfoViewModel, bool>();
 
-          
+            ShowAddDepositInfoDialogInteraction = new Interaction<AddDepositViewModel, bool>();
 
-    }
+
+
+        }
 
     ~MakeSaleViewModel()
         {
@@ -483,6 +489,11 @@ namespace GetStartedApp.ViewModels.DashboardPages
             return string.Equals(slectedPaymentMethodInEnglish,"check", StringComparison.OrdinalIgnoreCase);
         }
 
+        private bool UserHasSelected_Deposit_PaymentMethod()
+        {
+            string slectedPaymentMethodInEnglish = TranslateSelectedPaymentMethod_To_English_OriginalDb();
+            return string.Equals(slectedPaymentMethodInEnglish, "deposit", StringComparison.OrdinalIgnoreCase);
+        }
         private bool UserHasSelected_Debt_PaymentMode()
         {
             string slectedPaymentMethodInEnglish = TranslateSelectedPaymentMethod_To_English_OriginalDb();
@@ -492,16 +503,36 @@ namespace GetStartedApp.ViewModels.DashboardPages
         private async Task<(bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, ChequeInfo ChequeInfo)> OpenChequePage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage()
         {
             var chequeInfoToFillByUser = new ChequeInfo();
-            var userControlToShowInsideDialog = new AddNewChequeInfoViewModel(ref chequeInfoToFillByUser);
+            var userControlToBindInsideDialog = new AddNewChequeInfoViewModel(ref chequeInfoToFillByUser);
 
             // Awaiting the dialog interaction and getting the result from the user
-            bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage = await ShowAddChequeInfoDialogInteraction.Handle(userControlToShowInsideDialog);
+            bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage = await ShowAddChequeInfoDialogInteraction.Handle(userControlToBindInsideDialog);
 
             // Returning the tuple with the user interaction result and the filled cheque info
             return (UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, chequeInfoToFillByUser);
         }
 
-        
+        private async Task<(bool UserFilledInfoCorrectly, decimal LoadedDepositAmount)> OpenDepositPage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage()
+        {
+            var depositViewModel = new AddDepositViewModel(Total);
+
+            // Awaiting the dialog interaction and getting the result from the user
+            bool userFilledInfoCorrectly = await ShowAddDepositInfoDialogInteraction.Handle(depositViewModel);
+
+            // Initialize LoadedDepositAmount to -1 (indicating an invalid state)
+             _loadedDepositAmount_When_Choosing_DepositPaymentType = -1;
+
+            // Check if the user has filled the deposit amount correctly
+            if (userFilledInfoCorrectly)
+            {
+                _loadedDepositAmount_When_Choosing_DepositPaymentType = decimal.Parse(depositViewModel.DepositAmount);
+            }
+
+            return (userFilledInfoCorrectly, _loadedDepositAmount_When_Choosing_DepositPaymentType);
+        }
+
+
+
 
         private long GetClientID_FromPhoneNumber()
         {
@@ -538,13 +569,21 @@ namespace GetStartedApp.ViewModels.DashboardPages
                     var (UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, chequeInfoUserHasFilled) = await OpenChequePage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage();
                     bool userClosedThePage = !UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage;
                     _loadedCheckInfoByUser_When_Choosing_CheckPaymentType = chequeInfoUserHasFilled;
-                    
+
                     if (userClosedThePage) return;
+
+                }
+
+                else if (UserHasSelected_Deposit_PaymentMethod())
+                {
+                    var (UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, loaded) = await OpenDepositPage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage();
+                    bool userClosedThePage = !UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage;
                     
+                    if(userClosedThePage) return;
                 }
 
                 SubmitOperationSalesDataToDatabase(timeOfSellingOpperationIsNow,TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, 
-                                                       slectedPaymentMethodInEnglish,_loadedCheckInfoByUser_When_Choosing_CheckPaymentType);
+                                                       slectedPaymentMethodInEnglish,_loadedCheckInfoByUser_When_Choosing_CheckPaymentType,_loadedDepositAmount_When_Choosing_DepositPaymentType);
 
 
 
@@ -601,7 +640,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
 
         public virtual async void SubmitOperationSalesDataToDatabase
-        (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo)
+        (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation,
+            string slectedPaymentMethodInEnglish,ChequeInfo userChequeInfo,decimal loadedDepositAmount)
         {
             var result = AccessToClassLibraryBackendProject.AddNewSaleToDatabase(
                                                                                  timeOfSellingOpperationIsNow,
@@ -609,7 +649,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
                                                                                  ProductsBoughtInThisOperation,
                                                                                  SelectedClientName_PhoneNumber,
                                                                                  slectedPaymentMethodInEnglish,
-                                                                                 userChequeInfo);
+                                                                                 userChequeInfo,
+                                                                                 loadedDepositAmount);
 
             if (result.Success)
             {

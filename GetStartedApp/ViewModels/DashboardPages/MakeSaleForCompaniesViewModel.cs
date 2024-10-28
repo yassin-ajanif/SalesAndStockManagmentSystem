@@ -58,7 +58,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
 
 
         public override async void SubmitOperationSalesDataToDatabase
-        (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish, ChequeInfo userChequeInfo)
+        (DateTime timeOfSellingOpperationIsNow, float TotalPriceOfSellingOperation, DataTable ProductsBoughtInThisOperation, string slectedPaymentMethodInEnglish, 
+            ChequeInfo userChequeInfo, decimal loadedDepositAmount)
         {
 
             int selectedCompanyID_From_selectedCompanyName = getCompanyID_From_Its_Name();
@@ -67,7 +68,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
             var result =
                 AccessToClassLibraryBackendProject.
                 AddNewSaleToDatabase_ForCompanies
-                (timeOfSellingOpperationIsNow, TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, selectedCompanyID_From_selectedCompanyName, slectedPaymentMethodInEnglish, userChequeInfo);
+                (timeOfSellingOpperationIsNow, TotalPriceOfSellingOperation, ProductsBoughtInThisOperation, 
+                selectedCompanyID_From_selectedCompanyName, slectedPaymentMethodInEnglish, userChequeInfo, loadedDepositAmount);
 
             int lastSaleID = result.bonLivraisonNumber;
 

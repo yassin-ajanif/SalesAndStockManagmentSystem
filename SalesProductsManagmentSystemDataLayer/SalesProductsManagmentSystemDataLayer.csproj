@@ -129,6 +129,8 @@
   <ItemGroup>
     <Compile Include="clsDataBonLivraisonsLayer.cs" />
     <Compile Include="ClsDataAccessLayer.cs" />
+    <Compile Include="clsDataChecks.cs" />
+    <Compile Include="clsDataDeposits.cs" />
     <Compile Include="ClsDataInvoicesLayer.cs" />
     <Compile Include="clsDataLayerBonReception.cs" />
     <Compile Include="clsDataLayerCompanies.cs" />

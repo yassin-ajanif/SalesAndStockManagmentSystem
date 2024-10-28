@@ -37,12 +37,21 @@ namespace GetStartedApp.Helpers
             public string enFrench => "Chèque";
         }
 
+        // Updated Deposit struct with correct translations
+        public struct Deposit
+        {
+            public string enArabic => "تسبيق";   // Arabic translation
+            public string enEnglish => "Deposit"; // English translation
+            public string enFrench => "avance";    // French translation
+        }
+
         public static readonly object[] PaymentTypes = new object[]
         {
-        new Cash(),
-        new Credit(),
-        new Tpe(),
-        new Check()
+            new Cash(),
+            new Credit(),
+            new Tpe(),
+            new Check(),
+            new Deposit() // Add the new Deposit struct here
         };
 
         public static string TranslatePaymentIntoTargetedLanguage(string paymentTerm, string targetLanguagePrefix)
@@ -81,7 +90,5 @@ namespace GetStartedApp.Helpers
             // If no match found, throw an exception or return null
             throw new Exception($"Payment method '{paymentTerm}' not found.");
         }
-
-
     }
 }

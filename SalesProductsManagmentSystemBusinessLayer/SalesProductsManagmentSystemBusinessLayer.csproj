@@ -103,8 +103,10 @@
     <Compile Include="ClsBonLivraisonGenerator.cs" />
     <Compile Include="clsBonLivraisons.cs" />
     <Compile Include="clsBonReception.cs" />
+    <Compile Include="clsChecks.cs" />
     <Compile Include="ClsClients.cs" />
     <Compile Include="ClsCompanies.cs" />
+    <Compile Include="clsDeposits.cs" />
     <Compile Include="ClsDevisGenerator.cs" />
     <Compile Include="ClsInvoiceGenerator.cs" />
     <Compile Include="ClsInvoices.cs" />

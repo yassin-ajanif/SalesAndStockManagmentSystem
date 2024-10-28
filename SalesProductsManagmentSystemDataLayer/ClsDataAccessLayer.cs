@@ -904,7 +904,7 @@ public class ClsDataAccessLayer
         return reader;
     }
 
- 
+
 
     public static (bool Success, int SalesId) SaveNewSaleOperationToDatabase(
     DateTime saleDateTime,
@@ -912,6 +912,7 @@ public class ClsDataAccessLayer
     DataTable productDataTable,
     string clientNameAndPhoneNumberOrNormal,
     string selectedPaymentMethod,
+    decimal loadedDepositAmount,
     long? chequeNumber = null,  // Nullable long for cheque number
     decimal? amount = null,     // Nullable decimal for cheque amount
     DateTime? chequeDate = null) // Nullable DateTime for cheque date
@@ -952,6 +953,7 @@ public class ClsDataAccessLayer
 
                 cmd.Parameters.Add(new SqlParameter("@SaleDateTime", SqlDbType.DateTime) { Value = saleDateTime });
                 cmd.Parameters.Add(new SqlParameter("@TotalPrice", SqlDbType.Decimal) { Value = totalPrice });
+                cmd.Parameters.Add(new SqlParameter("@DepositAmount", SqlDbType.Decimal) { Value = loadedDepositAmount });
                 cmd.Parameters.Add(new SqlParameter("@ProductDataTable", SqlDbType.Structured)
                 {
                     TypeName = "dbo.ProductBought",
@@ -1021,6 +1023,7 @@ public class ClsDataAccessLayer
      DataTable productDataTable,
      int CompanyID,
      string selectedPaymentMethod,
+     decimal loadedDepositAmount,
      long? chequeNumber = null,  // Nullable long for cheque number
      decimal? amount = null,     // Nullable decimal for cheque amount
      DateTime? chequeDate = null) // Nullable DateTime for cheque date
@@ -1054,6 +1057,7 @@ public class ClsDataAccessLayer
 
                 cmd.Parameters.Add(new SqlParameter("@SaleDateTime", SqlDbType.DateTime) { Value = saleDateTime });
                 cmd.Parameters.Add(new SqlParameter("@TotalPrice", SqlDbType.Decimal) { Value = totalPrice });
+                cmd.Parameters.Add(new SqlParameter("@DepositAmount", SqlDbType.Decimal) { Value = loadedDepositAmount });
                 cmd.Parameters.Add(new SqlParameter("@ProductDataTable", SqlDbType.Structured)
                 {
                     TypeName = "dbo.ProductBought",

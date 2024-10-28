@@ -20,7 +20,7 @@ namespace GetStartedApp.Views.ProductPages
       
         public ReturnProductBySaleIDView()
         {
-            InitializeComponent();
+             InitializeComponent();
             // Subscribe to the event when the control is initialized
             ProductsListGrid.LoadingRow += EnableOnlyReturnableProducts;
             RegisterShowMessageBoxDialogProductEvents();

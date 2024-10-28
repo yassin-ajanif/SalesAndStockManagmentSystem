@@ -57,7 +57,7 @@ namespace GetStartedApp.ViewModels.ClientsPages
         }
 
         public ePaymentMode PaymentModeToConvert;
-        public string ChangingPaymentOperation { get; }
+     
         private ClientOrCompanySaleInfo clientOrCompanySalesInfo;
 
         public ClientsPaymentPageViewModel(ClientOrCompanySaleInfo clientOrCompanySalesInfo,ePaymentMode PaymentModeToConvert) :base(clientOrCompanySalesInfo.SaleID)
@@ -79,6 +79,7 @@ namespace GetStartedApp.ViewModels.ClientsPages
         {
             DisableAllPaymentMethods();
             IsCashPaymentMethodVisible = true;
+
         }
 
         private void EnableCheckPaymentMethod()
@@ -93,6 +94,10 @@ namespace GetStartedApp.ViewModels.ClientsPages
             IsCreditPaymentMethodVisible = true;
         }
 
+        private void EnableDepositPaymentMethod()
+        {
+            EnableCreditPaymentMethod();
+        }
         private void EnableTpePaymentMethod()
         {
             DisableAllPaymentMethods();
@@ -111,10 +116,21 @@ namespace GetStartedApp.ViewModels.ClientsPages
             PreviousPaymentMethodDetails = string.Empty;
         }
 
+        private void SetInforamtionOfDepositPaymentMethod_AsPreviousPaymentMethod()
+        {
+            PreviousPaymentMethod = "دفع مسبق";
+            decimal getDepositAmountBySaleID = SalesProductsManagmentSystemBusinessLayer.clsDeposits.RetrieveDepositAmountBySaleID(clientOrCompanySalesInfo.SaleID);
+            if(getDepositAmountBySaleID==-1) throw new Exception("No customer Deposit found for the provided Sale ID. Please check the Sale ID or ensure a cheque was issued.");
+            PreviousPaymentMethodDetails = getDepositAmountBySaleID.ToString();
+        }
         private void SetInforamtionOfCheckPaymentMethod_AsPreviousPaymentMethod()
         {
             PreviousPaymentMethod = "شيك";
-            PreviousPaymentMethodDetails = "رقم الشيك 123456";
+            long getCheckNumberFromSaleID = SalesProductsManagmentSystemBusinessLayer.clsChecks.GetCustomerChequeIDBySaleID(clientOrCompanySalesInfo.SaleID);
+
+            if (getCheckNumberFromSaleID == -1) throw new Exception("No customer cheque found for the provided Sale ID. Please check the Sale ID or ensure a cheque was issued.");
+            
+            PreviousPaymentMethodDetails = getCheckNumberFromSaleID.ToString();
         }
 
         private void SetInforamtionOfTpePaymentMethod_AsPreviousPaymentMethod()
@@ -135,6 +151,8 @@ namespace GetStartedApp.ViewModels.ClientsPages
 
                 case (int)ePaymentMode.ToCredit: SetInforamtionOfCreditPaymentMethod_AsPreviousPaymentMethod(); break;
 
+                case (int)ePaymentMode.ToDeposit: SetInforamtionOfDepositPaymentMethod_AsPreviousPaymentMethod(); break;
+
                 default:
                     throw new InvalidOperationException($"Unsupported PaymentID: {clientOrCompanySalesInfo.PaymentID}");
             }
@@ -151,6 +169,8 @@ namespace GetStartedApp.ViewModels.ClientsPages
                 case ePaymentMode.ToTpe: EnableTpePaymentMethod(); break;
 
                 case ePaymentMode.ToCredit: EnableCreditPaymentMethod(); break;
+
+                case ePaymentMode.ToDeposit: EnableDepositPaymentMethod(); break;
 
                 default:
                     throw new InvalidOperationException($"Unsupported PaymentID: {clientOrCompanySalesInfo.PaymentID}");

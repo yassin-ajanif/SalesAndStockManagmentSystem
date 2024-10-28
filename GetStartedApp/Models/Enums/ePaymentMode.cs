@@ -8,6 +8,6 @@ namespace GetStartedApp.Models.Enums
 {
     public enum  ePaymentMode
     {
-        ToCash=1,ToCheck, ToTpe, ToCredit 
+        ToCash=1,ToCheck, ToTpe, ToCredit , ToDeposit
     }
 }

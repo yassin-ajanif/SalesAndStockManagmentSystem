@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" 
+			 xmlns:vm="using:GetStartedApp.ViewModels"
+			 x:DataType="vm:AddDepositViewModel"
+			 x:CompileBindings="True"
+			 Background="{DynamicResource myBackgroundFaintBlueColor}"
+             x:Class="GetStartedApp.Views.AddDepositView"
+			 FontFamily="Roboto"
+			 >
+
+	
+
+	<Border Padding="9,10" Margin="20" 
+       BoxShadow="0 1 20 5 Gainsboro"
+       BorderBrush="Gainsboro"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+       >
+		
+		<StackPanel Margin="50 20" FlowDirection="RightToLeft" 
+					HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBlock Text="إضافة تسبيق" FontSize="24"
+					   Foreground="{DynamicResource myFaintGreenColor}"
+					   FontWeight="Bold" Margin="0,0,0,20"
+					   HorizontalAlignment="Center"/>
+
+			<StackPanel Orientation="Horizontal"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Center">
+				<TextBlock Text="مبلغ التسبيق:" Margin="10"/>
+				<TextBox Text="{Binding DepositAmount}"
+						 Margin="10" FlowDirection="LeftToRight"
+						 />
+			</StackPanel>
+
+			<Button Content="تسجيل" HorizontalAlignment="Center" Margin="20"
+					Background="{DynamicResource RedColorButtonValidated}"
+					Foreground="White"
+					Command="{Binding CheckDepositCommand}"/>
+		</StackPanel>
+
+		
+		
+	</Border>
+
+
+</UserControl>
