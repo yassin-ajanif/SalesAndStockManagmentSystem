@@ -913,7 +913,7 @@ public class ClsDataAccessLayer
     string clientNameAndPhoneNumberOrNormal,
     string selectedPaymentMethod,
     decimal loadedDepositAmount,
-    long? chequeNumber = null,  // Nullable long for cheque number
+    string chequeNumber = null,  // Nullable long for cheque number
     decimal? amount = null,     // Nullable decimal for cheque amount
     DateTime? chequeDate = null) // Nullable DateTime for cheque date
     {
@@ -969,10 +969,11 @@ public class ClsDataAccessLayer
                 });
 
                 // Add cheque-related parameters, allowing them to be null
-                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.BigInt)
+                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.NVarChar)
                 {
-                    Value = chequeNumber.HasValue ? (object)chequeNumber.Value : DBNull.Value
+                    Value = chequeNumber ?? (object)DBNull.Value
                 });
+
 
                 cmd.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Decimal)
                 {
@@ -1024,7 +1025,7 @@ public class ClsDataAccessLayer
      int CompanyID,
      string selectedPaymentMethod,
      decimal loadedDepositAmount,
-     long? chequeNumber = null,  // Nullable long for cheque number
+     string chequeNumber = null,  // Nullable long for cheque number
      decimal? amount = null,     // Nullable decimal for cheque amount
      DateTime? chequeDate = null) // Nullable DateTime for cheque date
     {
@@ -1067,9 +1068,9 @@ public class ClsDataAccessLayer
                 cmd.Parameters.Add(new SqlParameter("@PaymentMethod", SqlDbType.NVarChar) { Value = selectedPaymentMethod });
 
                 // Add cheque-related parameters, allowing them to be null
-                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.BigInt)
+                cmd.Parameters.Add(new SqlParameter("@ChequeNumber", SqlDbType.NVarChar)
                 {
-                    Value = chequeNumber.HasValue ? (object)chequeNumber.Value : DBNull.Value
+                    Value = chequeNumber ?? (object)DBNull.Value
                 });
 
                 cmd.Parameters.Add(new SqlParameter("@Amount", SqlDbType.Decimal)

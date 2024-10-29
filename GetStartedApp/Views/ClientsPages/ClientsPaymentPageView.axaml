@@ -273,7 +273,7 @@
 
 		<Button HorizontalAlignment="Center" Margin="10" Foreground="White"
 					Background="{ DynamicResource RedColorButtonValidated}"
-					Command="{Binding }"
+					Command="{Binding ConvertPaymentMethodCommand}"
 					Padding="15 10"
 					FontWeight="Bold"
 					Content="تسجيل"/>

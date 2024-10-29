@@ -402,7 +402,7 @@ namespace GetStartedApp.Models
        decimal loadedDepositAmount)
         {
             // Default values to be used if userChequeInfo is null
-            long? chequeNumber = null;
+            string chequeNumber = null;
             decimal? amount = null;
             DateTime? chequeDate = null;
 
@@ -439,7 +439,7 @@ namespace GetStartedApp.Models
      decimal loadedDepositAmount)
         {
             // Default values to be used if userChequeInfo is null
-            long? chequeNumber = null;
+            string chequeNumber = null;
             decimal? amount = null;
             DateTime? chequeDate = null;
 
@@ -1078,6 +1078,12 @@ namespace GetStartedApp.Models
         public static decimal RetrieveDepositAmountBySaleID(int saleID)
         {
             return SalesProductsManagmentSystemBusinessLayer.clsDeposits.RetrieveDepositAmountBySaleID(saleID);
+        }
+
+        public static bool ExecuteProcessPayment( decimal? depositAmount, int saleId, string selectedPaymentMethod, decimal? checkAmount, string checkNumber,DateTime? checkDate)
+        {
+
+            return SalesProductsManagmentSystemBusinessLayer.clsPayments.ExecuteProcessPayment(depositAmount,saleId, selectedPaymentMethod, checkAmount, checkNumber, checkDate);
         }
 
     }

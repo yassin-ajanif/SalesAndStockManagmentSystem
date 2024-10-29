@@ -18,7 +18,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
             string clientNameAndPhoneNumberOrNormal,
             string selectedPaymentMethod,
             decimal loadedDepositAmount,
-            long? chequeNumber = null,
+            string chequeNumber = null,
             decimal? amount = null,
             DateTime? chequeDate = null)
         {
@@ -44,7 +44,7 @@ namespace SalesProductsManagmentSystemBusinessLayer
       int companyID,
       string selectedPaymentMethod,
       decimal loadedDepositAmount,
-      long? chequeNumber = null,
+      string chequeNumber = null,
       decimal? amount = null,
       DateTime? chequeDate = null)
         {

@@ -54,7 +54,7 @@ namespace GetStartedApp.ViewModels
 
         private void LoadChequeInfoEntredByUser()
         {
-            ChequeInfoToFillByUser.ChequeNumber = long.Parse(ChequeNumber);
+            ChequeInfoToFillByUser.ChequeNumber = ChequeNumber;
             ChequeInfoToFillByUser.Amount = Decimal.Parse(Amount);
             ChequeInfoToFillByUser.ChequeDate = ChequeDate.DateTime;
         }

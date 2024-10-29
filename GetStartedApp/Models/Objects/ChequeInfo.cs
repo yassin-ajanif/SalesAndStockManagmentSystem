@@ -9,7 +9,7 @@ namespace GetStartedApp.Models.Objects
     public class ChequeInfo
     {
         // Property to hold the cheque number
-        public long ChequeNumber { get; set; }
+        public string ChequeNumber { get; set; }
 
         // Property to hold the amount of the cheque
         public decimal Amount { get; set; }

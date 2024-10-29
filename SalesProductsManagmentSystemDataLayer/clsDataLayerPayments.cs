@@ -71,7 +71,45 @@ namespace SalesProductsManagmentSystemDataLayer
 
             return paymentTypeID;
         }
-    
-    
+
+
+        public static bool ProcessPayment(
+         decimal? depositAmount,
+         int saleId,
+         string selectedPaymentMethod,
+         decimal? checkAmount,
+         string checkNumber,
+         DateTime? checkDate)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("ProcessPayment", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameters
+                        command.Parameters.AddWithValue("@DepositAmount", depositAmount ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@SaleID", saleId);
+                        command.Parameters.AddWithValue("@SelectedPaymentMethod", selectedPaymentMethod);
+                        command.Parameters.AddWithValue("@CheckAmount", checkAmount ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@CheckNumber", checkNumber ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@CheckDate", checkDate ?? (object)DBNull.Value);
+
+                        // Execute the stored procedure
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true; // Return true if the operation was successful
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (if necessary)
+                Console.WriteLine("Error processing payment: " + ex.Message);
+                return false; // Return false if an exception occurs
+            }
+        }
     }
 }
