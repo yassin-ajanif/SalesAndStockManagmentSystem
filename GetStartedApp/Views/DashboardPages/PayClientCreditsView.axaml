@@ -238,6 +238,12 @@
 										  ElementName=ReturnedProductList}"
 										  FontFamily="Roboto"/>
 								
+								<MenuItem Header="تحويل الى تسبيق"
+									  Command="{Binding ConvertClientCreditToDepositCommand}"
+									  CommandParameter="{Binding SelectedItem, 
+										  ElementName=ReturnedProductList}"
+									  FontFamily="Roboto"/>
+								
 								<MenuItem Header="تسديد بالشيك"
 										  Command="{Binding PayClientCreditAsCheckCommand}"
 										  CommandParameter="{Binding SelectedItem, 

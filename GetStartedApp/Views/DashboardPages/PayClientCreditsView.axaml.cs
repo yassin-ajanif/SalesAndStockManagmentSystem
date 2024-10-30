@@ -33,8 +33,9 @@ public partial class PayClientCreditsView : ReactiveUserControl<PayClientCredits
             action(ViewModel!.OpenPayClientCreditAsCheckPage.RegisterHandler(ShowCheckPaymentDialog));
             action(ViewModel!.OpenPayClientCreditAsTpePage.RegisterHandler(ShowTpePaymentDialog));
             action(ViewModel!.OpenConvertClientCreditToCreditPage.RegisterHandler(ShowConvertToCreditDialog)); 
-           // action(ViewModel!.OpenConvertClientCreditToDepositPage.RegisterHandler(ShowConvertToCreditDialog)); 
-           // action(ViewModel!.OpenConvertClientCreditToDepositPage.RegisterHandler(ShowConvertToDepositDialog)); 
+            action(ViewModel!.OpenConvertClientCreditToDepositPage.RegisterHandler(ShowConvertToDepositDialog)); 
+    
+
         });
     }
 
@@ -122,24 +123,27 @@ public partial class PayClientCreditsView : ReactiveUserControl<PayClientCredits
         interaction.SetOutput(Unit.Default);
     }
 
-  // private async Task ShowConvertToDepositDialog(InteractionContext<ClientOrCompanySaleInfo, Unit> interaction)
-  // {
-  //     var dialog = new DialogContainerView
-  //     {
-  //         Title = "تحويل الى تسبيق",
-  //         Content = new ClientsPaymentPageView
-  //         {
-  //             DataContext = new ClientsPaymentPageViewModel(interaction.Input, ePaymentMode.ToDeposit)
-  //         }
-  //     };
-  //
-  //     var window = this.GetVisualRoot() as Window;
-  //     if (window == null)
-  //     {
-  //         throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
-  //     }
-  //
-  //     await dialog.ShowDialog<Unit>(window);
-  //     interaction.SetOutput(Unit.Default);
-  // }
+    private async Task ShowConvertToDepositDialog(InteractionContext<ClientOrCompanySaleInfo, Unit> interaction)
+    {
+        var dialog = new DialogContainerView
+        {
+            Title = "تحويل الى تسبيق",
+            Content = new ClientsPaymentPageView
+            {
+                DataContext = new ClientsPaymentPageViewModel(interaction.Input, ePaymentMode.ToDeposit)
+            }
+        };
+
+        var window = this.GetVisualRoot() as Window;
+        if (window == null)
+        {
+            throw new InvalidOperationException("Cannot show dialog because this control is not contained within a Window.");
+        }
+
+        await dialog.ShowDialog<Unit>(window);
+        interaction.SetOutput(Unit.Default);
+    }
+
+   
+
 }

@@ -53,75 +53,72 @@
 	<StackPanel>
 
 
-		<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Margin="10" HorizontalAlignment="Center">
+		<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" 
+					Margin="15" HorizontalAlignment="Center">
 			<TextBlock FontWeight="Bold">طريقة الدفع المسبقة هي :</TextBlock>
 			<TextBlock FontWeight="Bold" Margin="5 0" Foreground="Blue" Text="{Binding PreviousPaymentMethod}"></TextBlock>
 			<TextBlock FontWeight="Bold" Foreground="Red" Text="{Binding PreviousPaymentMethodDetails}"></TextBlock>
 		</StackPanel>
 		
-		<StackPanel>
-			
-			<StackPanel Margin="20" FlowDirection="RightToLeft" IsVisible="{Binding IsCashPaymentMethodVisible}">
-				<TextBlock Text="اختر طريقة الدفع نقدا:" FontWeight="Bold" Margin="0,0,0,10"/>
-
-				<!-- Grid for Payment Options -->
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<!-- For the partial payment input -->
-						<ColumnDefinition Width="Auto" />
-						<!-- For the radio buttons -->
-					</Grid.ColumnDefinitions>
-
-					<!-- StackPanel for Radio Buttons on the right -->
-					<StackPanel Orientation="Vertical" Grid.Column="0">
-						<!-- Radio Button for Paying Fully -->
-						<RadioButton Name="PayFullyRadioButton"
-									 Content="الدفع بالكامل"
-									 GroupName="PaymentOptions"
-									 Margin="0,0,5,0"
-									 Checked="PayFullyRadioButton_Checked"/>
-
-						<!-- Radio Button for Paying Partially -->
-						<RadioButton Name="PayPartiallyRadioButton"
-									 Content="الدفع جزئياً"
-									 GroupName="PaymentOptions"
-									 Margin="0,0,5,0"
-									 Checked="PayPartiallyRadioButton_Checked"/>
-					</StackPanel>
-
-					<!-- StackPanel for Partial Payment Input on the left -->
-					<StackPanel Orientation="Horizontal" Margin="0,0,10,0" Grid.Column="1" Name="PartialPaymentTemplate" >
-						<TextBlock Text="التسبيق:"
-								   VerticalAlignment="Center" Margin="0,0,10,0" />
-						<TextBox Name="PartialAmountTextBox" Watermark="المبلغ الجزئي"
-								 Width="100" Height="20" MaxLength="6" FlowDirection="LeftToRight"/>
-					</StackPanel>
+		<StackPanel FlowDirection="RightToLeft" >
 
 
-				</Grid>
+			<StackPanel Orientation="Horizontal" Margin="10" 
+							IsVisible="{Binding IsCashPaymentMethodVisible}">
+					<CheckBox Name="PayFullyRadioButton"
+								 Content="الدفع بالكامل"
+							     Foreground="{DynamicResource myFaintGreenColor}"
+							     FontWeight="Bold"
+							     IsChecked="{Binding IsFullPaymentMethodChecked}"
+								 />
+				</StackPanel>
 
-
-
+				<!-- StackPanel for Partial Payment Option -->
+				<StackPanel Orientation="Horizontal" Margin="10"
+							IsVisible="{Binding IsDepositPaymentMethodVisible}">
+					<TextBlock Text="  أدخل مبلغ التسبيق:" VerticalAlignment="Center" Margin="0,0,10,0"
+							    Foreground="{DynamicResource myFaintGreenColor}"
+							     FontWeight="Bold"/>
+					<TextBox Name="PartialAmountTextBox"
+							 Width="100"
+							 MaxLength="6"
+							 Text= "{Binding NewDepositAmount}"
+							 FlowDirection="LeftToRight"/>
 			</StackPanel>
+			
+
 
 			<StackPanel Orientation="Horizontal" Margin="10" FlowDirection="RightToLeft"
 						IsVisible="{Binding IsCheckPaymentMethodVisible}">
-				<TextBlock Text="أدخل رقم الشيك:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-				<TextBox Name="CheckNumberTextBox" Width="100" MaxLength="10" VerticalAlignment="Center"/>
+				<TextBlock Text="أدخل رقم الشيك:" VerticalAlignment="Center" Margin="0,0,10,0"
+						    Foreground="{DynamicResource myFaintGreenColor}"
+							     FontWeight="Bold"/>
+				
+				<TextBox Name="CheckNumberTextBox" Width="100" MaxLength="10"
+						 VerticalAlignment="Center" FlowDirection="LeftToRight"
+						  Text="{Binding NewEntredCheckNumber}"/>
 				<Button Content="إدخال شيك جديد" Margin="10,0,0,0" VerticalAlignment="Center"/>
 			</StackPanel>
 
 			<StackPanel  FlowDirection="RightToLeft" Margin="10" Orientation="Horizontal"
 						 IsVisible="{Binding IsCreditPaymentMethodVisible}">
-				<TextBlock FontWeight="Bold">تحويل طريقة الدفع الى : </TextBlock>
-				<TextBlock FontWeight="Bold" Foreground="Red" Text=" دين"/>
+				<CheckBox  Content="تحويل طريقة الدفع الى :"  
+						   Foreground="{DynamicResource myFaintGreenColor}"
+							     FontWeight="Bold"
+						   IsChecked="{Binding IsCreditPaymentMethodChecked}"/>
+				
+				<TextBlock FontWeight="Bold" Foreground="Red" Text=" دين" Margin="5 9 0 0"/>
 			</StackPanel>
 
-			<StackPanel  FlowDirection="RightToLeft" Margin="10" Orientation="Horizontal"
+			<StackPanel  FlowDirection="RightToLeft" Margin="10" Orientation="Horizontal" 
+						 VerticalAlignment="Center"
 						  IsVisible="{Binding IsTpePaymentMethodVisible}">
-				<TextBlock FontWeight="Bold">تحويل طريقة الدفع الى :</TextBlock>
-				<TextBlock FontWeight="Bold" Foreground="Red" Text=" TPE"/>
+				<CheckBox Content="تحويل طريقة الدفع الى :" 
+						  Foreground="{DynamicResource myFaintGreenColor}"
+							     FontWeight="Bold"
+						  IsChecked="{Binding IsTpePaymentMethodChecked}"/>
+				
+				<TextBlock FontWeight="Bold" Foreground="Red" Text=" TPE" Margin="5 9 0 0"/>
 			</StackPanel>
 
 

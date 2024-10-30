@@ -1,20 +1,29 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
+using Avalonia.VisualTree;
 using GetStartedApp.Models.Objects;
+using GetStartedApp.ViewModels;
+using GetStartedApp.ViewModels.ClientsPages;
 using GetStartedApp.ViewModels.ProductPages;
 using GetStartedApp.Views.DashboardPages;
 using GetStartedApp.Views.ProductPages;
+using ReactiveUI;
+using System;
+using System.Reactive;
+using System.Threading.Tasks;
 
 namespace GetStartedApp.Views.ClientsPages;
 
-public partial class ClientsPaymentPageView : UserControl
+public partial class ClientsPaymentPageView : ReactiveUserControl<ClientsPaymentPageViewModel>
 {
     public ClientsPaymentPageView()
     {
         InitializeComponent();
         ProductsListGrid.LoadingRow += EnableOnlyReturnableProducts;
+        RegisterShowDialogProductEvents();
     }
 
     public void EnableOnlyReturnableProducts(object sender, DataGridRowEventArgs e)
@@ -28,17 +37,44 @@ public partial class ClientsPaymentPageView : UserControl
         }
     }
 
-    private void PayFullyRadioButton_Checked(object sender, RoutedEventArgs e)
+    private void RegisterShowDialogProductEvents()
     {
-        // Disable the partial payment section when "Pay Fully" is selected
-        PartialPaymentTemplate.IsEnabled = false;
+        this.WhenActivated(action =>
+        {
+            action(ViewModel!.ConfirmPaymentMethodToConvert.RegisterHandler(ShowMessageBoxForConversion_ToPaymentMethod_Confirmation)); 
+            action(ViewModel!.ShowIfOperationSuccedeOrFaildDialog.RegisterHandler(ShowMessageBoxIfOperationHasSuccededOrFailed)); 
+
+        });
     }
 
-    private void PayPartiallyRadioButton_Checked(object sender, RoutedEventArgs e)
+    private async Task ShowMessageBoxForConversion_ToPaymentMethod_Confirmation(InteractionContext<string, bool> context)
     {
-        // Enable the partial payment section when "Pay Partially" is selected
-        PartialPaymentTemplate.IsEnabled = true;
+   
+        var window = this.GetVisualRoot() as Window;
+        bool validatonBtnsAreVisible = true;
+        var dialog = new ShowMessageBoxContainer(context.Input, validatonBtnsAreVisible);
+
+        bool userHasConfirmedByYes = await dialog.ShowDialog<bool>(window);
+
+        context.SetOutput(userHasConfirmedByYes);
+
     }
+
+    private async Task ShowMessageBoxIfOperationHasSuccededOrFailed(InteractionContext<string, Unit> context)
+    {
+
+        var window = this.GetVisualRoot() as Window;
+        bool validatonBtnsAreVisible = false;
+        var dialog = new ShowMessageBoxContainer(context.Input, validatonBtnsAreVisible);
+
+        await dialog.ShowDialog<bool>(window);
+
+        context.SetOutput(Unit.Default);
+
+        window.Close();
+    }
+
+    
 
 
 

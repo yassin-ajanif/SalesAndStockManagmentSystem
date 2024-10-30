@@ -4,24 +4,29 @@ using GetStartedApp.ViewModels.ProductPages;
 using ReactiveUI;
 using System;
 using System.Reactive;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using GetStartedApp.Models;
+using GetStartedApp.Helpers.CustomUIErrorAttributes;
+using GetStartedApp.Helpers;
+using System.Reactive.Linq;
+
+
 
 namespace GetStartedApp.ViewModels.ClientsPages
 {
     public class ClientsPaymentPageViewModel: ReturnProductBySaleIDViewModel
     {
-        private bool _isCashPaymentMethodVisible;
-        private bool _isCheckPaymentMethodVisible;
-        private bool _isCreditPaymentMethodVisible;
-        private bool _isTpePaymentMethodVisible;
+        private bool   _isCashPaymentMethodVisible;
+        private bool   _isCheckPaymentMethodVisible;
+        private bool   _isCreditPaymentMethodVisible;
+        private bool   _isTpePaymentMethodVisible;
+        private bool   _isDepositPaymentMethodVisible;
         private string _previousPaymentMethod;
         private string _previousPaymentMethodDetails;
-        private string _newChequeAmount;
+        private string _newDepositAmount;
+        private bool _isFullPaymentMethodChecked;
+        private bool _isCreditPaymentMethodChecked;
+        private bool _isTpePaymentMethodChecked;
+        private string _newEntredCheckNumber;
 
 
         public string PreviousPaymentMethod
@@ -59,25 +64,61 @@ namespace GetStartedApp.ViewModels.ClientsPages
             set => this.RaiseAndSetIfChanged(ref _isTpePaymentMethodVisible, value);
         }
 
-        public bool NewChequeAmount
+        public bool IsDepositPaymentMethodVisible
         {
-            get => _isTpePaymentMethodVisible;
-            set => this.RaiseAndSetIfChanged(ref _isTpePaymentMethodVisible, value);
+            get => _isDepositPaymentMethodVisible;
+            set => this.RaiseAndSetIfChanged(ref _isDepositPaymentMethodVisible, value);
         }
 
+        [PositiveFloatRange(1,100_000,ErrorMessage = "ادخل رقم موجب")]
+        public string NewDepositAmount
+        {
+            get => _newDepositAmount;
+            set => this.RaiseAndSetIfChanged(ref _newDepositAmount, value);
+        }
+        [PositiveIntRange(1,1_0_000_000_000_000,ErrorMessage = "ادخل رقم موجب")]
+        public string NewEntredCheckNumber
+        {
+            get => _newEntredCheckNumber;
+            set => this.RaiseAndSetIfChanged(ref _newEntredCheckNumber, value);
+        }
+        // Public properties
+        public bool IsFullPaymentMethodChecked
+        {
+            get => _isFullPaymentMethodChecked;
+            set => this.RaiseAndSetIfChanged(ref _isFullPaymentMethodChecked, value);
+        }
+
+        public bool IsCreditPaymentMethodChecked
+        {
+            get => _isCreditPaymentMethodChecked;
+            set => this.RaiseAndSetIfChanged(ref _isCreditPaymentMethodChecked, value);
+        }
+
+        public bool IsTpePaymentMethodChecked
+        {
+            get => _isTpePaymentMethodChecked;
+            set => this.RaiseAndSetIfChanged(ref _isTpePaymentMethodChecked, value);
+        }
 
         public ePaymentMode PaymentModeToConvert;
      
         private ClientOrCompanySaleInfo clientOrCompanySalesInfo;
         public ReactiveCommand<Unit, Unit> ConvertPaymentMethodCommand { get; }
 
-       
+        public Interaction<string,bool> ConfirmPaymentMethodToConvert { get; }
+        public Interaction<string,Unit> ShowIfOperationSuccedeOrFaildDialog { get; }
+
         private ChequeInfo _newChequeInfoLoadedByUser = null;
         public ClientsPaymentPageViewModel(ClientOrCompanySaleInfo clientOrCompanySalesInfo,ePaymentMode PaymentModeToConvert) :base(clientOrCompanySalesInfo.SaleID)
         {
             this.clientOrCompanySalesInfo = clientOrCompanySalesInfo;
             this.PaymentModeToConvert = PaymentModeToConvert;
-            ConvertPaymentMethodCommand = ReactiveCommand.Create(ConvertThePaymentMethod_To_SelectedPaymentMethod);
+            ConvertPaymentMethodCommand = ReactiveCommand.Create(ConvertThePaymentMethod_To_SelectedPaymentMethod, ValidateSelectedPaymentMethod());
+            
+            ConfirmPaymentMethodToConvert = new Interaction<string, bool>();
+            ShowIfOperationSuccedeOrFaildDialog = new Interaction<string, Unit>();
+
 
             SetThePreviousMethodPaymentUi();
             SetTheAcutalMethodPaymentUi();
@@ -91,6 +132,7 @@ namespace GetStartedApp.ViewModels.ClientsPages
             IsCheckPaymentMethodVisible = false;
             IsCreditPaymentMethodVisible = false;
             IsTpePaymentMethodVisible = false;
+            IsDepositPaymentMethodVisible = false;
         }
         private void EnableCashPaymentMethod()
         {
@@ -114,8 +156,10 @@ namespace GetStartedApp.ViewModels.ClientsPages
 
         private void EnableDepositPaymentMethod()
         {
-            EnableCreditPaymentMethod();
+            DisableAllPaymentMethods();
+            IsDepositPaymentMethodVisible = true;
         }
+       
         private void EnableTpePaymentMethod()
         {
             DisableAllPaymentMethods();
@@ -201,60 +245,171 @@ namespace GetStartedApp.ViewModels.ClientsPages
             }
         }
 
-        private void ConvertThePaymentMethodTo_Cash() {
+        private async void ConvertThePaymentMethodTo_Cash() {
 
-            bool isOperationSucceded = AccessToClassLibraryBackendProject.ExecuteProcessPayment
-                (depositAmount: null, saleId :clientOrCompanySalesInfo.SaleID,selectedPaymentMethod: "cash", checkAmount: null, checkNumber: null, checkDate:null);
+           bool  isUserHasConfirmedTheOperation = await ConfirmPaymentMethodToConvert.Handle("هل تريد حقا تسجيل العملية ");
 
-
-
+           if (isUserHasConfirmedTheOperation) { 
+               
+              bool operationHasSucceded = AccessToClassLibraryBackendProject.ExecuteProcessPayment
+                                         (depositAmount: null, saleId :clientOrCompanySalesInfo.SaleID,selectedPaymentMethod: "cash", checkAmount: null, checkNumber: null, checkDate:null);
+           
+               if (operationHasSucceded) await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد تمت العملية بنجاح");
+           
+               else await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد حصل خطأ ما");
+           }
+       
         }
-        private void ConvertThePaymentMethodTo_Check() {
 
-            bool isOperationSucceded =  AccessToClassLibraryBackendProject.ExecuteProcessPayment
-        (depositAmount: null, saleId: clientOrCompanySalesInfo.SaleID, selectedPaymentMethod: "check", 
-         checkAmount: _newChequeInfoLoadedByUser.Amount, checkNumber: _newChequeInfoLoadedByUser.ChequeNumber, checkDate: _newChequeInfoLoadedByUser.ChequeDate);
 
-        }
-        private void ConvertThePaymentMethodTo_Credit()
+        private async void ConvertThePaymentMethodTo_Check()
         {
-            // Execute the process payment for Credit
-            bool isOperationSucceded = AccessToClassLibraryBackendProject.ExecuteProcessPayment(
-                depositAmount: null,
-                saleId: clientOrCompanySalesInfo.SaleID,
-                selectedPaymentMethod: "Credit",
-                checkAmount: null,
-                checkNumber: null,
-                checkDate: null);
+            bool isUserHasConfirmedTheOperation = await ConfirmPaymentMethodToConvert.Handle("هل تريد حقا تسجيل العملية");
+
+            if (isUserHasConfirmedTheOperation)
+            {
+                bool isOperationSucceeded = AccessToClassLibraryBackendProject.ExecuteProcessPayment(
+                    depositAmount: null,
+                    saleId: clientOrCompanySalesInfo.SaleID,
+                    selectedPaymentMethod: "check",
+                    checkAmount: _newChequeInfoLoadedByUser.Amount,
+                    checkNumber: _newChequeInfoLoadedByUser.ChequeNumber,
+                    checkDate: _newChequeInfoLoadedByUser.ChequeDate
+                );
+
+                if (isOperationSucceeded)
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد تمت العملية بنجاح");
+                else
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد حصل خطأ ما");
+            }
         }
 
-        private void ConvertThePaymentMethodTo_Tpe()
+        private async void ConvertThePaymentMethodTo_Credit()
         {
-            // Execute the process payment for TPE
-            bool isOperationSucceded = AccessToClassLibraryBackendProject.ExecuteProcessPayment(
-                depositAmount: null,
-                saleId: clientOrCompanySalesInfo.SaleID,
-                selectedPaymentMethod: "TPe",
-                checkAmount: null,
-                checkNumber: null,
-                checkDate: null);
+            bool isUserHasConfirmedTheOperation = await ConfirmPaymentMethodToConvert.Handle("هل تريد حقا تسجيل العملية");
+
+            if (isUserHasConfirmedTheOperation)
+            {
+                bool isOperationSucceeded = AccessToClassLibraryBackendProject.ExecuteProcessPayment(
+                    depositAmount: null,
+                    saleId: clientOrCompanySalesInfo.SaleID,
+                    selectedPaymentMethod: "Credit",
+                    checkAmount: null,
+                    checkNumber: null,
+                    checkDate: null
+                );
+
+                if (isOperationSucceeded)
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد تمت العملية بنجاح");
+                else
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد حصل خطأ ما");
+            }
         }
 
-        private void ConvertThePaymentMethodTo_Deposit()
+        private async void ConvertThePaymentMethodTo_Tpe()
         {
-            // Assuming you have a deposit amount to process for Deposit payment method
-            decimal depositAmount = decimal.Parse(_newChequeAmount); // Assuming you have a way to load this information
+            bool isUserHasConfirmedTheOperation = await ConfirmPaymentMethodToConvert.Handle("هل تريد حقا تسجيل العملية");
 
-            // Execute the process payment for Deposit
-            bool isOperationSucceded = AccessToClassLibraryBackendProject.ExecuteProcessPayment(
-                depositAmount: depositAmount,
-                saleId: clientOrCompanySalesInfo.SaleID,
-                selectedPaymentMethod: "Deposit",
-                checkAmount: null,
-                checkNumber: null,
-                checkDate: null);
+            if (isUserHasConfirmedTheOperation)
+            {
+                bool isOperationSucceeded = AccessToClassLibraryBackendProject.ExecuteProcessPayment(
+                    depositAmount: null,
+                    saleId: clientOrCompanySalesInfo.SaleID,
+                    selectedPaymentMethod: "Tpe",
+                    checkAmount: null,
+                    checkNumber: null,
+                    checkDate: null
+                );
+
+                if (isOperationSucceeded)
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد تمت العملية بنجاح");
+                else
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد حصل خطأ ما");
+            }
         }
 
+        private async void ConvertThePaymentMethodTo_Deposit()
+        {
+            bool isUserHasConfirmedTheOperation = await ConfirmPaymentMethodToConvert.Handle("هل تريد حقا تسجيل العملية");
+
+            if (isUserHasConfirmedTheOperation)
+            {
+                decimal depositAmount = decimal.Parse(NewDepositAmount); // Assuming you have a way to load this information
+
+                bool isOperationSucceeded = AccessToClassLibraryBackendProject.ExecuteProcessPayment(
+                    depositAmount: depositAmount,
+                    saleId: clientOrCompanySalesInfo.SaleID,
+                    selectedPaymentMethod: "Deposit",
+                    checkAmount: null,
+                    checkNumber: null,
+                    checkDate: null
+                );
+
+                if (isOperationSucceeded)
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد تمت العملية بنجاح");
+                else
+                    await ShowIfOperationSuccedeOrFaildDialog.Handle("لقد حصل خطأ ما");
+            }
+        }
+
+     bool AreFull_PaymentMethod_InfoToSubmitValid   =>  IsFullPaymentMethodChecked && _newChequeInfoLoadedByUser == null && NewDepositAmount == null;       
+     bool AreDeposit_PaymentMethod_InfoToSubmitValid =>  NewDepositAmount != null && _newChequeInfoLoadedByUser == null  && UiAttributeChecker.AreThesesAttributesPropertiesValid(this,nameof(NewDepositAmount));
+     bool AreCheck_PaymentMethod_InfoToSubmitValid   => NewEntredCheckNumber != null &&  NewDepositAmount == null &&
+            _newChequeInfoLoadedByUser !=null && UiAttributeChecker.AreThesesAttributesPropertiesValid(this, nameof(NewEntredCheckNumber) );        
+     bool AreCredit_PaymentMethod_InfoToSubmitValid  =>  IsCreditPaymentMethodChecked && _newChequeInfoLoadedByUser == null && NewDepositAmount == null;
+     bool AreTpe_PaymentMethod_InfoToSubmitValid     =>  IsTpePaymentMethodChecked && _newChequeInfoLoadedByUser == null && NewDepositAmount == null;
+
+        public IObservable<bool> ValidateFullPaymentMethod()
+        {
+            return this.WhenAnyValue( x => x.IsFullPaymentMethodChecked,(isFullPaymentChecked)  => isFullPaymentChecked && AreFull_PaymentMethod_InfoToSubmitValid);
+        }
+
+        public IObservable<bool> ValidateDepositPaymentMethod()
+        {
+            return this.WhenAnyValue(
+                x => x.NewDepositAmount,
+                (newDepositAmount) => !string.IsNullOrWhiteSpace(newDepositAmount) && AreDeposit_PaymentMethod_InfoToSubmitValid
+            );
+        }
+
+        public IObservable<bool> ValidateCheckPaymentMethod()
+        {
+            return this.WhenAnyValue (x => x.NewEntredCheckNumber,(NewEntredCheckNumber) =>!string.IsNullOrWhiteSpace(NewEntredCheckNumber) && AreCheck_PaymentMethod_InfoToSubmitValid);
+        }
+
+        public IObservable<bool> ValidateCreditPaymentMethod()
+        {
+            return this.WhenAnyValue(x => x.IsCreditPaymentMethodChecked,(isCreditChecked) => isCreditChecked && AreCredit_PaymentMethod_InfoToSubmitValid);
+        }
+
+        public IObservable<bool> ValidateTpePaymentMethod()
+        {
+            return this.WhenAnyValue( x => x.IsTpePaymentMethodChecked, (isTpeChecked) => isTpeChecked && AreTpe_PaymentMethod_InfoToSubmitValid );
+        }
+
+        public IObservable<bool> ValidateSelectedPaymentMethod()
+        {
+            switch (PaymentModeToConvert)
+            {
+                case ePaymentMode.ToCash: return ValidateFullPaymentMethod();
+
+
+                case ePaymentMode.ToCheck: return ValidateCheckPaymentMethod();
+
+
+                case ePaymentMode.ToTpe: return ValidateTpePaymentMethod();
+
+
+                case ePaymentMode.ToCredit: return ValidateCreditPaymentMethod();
+
+
+                case ePaymentMode.ToDeposit: return ValidateDepositPaymentMethod();
+
+
+                default:
+                    throw new InvalidOperationException($"Unsupported PaymentID: {clientOrCompanySalesInfo.PaymentID}");
+            }
+        }
 
         private void ConvertThePaymentMethod_To_SelectedPaymentMethod()
         {
