@@ -28,7 +28,7 @@ namespace GetStartedApp.ViewModels
         }
 
         // Property for the cheque date
-        private DateTimeOffset _chequeDate= new DateTimeOffset(new DateTime(2000, 1, 1));
+        private DateTimeOffset _chequeDate = DateTimeOffset.Now;
         public DateTimeOffset ChequeDate
         {
             get => _chequeDate;
@@ -39,21 +39,24 @@ namespace GetStartedApp.ViewModels
 
         public Interaction<Unit, Unit> addNewChequeInfoInteraction{get;set;}
 
-        private ChequeInfo _chequeInfoToFillByUser = new ChequeInfo();
+        private ChequeInfo _chequeInfoToFillByUser ;
         public ChequeInfo ChequeInfoToFillByUser
         {
             get => _chequeInfoToFillByUser;
             set => this.RaiseAndSetIfChanged(ref _chequeInfoToFillByUser, value);
         }
+
+        // this constructor is made to load the ui or viewmodel values where the chequeinfo values are null 
         public AddNewChequeInfoViewModel(ref ChequeInfo chequeInfoToFillByUser)
         {
-            chequeInfoToFillByUser = this._chequeInfoToFillByUser;
+            _chequeInfoToFillByUser = chequeInfoToFillByUser ;
             addNewChequeInfoInteraction = new Interaction<Unit, Unit>();
             AddCheckInfo = ReactiveCommand.Create(AddChequeInfo);
         }
-
-        private void LoadChequeInfoEntredByUser()
-        {
+   
+     
+        public void LoadChequeInfoEntredByUser()
+        {   
             ChequeInfoToFillByUser.ChequeNumber = ChequeNumber;
             ChequeInfoToFillByUser.Amount = Decimal.Parse(Amount);
             ChequeInfoToFillByUser.ChequeDate = ChequeDate.DateTime;

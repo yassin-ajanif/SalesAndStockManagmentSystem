@@ -96,8 +96,11 @@
 				
 				<TextBox Name="CheckNumberTextBox" Width="100" MaxLength="10"
 						 VerticalAlignment="Center" FlowDirection="LeftToRight"
-						  Text="{Binding NewEntredCheckNumber}"/>
-				<Button Content="إدخال شيك جديد" Margin="10,0,0,0" VerticalAlignment="Center"/>
+						  Text="{Binding NewEntredCheckNumber}"
+						 IsReadOnly="True"/>
+				<Button Content="إدخال شيك جديد" Margin="10,0,0,0"
+						VerticalAlignment="Center"
+						Command="{Binding AddNewCheckInfoCommand}"/>
 			</StackPanel>
 
 			<StackPanel  FlowDirection="RightToLeft" Margin="10" Orientation="Horizontal"

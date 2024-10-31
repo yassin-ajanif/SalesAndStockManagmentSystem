@@ -8,6 +8,7 @@ using GetStartedApp.Models;
 using GetStartedApp.Helpers.CustomUIErrorAttributes;
 using GetStartedApp.Helpers;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 
 
@@ -105,20 +106,24 @@ namespace GetStartedApp.ViewModels.ClientsPages
      
         private ClientOrCompanySaleInfo clientOrCompanySalesInfo;
         public ReactiveCommand<Unit, Unit> ConvertPaymentMethodCommand { get; }
+        public ReactiveCommand<Unit, Unit> AddNewCheckInfoCommand { get; }
 
         public Interaction<string,bool> ConfirmPaymentMethodToConvert { get; }
         public Interaction<string,Unit> ShowIfOperationSuccedeOrFaildDialog { get; }
+        public Interaction<AddNewChequeInfoViewModel, bool> ShowAddChequeInfoDialogInteraction { get; }
 
         private ChequeInfo _newChequeInfoLoadedByUser = null;
+   
         public ClientsPaymentPageViewModel(ClientOrCompanySaleInfo clientOrCompanySalesInfo,ePaymentMode PaymentModeToConvert) :base(clientOrCompanySalesInfo.SaleID)
         {
             this.clientOrCompanySalesInfo = clientOrCompanySalesInfo;
             this.PaymentModeToConvert = PaymentModeToConvert;
             ConvertPaymentMethodCommand = ReactiveCommand.Create(ConvertThePaymentMethod_To_SelectedPaymentMethod, ValidateSelectedPaymentMethod());
-            
+            AddNewCheckInfoCommand = ReactiveCommand.Create(AddNewCheckInfo);
+;
             ConfirmPaymentMethodToConvert = new Interaction<string, bool>();
             ShowIfOperationSuccedeOrFaildDialog = new Interaction<string, Unit>();
-
+            ShowAddChequeInfoDialogInteraction = new Interaction<AddNewChequeInfoViewModel, bool>();
 
             SetThePreviousMethodPaymentUi();
             SetTheAcutalMethodPaymentUi();
@@ -440,6 +445,56 @@ namespace GetStartedApp.ViewModels.ClientsPages
             }
         }
 
+        private async Task<(bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, ChequeInfo ChequeInfo)> OpenChequePage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage()
+        {
+            
+            AddNewChequeInfoViewModel viewModelToBindWithView=null;
 
+            if (userHasFilledChequeInfoBefore()) LoadPreviousEntredChequeInfo(ref _newChequeInfoLoadedByUser, ref viewModelToBindWithView);
+            else LoadBlankEntredCheckInfo(ref viewModelToBindWithView);
+
+            // Awaiting the dialog interaction and getting the result from the user
+            bool UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage = await ShowAddChequeInfoDialogInteraction.Handle(viewModelToBindWithView);
+
+            // Returning the tuple with the user interaction result and the filled cheque info
+            return (UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, _newChequeInfoLoadedByUser);
+        }
+
+        // if user has submited the cheque info before and wanted to add or edit something then the dialog should show the previous values entred
+        private void LoadPreviousEntredChequeInfo(ref ChequeInfo chequeInfoToFillByUser, ref AddNewChequeInfoViewModel viewModelToBindWithView)
+        {
+            // in this case _newcheinfloadedbyuser is not null becuase the user has already fill the cheque information so this is the second time he clik add new check so it must se the 
+            // previous values he entred
+             ChequeInfo previousCheckInfoLoadedByUser = _newChequeInfoLoadedByUser;
+             chequeInfoToFillByUser = previousCheckInfoLoadedByUser;
+             viewModelToBindWithView = new EditNewAddedCheckViewModel(ref previousCheckInfoLoadedByUser);
+
+        }
+
+        private void LoadBlankEntredCheckInfo( ref AddNewChequeInfoViewModel viewModelToBindWithView)
+        {
+             _newChequeInfoLoadedByUser = new ChequeInfo();
+             viewModelToBindWithView = new AddNewChequeInfoViewModel(ref _newChequeInfoLoadedByUser);
+
+        }
+
+
+        private bool userHasFilledChequeInfoBefore()
+        {
+            return _newChequeInfoLoadedByUser != null;
+        }
+
+        private async void AddNewCheckInfo()
+        {
+           
+                // Await the method to get the tuple result
+                var (UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage, chequeInfoUserHasFilled) = await OpenChequePage_And_ReturnInfo_FilledByUser_Plus_Check_IfUserHasntLeaveThePage();
+                bool userClosedThePage = !UserHasFilledCorrectlyTheInfo_And_DidntLeaveThePage;
+                _newChequeInfoLoadedByUser = chequeInfoUserHasFilled;
+
+                if (userClosedThePage) return;
+
+               NewEntredCheckNumber = _newChequeInfoLoadedByUser.ChequeNumber;
+        }
     }
 }
