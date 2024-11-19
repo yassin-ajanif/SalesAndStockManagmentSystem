@@ -109,32 +109,6 @@ namespace GetStartedApp.ViewModels.ProductPages
             SuppliersList = AccessToClassLibraryBackendProject.GetSupplierNamePhoneNumberCombo();
         }
 
-    //    protected override void when_UserSearchProductByName_DeleteBarcode_SearchText_And_ViceSera()
-    //    {
-    //        // Listen to changes in ProductNameTermToSerach
-    //        this.WhenAnyValue(x => x.ProductNameTermToSerach)
-    //            .Subscribe(productName =>
-    //            {
-    //                // If the user types in ProductNameTermToSerach, clear BarcodeNumber
-    //                if (!string.IsNullOrWhiteSpace(productName))
-    //                {
-    //                    BarcodeNumber = null;
-    //                }
-    //            });
-    //
-    //        // Listen to changes in BarcodeNumber
-    //        this.WhenAnyValue(x => x.BarcodeNumber)
-    //            .Subscribe(barcode =>
-    //            {
-    //                // If the user types in BarcodeNumber, clear ProductNameTermToSerach and SelectedProductNameTermSerach
-    //                if (!string.IsNullOrWhiteSpace(barcode))
-    //                {
-    //                    ProductNameTermToSerach = null;
-    //                    SelectedProductNameTermSerach = null;
-    //                }
-    //            });
-    //    }
-
         private void GetBoughtProductListFromDatabase()
         {
             // Extract supplier name from the selected combo box input
