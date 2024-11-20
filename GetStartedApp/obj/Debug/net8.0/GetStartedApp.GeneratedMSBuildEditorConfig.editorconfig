@@ -83,6 +83,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/PayClientCreditsView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/PaySupplierCreditsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/yassin/source/repos/FullSalesAndMangmentApp/SalesAndStockManagmentSystem/GetStartedApp/Views/DashboardPages/ReturnedProductsView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

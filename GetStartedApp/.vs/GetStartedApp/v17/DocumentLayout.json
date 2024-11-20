@@ -3,12 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\productpages\\productsboughtsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
-      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\productpages\\productsboughtsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\paysuppliercreditsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\paysuppliercreditsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\dashboardview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\dashboardview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\paysuppliercreditsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\paysuppliercreditsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\dashboardpages\\payclientcreditsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:viewmodels\\dashboardpages\\payclientcreditsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\dashboardpages\\payclientcreditsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
       "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\dashboardpages\\payclientcreditsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\views\\productpages\\productsboughtsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|solutionrelative:views\\productpages\\productsboughtsview.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{03EDD35D-9BFA-449C-9408-0BACC2181329}|GetStartedApp.csproj|c:\\users\\yassin\\source\\repos\\fullsalesandmangmentapp\\salesandstockmanagmentsystem\\getstartedapp\\viewmodels\\productpages\\productsboughtsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -37,20 +57,87 @@
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PaySupplierCreditsView.axaml",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\PaySupplierCreditsView.axaml",
+              "RelativeDocumentMoniker": "Views\\DashboardPages\\PaySupplierCreditsView.axaml",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\PaySupplierCreditsView.axaml",
+              "RelativeToolTip": "Views\\DashboardPages\\PaySupplierCreditsView.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-20T19:39:43.725Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindowViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MainWindowViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\MainWindowViewModel.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\MainWindowViewModel.cs",
+              "RelativeToolTip": "ViewModels\\DashboardPages\\MainWindowViewModel.cs",
+              "ViewState": "AQIAANMAAAAAAAAAAAAIwOIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T18:58:30.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DashboardView.axaml",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DashboardView.axaml",
+              "RelativeDocumentMoniker": "Views\\DashboardPages\\DashboardView.axaml",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\DashboardView.axaml",
+              "RelativeToolTip": "Views\\DashboardPages\\DashboardView.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-20T18:47:27.156Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PaySupplierCreditsViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\PaySupplierCreditsViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\PaySupplierCreditsViewModel.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\PaySupplierCreditsViewModel.cs",
+              "RelativeToolTip": "ViewModels\\DashboardPages\\PaySupplierCreditsViewModel.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAqwCsAAABwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T18:21:00.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PayClientCreditsViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\PayClientCreditsViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DashboardPages\\PayClientCreditsViewModel.cs",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\DashboardPages\\PayClientCreditsViewModel.cs",
+              "RelativeToolTip": "ViewModels\\DashboardPages\\PayClientCreditsViewModel.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAUwBQAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-20T18:11:35.384Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "ProductsBoughtsView.axaml",
               "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\ProductPages\\ProductsBoughtsView.axaml",
               "RelativeDocumentMoniker": "Views\\ProductPages\\ProductsBoughtsView.axaml",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\ProductPages\\ProductsBoughtsView.axaml*",
-              "RelativeToolTip": "Views\\ProductPages\\ProductsBoughtsView.axaml*",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\ProductPages\\ProductsBoughtsView.axaml",
+              "RelativeToolTip": "Views\\ProductPages\\ProductsBoughtsView.axaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-11-19T19:10:09.906Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "PayClientCreditsView.axaml",
               "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\Views\\DashboardPages\\PayClientCreditsView.axaml",
               "RelativeDocumentMoniker": "Views\\DashboardPages\\PayClientCreditsView.axaml",
@@ -62,20 +149,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "ProductsBoughtsViewModel.cs",
               "DocumentMoniker": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\ProductPages\\ProductsBoughtsViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\ProductPages\\ProductsBoughtsViewModel.cs",
-              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\ProductPages\\ProductsBoughtsViewModel.cs*",
-              "RelativeToolTip": "ViewModels\\ProductPages\\ProductsBoughtsViewModel.cs*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAI4AAAAAAAAA",
+              "ToolTip": "C:\\Users\\yassin\\source\\repos\\FullSalesAndMangmentApp\\SalesAndStockManagmentSystem\\GetStartedApp\\ViewModels\\ProductPages\\ProductsBoughtsViewModel.cs",
+              "RelativeToolTip": "ViewModels\\ProductPages\\ProductsBoughtsViewModel.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAGsAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-19T19:02:17.854Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             }
           ]
         }

@@ -230,6 +230,17 @@ public class MainWindowViewModel : ViewModelBase
 
     }
 
+    public void goToPaySuppliersPage()
+    {
+        CurrentPage = new PaySupplierCreditsViewModel(this);
+
+        navigationHistory.Push(CurrentPage);
+
+        // we set uis like buttn or any elements that dynmically appears and dissaper to default state for the welcome page
+        HideheaderAndShowBtnBack();
+
+    }
+
     public void EnableTheBellNotification_Of_ProductsWith_LowerQuantityInTheStock()
     {  
         NotificationBellImage= ImageHelper.LoadFromResource(new Uri("avares://GetStartedApp/Assets/Icons/NotificationYes.png"));

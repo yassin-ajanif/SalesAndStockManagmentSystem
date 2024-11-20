@@ -36,6 +36,8 @@ namespace GetStartedApp.ViewModels.DashboardPages
         
         public ICommand GoToPayClientsCreditCommand { get; private set; }
 
+        public ICommand GoToPaySuppliersCreditCommand { get; private set; }
+
 
 
         // this funtion is responsibe for enabling the commands that will be sending through btns
@@ -62,6 +64,7 @@ namespace GetStartedApp.ViewModels.DashboardPages
           GoToProductsBoughtsPageCommand = ReactiveCommand.Create(MainWindowViewModel.GoToProductsBoughtsPage);
           GoToBonCommandPageCommand  = ReactiveCommand.Create(MainWindowViewModel.GoToBonCommandPage);
           GoToPayClientsCreditCommand = ReactiveCommand.Create(MainWindowViewModel.GoToPayCreditsClientsPage); 
+          GoToPaySuppliersCreditCommand = ReactiveCommand.Create(MainWindowViewModel.goToPaySuppliersPage);
 
         }
 

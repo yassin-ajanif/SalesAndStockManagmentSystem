@@ -210,32 +210,7 @@
 							  Name="ReturnedProductList"
 							  CanUserResizeColumns="true">
 
-						<DataGrid.ContextMenu>
-							<ContextMenu >
-								<MenuItem Header="تسديد نقدا"
-										 
-										  FontFamily="Roboto"/>
-
-								<MenuItem Header="تحويل الى تسبيق"
-									
-									  FontFamily="Roboto"/>
-
-								<MenuItem Header="تسديد بالشيك"
-										  
-										  FontFamily="Roboto"/>
-
-								<MenuItem Header="تسديد tpe"
-										 
-										  FontFamily="Roboto"/>
-
-								<MenuItem Header="تحويل الى دين"
-									  
-									  FontFamily="Roboto"/>
-
-
-
-							</ContextMenu>
-						</DataGrid.ContextMenu>
+						
 						
 						<DataGrid.Columns>
 							<DataGridTextColumn Binding="{Binding SupplierBlNumber}" Header="رقم الوصل" />
