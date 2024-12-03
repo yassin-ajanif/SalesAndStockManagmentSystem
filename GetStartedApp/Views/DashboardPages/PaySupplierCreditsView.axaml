@@ -206,15 +206,17 @@
 							  IsReadOnly="True"
 							  GridLinesVisibility="All"
 							  FlowDirection="RightToLeft"
-							  Name="ReturnedProductList"
+							  Name="ProductsBoughtList"
 							  CanUserResizeColumns="true">
 
 
 
 						<DataGrid.ContextMenu>
 							<ContextMenu >
-								<MenuItem Header="تسديد نقدا"
-										 
+								<MenuItem Header="تسديد نقدا" 
+										  Command="{Binding PaySupplierCreditAsCashCommand}"
+										  CommandParameter="{Binding SelectedItem, 
+										  ElementName=ProductsBoughtList}"
 										  FontFamily="Roboto"/>
 
 								<MenuItem Header="تحويل الى تسبيق"

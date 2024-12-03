@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace GetStartedApp.ViewModels.ClientsPages
 {
-    public class ClientsPaymentPageViewModel: ReturnProductBySaleIDViewModel
+    public class ClientsPaymentPageViewModel : ReturnProductBySaleIDViewModel
     {
         private bool   _isCashPaymentMethodVisible;
         private bool   _isCheckPaymentMethodVisible;
